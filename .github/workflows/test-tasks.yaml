@@ -221,7 +221,7 @@ jobs:
           fi
 
           # Claude-Code 4.5 Sonnet
-          if [ -f "/tmp/results/test-result-terminus-claude/terminus-claude.txt" ]; then
+          if [ -f "/tmp/results/test-result-claude-code-4-5-sonnet/claude-code-4-5-sonnet.txt" ]; then
             result=$(cat /tmp/results/test-result-claude-code-4-5-sonnet/claude-code-4-5-sonnet.txt)
             if [ "$result" = "success" ]; then
               echo "✅ **Claude-Code (Claude 4.5 Sonnet)**: PASSED"
