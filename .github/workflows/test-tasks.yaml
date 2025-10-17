@@ -22,28 +22,22 @@ jobs:
             display: "NOP Agent (Should Fail)"
             required: true
             key: "nop"
-          - name: "terminus"
-            display: "Terminus (GPT-4.1)"
-            model: "openai/gpt-4.1"
+          - name: "codex"
+            display: "Codex (GPT-5)"
+            model: "openai/gpt-5"
             required: false
-            key: "terminus-gpt4"
-          - name: "terminus"
-            display: "Terminus (Claude 4 Sonnet)"
-            model: "anthropic/claude-sonnet-4-20250514"
+            key: "codex-gpt5"
+          - name: "claude"
+            display: "Claude-Code (Claude 4.5 Sonnet)"
+            model: "anthropic/claude-sonnet-4-5-20250929"
             required: false
-            key: "terminus-claude"
-          - name: "terminus"
-            display: "Terminus (Gemini 2.5 Pro)"
-            model: "gemini/gemini-2.5-pro-preview-06-05"
-            required: false
-            key: "terminus-gemini"
+            key: "claude-code-4-5-sonnet"
     continue-on-error: ${{ !matrix.agent.required }}
     name: Test with ${{ matrix.agent.display }}
 
     env:
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
 
     steps:
       - uses: actions/checkout@v3
@@ -214,40 +208,28 @@ jobs:
             echo "⏭️ **NOP Agent**: SKIPPED"
           fi
 
-          # Terminus GPT-4.1
-          if [ -f "/tmp/results/test-result-terminus-gpt4/terminus-gpt4.txt" ]; then
-            result=$(cat /tmp/results/test-result-terminus-gpt4/terminus-gpt4.txt)
+          # Codex GPT-5
+          if [ -f "/tmp/results/test-result-codex-gpt5/codex-gpt5.txt" ]; then
+            result=$(cat /tmp/results/test-result-codex-gpt5/codex-gpt5.txt)
             if [ "$result" = "success" ]; then
-              echo "✅ **Terminus (GPT-4.1)**: PASSED"
+              echo "✅ **Codex (GPT-5)**: PASSED"
             else
-              echo "❌ **Terminus (GPT-4.1)**: FAILED"
+              echo "❌ **Codex (GPT-5)**: FAILED"
             fi
           else
-            echo "⏭️ **Terminus (GPT-4.1)**: SKIPPED"
+            echo "⏭️ **Codex (GPT-5)**: SKIPPED"
           fi
 
-          # Terminus Claude 4 Sonnet
+          # Claude-Code 4.5 Sonnet
           if [ -f "/tmp/results/test-result-terminus-claude/terminus-claude.txt" ]; then
-            result=$(cat /tmp/results/test-result-terminus-claude/terminus-claude.txt)
+            result=$(cat /tmp/results/test-result-claude-code-4-5-sonnet/claude-code-4-5-sonnet.txt)
             if [ "$result" = "success" ]; then
-              echo "✅ **Terminus (Claude 4 Sonnet)**: PASSED"
+              echo "✅ **Claude-Code (Claude 4.5 Sonnet)**: PASSED"
             else
-              echo "❌ **Terminus (Claude 4 Sonnet)**: FAILED"
+              echo "❌ **Claude-Code (Claude 4.5 Sonnet)**: FAILED"
             fi
           else
-            echo "⏭️ **Terminus (Claude 4 Sonnet)**: SKIPPED"
-          fi
-
-          # Terminus Gemini 2.5 Pro
-          if [ -f "/tmp/results/test-result-terminus-gemini/terminus-gemini.txt" ]; then
-            result=$(cat /tmp/results/test-result-terminus-gemini/terminus-gemini.txt)
-            if [ "$result" = "success" ]; then
-              echo "✅ **Terminus (Gemini 2.5 Pro)**: PASSED"
-            else
-              echo "❌ **Terminus (Gemini 2.5 Pro)**: FAILED"
-            fi
-          else
-            echo "⏭️ **Terminus (Gemini 2.5 Pro)**: SKIPPED"
+            echo "⏭️ **Claude-Code (Claude 4.5 Sonnet)**: SKIPPED"
           fi
 
           echo ""
