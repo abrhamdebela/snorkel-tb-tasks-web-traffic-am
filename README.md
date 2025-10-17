@@ -21,13 +21,15 @@ git clone git@github.com:snorkel-ai/snorkel-tb-tasks.git
 cd snorkel-tb-tasks
 ```
 
-## Copy the task template folder
+## Create a new task using Task Wizard
 
 ```bash
-cp -r template-task tasks/your-task-name
+tb tasks create
 ```
 
-## Create a task
+The interactive wizard will eventually create a folder with some boilerplate files under /tasks folder.
+
+## Complete a task creation
 
 See [here](https://www.tbench.ai/docs/task-quickstart).
 
