@@ -27,7 +27,7 @@ jobs:
             model: "openai/gpt-5"
             required: false
             key: "codex-gpt5"
-          - name: "claude"
+          - name: "claude-code"
             display: "Claude-Code (Claude 4.5 Sonnet)"
             model: "anthropic/claude-sonnet-4-5-20250929"
             required: false
