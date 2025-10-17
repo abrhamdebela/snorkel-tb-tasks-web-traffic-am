@@ -41,6 +41,36 @@ jobs:
           
           echo "✅ All changes are under the tasks/ directory."
           
+      - name: Check if changes are in a single task folder
+        run: |
+          echo "Checking if all changes are in a single folder under tasks/..."
+          
+          task_folders=()
+          
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            # Extract the task folder name (first directory after tasks/)
+            if [[ "$file" =~ ^tasks/([^/]+) ]]; then
+              task_folder="${BASH_REMATCH[1]}"
+              # Add to array if not already present
+              if [[ ! " ${task_folders[@]} " =~ " ${task_folder} " ]]; then
+                task_folders+=("$task_folder")
+              fi
+            fi
+          done
+          
+          if [ ${#task_folders[@]} -gt 1 ]; then
+            echo "❌ Error: Changes span multiple task folders:"
+            printf '  - tasks/%s\n' "${task_folders[@]}"
+            echo ""
+            echo "All changes in a PR must be within a single task folder."
+            echo "Please create separate PRs for each task."
+            exit 1
+          fi
+          
+          if [ ${#task_folders[@]} -eq 1 ]; then
+            echo "✅ All changes are in a single task folder: tasks/${task_folders[0]}"
+          fi
+          
       - name: List changed files
         run: |
           echo "Changed files in this PR:"
