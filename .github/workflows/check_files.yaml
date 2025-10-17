@@ -1,0 +1,48 @@
+name: Check PR Files
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  check-files:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v41
+        
+      - name: Check if changes are under tasks directory
+        run: |
+          echo "Checking if all changes are under tasks/ directory..."
+          
+          invalid_files=()
+          
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            if [[ ! "$file" =~ ^tasks/ ]]; then
+              invalid_files+=("$file")
+            fi
+          done
+          
+          if [ ${#invalid_files[@]} -ne 0 ]; then
+            echo "❌ Error: The following files are not under the tasks/ directory:"
+            printf '%s\n' "${invalid_files[@]}"
+            echo ""
+            echo "All changes in this PR must be under the tasks/ directory."
+            echo "Please move your changes to tasks/your-task-name/"
+            exit 1
+          fi
+          
+          echo "✅ All changes are under the tasks/ directory."
+          
+      - name: List changed files
+        run: |
+          echo "Changed files in this PR:"
+          echo "${{ steps.changed-files.outputs.all_changed_files }}"
+
