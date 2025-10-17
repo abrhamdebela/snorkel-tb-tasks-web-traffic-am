@@ -61,6 +61,9 @@ jobs:
           curl -LsSf https://astral.sh/uv/install.sh | sh
           echo "$HOME/.cargo/bin" >> $GITHUB_PATH
 
+          # Install terminal-bench
+          uv tool install terminal-bench
+
           # Install jq and bc for parsing results
           sudo apt-get update
           sudo apt-get install -y jq bc
