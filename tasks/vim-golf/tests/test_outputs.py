@@ -20,7 +20,7 @@ def test_score_value_valid():
 
     assert score_path.exists(), f"File {score_path} does not exist"
 
-    with open(score_path, 'r') as f:
+    with open(score_path, "r") as f:
         score_content = f.read().strip()
 
     try:
