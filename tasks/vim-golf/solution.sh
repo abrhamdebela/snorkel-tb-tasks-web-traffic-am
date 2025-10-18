@@ -1,0 +1,1 @@
+echo 39 >> /score.txt
