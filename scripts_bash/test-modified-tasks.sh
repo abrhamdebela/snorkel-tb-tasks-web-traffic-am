@@ -12,7 +12,7 @@ AGENT_DISPLAY_NAME=""
 FAIL_ON_ERROR=true
 
 # Hard-coded values
-N_ATTEMPTS=5
+N_ATTEMPTS=10
 
 # Parse command line arguments
 while [[ $# -gt 0 ]]; do
