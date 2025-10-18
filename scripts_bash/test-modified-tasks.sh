@@ -92,13 +92,13 @@ for task in "$@"; do
   fi
   
   # Parse the results file
-  # Extract accuracy from the results file
-  accuracy=$(jq '.accuracy' "$results_file")
-  echo "Test accuracy for $task with $AGENT_DISPLAY_NAME: $accuracy"
+  # Extract Pass@5 from the results file
+  pass_at_5=$(jq '.pass_at_k."5"' "$results_file")
+  echo "Test Pass@5 for $task with $AGENT_DISPLAY_NAME: $pass_at_5"
   
-  # If accuracy is less than 1.0, at least one test failed
-  if (( $(echo "$accuracy < 1.0" | bc -l) )); then
-    echo "❌ Tests for $task failed with $AGENT_DISPLAY_NAME (accuracy: $accuracy)"
+  # If Pass@5 is greater than 0.6, the task is not difficult enough. Let it fail.
+  if (( $(echo "$pass_at_5 > 0.6" | bc -l) )); then
+    echo "❌ Tests for $task passed with $AGENT_DISPLAY_NAME easily (Pass@5: $pass_at_5)"
     
     # Get list of specific tests that failed
     echo "Failed tests for $task with $AGENT_DISPLAY_NAME:"
@@ -130,7 +130,7 @@ for task in "$@"; do
     
     failed_tasks+=("$task")
   else
-    echo "✅ Tests for $task passed with $AGENT_DISPLAY_NAME (accuracy: $accuracy)"
+    echo "✅ Great job! Your $task stumped $AGENT_DISPLAY_NAME! (Pass@5: $pass_at_5)"
     passed_tasks+=("$task")
   fi
 done
