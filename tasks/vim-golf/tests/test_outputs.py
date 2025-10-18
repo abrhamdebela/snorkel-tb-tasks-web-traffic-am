@@ -8,12 +8,14 @@ from pathlib import Path
 
 
 def test_score_file_exists():
+    """Check that the score file exists"""
     score_path = Path("/score.txt")
 
     assert score_path.exists(), f"File {score_path} does not exist"
 
 
 def test_score_value_valid():
+    """Check that the score file is within bounds"""
     score_path = Path("/score.txt")
 
     assert score_path.exists(), f"File {score_path} does not exist"
