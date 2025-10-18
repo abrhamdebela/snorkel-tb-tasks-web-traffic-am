@@ -92,4 +92,4 @@ def test_score_valid():
     else:
         assert False, f"Could not find score in vimgolf output: {result.stdout}"
 
-    assert actual_score <= 200 * best_score, f"Score too high. Got {actual_score}, expected <= {2 * best_score}"
+    assert actual_score <= 2 * best_score, f"Score too high. Got {actual_score}, expected <= {2 * best_score}"
