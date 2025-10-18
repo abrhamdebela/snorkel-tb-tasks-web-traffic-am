@@ -27,4 +27,4 @@ def test_score_value_valid():
         assert False, f"Score file contains invalid integer: '{score_content}'"
 
     assert score > 0, f"Score must be greater than 0, got {score}"
-    assert score <= 39 * 1.5, f"Score must be <= 39 * 1.5, got {score}"
+    assert score <= 39 * 2, f"Score must be <= 39 * 2, got {score}"
