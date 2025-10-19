@@ -13,7 +13,6 @@ FAIL_ON_ERROR=true
 
 # Hard-coded values
 N_ATTEMPTS=10
-N_CONCURRENT=5
 
 # Parse command line arguments
 while [[ $# -gt 0 ]]; do
@@ -69,7 +68,7 @@ for task in "$@"; do
   echo "Running tests for $task with $AGENT_DISPLAY_NAME"
   
   # Build the command
-  CMD="uv run tb run --agent $AGENT --task-id $task --run-id github-action-$timestamp-$task --cleanup --n-attempts $N_ATTEMPTS --n-concurrent $N_CONCURRENT"
+  CMD="uv run tb run --agent $AGENT --task-id $task --run-id github-action-$timestamp-$task --cleanup --n-attempts $N_ATTEMPTS"
   if [ -n "$MODEL" ]; then
     CMD="$CMD --model $MODEL"
   fi
