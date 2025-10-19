@@ -11,7 +11,7 @@ MODEL=""
 AGENT_DISPLAY_NAME=""
 FAIL_ON_ERROR=true
 
-# Hard-coded values
+# Hard-coded values for agents
 N_ATTEMPTS=10
 
 # Parse command line arguments
@@ -55,6 +55,11 @@ elif [ "$AGENT" = "terminus" ] && [ -n "$MODEL" ]; then
   AGENT_DISPLAY_NAME="Terminus ($MODEL)"
 else
   AGENT_DISPLAY_NAME="$AGENT"
+fi
+
+# Set N_ATTEMPTS for non-agents ("oracle" and "nop")
+if [ "$AGENT" = "oracle" ] || [ "$AGENT" = "nop" ]; then
+  N_ATTEMPTS=1
 fi
 
 failed_tasks=()
