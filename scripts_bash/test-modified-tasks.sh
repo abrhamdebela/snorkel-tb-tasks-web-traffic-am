@@ -11,9 +11,8 @@ MODEL=""
 AGENT_DISPLAY_NAME=""
 FAIL_ON_ERROR=true
 
-# Hard-coded values
+# Hard-coded values for agents
 N_ATTEMPTS=10
-N_CONCURRENT=2
 
 # Parse command line arguments
 while [[ $# -gt 0 ]]; do
@@ -58,6 +57,11 @@ else
   AGENT_DISPLAY_NAME="$AGENT"
 fi
 
+# Set N_ATTEMPTS for non-agents ("oracle" and "nop")
+if [ "$AGENT" = "oracle" ] || [ "$AGENT" = "nop" ]; then
+  N_ATTEMPTS=1
+fi
+
 failed_tasks=()
 passed_tasks=()
 timestamp=$(date "+%Y-%m-%d__%H-%M-%S")
@@ -69,7 +73,7 @@ for task in "$@"; do
   echo "Running tests for $task with $AGENT_DISPLAY_NAME"
   
   # Build the command
-  CMD="uv run tb run --agent $AGENT --task-id $task --run-id github-action-$timestamp-$task --cleanup --n-attempts $N_ATTEMPTS --n-concurrent $N_CONCURRENT"
+  CMD="uv run tb run --agent $AGENT --task-id $task --run-id github-action-$timestamp-$task --cleanup --n-attempts $N_ATTEMPTS"
   if [ -n "$MODEL" ]; then
     CMD="$CMD --model $MODEL"
   fi
