@@ -56,7 +56,7 @@ jobs:
           echo "$HOME/.cargo/bin" >> $GITHUB_PATH
 
           # Install terminal-bench
-          uv tool install terminal-bench
+          uv tool install git+https://github.com/snorkel-ai/terminal-bench.git@release-0.2.18
 
           # Install jq and bc for parsing results
           sudo apt-get update
