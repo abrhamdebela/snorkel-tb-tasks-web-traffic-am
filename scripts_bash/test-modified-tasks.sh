@@ -13,7 +13,7 @@ FAIL_ON_ERROR=true
 
 # Hard-coded values
 N_ATTEMPTS=10
-N_CONCURRENT=5
+N_CONCURRENT=2
 
 # Parse command line arguments
 while [[ $# -gt 0 ]]; do
