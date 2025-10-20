@@ -1,0 +1,134 @@
+name: Test Single Task
+
+on:
+  workflow_call:
+    inputs:
+      agent:
+        type: string
+        description: The agent to test
+      run:
+        type: string
+        description: The run to test
+      key:
+        type: string
+        description: The key to use for the run
+      model:
+        type: string
+        description: The model to test
+      required:
+        type: boolean
+        description: Whether the agent is required
+        default: true
+
+jobs:
+  test-single-task:
+    runs-on: ubuntu-latest
+    continue-on-error: ${{ !inputs.required }}
+    name: Test with ${{ inputs.agent }} - ${{ inputs.run }}
+
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.13"
+
+      - name: Install dependencies
+        run: |
+          # Install uv
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+
+          # Install terminal-bench
+          uv tool install terminal-bench
+
+          # Install jq and bc for parsing results
+          sudo apt-get update
+          sudo apt-get install -y jq bc
+
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v45
+        with:
+          files: tasks/**/*
+
+      - name: Find modified test tasks
+        id: find-modified
+        run: |
+          # Get all modified task directories
+          ALL_TASKS=$(echo "${{ steps.changed-files.outputs.all_changed_files }}" | tr ' ' '\n' | grep -E '^tasks/[^/]+/' | cut -d'/' -f2 | sort | uniq)
+
+          # Fail if 2 or more tasks are modified
+          if [ $(echo "$ALL_TASKS" | wc -l) -gt 1 ]; then
+            echo "Error: Multiple tasks modified. Please modify only one task at a time."
+            exit 1
+          fi
+
+          # Filter out tasks where only instruction changed
+          TASKS=""
+
+          # Make the check script executable
+          chmod +x scripts_bash/check-instruction-only-change.sh
+
+          for task in $ALL_TASKS; do
+            
+            # Check if only instruction changed
+            if ./scripts_bash/check-instruction-only-change.sh "tasks/$task" "${{ github.base_ref }}"; then
+              echo "⏭️  Skipping $task (only instruction field changed)"
+            else
+              TASKS="$TASKS $task"
+            fi
+          done
+
+          # Clean up the task list
+          TASKS=$(echo "$TASKS" | tr ' ' '\n' | grep -v '^$' | tr '\n' ' ' | sed 's/^ *//' | sed 's/ $//')
+
+          echo "Modified tasks to test: $TASKS"
+          echo "tasks<<EOF" >> $GITHUB_OUTPUT
+          echo "$TASKS" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Run tests for modified tasks
+        id: run-tests
+        run: |
+          # Make the script executable
+          chmod +x scripts_bash/test-modified-tasks.sh
+
+          # Build the command with agent and model parameters
+          CMD="./scripts_bash/test-modified-tasks.sh --agent ${{ inputs.agent }} --run ${{ inputs.run }} --key ${{ inputs.key }}"
+          if [ -n "${{ inputs.model }}" ]; then
+            CMD="$CMD --model ${{ inputs.model }}"
+          fi
+          if [ "${{ inputs.required }}" != "true" ]; then
+            CMD="$CMD --no-fail-on-error"
+          fi
+          CMD="$CMD ${{ steps.find-modified.outputs.tasks }}"
+
+          # Run the script and capture result
+          mkdir -p /tmp/test-results
+
+          # Run the command (it will write result to runs/github-action-$task-$RUN/results.json)
+          $CMD
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-result-${{ inputs.key }}_${{ inputs.run }}
+          path: runs/github-action-${{ inputs.key }}_${{ inputs.run }}/results.json
+          retention-days: 1
+
+      - name: Upload session recordings
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: recordings-${{ inputs.key }}_${{ inputs.run }}
+          path: runs/**/sessions/*
+          retention-days: 1
