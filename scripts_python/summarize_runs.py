@@ -12,8 +12,8 @@ TIMEOUT_KEYS = {"timeout", "agent_timeout", "test_timeout", "timed_out", "deadli
 def parse_batch_name(batch_dir: Path):
     """Example: test-result-claude-code-4-5-sonnet-2"""
     agent_run = batch_dir.name.replace("test-result-", "")
-    agent, run = agent_run.split("_")
-    return agent, run
+    agent, task, run = agent_run.split("_")
+    return agent, task, run
 
 def safe_read_json(p: Path) -> Optional[Dict[str, Any]]:
     try:
@@ -39,30 +39,31 @@ def main():
     print(batch_dirs)
     batch_dirs.sort()
 
-    all_results: Dict[str, List[Dict[str, Any]]] = defaultdict(list)
+    all_results: Dict[str, Dict[str, List[Dict[str, Any]]]] = defaultdict(lambda: defaultdict(list))
     for bd in batch_dirs:
-        agent, run = parse_batch_name(bd)
+        agent, task, run = parse_batch_name(bd)
         results_json = safe_read_json(bd / "results.json")
-        all_results[agent].extend(results_json.get("results", []))
+        all_results[task][agent].extend(results_json.get("results", []))
     
-    summary: Dict[str, Dict[str, Any]] = defaultdict(dict)
-    for agent, results in all_results.items():
-        is_resolveds = []
-        for result in results:
-            is_resolveds.append(result["is_resolved"])
-        summary[agent]["accuracy"] = sum(is_resolveds) / len(is_resolveds)
-        if len(is_resolveds) >= 5:
-            summary[agent]["pass_at_5"] = pass_at_k_estimator(len(is_resolveds), sum(is_resolveds), 5)
-        else:
-            summary[agent]["pass_at_5"] = "N/A"
-        summary[agent]["n_runs"] = len(results)
+    summary: Dict[str, Dict[str, Dict[str, Any]]] = defaultdict(lambda: defaultdict(dict))
+    for task, results_by_agent in all_results.items():
+        for agent, task_results in results_by_agent.items():
+            is_resolveds = []
+            for result in task_results:
+                is_resolveds.append(result["is_resolved"])
+            summary[task][agent]["accuracy"] = sum(is_resolveds) / len(is_resolveds)
+            if len(is_resolveds) >= 5:
+                summary[task][agent]["pass_at_5"] = pass_at_k_estimator(len(is_resolveds), sum(is_resolveds), 5)
+            else:
+                summary[task][agent]["pass_at_5"] = "N/A"
+            summary[task][agent]["n_runs"] = len(task_results)
     with open("summary-of-runs-comment.md", "w") as f:
-        f.write("## Summary of Runs:\n")
-        f.write("| Agent/Model | # of runs | Accuracy | Pass@5 |\n")
-        f.write("|-------------|------------|----------|--------|\n")
-        for agent, data in summary.items():
-            f.write(f"| {agent} | {data['n_runs']} | {data['accuracy']} | {data['pass_at_5']} |\n")
-
+        for task, results_by_agent in summary.items():
+            f.write(f"## Summary of Runs for \"{task}\":\n")
+            f.write("| Agent/Model | # of runs | Accuracy | Pass@5 |\n")
+            f.write("|-------------|------------|----------|--------|\n")
+            for agent, data in results_by_agent.items():
+                f.write(f"| {agent} | {data['n_runs']} | {data['accuracy']} | {data['pass_at_5']} |\n")
 
 if __name__ == "__main__":
     main()

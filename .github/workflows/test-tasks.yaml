@@ -13,7 +13,55 @@ permissions:
   pull-requests: write
 
 jobs:
+  find-modified-tasks:
+    runs-on: ubuntu-latest
+    name: Find modified test tasks
+
+    outputs:
+      tasks: ${{ steps.find-modified.outputs.tasks }}
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v45
+        with:
+          files: tasks/**/*
+      - name: Find modified test tasks
+        id: find-modified
+        run: |
+          # Get all modified task directories
+          ALL_TASKS=$(echo "${{ steps.changed-files.outputs.all_changed_files }}" | tr ' ' '\n' | grep -E '^tasks/[^/]+/' | cut -d'/' -f2 | sort | uniq)
+
+          # Filter out tasks where only instruction changed
+          TASKS=""
+
+          # Make the check script executable
+          chmod +x scripts_bash/check-instruction-only-change.sh
+
+          for task in $ALL_TASKS; do
+            
+            # Check if only instruction changed
+            if ./scripts_bash/check-instruction-only-change.sh "tasks/$task" "${{ github.base_ref }}"; then
+              echo "⏭️  Skipping $task (only instruction field changed)"
+            else
+              TASKS="$TASKS $task"
+            fi
+          done
+
+          # Clean up the task list
+          TASKS=$(echo "$TASKS" | tr ' ' '\n' | grep -v '^$' | tr '\n' ' ' | sed 's/^ *//' | sed 's/ $//')
+
+          echo "Modified tasks to test: $TASKS"
+          
+          # Convert space-separated list to JSON array (compact format)
+          TASKS_ARRAY=$(echo "$TASKS" | tr ' ' '\n' | grep -v '^$' | jq -R . | jq -sc .)
+          echo "tasks=$TASKS_ARRAY" >> $GITHUB_OUTPUT
+  
   test-agents:
+    needs: find-modified-tasks
     strategy:
       fail-fast: false
       matrix:
@@ -29,7 +77,8 @@ jobs:
             required: false
             key: "claude-code-4-5-sonnet"
         run: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-    name: Test Agents with ${{ matrix.agent.display }} - ${{ matrix.run }}
+        task: ${{ fromJSON(needs.find-modified-tasks.outputs.tasks) }}
+    name: Test Agents with ${{ matrix.agent.display }} - ${{ matrix.task }} - ${{ matrix.run }}
     uses: ./.github/workflows/test-single-task.yaml
     with:
       agent: ${{ matrix.agent.name }}
@@ -37,9 +86,11 @@ jobs:
       key: ${{ matrix.agent.key }}
       model: ${{ matrix.agent.model }}
       required: ${{ matrix.agent.required }}
+      task: ${{ matrix.task }}
     secrets: inherit
 
   test-non-agents:
+    needs: find-modified-tasks
     strategy:
       fail-fast: false
       matrix:
@@ -53,7 +104,8 @@ jobs:
             required: true
             key: "nop"
         run: [1]
-    name: Test Non-Agents with ${{ matrix.agent.display }} - ${{ matrix.run }}
+        task: ${{ fromJSON(needs.find-modified-tasks.outputs.tasks) }}
+    name: Test Non-Agents with ${{ matrix.agent.display }} - ${{ matrix.task }} - ${{ matrix.run }}
     uses: ./.github/workflows/test-single-task.yaml
     with:
       agent: ${{ matrix.agent.name }}
@@ -61,6 +113,7 @@ jobs:
       key: ${{ matrix.agent.key }}
       model: ${{ matrix.agent.model }}
       required: ${{ matrix.agent.required }}
+      task: ${{ matrix.task }}
 
   # Summary job to provide clear PR status
   test-summary:

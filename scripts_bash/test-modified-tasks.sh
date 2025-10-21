@@ -73,7 +73,7 @@ for task in "$@"; do
   echo "Running tests for $task with $AGENT_DISPLAY_NAME"
   
   # Build the command
-  CMD="uv run tb run --agent $AGENT --task-id $task --run-id github-action-${KEY}_${RUN} --cleanup"
+  CMD="uv run tb run --agent $AGENT --task-id $task --run-id github-action-${KEY}_${task}_${RUN} --cleanup"
   if [ -n "$MODEL" ]; then
     CMD="$CMD --model $MODEL"
   fi
@@ -87,7 +87,7 @@ for task in "$@"; do
   docker buildx prune --force
   
   # Check if the results file exists and has valid JSON content
-  results_file="runs/github-action-${KEY}_${RUN}/results.json"
+  results_file="runs/github-action-${KEY}_${task}_${RUN}/results.json"
   
   # If running the harness didn't generate results, that's a failure
   if [ ! -f "$results_file" ]; then
