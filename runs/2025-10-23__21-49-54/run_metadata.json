@@ -1,0 +1,30 @@
+{
+    "run_id": "2025-10-23__21-49-54",
+    "uuid": "c2ff4e31-0cc0-4c88-94ac-096d3719d465",
+    "dataset_path": "C:\\Users\\HammamAlmomani\\snorkel-tb-tasks\\tasks",
+    "dataset_name": null,
+    "dataset_version": null,
+    "output_path": "C:\\Users\\HammamAlmomani\\snorkel-tb-tasks\\runs",
+    "agent_name": "oracle",
+    "no_rebuild": false,
+    "cleanup": true,
+    "log_level": 20,
+    "task_ids": [
+        "fidget-spinner"
+    ],
+    "exclude_task_ids": null,
+    "n_tasks": null,
+    "n_concurrent_trials": 4,
+    "n_attempts": 1,
+    "dataset_size": 1,
+    "accuracy": 0.0,
+    "model_name": "Oracle",
+    "start_time": "2025-10-23T18:49:54.908658+00:00",
+    "end_time": "2025-10-23T18:50:09.087320+00:00",
+    "commit_hash": "0d3149f39b2f0eb4985802a69d8a172c1d91064e",
+    "username": "hammamalmomani-a11y",
+    "s3_bucket": null,
+    "agent_kwargs": null,
+    "pass_at_k": {},
+    "resumed_at": null
+}
