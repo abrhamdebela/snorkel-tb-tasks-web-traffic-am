@@ -60,6 +60,17 @@ jobs:
           TASKS_ARRAY=$(echo "$TASKS" | tr ' ' '\n' | grep -v '^$' | jq -R . | jq -sc .)
           echo "tasks=$TASKS_ARRAY" >> $GITHUB_OUTPUT
   
+  quality-by-llm:
+    needs: find-modified-tasks
+    strategy:
+      matrix:
+        task: ${{ fromJSON(needs.find-modified-tasks.outputs.tasks) }}
+    name: Check quality of ${{ matrix.task }} by LLM
+    uses: ./.github/workflows/check-quality-by-llm.yaml
+    with:
+      task: ${{ matrix.task }}
+    secrets: inherit
+
   test-agents:
     needs: find-modified-tasks
     strategy:
