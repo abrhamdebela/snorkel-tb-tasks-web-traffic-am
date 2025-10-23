@@ -65,7 +65,9 @@ def main():
         for agent, task_results in results_by_agent.items():
             is_resolveds = []
             for result in task_results:
-                is_resolveds.append(result["is_resolved"])
+                # Treat None as False (unresolved)
+                is_resolved = result["is_resolved"]
+                is_resolveds.append(is_resolved if is_resolved is not None else False)
             agents_summary[agent]["accuracy"] = sum(is_resolveds) / len(is_resolveds)
             if len(is_resolveds) >= 5:
                 agents_summary[agent]["pass_at_5"] = pass_at_k_estimator(len(is_resolveds), sum(is_resolveds), 5)
