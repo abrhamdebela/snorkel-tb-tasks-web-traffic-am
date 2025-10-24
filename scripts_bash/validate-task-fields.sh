@@ -52,6 +52,18 @@ for file in $FILES_TO_CHECK; do
         fi
     done
     
+    # Validate category field has valid value
+    if grep -q "^category:" "$file"; then
+        category=$(grep "^category:" "$file" | sed 's/^category: *//' | tr -d ' ')
+        if [[ ! "$category" =~ ^(system-administration|build-and-dependency-management|data-processing|games|software-engineering|machine-learning|debugging|security|scientific-computing)$ ]]; then
+            echo "❌ Error: $file has invalid category: $category (must be one of: system-administration, build-and-dependency-management, data-processing, games, software-engineering, machine-learning, debugging, security, scientific-computing)"
+            FAILED=1
+        fi
+        # Write category to GITHUB_OUTPUT
+        echo "The category is: $category"
+        echo "category=$category" >> $GITHUB_OUTPUT
+    fi
+
     # Validate time estimates: required fields, can be empty/null but validate if present
     if grep -q "^expert_time_estimate_min:" "$file"; then
         expert_time=$(grep "^expert_time_estimate_min:" "$file" | sed 's/^expert_time_estimate_min: *//' | tr -d ' ')
