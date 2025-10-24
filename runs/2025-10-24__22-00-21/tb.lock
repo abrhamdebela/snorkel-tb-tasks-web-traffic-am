@@ -1,14 +1,12 @@
 {
     "lockfile_version": "1.0",
-    "created_at": "2025-10-24T20:14:47.857990+03:00",
+    "created_at": "2025-10-24T22:00:21.543510+03:00",
     "invocation": {
         "command": "tb",
         "args": [
             "run",
             "--agent",
-            "codex",
-            "--model",
-            "openai/gpt-5",
+            "oracle",
             "--task-id",
             "fidget-spinner"
         ]
@@ -19,12 +17,11 @@
         "is_editable_installation": false
     },
     "agent": {
-        "name": "codex",
-        "import_path": "terminal_bench.agents.installed_agents.codex.codex_agent:CodexAgent",
-        "model_name": "openai/gpt-5",
+        "name": "oracle",
+        "import_path": "terminal_bench.agents.oracle_agent:OracleAgent",
+        "model_name": "Oracle",
         "extra_kwargs": {
-            "no_rebuild": false,
-            "model_name": "openai/gpt-5"
+            "no_rebuild": false
         }
     },
     "run_config": {
@@ -50,7 +47,7 @@
     },
     "local_config": {
         "output_path": "runs",
-        "run_id": "2025-10-24__20-14-47",
+        "run_id": "2025-10-24__22-00-21",
         "upload_results": false
     }
 }

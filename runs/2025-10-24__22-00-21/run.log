@@ -6,19 +6,19 @@ Processing tasks in duration order (longest first):
 +-----+----------------+------------+------------+
 Total tasks: 1
 Starting harness run
-Run ID: 2025-10-24__20-14-47
+Run ID: 2025-10-24__22-00-21
 Running task: fidget-spinner
-Running docker compose command: docker compose -p fidget-spinner-1-of-1-2025-10-24__20-14-47 -f C:\Users\HammamAlmomani\snorkel-tb-tasks\tasks\fidget-spinner\docker-compose.yaml build
-Running docker compose command: docker compose -p fidget-spinner-1-of-1-2025-10-24__20-14-47 -f C:\Users\HammamAlmomani\snorkel-tb-tasks\tasks\fidget-spinner\docker-compose.yaml up -d
-Running docker compose command: docker compose -p fidget-spinner-1-of-1-2025-10-24__20-14-47 -f C:\Users\HammamAlmomani\snorkel-tb-tasks\tasks\fidget-spinner\docker-compose.yaml down
-Running docker compose command: docker compose -p fidget-spinner-1-of-1-2025-10-24__20-14-47 -f C:\Users\HammamAlmomani\snorkel-tb-tasks\tasks\fidget-spinner\docker-compose.yaml down --rmi all --volumes
-Harness execution failed for tasks\fidget-spinner: 404 Client Error for http+docker://localnpipe/v1.51/containers/d69c1101a63fc8406482cc229486088d20b821bdda9d539872e43638af5522fc/archive?path=%5Ctmp: Not Found ("Could not find the file \tmp in container d69c1101a63fc8406482cc229486088d20b821bdda9d539872e43638af5522fc")
+Running docker compose command: docker compose -p fidget-spinner-1-of-1-2025-10-24__22-00-21 -f C:\Users\HammamAlmomani\snorkel-tb-tasks\tasks\fidget-spinner\docker-compose.yaml build
+Running docker compose command: docker compose -p fidget-spinner-1-of-1-2025-10-24__22-00-21 -f C:\Users\HammamAlmomani\snorkel-tb-tasks\tasks\fidget-spinner\docker-compose.yaml up -d
+Running docker compose command: docker compose -p fidget-spinner-1-of-1-2025-10-24__22-00-21 -f C:\Users\HammamAlmomani\snorkel-tb-tasks\tasks\fidget-spinner\docker-compose.yaml down
+Running docker compose command: docker compose -p fidget-spinner-1-of-1-2025-10-24__22-00-21 -f C:\Users\HammamAlmomani\snorkel-tb-tasks\tasks\fidget-spinner\docker-compose.yaml down --rmi all --volumes
+Harness execution failed for tasks\fidget-spinner: 404 Client Error for http+docker://localnpipe/v1.51/containers/e9e3a8d0a820cfc9b80944f1d903b50108e5a5960f1f476308a3e0361cf857f4/archive?path=%5Ctmp: Not Found ("Could not find the file \tmp in container e9e3a8d0a820cfc9b80944f1d903b50108e5a5960f1f476308a3e0361cf857f4")
 Traceback (most recent call last):
   File "C:\Users\HammamAlmomani\AppData\Roaming\uv\tools\terminal-bench\Lib\site-packages\docker\api\client.py", line 275, in _raise_for_status
     response.raise_for_status()
   File "C:\Users\HammamAlmomani\AppData\Roaming\uv\tools\terminal-bench\Lib\site-packages\requests\models.py", line 1026, in raise_for_status
     raise HTTPError(http_error_msg, response=self)
-requests.exceptions.HTTPError: 404 Client Error: Not Found for url: http+docker://localnpipe/v1.51/containers/d69c1101a63fc8406482cc229486088d20b821bdda9d539872e43638af5522fc/archive?path=%5Ctmp
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: http+docker://localnpipe/v1.51/containers/e9e3a8d0a820cfc9b80944f1d903b50108e5a5960f1f476308a3e0361cf857f4/archive?path=%5Ctmp
 
 The above exception was the direct cause of the following exception:
 
@@ -51,4 +51,4 @@ Traceback (most recent call last):
           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "C:\Users\HammamAlmomani\AppData\Roaming\uv\tools\terminal-bench\Lib\site-packages\docker\errors.py", line 39, in create_api_error_from_http_exception
     raise cls(e, response=response, explanation=explanation) from e
-docker.errors.NotFound: 404 Client Error for http+docker://localnpipe/v1.51/containers/d69c1101a63fc8406482cc229486088d20b821bdda9d539872e43638af5522fc/archive?path=%5Ctmp: Not Found ("Could not find the file \tmp in container d69c1101a63fc8406482cc229486088d20b821bdda9d539872e43638af5522fc")
+docker.errors.NotFound: 404 Client Error for http+docker://localnpipe/v1.51/containers/e9e3a8d0a820cfc9b80944f1d903b50108e5a5960f1f476308a3e0361cf857f4/archive?path=%5Ctmp: Not Found ("Could not find the file \tmp in container e9e3a8d0a820cfc9b80944f1d903b50108e5a5960f1f476308a3e0361cf857f4")

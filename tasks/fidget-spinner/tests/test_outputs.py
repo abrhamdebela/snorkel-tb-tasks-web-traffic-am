@@ -167,12 +167,6 @@ def test_animate_decreases_turn():
         called["count"] += 1
 
     spinner.spinner = fake_spinner
-    called = {"count": 0}
-
-    def fake_spinner():
-        called["count"] += 1
-
-    spinner.spinner = fake_spinner
 
     # Set turn to 10
     spinner.state["turn"] = 10
@@ -213,6 +207,12 @@ def test_animate_respects_zero():
     spinner.right = MockTurtle.right
     spinner.update = MockTurtle.update
     spinner.ontimer = MockTurtle.ontimer
+    called = {"count": 0}
+
+    def fake_spinner():
+        called["count"] += 1
+
+    spinner.spinner = fake_spinner
 
     # Set turn to 0
     spinner.state["turn"] = 0
@@ -239,6 +239,7 @@ def test_spinner_draws_all_layers():
     def log(name):
         def handler(*args, **kwargs):
             calls.append((name, args, kwargs))
+
         return handler
 
     def right(angle):
@@ -277,9 +278,11 @@ def test_spinner_draws_all_layers():
         spinner.pencolor = log("pencolor")
         spinner.width = log("width")
         spinner.goto = log("goto")
+
         def forward(amount):
             forward_angles.append(orientation["value"] % 360)
             calls.append(("forward", (amount,), {}))
+
         spinner.forward = forward
         spinner.back = log("back")
         spinner.setheading = setheading
@@ -313,8 +316,8 @@ def test_spinner_draws_all_layers():
         for call in calls
         if call[0] == "forward" and call[1] == (spinner.ARM_LENGTH,)
     ]
-    assert len(forward_calls) >= spinner.ARMS_COUNT, (
-        "Each arm must move forward ARM_LENGTH at least once"
+    assert len(forward_calls) == spinner.ARMS_COUNT, (
+        "Spinner must draw exactly ARMS_COUNT arms"
     )
 
     border_dots = [
@@ -355,16 +358,38 @@ def test_spinner_draws_all_layers():
         "Center hub must have dark blue border and gray inner dot"
     )
 
-    assert len(forward_angles) >= spinner.ARMS_COUNT, (
-        "Spinner must draw at least ARMS_COUNT arms"
+    assert len(forward_angles) == spinner.ARMS_COUNT, (
+        "Spinner must draw exactly ARMS_COUNT arms"
     )
-    key_angles = sorted(forward_angles[: spinner.ARMS_COUNT])
+    key_angles = sorted(forward_angles)
     for index, angle in enumerate(key_angles):
         next_angle = key_angles[(index + 1) % spinner.ARMS_COUNT]
         delta = (next_angle - angle) % 360
         assert math.isclose(delta, 72.0, abs_tol=1e-6), (
             "Arms must be evenly spaced at 72 degree intervals"
         )
+
+    # Verify layer ordering: arms (forward) -> bearings (outer/inner dots) -> center hub
+    forward_indices = [
+        i
+        for i, call in enumerate(calls)
+        if call[0] == "forward" and call[1] == (spinner.ARM_LENGTH,)
+    ]
+    border_indices = [i for i, call in enumerate(calls) if call in border_dots]
+    colored_indices = [i for i, call in enumerate(calls) if call in colored_dots]
+    bearing_indices = sorted(border_indices + colored_indices)
+    center_indices = [
+        i
+        for i, call in enumerate(calls)
+        if call in center_border or call in center_inner
+    ]
+
+    assert max(forward_indices) < min(bearing_indices), (
+        "Outer bearings must be drawn after all arms"
+    )
+    assert max(bearing_indices) < min(center_indices), (
+        "Center hub must be drawn after outer bearings"
+    )
 
     assert calls[-1][0] == "update", "spinner() must call update() after drawing"
 
