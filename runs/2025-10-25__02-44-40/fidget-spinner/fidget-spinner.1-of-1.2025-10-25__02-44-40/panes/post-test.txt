@@ -1,0 +1,382 @@
+root@0273a146bb27:/app# bash /tests/run-tests.sh; tmux wait -S done
+Get:1 http://deb.debian.org/debian bookworm InRelease [151 kB]
+Get:2 http://deb.debian.org/debian bookworm-updates InRelease [55.4 kB]
+Get:3 http://deb.debian.org/debian-security bookworm-security InRelease [48.0 kB]
+Get:4 http://deb.debian.org/debian bookworm/main amd64 Packages [8791 kB]
+Get:5 http://deb.debian.org/debian bookworm-updates/main amd64 Packages [6924 B]
+Get:6 http://deb.debian.org/debian-security bookworm-security/main amd64 Packages [283 kB]
+Fetched 9336 kB in 7s (1268 kB/s)
+Reading package lists... Done
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following additional packages will be installed:
+  libcurl4 libldap-2.5-0 libldap-common libnghttp2-14 libpsl5 librtmp1 libsasl2-2 libsasl2-modules libsasl2-modules-db libssh2-1 publicsuffix
+Suggested packages:
+  libsasl2-modules-gssapi-mit | libsasl2-modules-gssapi-heimdal libsasl2-modules-ldap libsasl2-modules-otp libsasl2-modules-sql
+The following NEW packages will be installed:
+  curl libcurl4 libldap-2.5-0 libldap-common libnghttp2-14 libpsl5 librtmp1 libsasl2-2 libsasl2-modules libsasl2-modules-db libssh2-1 publicsuffix
+0 upgraded, 12 newly installed, 0 to remove and 40 not upgraded.
+Need to get 1564 kB of archives.
+After this operation, 3748 kB of additional disk space will be used.
+Get:1 http://deb.debian.org/debian bookworm/main amd64 libsasl2-modules-db amd64 2.1.28+dfsg-10 [20.3 kB]
+Get:2 http://deb.debian.org/debian bookworm/main amd64 libsasl2-2 amd64 2.1.28+dfsg-10 [59.7 kB]
+Get:3 http://deb.debian.org/debian bookworm/main amd64 libldap-2.5-0 amd64 2.5.13+dfsg-5 [183 kB]
+Get:4 http://deb.debian.org/debian bookworm/main amd64 libnghttp2-14 amd64 1.52.0-1+deb12u2 [73.0 kB]
+Get:5 http://deb.debian.org/debian bookworm/main amd64 libpsl5 amd64 0.21.2-1 [58.7 kB]
+Get:6 http://deb.debian.org/debian bookworm/main amd64 librtmp1 amd64 2.4+20151223.gitfa8646d.1-2+b2 [60.8 kB]
+Get:7 http://deb.debian.org/debian bookworm/main amd64 libssh2-1 amd64 1.10.0-3+b1 [179 kB]
+Get:8 http://deb.debian.org/debian bookworm/main amd64 libcurl4 amd64 7.88.1-10+deb12u14 [392 kB]
+Get:9 http://deb.debian.org/debian bookworm/main amd64 curl amd64 7.88.1-10+deb12u14 [316 kB]
+Get:10 http://deb.debian.org/debian bookworm/main amd64 libldap-common all 2.5.13+dfsg-5 [29.3 kB]
+Get:11 http://deb.debian.org/debian bookworm/main amd64 libsasl2-modules amd64 2.1.28+dfsg-10 [66.6 kB]
+Get:12 http://deb.debian.org/debian bookworm/main amd64 publicsuffix all 20230209.2326-1 [126 kB]
+Fetched 1564 kB in 1s (1126 kB/s)
+debconf: delaying package configuration, since apt-utils is not installed
+Selecting previously unselected package libsasl2-modules-db:amd64.
+(Reading database ... 9337 files and directories currently installed.)
+Preparing to unpack .../00-libsasl2-modules-db_2.1.28+dfsg-10_amd64.deb ...
+Unpacking libsasl2-modules-db:amd64 (2.1.28+dfsg-10) ...
+Selecting previously unselected package libsasl2-2:amd64.
+Preparing to unpack .../01-libsasl2-2_2.1.28+dfsg-10_amd64.deb ...
+Unpacking libsasl2-2:amd64 (2.1.28+dfsg-10) ...
+Selecting previously unselected package libldap-2.5-0:amd64.
+Preparing to unpack .../02-libldap-2.5-0_2.5.13+dfsg-5_amd64.deb ...
+Unpacking libldap-2.5-0:amd64 (2.5.13+dfsg-5) ...
+Selecting previously unselected package libnghttp2-14:amd64.
+Preparing to unpack .../03-libnghttp2-14_1.52.0-1+deb12u2_amd64.deb ...
+Unpacking libnghttp2-14:amd64 (1.52.0-1+deb12u2) ...
+Selecting previously unselected package libpsl5:amd64.
+Preparing to unpack .../04-libpsl5_0.21.2-1_amd64.deb ...
+Unpacking libpsl5:amd64 (0.21.2-1) ...
+Selecting previously unselected package librtmp1:amd64.
+Preparing to unpack .../05-librtmp1_2.4+20151223.gitfa8646d.1-2+b2_amd64.deb ...
+Unpacking librtmp1:amd64 (2.4+20151223.gitfa8646d.1-2+b2) ...
+Selecting previously unselected package libssh2-1:amd64.
+Preparing to unpack .../06-libssh2-1_1.10.0-3+b1_amd64.deb ...
+Unpacking libssh2-1:amd64 (1.10.0-3+b1) ...
+Selecting previously unselected package libcurl4:amd64.
+Preparing to unpack .../07-libcurl4_7.88.1-10+deb12u14_amd64.deb ...
+Unpacking libcurl4:amd64 (7.88.1-10+deb12u14) ...
+Selecting previously unselected package curl.
+Preparing to unpack .../08-curl_7.88.1-10+deb12u14_amd64.deb ...
+Unpacking curl (7.88.1-10+deb12u14) ...
+Selecting previously unselected package libldap-common.
+Preparing to unpack .../09-libldap-common_2.5.13+dfsg-5_all.deb ...
+Unpacking libldap-common (2.5.13+dfsg-5) ...
+Selecting previously unselected package libsasl2-modules:amd64.
+Preparing to unpack .../10-libsasl2-modules_2.1.28+dfsg-10_amd64.deb ...
+Unpacking libsasl2-modules:amd64 (2.1.28+dfsg-10) ...
+Selecting previously unselected package publicsuffix.
+Preparing to unpack .../11-publicsuffix_20230209.2326-1_all.deb ...
+Unpacking publicsuffix (20230209.2326-1) ...
+Setting up libpsl5:amd64 (0.21.2-1) ...
+Setting up libsasl2-modules:amd64 (2.1.28+dfsg-10) ...
+Setting up libnghttp2-14:amd64 (1.52.0-1+deb12u2) ...
+Setting up libldap-common (2.5.13+dfsg-5) ...
+Setting up libsasl2-modules-db:amd64 (2.1.28+dfsg-10) ...
+Setting up librtmp1:amd64 (2.4+20151223.gitfa8646d.1-2+b2) ...
+Setting up libsasl2-2:amd64 (2.1.28+dfsg-10) ...
+Setting up libssh2-1:amd64 (1.10.0-3+b1) ...
+Setting up publicsuffix (20230209.2326-1) ...
+Setting up libldap-2.5-0:amd64 (2.5.13+dfsg-5) ...
+Setting up libcurl4:amd64 (7.88.1-10+deb12u14) ...
+Setting up curl (7.88.1-10+deb12u14) ...
+Processing triggers for libc-bin (2.36-9+deb12u9) ...
+downloading uv 0.7.13 x86_64-unknown-linux-gnu
+no checksums to verify
+installing to /root/.local/bin
+  uv
+  uvx
+everything's installed!
+
+To add $HOME/.local/bin to your PATH, either restart your shell or run:
+
+    source $HOME/.local/bin/env (sh, bash, zsh)
+    source $HOME/.local/bin/env.fish (fish)
+Initialized project `app`
+Using CPython 3.13.1 interpreter at: /usr/local/bin/python3.13
+Creating virtual environment at: .venv
+Resolved 7 packages in 1.66s
+Prepared 5 packages in 815ms
+Installed 5 packages in 13ms
+ + iniconfig==2.3.0
+ + packaging==25.0
+ + pluggy==1.6.0
+ + pygments==2.19.2
+ + pytest==8.4.1
+===================================================================== test session starts ======================================================================
+platform linux -- Python 3.13.1, pytest-8.4.1, pluggy-1.6.0
+rootdir: /tests
+collected 17 items
+
+../tests/test_outputs.py ..............FFF                                                                                                               [100%]
+
+=========================================================================== FAILURES ===========================================================================
+________________________________________________________________ test_spinner_draws_all_layers _________________________________________________________________
+
+    def test_spinner_draws_all_layers():
+        """Verify spinner() clears, rotates, and renders all required layers."""
+        spinner = _import_spinner()
+        spinner.state["turn"] = 25  # rotation should be turn / 10 -> 2.5 degrees
+
+        calls = []
+        orientation = {"value": 0.0}
+        forward_angles = []
+
+        def log(name):
+            def handler(*args, **kwargs):
+                calls.append((name, args, kwargs))
+
+            return handler
+
+        def right(angle):
+            calls.append(("right", (angle,), {}))
+            orientation["value"] = (orientation["value"] - angle) % 360
+
+        def heading():
+            calls.append(("heading", (), {}))
+            return orientation["value"]
+
+        def setheading(value):
+            calls.append(("setheading", (value,), {}))
+            orientation["value"] = value % 360
+
+        original_funcs = {
+            "clear": spinner.clear,
+            "right": spinner.right,
+            "penup": spinner.penup,
+            "pendown": spinner.pendown,
+            "pencolor": spinner.pencolor,
+            "width": spinner.width,
+            "goto": spinner.goto,
+            "forward": spinner.forward,
+            "back": spinner.back,
+            "setheading": spinner.setheading,
+            "heading": spinner.heading,
+            "dot": spinner.dot,
+            "update": spinner.update,
+        }
+
+        try:
+            spinner.clear = log("clear")
+            spinner.right = right
+            spinner.penup = log("penup")
+            spinner.pendown = log("pendown")
+            spinner.pencolor = log("pencolor")
+            spinner.width = log("width")
+            spinner.goto = log("goto")
+
+            def forward(amount):
+                forward_angles.append(orientation["value"] % 360)
+                calls.append(("forward", (amount,), {}))
+
+            spinner.forward = forward
+            spinner.back = log("back")
+            spinner.setheading = setheading
+            spinner.heading = heading
+            spinner.dot = log("dot")
+            spinner.update = log("update")
+
+            spinner.spinner()
+        finally:
+            for name, original in original_funcs.items():
+                setattr(spinner, name, original)
+
+        assert calls[0][0] == "clear", "spinner() must clear the screen before drawing"
+
+        right_calls = [call for call in calls if call[0] == "right"]
+        assert right_calls, "spinner() must rotate using right()"
+        assert right_calls[0][1] == (2.5,), "Rotation angle must be state['turn'] / 10"
+
+        width_calls = [call for call in calls if call[0] == "width"]
+        assert any(call[1] == (spinner.ARM_WIDTH,) for call in width_calls), (
+            "Pen width must be set to ARM_WIDTH"
+        )
+
+        pencolor_calls = [call for call in calls if call[0] == "pencolor"]
+        assert any(call[1] == ("darkblue",) for call in pencolor_calls), (
+            "Arm color must be set to darkblue"
+        )
+
+        forward_calls = [
+            call
+            for call in calls
+            if call[0] == "forward" and call[1] == (spinner.ARM_LENGTH,)
+        ]
+>       assert len(forward_calls) == spinner.ARMS_COUNT, (
+            "Spinner must draw exactly ARMS_COUNT arms"
+        )
+E       AssertionError: Spinner must draw exactly ARMS_COUNT arms
+E       assert 10 == 5
+E        +  where 10 = len([('forward', (150,), {}), ('forward', (150,), {}), ('forward', (150,), {}), ('forward', (150,), {}), ('forward', (150,), {}), ('forwa
+rd', (150,), {}), ...])
+E        +  and   5 = <module 'fidget_spinner' from '/app/fidget_spinner.py'>.ARMS_COUNT
+
+/tests/test_outputs.py:319: AssertionError
+__________________________________________________________________ test_uses_twenty_ms_timing __________________________________________________________________
+
+    def test_uses_twenty_ms_timing():
+        """Verify animate() uses 20 millisecond timing for ontimer."""
+        spinner = _import_spinner()
+
+        timing_captured = []
+
+        # Mock ontimer to capture timing
+        def mock_ontimer(func, delay):
+            timing_captured.append(delay)
+
+        spinner.ontimer = mock_ontimer
+
+        # Mock other turtle functions
+        spinner.clear = lambda: None
+        spinner.right = lambda x: None
+        spinner.update = lambda: None
+
+        # Set turn > 0 so animate logic runs
+        spinner.state["turn"] = 5
+
+        # Call animate
+>       spinner.animate()
+
+/tests/test_outputs.py:418:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+fidget_spinner.py:118: in animate
+    spinner()  # Redraw the spinner
+    ^^^^^^^^^
+fidget_spinner.py:65: in spinner
+    penup()
+<string>:6: in penup
+    ???
+/usr/local/lib/python3.13/turtle.py:3844: in __init__
+    Turtle._screen = Screen()
+                     ^^^^^^^^
+/usr/local/lib/python3.13/turtle.py:3699: in Screen
+    Turtle._screen = _Screen()
+                     ^^^^^^^^^
+/usr/local/lib/python3.13/turtle.py:3710: in __init__
+    _Screen._root = self._root = _Root()
+                                 ^^^^^^^
+/usr/local/lib/python3.13/turtle.py:429: in __init__
+    TK.Tk.__init__(self)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <turtle._Root object .>, screenName = None, baseName = 'pytest', className = 'Tk', useTk = True, sync = False, use = None
+
+    def __init__(self, screenName=None, baseName=None, className='Tk',
+                 useTk=True, sync=False, use=None):
+        """Return a new top level widget on screen SCREENNAME. A new Tcl interpreter will
+        be created. BASENAME will be used for the identification of the profile file (see
+        readprofile).
+        It is constructed from sys.argv[0] without extensions if None is given. CLASSNAME
+        is the name of the widget class."""
+        self.master = None
+        self.children = {}
+        self._tkloaded = False
+        # to avoid recursions in the getattr code in case of failure, we
+        # ensure that self.tk is always _something_.
+        self.tk = None
+        if baseName is None:
+            import os
+            baseName = os.path.basename(sys.argv[0])
+            baseName, ext = os.path.splitext(baseName)
+            if ext not in ('.py', '.pyc'):
+                baseName = baseName + ext
+        interactive = False
+>       self.tk = _tkinter.create(screenName, baseName, className, interactive, wantobjects, useTk, sync, use)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       _tkinter.TclError: couldn't connect to display ":99"
+
+/usr/local/lib/python3.13/tkinter/__init__.py:2459: TclError
+_________________________________________________________ test_main_block_configures_window_and_events _________________________________________________________
+
+    def test_main_block_configures_window_and_events():
+        """Verify __main__ block wires up window, events, and animation as specified."""
+        # Ensure a clean import state
+        sys.modules.pop("fidget_spinner", None)
+
+        # Build a fake turtle module that captures the calls we care about.
+        call_log = []
+        orientation = {"value": 0}
+
+        def record(name):
+            def handler(*args, **kwargs):
+                call_log.append((name, args, kwargs))
+
+            return handler
+
+        def right(angle):
+            call_log.append(("right", (angle,), {}))
+            orientation["value"] = (orientation["value"] - angle) % 360
+
+        def heading():
+            call_log.append(("heading", (), {}))
+            return orientation["value"]
+
+        def setheading(value):
+            call_log.append(("setheading", (value,), {}))
+            orientation["value"] = value
+
+        fake_turtle = types.ModuleType("turtle")
+        fake_turtle.setup = record("setup")
+        fake_turtle.hideturtle = record("hideturtle")
+        fake_turtle.tracer = record("tracer")
+        fake_turtle.bgcolor = record("bgcolor")
+        fake_turtle.listen = record("listen")
+        fake_turtle.onkey = record("onkey")
+        fake_turtle.done = record("done")
+        fake_turtle.clear = record("clear")
+        fake_turtle.right = right
+        fake_turtle.penup = record("penup")
+        fake_turtle.pendown = record("pendown")
+        fake_turtle.pencolor = record("pencolor")
+        fake_turtle.width = record("width")
+        fake_turtle.goto = record("goto")
+        fake_turtle.forward = record("forward")
+        fake_turtle.back = record("back")
+        fake_turtle.setheading = setheading
+        fake_turtle.heading = heading
+        fake_turtle.dot = record("dot")
+        fake_turtle.update = record("update")
+        fake_turtle.ontimer = record("ontimer")
+
+        original_turtle = sys.modules.get("turtle")
+        sys.modules["turtle"] = fake_turtle
+
+        try:
+>           namespace = runpy.run_module("fidget_spinner", run_name="__main__")
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+/tests/test_outputs.py:479:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+<frozen runpy>:222: in run_module
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+mod_name = 'fidget_spinner', error = <class 'ImportError'>
+
+>   ???
+E   ImportError: No module named fidget_spinner
+
+<frozen runpy>:142: ImportError
+============================================================================ PASSES ============================================================================
+=================================================================== short test summary info ====================================================================
+PASSED ../tests/test_outputs.py::test_fidget_spinner_file_exists
+PASSED ../tests/test_outputs.py::test_file_is_valid_python
+PASSED ../tests/test_outputs.py::test_state_dictionary_exists
+PASSED ../tests/test_outputs.py::test_state_initial_value
+PASSED ../tests/test_outputs.py::test_colors_list_exists
+PASSED ../tests/test_outputs.py::test_colors_list_values
+PASSED ../tests/test_outputs.py::test_configuration_constants
+PASSED ../tests/test_outputs.py::test_spinner_function_exists
+PASSED ../tests/test_outputs.py::test_animate_function_exists
+PASSED ../tests/test_outputs.py::test_flick_function_exists
+PASSED ../tests/test_outputs.py::test_flick_adds_ten
+PASSED ../tests/test_outputs.py::test_flick_accumulates
+PASSED ../tests/test_outputs.py::test_animate_decreases_turn
+PASSED ../tests/test_outputs.py::test_animate_respects_zero
+FAILED ../tests/test_outputs.py::test_spinner_draws_all_layers - AssertionError: Spinner must draw exactly ARMS_COUNT arms
+FAILED ../tests/test_outputs.py::test_uses_twenty_ms_timing - _tkinter.TclError: couldn't connect to display ":99"
+FAILED ../tests/test_outputs.py::test_main_block_configures_window_and_events - ImportError: No module named fidget_spinner
+================================================================= 3 failed, 14 passed in 0.36s =================================================================
+root@0273a146bb27:/app#
