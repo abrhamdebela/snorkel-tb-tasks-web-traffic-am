@@ -1,0 +1,54 @@
+Processing tasks in duration order (longest first):
++-----+----------------+------------+------------+
+|   # | Task Name      | Duration   | Source     |
++=====+================+============+============+
+|   1 | fidget-spinner | 5m 30s     | calculated |
++-----+----------------+------------+------------+
+Total tasks: 1
+Starting harness run
+Run ID: 2025-10-24__18-09-42
+Running task: fidget-spinner
+Running docker compose command: docker compose -p fidget-spinner-1-of-1-2025-10-24__18-09-42 -f C:\Users\HammamAlmomani\snorkel-tb-tasks\tasks\fidget-spinner\docker-compose.yaml build
+Running docker compose command: docker compose -p fidget-spinner-1-of-1-2025-10-24__18-09-42 -f C:\Users\HammamAlmomani\snorkel-tb-tasks\tasks\fidget-spinner\docker-compose.yaml up -d
+Running docker compose command: docker compose -p fidget-spinner-1-of-1-2025-10-24__18-09-42 -f C:\Users\HammamAlmomani\snorkel-tb-tasks\tasks\fidget-spinner\docker-compose.yaml down
+Running docker compose command: docker compose -p fidget-spinner-1-of-1-2025-10-24__18-09-42 -f C:\Users\HammamAlmomani\snorkel-tb-tasks\tasks\fidget-spinner\docker-compose.yaml down --rmi all --volumes
+Harness execution failed for tasks\fidget-spinner: 404 Client Error for http+docker://localnpipe/v1.51/containers/450f9a74a8053cda4139aa14e05f959781b04cc7cf034fb80d9fc04fed683274/archive?path=%5Ctmp: Not Found ("Could not find the file \tmp in container 450f9a74a8053cda4139aa14e05f959781b04cc7cf034fb80d9fc04fed683274")
+Traceback (most recent call last):
+  File "C:\Users\HammamAlmomani\AppData\Roaming\uv\tools\terminal-bench\Lib\site-packages\docker\api\client.py", line 275, in _raise_for_status
+    response.raise_for_status()
+  File "C:\Users\HammamAlmomani\AppData\Roaming\uv\tools\terminal-bench\Lib\site-packages\requests\models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: http+docker://localnpipe/v1.51/containers/450f9a74a8053cda4139aa14e05f959781b04cc7cf034fb80d9fc04fed683274/archive?path=%5Ctmp
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HammamAlmomani\AppData\Roaming\uv\tools\terminal-bench\Lib\site-packages\terminal_bench\harness\harness.py", line 1011, in _execute_single_trial
+    trial_results = self._run_trial(trial_handler)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HammamAlmomani\AppData\Roaming\uv\tools\terminal-bench\Lib\site-packages\terminal_bench\harness\harness.py", line 730, in _run_trial
+    session = terminal.create_session(
+              ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HammamAlmomani\AppData\Roaming\uv\tools\terminal-bench\Lib\site-packages\terminal_bench\terminal\terminal.py", line 78, in create_session
+    session = TmuxSession(
+              ^^^^^^^^^^^^
+  File "C:\Users\HammamAlmomani\AppData\Roaming\uv\tools\terminal-bench\Lib\site-packages\terminal_bench\terminal\tmux_session.py", line 59, in __init__
+    self.copy_to_container(
+  File "C:\Users\HammamAlmomani\AppData\Roaming\uv\tools\terminal-bench\Lib\site-packages\terminal_bench\terminal\tmux_session.py", line 390, in copy_to_container
+    DockerComposeManager.copy_to_container(
+  File "C:\Users\HammamAlmomani\AppData\Roaming\uv\tools\terminal-bench\Lib\site-packages\terminal_bench\terminal\docker_compose_manager.py", line 213, in copy_to_container
+    container.put_archive(container_dir, tar_stream.read())
+  File "C:\Users\HammamAlmomani\AppData\Roaming\uv\tools\terminal-bench\Lib\site-packages\docker\models\containers.py", line 350, in put_archive
+    return self.client.api.put_archive(self.id, path, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HammamAlmomani\AppData\Roaming\uv\tools\terminal-bench\Lib\site-packages\docker\utils\decorators.py", line 19, in wrapped
+    return f(self, resource_id, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HammamAlmomani\AppData\Roaming\uv\tools\terminal-bench\Lib\site-packages\docker\api\container.py", line 991, in put_archive
+    self._raise_for_status(res)
+  File "C:\Users\HammamAlmomani\AppData\Roaming\uv\tools\terminal-bench\Lib\site-packages\docker\api\client.py", line 277, in _raise_for_status
+    raise create_api_error_from_http_exception(e) from e
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HammamAlmomani\AppData\Roaming\uv\tools\terminal-bench\Lib\site-packages\docker\errors.py", line 39, in create_api_error_from_http_exception
+    raise cls(e, response=response, explanation=explanation) from e
+docker.errors.NotFound: 404 Client Error for http+docker://localnpipe/v1.51/containers/450f9a74a8053cda4139aa14e05f959781b04cc7cf034fb80d9fc04fed683274/archive?path=%5Ctmp: Not Found ("Could not find the file \tmp in container 450f9a74a8053cda4139aa14e05f959781b04cc7cf034fb80d9fc04fed683274")
