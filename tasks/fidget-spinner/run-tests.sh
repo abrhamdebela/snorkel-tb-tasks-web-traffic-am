@@ -3,14 +3,28 @@
 # Terminal-Bench test runner for fidget spinner task
 # This script sets up the test environment and runs pytest
 
-# Install curl
-apt-get update
-apt-get install -y curl
+set -euo pipefail
 
-# Install uv
-curl -LsSf https://astral.sh/uv/0.7.13/install.sh | sh
+UV_VERSION="0.7.13"
+UV_INSTALL_SCRIPT="https://astral.sh/uv/${UV_VERSION}/install.sh"
+UV_INSTALLER="$(mktemp)"
 
-source $HOME/.local/bin/env
+# Download the uv installer script without relying on curl/wget availability.
+python - "$UV_INSTALL_SCRIPT" "$UV_INSTALLER" <<'PY'
+import sys
+from pathlib import Path
+from urllib.request import urlopen
+
+url, destination = sys.argv[1], sys.argv[2]
+with urlopen(url) as response:
+    Path(destination).write_bytes(response.read())
+PY
+
+chmod +x "$UV_INSTALLER"
+env UV_LINK_MODE=copy sh "$UV_INSTALLER"
+rm -f "$UV_INSTALLER"
+
+source "$HOME/.local/bin/env"
 
 # Check if we're in a valid working directory
 if [ "$PWD" = "/" ]; then
@@ -22,4 +36,4 @@ uv init
 uv add pytest==8.4.1
 
 # Run the tests
-uv run pytest $TEST_DIR/test_outputs.py -rA
+uv run pytest "$TEST_DIR/test_outputs.py" -rA
