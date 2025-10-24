@@ -56,6 +56,8 @@ CATEGORIES = [
 ]
 
 class SnorkelWizard(Wizard):
+    _TEMPLATE_DIR = Path(__file__).parent.parent.parent / "template-task"
+
     def _show_welcome(self, color: str) -> None:
         self._print_with_color(
             r"""
@@ -132,6 +134,10 @@ class SnorkelWizard(Wizard):
                 color=Colors.RED,
             )
 
+    def _create_files(self, color: str) -> None:
+        super()._create_files(color)
+        self._copy_template_file(".dockerignore")
+
 @tasks_app.command()
 def create(
     task_id: Annotated[
@@ -189,5 +195,4 @@ def create(
         expert_time_estimate_min=expert_time_estimate_min,
         junior_time_estimate_min=junior_time_estimate_min,
     )
-    wizard._TEMPLATE_DIR = Path(__file__).parent.parent.parent / "template-task"
     wizard.run()

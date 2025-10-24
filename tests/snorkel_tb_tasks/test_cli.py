@@ -35,6 +35,7 @@ def test_tasks_create():
     assert Path("tasks/my-first-task/task.yaml").exists()
     assert Path("tasks/my-first-task/solution.sh").exists()
     assert Path("tasks/my-first-task/tests/test_outputs.py").exists()
+    assert Path("tasks/my-first-task/.dockerignore").exists()
 
     # Check if task.yaml was created correctly
     with open("tasks/my-first-task/task.yaml", "r") as f:
