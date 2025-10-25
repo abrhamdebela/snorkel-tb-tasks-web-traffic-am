@@ -1,0 +1,11 @@
+{"version": 2, "width": 160, "height": 40, "timestamp": 1761351337, "env": {"SHELL": "/bin/bash", "TERM": "tmux-256color"}}
+[0.00453, "o", "\u001b[?2004hroot@56a955020ceb:/app# "]
+[2.990076, "i", "clear\r"]
+[2.99032, "o", "clear\r\n\u001b[?2004l\r"]
+[2.991531, "o", "\u001b[H\u001b[J\u001b[3J\u001b[?2004hroot@56a955020ceb:/app# "]
+[3.418972, "i", "bash /tests/run-tests.sh; tmux wait -S done\r"]
+[3.421076, "o", "bash /tests/run-tests.sh; tmux wait -S done\r\n\u001b[?2004l\r/tests/run-tests.sh: line 2: $'\\r': command not found\r\n"]
+[3.42204, "o", "/tests/run-tests.sh: line 5: $'\\r': command not found\r\n/tests/run-tests.sh: line 6: set: pipefail\r: invalid option name\r\n"]
+[3.423928, "o", "\u001b[?2004hroot@56a955020ceb:/app# "]
+[3.713498, "i", "\u0004"]
+[3.713788, "o", "\u001b[?2004l\r\r\nexit\r\n"]

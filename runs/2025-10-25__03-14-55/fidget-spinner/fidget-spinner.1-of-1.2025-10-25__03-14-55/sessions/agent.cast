@@ -1,0 +1,11 @@
+{"version": 2, "width": 160, "height": 40, "timestamp": 1761351302, "env": {"SHELL": "/bin/bash", "TERM": "tmux-256color"}}
+[0.00458, "o", "\u001b[?2004hroot@351a46b44391:/app# "]
+[2.932843, "i", "clear\r"]
+[2.933166, "o", "clear\r\n\u001b[?2004l\r"]
+[2.93584, "o", "\u001b[H\u001b[J\u001b[3J\u001b[?2004hroot@351a46b44391:/app# "]
+[3.205626, "i", "bash /oracle/solution.sh; tmux wait -S done\r"]
+[3.206876, "o", "bash /oracle/solution.sh; tmux wait -S done\r\n\u001b[?2004l\r"]
+[3.214189, "o", "Fidget spinner application created successfully at /app/fidget_spinner.py\r\n"]
+[3.218134, "o", "\u001b[?2004hroot@351a46b44391:/app# "]
+[7.345484, "i", "\u0004"]
+[7.346083, "o", "\u001b[?2004l\r\r\nexit\r\n"]
