@@ -1,0 +1,40 @@
+root@c73e474088a9:/app# bash /tests/run-tests.sh; tmux wait -S done
+/tests/run-tests.sh: line 2: $'\r': command not found
+/tests/run-tests.sh: line 5: $'\r': command not found
+: invalid option nameline 6: set: pipefail
+root@c73e474088a9:/app#
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

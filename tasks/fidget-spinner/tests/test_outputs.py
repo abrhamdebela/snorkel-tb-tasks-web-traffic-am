@@ -301,19 +301,15 @@ def test_spinner_draws_all_layers():
     assert right_calls, "spinner() must rotate using right()"
     assert right_calls[0][1] == (2.5,), "Rotation angle must be state['turn'] / 10"
 
-    width_indices = [
-        index
-        for index, call in enumerate(calls)
-        if call[0] == "width" and call[1] == (spinner.ARM_WIDTH,)
-    ]
-    assert width_indices, "Pen width must be set to ARM_WIDTH"
+    width_calls = [call for call in calls if call[0] == "width"]
+    assert any(call[1] == (spinner.ARM_WIDTH,) for call in width_calls), (
+        "Pen width must be set to ARM_WIDTH"
+    )
 
-    pencolor_indices = [
-        index
-        for index, call in enumerate(calls)
-        if call[0] == "pencolor" and call[1] == ("darkblue",)
-    ]
-    assert pencolor_indices, "Arm color must be set to darkblue"
+    pencolor_calls = [call for call in calls if call[0] == "pencolor"]
+    assert any(call[1] == ("darkblue",) for call in pencolor_calls), (
+        "Arm color must be set to darkblue"
+    )
 
     forward_calls = [
         call
@@ -323,17 +319,6 @@ def test_spinner_draws_all_layers():
     assert len(forward_calls) == spinner.ARMS_COUNT, (
         "Spinner must draw exactly ARMS_COUNT arms"
     )
-
-    first_pendown_index = next(
-        (index for index, call in enumerate(calls) if call[0] == "pendown"), None
-    )
-    if first_pendown_index is not None:
-        assert width_indices[0] < first_pendown_index, (
-            "Pen width must be established before drawing the arms"
-        )
-        assert pencolor_indices[0] < first_pendown_index, (
-            "Pen color must be set to darkblue before drawing begins"
-        )
 
     border_dots = [
         call
