@@ -34,7 +34,7 @@ instruction: |
      - Get a clean compile with no errors
   
   3. Run the simulation successfully:
-     - Execute /app/legacy_sim/simulation (equivalent to running ./simulation in /app/legacy_sim)
+     - Execute /app/legacy_sim/simulation (running the binary from within /app/legacy_sim is also acceptable)
      - The program should read parameters from /app/legacy_sim/input.txt
      - The program must complete without crashing
      - The program must create an output file at /app/legacy_sim/results.dat
@@ -69,9 +69,14 @@ instruction: |
   
   ## Output File Format
   
-  The file /app/legacy_sim/results.dat will contain:
-  - Header lines starting with # describing the simulation parameters
-  - Lines with "Final Energy:", "Final Momentum:", and "Final Temperature:" values
+  The file /app/legacy_sim/results.dat will contain the following header lines (each exactly as written):
+  - `# 1D Wave Simulation Results`
+  - `# Grid Points: <value>`
+  - `# Time Step: <value>`
+  - `# Iterations: <value>`
+  - `# Final Energy: <value>`
+  - `# Final Momentum: <value>`
+  - `# Final Temperature: <value>`
   - Numerical data lines with two columns: position (0.0 to 1.0) and wave amplitude
   
   ## Important Notes

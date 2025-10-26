@@ -41,7 +41,7 @@ make clean
 make
 
 # Run the simulation
-./simulation
+/app/legacy_sim/simulation
 
 # Verify output exists
 if [ ! -f results.dat ]; then
