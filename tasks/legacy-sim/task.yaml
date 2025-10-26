@@ -24,7 +24,7 @@ instruction: |
   
   1. Create a new Makefile that works with gfortran:
      - Replace the g77 compiler with gfortran
-     - Add appropriate compiler flags for compiling old Fortran 77 code
+     - Add appropriate compiler flags for compiling old Fortran 77 code (`-std=legacy` is required)
      - Name the output binary "simulation"
      - The Makefile must compile all three .f files and link them together
   
@@ -34,22 +34,22 @@ instruction: |
      - Get a clean compile with no errors
   
   3. Run the simulation successfully:
-     - Execute ./simulation from the /app/legacy_sim directory
-     - The program should read parameters from input.txt
+     - Execute /app/legacy_sim/simulation (equivalent to running ./simulation in /app/legacy_sim)
+     - The program should read parameters from /app/legacy_sim/input.txt
      - The program must complete without crashing
-     - The program must create an output file named "results.dat" in /app/legacy_sim
+     - The program must create an output file at /app/legacy_sim/results.dat
   
   ## Success Criteria
   
   Your solution must satisfy all of these requirements:
   - A Makefile exists that uses gfortran (not g77)
   - The code compiles without errors using your Makefile
-  - A binary named "simulation" is created in /app/legacy_sim
+  - A binary exists at /app/legacy_sim/simulation
   - The simulation binary is executable
-  - Running ./simulation completes without errors
-  - A file named "results.dat" is created in /app/legacy_sim
-  - The results.dat file contains valid numerical data
-  - The results.dat file contains exactly 1000 data lines (one per grid point)
+  - Running /app/legacy_sim/simulation completes without errors
+  - The file /app/legacy_sim/results.dat is created
+  - The /app/legacy_sim/results.dat file contains valid numerical data
+  - The /app/legacy_sim/results.dat file contains exactly 1000 data lines (one per grid point)
   - The final energy value in the output is between 0.01 and 100.0
   - The final momentum value in the output is between -1.0 and 1.0
   
@@ -69,7 +69,7 @@ instruction: |
   
   ## Output File Format
   
-  The results.dat file will contain:
+  The file /app/legacy_sim/results.dat will contain:
   - Header lines starting with # describing the simulation parameters
   - Lines with "Final Energy:", "Final Momentum:", and "Final Temperature:" values
   - Numerical data lines with two columns: position (0.0 to 1.0) and wave amplitude
@@ -86,7 +86,7 @@ instruction: |
 author_name: Hammam
 author_email: hammam.almomani@menadevs.io
 difficulty: medium
-category: build-compilation
+category: build-and-dependency-management
 tags:
   - fortran
   - legacy-code
