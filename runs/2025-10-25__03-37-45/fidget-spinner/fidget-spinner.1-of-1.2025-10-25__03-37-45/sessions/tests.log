@@ -1,552 +1,0 @@
-asciinema rec --stdin /logs/tests.cast
-[?2004hroot@20f37f817804:/app# asciinema rec --stdin /logs/tests.cast
-[?2004l[0;32masciinema: recording asciicast to /logs/tests.cast[0m
-[0;32masciinema: press <ctrl-d> or type "exit" when you're done[0m
-[?2004hroot@20f37f817804:/app# clear
-[?2004l[H[J[3J[?2004hroot@20f37f817804:/app# bash /tests/run-tests.sh; tmux wait -S done
-[?2004l0% [Working]0% [Waiting for headers]                        Hit:1 http://deb.debian.org/debian bookworm InRelease
-0% [Waiting for headers]0% [Waiting for headers]                        Hit:2 http://deb.debian.org/debian bookworm-updates InRelease
-0% [Waiting for headers]0% [Waiting for headers]                        Hit:3 http://deb.debian.org/debian-security bookworm-security InRelease
-                        0% [Working]20% [Working]             Reading package lists... 0%Reading package lists... 0%Reading package lists... 0%Reading package lists... 95%Reading package lists... 95%Reading package lists... 96%Reading package lists... 96%Reading package lists... 99%Reading package lists... 99%Reading package lists... Done
-Reading package lists... 0%Reading package lists... 0%Reading package lists... 0%Reading package lists... 95%Reading package lists... 95%Reading package lists... 96%Reading package lists... 96%Reading package lists... 99%Reading package lists... 99%Reading package lists... Done
-Building dependency tree... 0%Building dependency tree... 0%Building dependency tree... 50%Building dependency tree... 50%Building dependency tree... Done
-Reading state information... 0% Reading state information... 0%Reading state information... Done
-curl is already the newest version (7.88.1-10+deb12u14).
-0 upgraded, 0 newly installed, 0 to remove and 40 not upgraded.
-downloading uv 0.7.13 x86_64-unknown-linux-gnu
-no checksums to verify
-installing to /root/.local/bin
-  uv
-  uvx
-everything's installed!
-
-To add $HOME/.local/bin to your PATH, either restart your shell or run:
-
-    source $HOME/.local/bin/env (sh, bash, zsh)
-    source $HOME/.local/bin/env.fish (fish)
-Initialized project `[36mapp[39m`
-Using CPython 3.13.1 interpreter at: [36m/usr/local/bin/python3.13[39m
-Creating virtual environment at: [36m.venv[39m
-[37m⠋[0m [2mResolving dependencies...                                                                                                                                     [0m[2K[37m⠙[0m [2mResolving dependencies...                                                                                                                                     [0m[2K[37m⠋[0m [2mResolving dependencies...                                                                                                                                     [0m[2K[37m⠙[0m [2mResolving dependencies...                                                                                                                                     [0m[2K[37m⠋[0m [2mResolving dependencies...                                                                                                                                     [0m[2K[37m⠙[0m [2mResolving dependencies...                                                                                                                                     [0m[2K[37m⠙[0m [2mapp==0.1.0                                                                                                                                                    [0m[2K[37m⠹[0m [2mapp==0.1.0                                                                                                                                                    [0m[2K[37m⠸[0m [2mapp==0.1.0                                                                                                                                                    [0m[2K[37m⠸[0m [2mpytest==8.4.1                                                                                                                                                 [0m[2K[37m⠼[0m [2mpytest==8.4.1                                                                                                                                                 [0m[2K[37m⠴[0m [2mpytest==8.4.1                                                                                                                                                 [0m[2K[37m⠴[0m [2mcolorama==0.4.6                                                                                                                                               [0m[2K[37m⠴[0m [2mcolorama==0.4.6                                                                                                                                               [0m[2K[37m⠴[0m [2miniconfig==2.3.0                                                                                                                                              [0m[2K[37m⠴[0m [2mpackaging==25.0                                                                                                                                               [0m[2K[37m⠴[0m [2mpluggy==1.6.0                                                                                                                                                 [0m[2K[37m⠴[0m [2mpygments==2.19.2                                                                                                                                              [0m[2K[37m⠴[0m [2m                                                                                                                                                              [0m[2K[2mResolved [1m7 packages[0m [2min 935ms[0m[0m
-[37m⠋[0m [2mPreparing packages...[0m (0/0)                                                                                                                                   [2K[37m⠙[0m [2mPreparing packages...[0m (0/0)                                                                                                                                   [2K[37m⠙[0m [2mPreparing packages...[0m (0/5)                                                                                                                                   [2K[37m⠹[0m [2mPreparing packages...[0m (0/5)                                                                                                                                   [2K[37m⠹[0m [2mPreparing packages...[0m (0/5)
-[2mpluggy              [0m [32m[2m------------------------------[0m[0m     0 B/20.06 KiB                                                                                           [1A[2K[1B[2K[1A[37m⠹[0m [2mPreparing packages...[0m (0/5)
-[2mpluggy              [0m [32m[2m------------------------------[0m[0m     0 B/20.06 KiB                                                                                           [1A[2K[1B[2K[1A[37m⠹[0m [2mPreparing packages...[0m (0/5)
-[2miniconfig           [0m [32m[2m------------------------------[0m[0m     0 B/7.31 KiB
-[2mpluggy              [0m [32m[2m------------------------------[0m[0m     0 B/20.06 KiB                                                                                           [2A[2K[1B[2K[1B[2K[2A[37m⠹[0m [2mPreparing packages...[0m (0/5)
-[2miniconfig           [0m [32m------------------------------[2m[0m[0m 7.31 KiB/7.31 KiB
-[2mpluggy              [0m [32m[2m------------------------------[0m[0m     0 B/20.06 KiB                                                                                           [2A[2K[1B[2K[1B[2K[2A[37m⠹[0m [2mPreparing packages...[0m (0/5)
-[2mpluggy              [0m [32m[2m------------------------------[0m[0m     0 B/20.06 KiB                                                                                           [1A[2K[1B[2K[1A[37m⠹[0m [2mPreparing packages...[0m (0/5)
-[2mpluggy              [0m [32m------------------------[2m------[0m[0m 16.00 KiB/20.06 KiB                                                                                         [1A[2K[1B[2K[1A[37m⠹[0m [2mPreparing packages...[0m (0/5)
-[2mpluggy              [0m [32m------------------------[2m------[0m[0m 16.00 KiB/20.06 KiB                                                                                         [1A[2K[1B[2K[1A[37m⠹[0m [2mPreparing packages...[0m (0/5)
-[2mpluggy              [0m [32m------------------------[2m------[0m[0m 16.00 KiB/20.06 KiB
-[2mpygments            [0m [32m[2m------------------------------[0m[0m     0 B/1.17 MiB                                                                                            [2A[2K[1B[2K[1B[2K[2A[37m⠹[0m [2mPreparing packages...[0m (0/5)
-[2mpluggy              [0m [32m------------------------------[2m[0m[0m 20.06 KiB/20.06 KiB
-[2mpygments            [0m [32m[2m------------------------------[0m[0m     0 B/1.17 MiB                                                                                            [2A[2K[1B[2K[1B[2K[2A[37m⠹[0m [2mPreparing packages...[0m (0/5)
-[2mpygments            [0m [32m[2m------------------------------[0m[0m     0 B/1.17 MiB                                                                                            [1A[2K[1B[2K[1A[37m⠹[0m [2mPreparing packages...[0m (0/5)
-[2mpygments            [0m [32m-[2m-----------------------------[0m[0m 14.88 KiB/1.17 MiB                                                                                          [1A[2K[1B[2K[1A[37m⠹[0m [2mPreparing packages...[0m (0/5)
-[2mpygments            [0m [32m-[2m-----------------------------[0m[0m 14.88 KiB/1.17 MiB                                                                                          [1A[2K[1B[2K[1A[37m⠹[0m [2mPreparing packages...[0m (0/5)
-[2mpackaging           [0m [32m[2m------------------------------[0m[0m     0 B/64.91 KiB
-[2mpygments            [0m [32m-[2m-----------------------------[0m[0m 14.88 KiB/1.17 MiB                                                                                          [2A[2K[1B[2K[1B[2K[2A[37m⠹[0m [2mPreparing packages...[0m (0/5)
-[2mpackaging           [0m [32m[2m------------------------------[0m[0m     0 B/64.91 KiB
-[2mpygments            [0m [32m-[2m-----------------------------[0m[0m 14.88 KiB/1.17 MiB                                                                                          [2A[2K[1B[2K[1B[2K[2A[37m⠹[0m [2mPreparing packages...[0m (0/5)
-[2mpackaging           [0m [32m[2m------------------------------[0m[0m     0 B/64.91 KiB
-[2mpygments            [0m [32m-[2m-----------------------------[0m[0m 14.88 KiB/1.17 MiB                                                                                          [2A[2K[1B[2K[1B[2K[2A[37m⠹[0m [2mPreparing packages...[0m (0/5)
-[2mpackaging           [0m [32m[2m------------------------------[0m[0m     0 B/64.91 KiB
-[2mpytest              [0m [32m[2m------------------------------[0m[0m     0 B/356.91 KiB
-[2mpygments            [0m [32m-[2m-----------------------------[0m[0m 14.88 KiB/1.17 MiB                                                                                          [3A[2K[1B[2K[1B[2K[1B[2K[3A[37m⠹[0m [2mPreparing packages...[0m (0/5)
-[2mpackaging           [0m [32m------[2m------------------------[0m[0m 11.12 KiB/64.91 KiB
-[2mpytest              [0m [32m[2m------------------------------[0m[0m     0 B/356.91 KiB
-[2mpygments            [0m [32m-[2m-----------------------------[0m[0m 14.88 KiB/1.17 MiB                                                                                          [3A[2K[1B[2K[1B[2K[1B[2K[3A[37m⠹[0m [2mPreparing packages...[0m (0/5)
-[2mpackaging           [0m [32m------[2m------------------------[0m[0m 11.12 KiB/64.91 KiB
-[2mpytest              [0m [32m[2m------------------------------[0m[0m     0 B/356.91 KiB
-[2mpygments            [0m [32m-[2m-----------------------------[0m[0m 30.88 KiB/1.17 MiB                                                                                          [3A[2K[1B[2K[1B[2K[1B[2K[3A[37m⠹[0m [2mPreparing packages...[0m (0/5)
-[2mpackaging           [0m [32m------[2m------------------------[0m[0m 11.12 KiB/64.91 KiB
-[2mpytest              [0m [32m-[2m-----------------------------[0m[0m 5.39 KiB/356.91 KiB
-[2mpygments            [0m [32m-[2m-----------------------------[0m[0m 30.88 KiB/1.17 MiB                                                                                          [3A[2K[1B[2K[1B[2K[1B[2K[3A[37m⠹[0m [2mPreparing packages...[0m (0/5)
-[2mpackaging           [0m [32m-------[2m-----------------------[0m[0m 14.89 KiB/64.91 KiB
-[2mpytest              [0m [32m-[2m-----------------------------[0m[0m 5.39 KiB/356.91 KiB
-[2mpygments            [0m [32m-[2m-----------------------------[0m[0m 30.88 KiB/1.17 MiB                                                                                          [3A[2K[1B[2K[1B[2K[1B[2K[3A[37m⠹[0m [2mPreparing packages...[0m (0/5)
-[2mpackaging           [0m [32m-------[2m-----------------------[0m[0m 14.89 KiB/64.91 KiB
-[2mpytest              [0m [32m-[2m-----------------------------[0m[0m 5.39 KiB/356.91 KiB
-[2mpygments            [0m [32m--[2m----------------------------[0m[0m 46.88 KiB/1.17 MiB                                                                                          [3A[2K[1B[2K[1B[2K[1B[2K[3A[37m⠹[0m [2mPreparing packages...[0m (0/5)
-[2mpackaging           [0m [32m-------[2m-----------------------[0m[0m 14.89 KiB/64.91 KiB
-[2mpytest              [0m [32m--[2m----------------------------[0m[0m 21.39 KiB/356.91 KiB
-[2mpygments            [0m [32m--[2m----------------------------[0m[0m 46.88 KiB/1.17 MiB                                                                                          [3A[2K[1B[2K[1B[2K[1B[2K[3A[37m⠸[0m [2mPreparing packages...[0m (2/5)
-[2mpackaging           [0m [32m-------[2m-----------------------[0m[0m 14.89 KiB/64.91 KiB
-[2mpytest              [0m [32m--[2m----------------------------[0m[0m 21.39 KiB/356.91 KiB
-[2mpygments            [0m [32m--[2m----------------------------[0m[0m 46.88 KiB/1.17 MiB                                                                                          [3A[2K[1B[2K[1B[2K[1B[2K[3A[37m⠸[0m [2mPreparing packages...[0m (2/5)
-[2mpackaging           [0m [32m-------[2m-----------------------[0m[0m 14.89 KiB/64.91 KiB
-[2mpytest              [0m [32m--[2m----------------------------[0m[0m 21.39 KiB/356.91 KiB
-[2mpygments            [0m [32m--[2m----------------------------[0m[0m 62.88 KiB/1.17 MiB                                                                                          [3A[2K[1B[2K[1B[2K[1B[2K[3A[37m⠸[0m [2mPreparing packages...[0m (2/5)
-[2mpackaging           [0m [32m-------[2m-----------------------[0m[0m 14.89 KiB/64.91 KiB
-[2mpytest              [0m [32m----[2m--------------------------[0m[0m 37.39 KiB/356.91 KiB
-[2mpygments            [0m [32m--[2m----------------------------[0m[0m 62.88 KiB/1.17 MiB                                                                                          [3A[2K[1B[2K[1B[2K[1B[2K[3A[37m⠸[0m [2mPreparing packages...[0m (2/5)
-[2mpackaging           [0m [32m-------[2m-----------------------[0m[0m 14.89 KiB/64.91 KiB
-[2mpytest              [0m [32m----[2m--------------------------[0m[0m 37.39 KiB/356.91 KiB
-[2mpygments            [0m [32m--[2m----------------------------[0m[0m 75.38 KiB/1.17 MiB                                                                                          [3A[2K[1B[2K[1B[2K[1B[2K[3A[37m⠸[0m [2mPreparing packages...[0m (2/5)
-[2mpackaging           [0m [32m----------------------[2m--------[0m[0m 46.89 KiB/64.91 KiB
-[2mpytest              [0m [32m--------[2m----------------------[0m[0m 92.37 KiB/356.91 KiB
-[2mpygments            [0m [32m---[2m---------------------------[0m[0m 107.38 KiB/1.17 MiB                                                                                         [3A[2K[1B[2K[1B[2K[1B[2K[3A[37m⠸[0m [2mPreparing packages...[0m (2/5)
-[2mpytest              [0m [32m----------[2m--------------------[0m[0m 108.37 KiB/356.91 KiB
-[2mpygments            [0m [32m----[2m--------------------------[0m[0m 123.27 KiB/1.17 MiB                                                                                         [2A[2K[1B[2K[1B[2K[2A[37m⠸[0m [2mPreparing packages...[0m (2/5)
-[2mpytest              [0m [32m---------------[2m---------------[0m[0m 172.37 KiB/356.91 KiB
-[2mpygments            [0m [32m-----[2m-------------------------[0m[0m 171.38 KiB/1.17 MiB                                                                                         [2A[2K[1B[2K[1B[2K[2A[37m⠸[0m [2mPreparing packages...[0m (2/5)
-[2mpytest              [0m [32m----------------------------[2m--[0m[0m 332.37 KiB/356.91 KiB
-[2mpygments            [0m [32m--------[2m----------------------[0m[0m 287.38 KiB/1.17 MiB                                                                                         [2A[2K[1B[2K[1B[2K[2A[37m⠸[0m [2mPreparing packages...[0m (2/5)
-[2mpygments            [0m [32m---------[2m---------------------[0m[0m 335.38 KiB/1.17 MiB                                                                                         [1A[2K[1B[2K[1A[37m⠸[0m [2mPreparing packages...[0m (2/5)
-[2mpygments            [0m [32m-----------------[2m-------------[0m[0m 655.38 KiB/1.17 MiB                                                                                         [1A[2K[1B[2K[1A[37m⠼[0m [2mPreparing packages...[0m (4/5)
-[2mpygments            [0m [32m------------------------------[2m[0m[0m 1.14 MiB/1.17 MiB                                                                                           [1A[2K[1B[2K[1A[37m⠼[0m [2mPreparing packages...[0m (4/5)                                                                                                                                   [2K[2mPrepared [1m5 packages[0m [2min 654ms[0m[0m
-░░░░░░░░░░░░░░░░░░░░ [0/0] [2mInstalling wheels...                                                                                                                 [0m[2K░░░░░░░░░░░░░░░░░░░░ [0/5] [2mInstalling wheels...                                                                                                                 [0m[2K░░░░░░░░░░░░░░░░░░░░ [0/5] [2miniconfig==2.3.0                                                                                                                     [0m[2K████░░░░░░░░░░░░░░░░ [1/5] [2miniconfig==2.3.0                                                                                                                     [0m[2K████░░░░░░░░░░░░░░░░ [1/5] [2mpluggy==1.6.0                                                                                                                        [0m[2K████████░░░░░░░░░░░░ [2/5] [2mpluggy==1.6.0                                                                                                                        [0m[2K████████░░░░░░░░░░░░ [2/5] [2mpackaging==25.0                                                                                                                      [0m[2K████████████░░░░░░░░ [3/5] [2mpackaging==25.0                                                                                                                      [0m[2K████████████░░░░░░░░ [3/5] [2mpytest==8.4.1                                                                                                                        [0m[2K████████████████░░░░ [4/5] [2mpytest==8.4.1                                                                                                                        [0m[2K████████████████░░░░ [4/5] [2mpygments==2.19.2                                                                                                                     [0m[2K████████████████████ [5/5] [2mpygments==2.19.2                                                                                                                     [0m[2K[2mInstalled [1m5 packages[0m [2min 8ms[0m[0m
- [32m+[39m [1miniconfig[0m[2m==2.3.0[0m
- [32m+[39m [1mpackaging[0m[2m==25.0[0m
- [32m+[39m [1mpluggy[0m[2m==1.6.0[0m
- [32m+[39m [1mpygments[0m[2m==2.19.2[0m
- [32m+[39m [1mpytest[0m[2m==8.4.1[0m
-[1m===================================================================== test session starts ======================================================================[0m
-platform linux -- Python 3.13.1, pytest-8.4.1, pluggy-1.6.0
-rootdir: /tests
-[1mcollecting ... [0m[1mcollected 17 items                                                                                                                                             [0m
-
-../tests/test_outputs.py [31mF[0m[31mF[0m[31mF[0m[31mF[0m[31mF[0m[31mF[0m[31mF[0m[31mF[0m[31mF[0m[31mF[0m[31mF[0m[31mF[0m[31mF[0m[31mF[0m[31mF[0m[31mF[0m[31mF[0m[31m                                                                                                               [100%][0m
-
-=========================================================================== FAILURES ===========================================================================
-[31m[1m_______________________________________________________________ test_fidget_spinner_file_exists ________________________________________________________________[0m
-
-    [0m[94mdef[39;49;00m[90m [39;49;00m[92mtest_fidget_spinner_file_exists[39;49;00m():[90m[39;49;00m
-    [90m    [39;49;00m[33m"""Verify that fidget_spinner.py exists in /app directory."""[39;49;00m[90m[39;49;00m
-        spinner_path = Path([33m"[39;49;00m[33m/app/fidget_spinner.py[39;49;00m[33m"[39;49;00m)[90m[39;49;00m
->       [94massert[39;49;00m spinner_path.exists(), [33m"[39;49;00m[33mFile /app/fidget_spinner.py does not exist[39;49;00m[33m"[39;49;00m[90m[39;49;00m
-[1m[31mE       AssertionError: File /app/fidget_spinner.py does not exist[0m
-[1m[31mE       assert False[0m
-[1m[31mE        +  where False = exists()[0m
-[1m[31mE        +    where exists = PosixPath('/app/fidget_spinner.py').exists[0m
-
-[1m[31m/tests/test_outputs.py[0m:16: AssertionError
-[31m[1m__________________________________________________________________ test_file_is_valid_python ___________________________________________________________________[0m
-
-    [0m[94mdef[39;49;00m[90m [39;49;00m[92mtest_file_is_valid_python[39;49;00m():[90m[39;49;00m
-    [90m    [39;49;00m[33m"""Verify the file contains valid Python syntax that can be compiled."""[39;49;00m[90m[39;49;00m
-        spinner_path = Path([33m"[39;49;00m[33m/app/fidget_spinner.py[39;49;00m[33m"[39;49;00m)[90m[39;49;00m
-        [94mtry[39;49;00m:[90m[39;49;00m
->           [94mwith[39;49;00m [96mopen[39;49;00m(spinner_path) [94mas[39;49;00m f:[90m[39;49;00m
-                 ^^^^^^^^^^^^^^^^^^[90m[39;49;00m
-[1m[31mE           FileNotFoundError: [Errno 2] No such file or directory: '/app/fidget_spinner.py'[0m
-
-[1m[31m/tests/test_outputs.py[0m:23: FileNotFoundError
-[31m[1m_________________________________________________________________ test_state_dictionary_exists _________________________________________________________________[0m
-
-    [0m[94mdef[39;49;00m[90m [39;49;00m[92mtest_state_dictionary_exists[39;49;00m():[90m[39;49;00m
-    [90m    [39;49;00m[33m"""Verify the module defines a state dictionary with 'turn' key."""[39;49;00m[90m[39;49;00m
->       spinner = _import_spinner()[90m[39;49;00m
-                  ^^^^^^^^^^^^^^^^^[90m[39;49;00m
-
-[1m[31m/tests/test_outputs.py[0m:42: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-[1m[31m/tests/test_outputs.py[0m:36: in _import_spinner
-    [0mspec.loader.exec_module(module)[90m[39;49;00m
-[1m[31m<frozen importlib._bootstrap_external>[0m:1022: in exec_module
-    [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
-[1m[31m<frozen importlib._bootstrap_external>[0m:1159: in get_code
-    [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-self = <_frozen_importlib_external.SourceFileLoader object at 0x77d6a1b7d910>, path = '/app/fidget_spinner.py'
-
->   [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
-[1m[31mE   FileNotFoundError: [Errno 2] No such file or directory: '/app/fidget_spinner.py'[0m
-
-[1m[31m<frozen importlib._bootstrap_external>[0m:1217: FileNotFoundError
-[31m[1m___________________________________________________________________ test_state_initial_value ___________________________________________________________________[0m
-
-    [0m[94mdef[39;49;00m[90m [39;49;00m[92mtest_state_initial_value[39;49;00m():[90m[39;49;00m
-    [90m    [39;49;00m[33m"""Verify state['turn'] is initialized to 0."""[39;49;00m[90m[39;49;00m
->       spinner = _import_spinner()[90m[39;49;00m
-                  ^^^^^^^^^^^^^^^^^[90m[39;49;00m
-
-[1m[31m/tests/test_outputs.py[0m:50: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-[1m[31m/tests/test_outputs.py[0m:36: in _import_spinner
-    [0mspec.loader.exec_module(module)[90m[39;49;00m
-[1m[31m<frozen importlib._bootstrap_external>[0m:1022: in exec_module
-    [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
-[1m[31m<frozen importlib._bootstrap_external>[0m:1159: in get_code
-    [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-self = <_frozen_importlib_external.SourceFileLoader object at 0x77d6a1b7c290>, path = '/app/fidget_spinner.py'
-
->   [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
-[1m[31mE   FileNotFoundError: [Errno 2] No such file or directory: '/app/fidget_spinner.py'[0m
-
-[1m[31m<frozen importlib._bootstrap_external>[0m:1217: FileNotFoundError
-[31m[1m___________________________________________________________________ test_colors_list_exists ____________________________________________________________________[0m
-
-    [0m[94mdef[39;49;00m[90m [39;49;00m[92mtest_colors_list_exists[39;49;00m():[90m[39;49;00m
-    [90m    [39;49;00m[33m"""Verify the module defines a colors list."""[39;49;00m[90m[39;49;00m
->       spinner = _import_spinner()[90m[39;49;00m
-                  ^^^^^^^^^^^^^^^^^[90m[39;49;00m
-
-[1m[31m/tests/test_outputs.py[0m:56: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-[1m[31m/tests/test_outputs.py[0m:36: in _import_spinner
-    [0mspec.loader.exec_module(module)[90m[39;49;00m
-[1m[31m<frozen importlib._bootstrap_external>[0m:1022: in exec_module
-    [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
-[1m[31m<frozen importlib._bootstrap_external>[0m:1159: in get_code
-    [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-self = <_frozen_importlib_external.SourceFileLoader object at 0x77d6a1b7c470>, path = '/app/fidget_spinner.py'
-
->   [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
-[1m[31mE   FileNotFoundError: [Errno 2] No such file or directory: '/app/fidget_spinner.py'[0m
-
-[1m[31m<frozen importlib._bootstrap_external>[0m:1217: FileNotFoundError
-[31m[1m___________________________________________________________________ test_colors_list_values ____________________________________________________________________[0m
-
-    [0m[94mdef[39;49;00m[90m [39;49;00m[92mtest_colors_list_values[39;49;00m():[90m[39;49;00m
-    [90m    [39;49;00m[33m"""Verify colors list contains correct colors in order."""[39;49;00m[90m[39;49;00m
->       spinner = _import_spinner()[90m[39;49;00m
-                  ^^^^^^^^^^^^^^^^^[90m[39;49;00m
-
-[1m[31m/tests/test_outputs.py[0m:63: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-[1m[31m/tests/test_outputs.py[0m:36: in _import_spinner
-    [0mspec.loader.exec_module(module)[90m[39;49;00m
-[1m[31m<frozen importlib._bootstrap_external>[0m:1022: in exec_module
-    [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
-[1m[31m<frozen importlib._bootstrap_external>[0m:1159: in get_code
-    [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-self = <_frozen_importlib_external.SourceFileLoader object at 0x77d6a17fff50>, path = '/app/fidget_spinner.py'
-
->   [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
-[1m[31mE   FileNotFoundError: [Errno 2] No such file or directory: '/app/fidget_spinner.py'[0m
-
-[1m[31m<frozen importlib._bootstrap_external>[0m:1217: FileNotFoundError
-[31m[1m_________________________________________________________________ test_configuration_constants _________________________________________________________________[0m
-
-    [0m[94mdef[39;49;00m[90m [39;49;00m[92mtest_configuration_constants[39;49;00m():[90m[39;49;00m
-    [90m    [39;49;00m[33m"""Verify all dimension constants are defined with correct values."""[39;49;00m[90m[39;49;00m
->       spinner = _import_spinner()[90m[39;49;00m
-                  ^^^^^^^^^^^^^^^^^[90m[39;49;00m
-
-[1m[31m/tests/test_outputs.py[0m:70: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-[1m[31m/tests/test_outputs.py[0m:36: in _import_spinner
-    [0mspec.loader.exec_module(module)[90m[39;49;00m
-[1m[31m<frozen importlib._bootstrap_external>[0m:1022: in exec_module
-    [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
-[1m[31m<frozen importlib._bootstrap_external>[0m:1159: in get_code
-    [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-self = <_frozen_importlib_external.SourceFileLoader object at 0x77d6a17ff710>, path = '/app/fidget_spinner.py'
-
->   [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
-[1m[31mE   FileNotFoundError: [Errno 2] No such file or directory: '/app/fidget_spinner.py'[0m
-
-[1m[31m<frozen importlib._bootstrap_external>[0m:1217: FileNotFoundError
-[31m[1m_________________________________________________________________ test_spinner_function_exists _________________________________________________________________[0m
-
-    [0m[94mdef[39;49;00m[90m [39;49;00m[92mtest_spinner_function_exists[39;49;00m():[90m[39;49;00m
-    [90m    [39;49;00m[33m"""Verify the module defines a spinner() function."""[39;49;00m[90m[39;49;00m
->       spinner = _import_spinner()[90m[39;49;00m
-                  ^^^^^^^^^^^^^^^^^[90m[39;49;00m
-
-[1m[31m/tests/test_outputs.py[0m:92: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-[1m[31m/tests/test_outputs.py[0m:36: in _import_spinner
-    [0mspec.loader.exec_module(module)[90m[39;49;00m
-[1m[31m<frozen importlib._bootstrap_external>[0m:1022: in exec_module
-    [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
-[1m[31m<frozen importlib._bootstrap_external>[0m:1159: in get_code
-    [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-self = <_frozen_importlib_external.SourceFileLoader object at 0x77d6a1b7c1d0>, path = '/app/fidget_spinner.py'
-
->   [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
-[1m[31mE   FileNotFoundError: [Errno 2] No such file or directory: '/app/fidget_spinner.py'[0m
-
-[1m[31m<frozen importlib._bootstrap_external>[0m:1217: FileNotFoundError
-[31m[1m_________________________________________________________________ test_animate_function_exists _________________________________________________________________[0m
-
-    [0m[94mdef[39;49;00m[90m [39;49;00m[92mtest_animate_function_exists[39;49;00m():[90m[39;49;00m
-    [90m    [39;49;00m[33m"""Verify the module defines an animate() function."""[39;49;00m[90m[39;49;00m
->       spinner = _import_spinner()[90m[39;49;00m
-                  ^^^^^^^^^^^^^^^^^[90m[39;49;00m
-
-[1m[31m/tests/test_outputs.py[0m:99: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-[1m[31m/tests/test_outputs.py[0m:36: in _import_spinner
-    [0mspec.loader.exec_module(module)[90m[39;49;00m
-[1m[31m<frozen importlib._bootstrap_external>[0m:1022: in exec_module
-    [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
-[1m[31m<frozen importlib._bootstrap_external>[0m:1159: in get_code
-    [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-self = <_frozen_importlib_external.SourceFileLoader object at 0x77d6a17ff6b0>, path = '/app/fidget_spinner.py'
-
->   [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
-[1m[31mE   FileNotFoundError: [Errno 2] No such file or directory: '/app/fidget_spinner.py'[0m
-
-[1m[31m<frozen importlib._bootstrap_external>[0m:1217: FileNotFoundError
-[31m[1m__________________________________________________________________ test_flick_function_exists __________________________________________________________________[0m
-
-    [0m[94mdef[39;49;00m[90m [39;49;00m[92mtest_flick_function_exists[39;49;00m():[90m[39;49;00m
-    [90m    [39;49;00m[33m"""Verify the module defines a flick() function."""[39;49;00m[90m[39;49;00m
->       spinner = _import_spinner()[90m[39;49;00m
-                  ^^^^^^^^^^^^^^^^^[90m[39;49;00m
-
-[1m[31m/tests/test_outputs.py[0m:106: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-[1m[31m/tests/test_outputs.py[0m:36: in _import_spinner
-    [0mspec.loader.exec_module(module)[90m[39;49;00m
-[1m[31m<frozen importlib._bootstrap_external>[0m:1022: in exec_module
-    [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
-[1m[31m<frozen importlib._bootstrap_external>[0m:1159: in get_code
-    [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-self = <_frozen_importlib_external.SourceFileLoader object at 0x77d6a17ff470>, path = '/app/fidget_spinner.py'
-
->   [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
-[1m[31mE   FileNotFoundError: [Errno 2] No such file or directory: '/app/fidget_spinner.py'[0m
-
-[1m[31m<frozen importlib._bootstrap_external>[0m:1217: FileNotFoundError
-[31m[1m_____________________________________________________________________ test_flick_adds_ten ______________________________________________________________________[0m
-
-    [0m[94mdef[39;49;00m[90m [39;49;00m[92mtest_flick_adds_ten[39;49;00m():[90m[39;49;00m
-    [90m    [39;49;00m[33m"""Verify flick() adds exactly 10 to state['turn']."""[39;49;00m[90m[39;49;00m
->       spinner = _import_spinner()[90m[39;49;00m
-                  ^^^^^^^^^^^^^^^^^[90m[39;49;00m
-
-[1m[31m/tests/test_outputs.py[0m:113: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-[1m[31m/tests/test_outputs.py[0m:36: in _import_spinner
-    [0mspec.loader.exec_module(module)[90m[39;49;00m
-[1m[31m<frozen importlib._bootstrap_external>[0m:1022: in exec_module
-    [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
-[1m[31m<frozen importlib._bootstrap_external>[0m:1159: in get_code
-    [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-self = <_frozen_importlib_external.SourceFileLoader object at 0x77d6a17fdd30>, path = '/app/fidget_spinner.py'
-
->   [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
-[1m[31mE   FileNotFoundError: [Errno 2] No such file or directory: '/app/fidget_spinner.py'[0m
-
-[1m[31m<frozen importlib._bootstrap_external>[0m:1217: FileNotFoundError
-[31m[1m____________________________________________________________________ test_flick_accumulates ____________________________________________________________________[0m
-
-    [0m[94mdef[39;49;00m[90m [39;49;00m[92mtest_flick_accumulates[39;49;00m():[90m[39;49;00m
-    [90m    [39;49;00m[33m"""Verify multiple flicks accumulate correctly."""[39;49;00m[90m[39;49;00m
->       spinner = _import_spinner()[90m[39;49;00m
-                  ^^^^^^^^^^^^^^^^^[90m[39;49;00m
-
-[1m[31m/tests/test_outputs.py[0m:125: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-[1m[31m/tests/test_outputs.py[0m:36: in _import_spinner
-    [0mspec.loader.exec_module(module)[90m[39;49;00m
-[1m[31m<frozen importlib._bootstrap_external>[0m:1022: in exec_module
-    [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
-[1m[31m<frozen importlib._bootstrap_external>[0m:1159: in get_code
-    [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-self = <_frozen_importlib_external.SourceFileLoader object at 0x77d6a17fd7f0>, path = '/app/fidget_spinner.py'
-
->   [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
-[1m[31mE   FileNotFoundError: [Errno 2] No such file or directory: '/app/fidget_spinner.py'[0m
-
-[1m[31m<frozen importlib._bootstrap_external>[0m:1217: FileNotFoundError
-[31m[1m_________________________________________________________________ test_animate_decreases_turn __________________________________________________________________[0m
-
-    [0m[94mdef[39;49;00m[90m [39;49;00m[92mtest_animate_decreases_turn[39;49;00m():[90m[39;49;00m
-    [90m    [39;49;00m[33m"""Verify animate() decreases turn by 1 when turn > 0."""[39;49;00m[90m[39;49;00m
->       spinner = _import_spinner()[90m[39;49;00m
-                  ^^^^^^^^^^^^^^^^^[90m[39;49;00m
-
-[1m[31m/tests/test_outputs.py[0m:139: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-[1m[31m/tests/test_outputs.py[0m:36: in _import_spinner
-    [0mspec.loader.exec_module(module)[90m[39;49;00m
-[1m[31m<frozen importlib._bootstrap_external>[0m:1022: in exec_module
-    [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
-[1m[31m<frozen importlib._bootstrap_external>[0m:1159: in get_code
-    [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-self = <_frozen_importlib_external.SourceFileLoader object at 0x77d6a17fdaf0>, path = '/app/fidget_spinner.py'
-
->   [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
-[1m[31mE   FileNotFoundError: [Errno 2] No such file or directory: '/app/fidget_spinner.py'[0m
-
-[1m[31m<frozen importlib._bootstrap_external>[0m:1217: FileNotFoundError
-[31m[1m__________________________________________________________________ test_animate_respects_zero __________________________________________________________________[0m
-
-    [0m[94mdef[39;49;00m[90m [39;49;00m[92mtest_animate_respects_zero[39;49;00m():[90m[39;49;00m
-    [90m    [39;49;00m[33m"""Verify animate() doesn't make turn negative."""[39;49;00m[90m[39;49;00m
->       spinner = _import_spinner()[90m[39;49;00m
-                  ^^^^^^^^^^^^^^^^^[90m[39;49;00m
-
-[1m[31m/tests/test_outputs.py[0m:186: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-[1m[31m/tests/test_outputs.py[0m:36: in _import_spinner
-    [0mspec.loader.exec_module(module)[90m[39;49;00m
-[1m[31m<frozen importlib._bootstrap_external>[0m:1022: in exec_module
-    [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
-[1m[31m<frozen importlib._bootstrap_external>[0m:1159: in get_code
-    [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-self = <_frozen_importlib_external.SourceFileLoader object at 0x77d6a17fdd90>, path = '/app/fidget_spinner.py'
-
->   [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
-[1m[31mE   FileNotFoundError: [Errno 2] No such file or directory: '/app/fidget_spinner.py'[0m
-
-[1m[31m<frozen importlib._bootstrap_external>[0m:1217: FileNotFoundError
-[31m[1m________________________________________________________________ test_spinner_draws_all_layers _________________________________________________________________[0m
-
-    [0m[94mdef[39;49;00m[90m [39;49;00m[92mtest_spinner_draws_all_layers[39;49;00m():[90m[39;49;00m
-    [90m    [39;49;00m[33m"""Verify spinner() clears, rotates, and renders all required layers."""[39;49;00m[90m[39;49;00m
->       spinner = _import_spinner()[90m[39;49;00m
-                  ^^^^^^^^^^^^^^^^^[90m[39;49;00m
-
-[1m[31m/tests/test_outputs.py[0m:232: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-[1m[31m/tests/test_outputs.py[0m:36: in _import_spinner
-    [0mspec.loader.exec_module(module)[90m[39;49;00m
-[1m[31m<frozen importlib._bootstrap_external>[0m:1022: in exec_module
-    [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
-[1m[31m<frozen importlib._bootstrap_external>[0m:1159: in get_code
-    [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-self = <_frozen_importlib_external.SourceFileLoader object at 0x77d6a17fe2d0>, path = '/app/fidget_spinner.py'
-
->   [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
-[1m[31mE   FileNotFoundError: [Errno 2] No such file or directory: '/app/fidget_spinner.py'[0m
-
-[1m[31m<frozen importlib._bootstrap_external>[0m:1217: FileNotFoundError
-[31m[1m__________________________________________________________________ test_uses_twenty_ms_timing __________________________________________________________________[0m
-
-    [0m[94mdef[39;49;00m[90m [39;49;00m[92mtest_uses_twenty_ms_timing[39;49;00m():[90m[39;49;00m
-    [90m    [39;49;00m[33m"""Verify animate() uses 20 millisecond timing for ontimer."""[39;49;00m[90m[39;49;00m
->       spinner = _import_spinner()[90m[39;49;00m
-                  ^^^^^^^^^^^^^^^^^[90m[39;49;00m
-
-[1m[31m/tests/test_outputs.py[0m:414: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-[1m[31m/tests/test_outputs.py[0m:36: in _import_spinner
-    [0mspec.loader.exec_module(module)[90m[39;49;00m
-[1m[31m<frozen importlib._bootstrap_external>[0m:1022: in exec_module
-    [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
-[1m[31m<frozen importlib._bootstrap_external>[0m:1159: in get_code
-    [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-self = <_frozen_importlib_external.SourceFileLoader object at 0x77d6a17ff770>, path = '/app/fidget_spinner.py'
-
->   [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
-[1m[31mE   FileNotFoundError: [Errno 2] No such file or directory: '/app/fidget_spinner.py'[0m
-
-[1m[31m<frozen importlib._bootstrap_external>[0m:1217: FileNotFoundError
-[31m[1m_________________________________________________________ test_main_block_configures_window_and_events _________________________________________________________[0m
-
-    [0m[94mdef[39;49;00m[90m [39;49;00m[92mtest_main_block_configures_window_and_events[39;49;00m():[90m[39;49;00m
-    [90m    [39;49;00m[33m"""Verify __main__ block wires up window, events, and animation as specified."""[39;49;00m[90m[39;49;00m
-        [90m# Ensure a clean import state[39;49;00m[90m[39;49;00m
-        sys.modules.pop([33m"[39;49;00m[33mfidget_spinner[39;49;00m[33m"[39;49;00m, [94mNone[39;49;00m)[90m[39;49;00m
-    [90m[39;49;00m
-        [90m# Build a fake turtle module that captures the calls we care about.[39;49;00m[90m[39;49;00m
-        call_log = [][90m[39;49;00m
-        orientation = {[33m"[39;49;00m[33mvalue[39;49;00m[33m"[39;49;00m: [94m0[39;49;00m}[90m[39;49;00m
-    [90m[39;49;00m
-        [94mdef[39;49;00m[90m [39;49;00m[92mrecord[39;49;00m(name):[90m[39;49;00m
-            [94mdef[39;49;00m[90m [39;49;00m[92mhandler[39;49;00m(*args, **kwargs):[90m[39;49;00m
-                call_log.append((name, args, kwargs))[90m[39;49;00m
-    [90m[39;49;00m
-            [94mreturn[39;49;00m handler[90m[39;49;00m
-    [90m[39;49;00m
-        [94mdef[39;49;00m[90m [39;49;00m[92mright[39;49;00m(angle):[90m[39;49;00m
-            call_log.append(([33m"[39;49;00m[33mright[39;49;00m[33m"[39;49;00m, (angle,), {}))[90m[39;49;00m
-            orientation[[33m"[39;49;00m[33mvalue[39;49;00m[33m"[39;49;00m] = (orientation[[33m"[39;49;00m[33mvalue[39;49;00m[33m"[39;49;00m] - angle) % [94m360[39;49;00m[90m[39;49;00m
-    [90m[39;49;00m
-        [94mdef[39;49;00m[90m [39;49;00m[92mheading[39;49;00m():[90m[39;49;00m
-            call_log.append(([33m"[39;49;00m[33mheading[39;49;00m[33m"[39;49;00m, (), {}))[90m[39;49;00m
-            [94mreturn[39;49;00m orientation[[33m"[39;49;00m[33mvalue[39;49;00m[33m"[39;49;00m][90m[39;49;00m
-    [90m[39;49;00m
-        [94mdef[39;49;00m[90m [39;49;00m[92msetheading[39;49;00m(value):[90m[39;49;00m
-            call_log.append(([33m"[39;49;00m[33msetheading[39;49;00m[33m"[39;49;00m, (value,), {}))[90m[39;49;00m
-            orientation[[33m"[39;49;00m[33mvalue[39;49;00m[33m"[39;49;00m] = value[90m[39;49;00m
-    [90m[39;49;00m
-        fake_turtle = types.ModuleType([33m"[39;49;00m[33mturtle[39;49;00m[33m"[39;49;00m)[90m[39;49;00m
-        fake_turtle.setup = record([33m"[39;49;00m[33msetup[39;49;00m[33m"[39;49;00m)[90m[39;49;00m
-        fake_turtle.hideturtle = record([33m"[39;49;00m[33mhideturtle[39;49;00m[33m"[39;49;00m)[90m[39;49;00m
-        fake_turtle.tracer = record([33m"[39;49;00m[33mtracer[39;49;00m[33m"[39;49;00m)[90m[39;49;00m
-        fake_turtle.bgcolor = record([33m"[39;49;00m[33mbgcolor[39;49;00m[33m"[39;49;00m)[90m[39;49;00m
-        fake_turtle.listen = record([33m"[39;49;00m[33mlisten[39;49;00m[33m"[39;49;00m)[90m[39;49;00m
-        fake_turtle.onkey = record([33m"[39;49;00m[33monkey[39;49;00m[33m"[39;49;00m)[90m[39;49;00m
-        fake_turtle.done = record([33m"[39;49;00m[33mdone[39;49;00m[33m"[39;49;00m)[90m[39;49;00m
-        fake_turtle.clear = record([33m"[39;49;00m[33mclear[39;49;00m[33m"[39;49;00m)[90m[39;49;00m
-        fake_turtle.right = right[90m[39;49;00m
-        fake_turtle.penup = record([33m"[39;49;00m[33mpenup[39;49;00m[33m"[39;49;00m)[90m[39;49;00m
-        fake_turtle.pendown = record([33m"[39;49;00m[33mpendown[39;49;00m[33m"[39;49;00m)[90m[39;49;00m
-        fake_turtle.pencolor = record([33m"[39;49;00m[33mpencolor[39;49;00m[33m"[39;49;00m)[90m[39;49;00m
-        fake_turtle.width = record([33m"[39;49;00m[33mwidth[39;49;00m[33m"[39;49;00m)[90m[39;49;00m
-        fake_turtle.goto = record([33m"[39;49;00m[33mgoto[39;49;00m[33m"[39;49;00m)[90m[39;49;00m
-        fake_turtle.forward = record([33m"[39;49;00m[33mforward[39;49;00m[33m"[39;49;00m)[90m[39;49;00m
-        fake_turtle.back = record([33m"[39;49;00m[33mback[39;49;00m[33m"[39;49;00m)[90m[39;49;00m
-        fake_turtle.setheading = setheading[90m[39;49;00m
-        fake_turtle.heading = heading[90m[39;49;00m
-        fake_turtle.dot = record([33m"[39;49;00m[33mdot[39;49;00m[33m"[39;49;00m)[90m[39;49;00m
-        fake_turtle.update = record([33m"[39;49;00m[33mupdate[39;49;00m[33m"[39;49;00m)[90m[39;49;00m
-        fake_turtle.ontimer = record([33m"[39;49;00m[33montimer[39;49;00m[33m"[39;49;00m)[90m[39;49;00m
-    [90m[39;49;00m
-        original_turtle = sys.modules.get([33m"[39;49;00m[33mturtle[39;49;00m[33m"[39;49;00m)[90m[39;49;00m
-        sys.modules[[33m"[39;49;00m[33mturtle[39;49;00m[33m"[39;49;00m] = fake_turtle[90m[39;49;00m
-    [90m[39;49;00m
-        [94mtry[39;49;00m:[90m[39;49;00m
->           namespace = runpy.run_module([33m"[39;49;00m[33mfidget_spinner[39;49;00m[33m"[39;49;00m, run_name=[33m"[39;49;00m[33m__main__[39;49;00m[33m"[39;49;00m)[90m[39;49;00m
-                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
-
-[1m[31m/tests/test_outputs.py[0m:494: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-[1m[31m<frozen runpy>[0m:222: in run_module
-    [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-mod_name = 'fidget_spinner', error = <class 'ImportError'>
-
->   [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
-[1m[31mE   ImportError: No module named fidget_spinner[0m
-
-[1m[31m<frozen runpy>[0m:142: ImportError
-[36m[1m=================================================================== short test summary info ====================================================================[0m
-[31mFAILED[0m ../tests/test_outputs.py::[1mtest_fidget_spinner_file_exists[0m - AssertionError: File /app/fidget_spinner.py does not exist
-[31mFAILED[0m ../tests/test_outputs.py::[1mtest_file_is_valid_python[0m - FileNotFoundError: [Errno 2] No such file or directory: '/app/fidget_spinner.py'
-[31mFAILED[0m ../tests/test_outputs.py::[1mtest_state_dictionary_exists[0m - FileNotFoundError: [Errno 2] No such file or directory: '/app/fidget_spinner.py'
-[31mFAILED[0m ../tests/test_outputs.py::[1mtest_state_initial_value[0m - FileNotFoundError: [Errno 2] No such file or directory: '/app/fidget_spinner.py'
-[31mFAILED[0m ../tests/test_outputs.py::[1mtest_colors_list_exists[0m - FileNotFoundError: [Errno 2] No such file or directory: '/app/fidget_spinner.py'
-[31mFAILED[0m ../tests/test_outputs.py::[1mtest_colors_list_values[0m - FileNotFoundError: [Errno 2] No such file or directory: '/app/fidget_spinner.py'
-[31mFAILED[0m ../tests/test_outputs.py::[1mtest_configuration_constants[0m - FileNotFoundError: [Errno 2] No such file or directory: '/app/fidget_spinner.py'
-[31mFAILED[0m ../tests/test_outputs.py::[1mtest_spinner_function_exists[0m - FileNotFoundError: [Errno 2] No such file or directory: '/app/fidget_spinner.py'
-[31mFAILED[0m ../tests/test_outputs.py::[1mtest_animate_function_exists[0m - FileNotFoundError: [Errno 2] No such file or directory: '/app/fidget_spinner.py'
-[31mFAILED[0m ../tests/test_outputs.py::[1mtest_flick_function_exists[0m - FileNotFoundError: [Errno 2] No such file or directory: '/app/fidget_spinner.py'
-[31mFAILED[0m ../tests/test_outputs.py::[1mtest_flick_adds_ten[0m - FileNotFoundError: [Errno 2] No such file or directory: '/app/fidget_spinner.py'
-[31mFAILED[0m ../tests/test_outputs.py::[1mtest_flick_accumulates[0m - FileNotFoundError: [Errno 2] No such file or directory: '/app/fidget_spinner.py'
-[31mFAILED[0m ../tests/test_outputs.py::[1mtest_animate_decreases_turn[0m - FileNotFoundError: [Errno 2] No such file or directory: '/app/fidget_spinner.py'
-[31mFAILED[0m ../tests/test_outputs.py::[1mtest_animate_respects_zero[0m - FileNotFoundError: [Errno 2] No such file or directory: '/app/fidget_spinner.py'
-[31mFAILED[0m ../tests/test_outputs.py::[1mtest_spinner_draws_all_layers[0m - FileNotFoundError: [Errno 2] No such file or directory: '/app/fidget_spinner.py'
-[31mFAILED[0m ../tests/test_outputs.py::[1mtest_uses_twenty_ms_timing[0m - FileNotFoundError: [Errno 2] No such file or directory: '/app/fidget_spinner.py'
-[31mFAILED[0m ../tests/test_outputs.py::[1mtest_main_block_configures_window_and_events[0m - ImportError: No module named fidget_spinner
-[31m====================================================================== [31m[1m17 failed[0m[31m in 0.21s[0m[31m ======================================================================[0m
-[?2004hroot@20f37f817804:/app# [?2004l
-exit
-[0;32masciinema: recording finished[0m
-[0;32masciinema: asciicast saved to /logs/tests.cast[0m
-[?2004hroot@20f37f817804:/app# 
