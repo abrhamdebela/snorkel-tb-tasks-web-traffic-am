@@ -6,17 +6,17 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # Install CA certificates and switch apt sources to HTTPS
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends ca-certificates=20240203~22.04.1 \
+    && apt-get install -y --no-install-recommends ca-certificates \
     && sed -i 's|http://|https://|g' /etc/apt/sources.list \
     && apt-get update
 
 # Install required packages for the task
 RUN apt-get install -y --no-install-recommends \
-    gfortran=4:11.2.0-1ubuntu1 \
-    gcc=4:11.2.0-1ubuntu1 \
-    make=4.3-4.1build1 \
-    tmux=3.2a-4ubuntu0.2 \
-    asciinema=2.1.0-1 \
+    gfortran \
+    gcc \
+    make \
+    tmux \
+    asciinema \
     && rm -rf /var/lib/apt/lists/*
 
 # Create working directory

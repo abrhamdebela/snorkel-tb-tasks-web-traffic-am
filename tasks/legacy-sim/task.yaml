@@ -46,6 +46,7 @@ instruction: |
   - The code compiles without errors using your Makefile
   - A binary exists at /app/legacy_sim/simulation
   - The simulation binary is executable
+  - The /app/legacy_sim/simulation binary must be an ELF executable produced from the provided Fortran sources (we will inspect for the expected Fortran entry points)
   - Running /app/legacy_sim/simulation completes without errors
   - The file /app/legacy_sim/results.dat is created
   - The /app/legacy_sim/results.dat file contains valid numerical data
@@ -84,6 +85,7 @@ instruction: |
   - Do NOT modify the Fortran source code files (main.f, data_io.f, compute.f)
   - Do NOT change the physics algorithm
   - Do NOT change the input or output file formats
+  - Do NOT replace the simulation binary with a stub; it must result from compiling the provided Fortran sources
   - Focus only on creating a working Makefile and getting the code to compile and run
   - Modern gfortran may require specific flags for old Fortran 77 code
   - The simulation should complete in under 30 seconds
