@@ -1,0 +1,27 @@
+# Makefile for Legacy Fortran Simulation
+# Original compiler: g77 (no longer available)
+# Must be ported to gfortran
+
+FC = g77
+FFLAGS = -O2 -fno-automatic -funroll-loops
+LDFLAGS = 
+
+SOURCES = main.f data_io.f compute.f
+OBJECTS = $(SOURCES:.f=.o)
+TARGET = simulation
+
+.PHONY: all clean run
+
+all: $(TARGET)
+
+$(TARGET): $(OBJECTS)
+	$(FC) $(LDFLAGS) -o $(TARGET) $(OBJECTS)
+
+%.o: %.f
+	$(FC) $(FFLAGS) -c $<
+
+clean:
+	rm -f $(OBJECTS) $(TARGET) results.dat
+
+run: $(TARGET)
+	./$(TARGET)
