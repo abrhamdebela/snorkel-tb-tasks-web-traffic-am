@@ -21,7 +21,6 @@ if [ "$PWD" = "/" ]; then
 fi
 
 uv init
-uv venv
 uv add pytest==8.4.1
 
 # Install other dependencies if needed (remember, by default this is a different venv
