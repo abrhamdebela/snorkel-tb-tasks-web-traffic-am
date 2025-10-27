@@ -69,20 +69,19 @@ instruction: |
   ```
   
   ## Output File Format
-  
+
   The file /app/legacy_sim/results.dat will contain the following header lines (each exactly as written):
   - `# 1D Wave Simulation Results`
   - `# Grid Points: <value>`
-  The `Grid Points`, `Time Step`, and `Iterations` headers must reproduce the exact numeric strings read from `/app/legacy_sim/input.txt`.
-  - `# Time Step: <value>`
   - `# Time Step: <value>`
   - `# Iterations: <value>`
+
   The `Grid Points`, `Time Step`, and `Iterations` headers must reproduce the exact numeric strings read from `/app/legacy_sim/input.txt`.
+
   - `# Final Energy: <value>`
   - `# Final Momentum: <value>`
   - `# Final Temperature: <value>`
   - Numerical data lines with two columns: position (0.0 to 1.0) and wave amplitude
-  
   ## Important Notes
   
   - Do NOT modify the Fortran source code files (main.f, data_io.f, compute.f)
@@ -111,3 +110,5 @@ disable_asciinema: false
 estimated_duration_sec: null
 expert_time_estimate_min: 60
 junior_time_estimate_min: 120
+
+
