@@ -260,6 +260,7 @@ def test_position_column_between_zero_and_one():
                 f"Position values must be within [0.0, 1.0]; found {position}."
             )
 
+
 def test_final_temperature_line_exists():
     """
     Test: Output includes a 'Final Temperature:' line (criterion from task.yaml line 74).
@@ -318,6 +319,7 @@ def test_results_file_has_expected_headers():
             f"Header line {index + 1} must match '{pattern}' ({description}), "
             f"but got '{line}'."
         )
+
 
 def test_results_header_matches_input_values():
     """
