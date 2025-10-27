@@ -11,9 +11,6 @@ MODEL=""
 AGENT_DISPLAY_NAME=""
 FAIL_ON_ERROR=true
 
-# Hard-coded values for agents
-N_ATTEMPTS=10
-
 # Parse command line arguments
 while [[ $# -gt 0 ]]; do
   case $1 in
@@ -23,6 +20,14 @@ while [[ $# -gt 0 ]]; do
       ;;
     --model)
       MODEL="$2"
+      shift 2
+      ;;
+    --run)
+      RUN="$2"
+      shift 2
+      ;;
+    --key)
+      KEY="$2"
       shift 2
       ;;
     --no-fail-on-error)
@@ -44,6 +49,7 @@ if [ $# -eq 0 ]; then
   echo "Options:"
   echo "  --agent AGENT         Agent to use (default: oracle)"
   echo "  --model MODEL         Model to use (for non-oracle agents)"
+  echo "  --run RUN             Run ID to use (for multiple runs)"
   echo "  --no-fail-on-error    Don't fail on test errors "
   exit 1
 fi
@@ -57,14 +63,8 @@ else
   AGENT_DISPLAY_NAME="$AGENT"
 fi
 
-# Set N_ATTEMPTS for non-agents ("oracle" and "nop")
-if [ "$AGENT" = "oracle" ] || [ "$AGENT" = "nop" ]; then
-  N_ATTEMPTS=1
-fi
-
 failed_tasks=()
 passed_tasks=()
-timestamp=$(date "+%Y-%m-%d__%H-%M-%S")
 
 echo "🤖 Testing with $AGENT_DISPLAY_NAME agent"
 echo "========================================"
@@ -73,7 +73,7 @@ for task in "$@"; do
   echo "Running tests for $task with $AGENT_DISPLAY_NAME"
   
   # Build the command
-  CMD="uv run tb run --agent $AGENT --task-id $task --run-id github-action-$timestamp-$task --cleanup --n-attempts $N_ATTEMPTS"
+  CMD="uv run tb run --agent $AGENT --task-id $task --run-id github-action-${KEY}_${task}_${RUN} --cleanup"
   if [ -n "$MODEL" ]; then
     CMD="$CMD --model $MODEL"
   fi
@@ -87,23 +87,23 @@ for task in "$@"; do
   docker buildx prune --force
   
   # Check if the results file exists and has valid JSON content
-  results_file="runs/github-action-$timestamp-$task/results.json"
+  results_file="runs/github-action-${KEY}_${task}_${RUN}/results.json"
   
   # If running the harness didn't generate results, that's a failure
   if [ ! -f "$results_file" ]; then
     echo "❌ No results file generated for $task with $AGENT_DISPLAY_NAME"
-    failed_tasks+=("$task")
+    failed_tasks+=("$task-$RUN")
     continue
   fi
   
   # Parse the results file
-  # Extract Pass@5 from the results file
-  pass_at_5=$(jq '.pass_at_k."5"' "$results_file")
-  echo "Test Pass@5 for $task with $AGENT_DISPLAY_NAME: $pass_at_5"
+  # Extract accuracy from the results file
+  accuracy=$(jq '.accuracy' "$results_file")
+  echo "Test accuracy for $task with $AGENT_DISPLAY_NAME: $accuracy"
   
-  # If Pass@5 is greater than 0.6, the task is not difficult enough. Let it fail.
-  if (( $(echo "$pass_at_5 > 0.6" | bc -l) )); then
-    echo "❌ Tests for $task passed with $AGENT_DISPLAY_NAME easily (Pass@5: $pass_at_5)"
+  # If accuracy is less than 1.0, at least one test failed
+  if (( $(echo "$accuracy < 1.0" | bc -l) )); then
+    echo "❌ Tests for $task failed with $AGENT_DISPLAY_NAME (accuracy: $accuracy)"
     
     # Get list of specific tests that failed
     echo "Failed tests for $task with $AGENT_DISPLAY_NAME:"
@@ -135,7 +135,7 @@ for task in "$@"; do
     
     failed_tasks+=("$task")
   else
-    echo "✅ Great job! Your $task stumped $AGENT_DISPLAY_NAME! (Pass@5: $pass_at_5)"
+    echo "✅ Tests for $task passed with $AGENT_DISPLAY_NAME (accuracy: $accuracy)"
     passed_tasks+=("$task")
   fi
 done
@@ -145,8 +145,8 @@ if [ ${#failed_tasks[@]} -gt 0 ]; then
   echo ""
   echo "=========================================="
   echo "❌ SUMMARY: The following tasks failed with $AGENT_DISPLAY_NAME:"
-  for task in "${failed_tasks[@]}"; do
-    echo "- $task"
+  for task_run in "${failed_tasks[@]}"; do
+    echo "- $task_run"
   done
   echo "=========================================="
   
