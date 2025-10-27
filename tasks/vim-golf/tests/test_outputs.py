@@ -172,9 +172,9 @@ def test_official_files_match():
 
     # Read submitted files
     with open(start_path, "r") as f:
-        submitted_start = f.read()
+        submitted_start = f.read().strip()
     with open(end_path, "r") as f:
-        submitted_end = f.read()
+        submitted_end = f.read().strip()
 
     # Validate files match
     assert submitted_start == official_start_content, (
