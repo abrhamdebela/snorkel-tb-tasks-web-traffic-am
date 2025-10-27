@@ -34,7 +34,9 @@ def pass_at_k_estimator(n: int, c: int, k: int) -> float:
 def get_difficulty(agents_summary: Dict[str, Dict[str, Any]]) -> str:
     # Ignore NOP and Oracle for difficulty calculation
     accuracies = [agent_summary["accuracy"] for agent, agent_summary in agents_summary.items() if agent not in ["nop", "oracle"]]
-    if any(accuracy < 0.4 for accuracy in accuracies):
+    if len(accuracies) == 0:
+        return "n/a"
+    elif any(accuracy < 0.4 for accuracy in accuracies):
         return "hard"
     elif any(accuracy < 0.6 for accuracy in accuracies):
         return "medium"
@@ -79,11 +81,14 @@ def main():
     with open("summary-of-runs-comment.md", "w") as f:
         for task, task_summary in summary.items():
             f.write(f"## Summary of Runs for \"{task}\":\n")
-            f.write(f"Difficulty: {task_summary['difficulty']}\n")
-            f.write("| Agent/Model | # of runs | Accuracy | Pass@5 |\n")
-            f.write("|-------------|------------|----------|--------|\n")
-            for agent, data in task_summary["agents"].items():
-                f.write(f"| {agent} | {data['n_runs']} | {data['accuracy']} | {data['pass_at_5']} |\n")
+            if set(task_summary["agents"]) == {"nop", "oracle"}:
+                f.write("This task is not tested with any agents as the Oracle solution failed. Please fix the Oracle solution and re-run the tests.\n")
+            else:
+                f.write(f"Difficulty: {task_summary['difficulty']}\n")
+                f.write("| Agent/Model | # of runs | Accuracy | Pass@5 |\n")
+                f.write("|-------------|------------|----------|--------|\n")
+                for agent, data in task_summary["agents"].items():
+                    f.write(f"| {agent} | {data['n_runs']} | {data['accuracy']} | {data['pass_at_5']} |\n")
     # Send the difficulty of the last task to $GITHUB_OUTPUT
     # Note: last task but it should be fine as a PR should only contain one task
     with open(os.environ["GITHUB_OUTPUT"], "a") as f:
