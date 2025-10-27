@@ -32,6 +32,10 @@ statistics.
 
 Notice the `--dataset-path annotated_tasks` flag. This is because this folder is in a different folder (annotated_tasks) rather than the standard tasks folder.
 
+### .dockerignore
+
+This file ensures that the files related to the task tracking will not be put into the Dockerfile. You should not change this file.
+
 ### docker-compose.yaml
 
 This file will only need to be changed if you have an additional service you want to deploy in the agent's environment. For example, if you want to deploy a minio container in the same environment, you can do that via this file. Otherwise, do not change this file.
