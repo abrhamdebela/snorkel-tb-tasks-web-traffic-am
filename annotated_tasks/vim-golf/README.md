@@ -67,10 +67,7 @@ This solution should be self-contained, and should not be hard-coded. It should 
 When testing, one thing you can do to see where the solution ends up is the following:
 `tb tasks interact -t vim-golf --tasks-dir annotated_tasks`
 
-This will run the exact docker environment that the agent and oracle will be running in.
-
-If you want to copy your solution.sh into the environment, you can also use the --include-all flag:
-`tb tasks interact -t vim-golf --include-all --tasks-dir annotated_tasks`
+This will run the exact docker environment that the agent and oracle will be running in. From there, you can test your solution script.
 
 ### solution.yaml
 
