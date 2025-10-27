@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 from typing import Dict, Any, List, Optional
 import numpy as np
+import os
 
 RUNS_ROOT = Path("/tmp/results").resolve()
 
@@ -28,7 +29,20 @@ def pass_at_k_estimator(n: int, c: int, k: int) -> float:
     if n - c < k:
         return 1.0
     return float(1.0 - np.prod(1.0 - k / np.arange(n - c + 1, n + 1)))
-    
+
+
+def get_difficulty(agents_summary: Dict[str, Dict[str, Any]]) -> str:
+    # Ignore NOP and Oracle for difficulty calculation
+    accuracies = [agent_summary["accuracy"] for agent, agent_summary in agents_summary.items() if agent not in ["nop", "oracle"]]
+    if any(accuracy < 0.4 for accuracy in accuracies):
+        return "hard"
+    elif any(accuracy < 0.6 for accuracy in accuracies):
+        return "medium"
+    elif any(accuracy < 0.8 for accuracy in accuracies):
+        return "easy"
+    else:
+        return "trivial"
+
 
 def main():
     if not RUNS_ROOT.exists():
@@ -45,25 +59,35 @@ def main():
         results_json = safe_read_json(bd / "results.json")
         all_results[task][agent].extend(results_json.get("results", []))
     
-    summary: Dict[str, Dict[str, Dict[str, Any]]] = defaultdict(lambda: defaultdict(dict))
+    summary: Dict[str, Dict[str, Any]] = defaultdict(dict)
     for task, results_by_agent in all_results.items():
+        agents_summary: Dict[str, Dict[str, Any]] = defaultdict(dict)
         for agent, task_results in results_by_agent.items():
             is_resolveds = []
             for result in task_results:
-                is_resolveds.append(result["is_resolved"])
-            summary[task][agent]["accuracy"] = sum(is_resolveds) / len(is_resolveds)
+                # Treat None as False (unresolved)
+                is_resolved = result["is_resolved"]
+                is_resolveds.append(is_resolved if is_resolved is not None else False)
+            agents_summary[agent]["accuracy"] = sum(is_resolveds) / len(is_resolveds)
             if len(is_resolveds) >= 5:
-                summary[task][agent]["pass_at_5"] = pass_at_k_estimator(len(is_resolveds), sum(is_resolveds), 5)
+                agents_summary[agent]["pass_at_5"] = pass_at_k_estimator(len(is_resolveds), sum(is_resolveds), 5)
             else:
-                summary[task][agent]["pass_at_5"] = "N/A"
-            summary[task][agent]["n_runs"] = len(task_results)
+                agents_summary[agent]["pass_at_5"] = "N/A"
+            agents_summary[agent]["n_runs"] = len(task_results)
+        summary[task]["agents"] = agents_summary
+        summary[task]["difficulty"] = get_difficulty(agents_summary)
     with open("summary-of-runs-comment.md", "w") as f:
-        for task, results_by_agent in summary.items():
+        for task, task_summary in summary.items():
             f.write(f"## Summary of Runs for \"{task}\":\n")
+            f.write(f"Difficulty: {task_summary['difficulty']}\n")
             f.write("| Agent/Model | # of runs | Accuracy | Pass@5 |\n")
             f.write("|-------------|------------|----------|--------|\n")
-            for agent, data in results_by_agent.items():
+            for agent, data in task_summary["agents"].items():
                 f.write(f"| {agent} | {data['n_runs']} | {data['accuracy']} | {data['pass_at_5']} |\n")
+    # Send the difficulty of the last task to $GITHUB_OUTPUT
+    # Note: last task but it should be fine as a PR should only contain one task
+    with open(os.environ["GITHUB_OUTPUT"], "a") as f:
+        f.write(f"difficulty=difficulty:{summary[task]['difficulty']}\n")
 
 if __name__ == "__main__":
     main()
