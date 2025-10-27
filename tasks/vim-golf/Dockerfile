@@ -20,7 +20,7 @@
 FROM ghcr.io/laude-institute/t-bench/python-3-13:20250620
 RUN apt update && apt install -y vim
 
-COPY challenge.txt /challenge.txt
+COPY challenge.txt /app/challenge.txt
 
 # View the list of available base images here:
 # https://github.com/laude-institute/terminal-bench/packages
@@ -33,7 +33,7 @@ COPY challenge.txt /challenge.txt
 
 # RUN apt-get update && apt-get install -y tmux asciinema
 
-# WORKDIR /app
+WORKDIR /app
 # ======================================================================================
 
 # If you'd like to step into the container and run commands to help you develop the task
