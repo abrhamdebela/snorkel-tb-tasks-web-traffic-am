@@ -1,9 +1,11 @@
 #!/bin/bash
 
-# You can modify anything in this script. Just make sure it generates test output that
-# is parsed by a parser (PytestParser by default).
-
-# This boilerplate script installs uv (to manage Python) and runs pytest.
+# Hint from Snorkel
+# Script used to execute and validate the end-to-end evaluation of the task.
+# It coordinates running the agent within the defined environment,
+# invokes test cases or success criteria checks, and produces structured output
+# (e.g., logs or JSON summaries) that indicate task completion status.
+# It must be deterministic, portable, and callable directly from the project root.
 
 # Install curl
 apt-get update

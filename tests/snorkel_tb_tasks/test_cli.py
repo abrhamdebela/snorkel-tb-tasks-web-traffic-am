@@ -49,5 +49,10 @@ def test_tasks_create():
     assert task_yaml["expert_time_estimate_min"] == 120
     assert task_yaml["junior_time_estimate_min"] == 60
 
+    # Check if Snorkel's hints were added to the task.yaml file
+    with open("tasks/my-first-task/task.yaml", "r") as f:
+        canary_string = "".join([line for line in f.readlines() if line.startswith("#")])
+    assert "Hint from Snorkel" in canary_string
+
     # clean up
     shutil.rmtree("tasks/my-first-task")
