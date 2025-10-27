@@ -63,6 +63,29 @@ def test_score_valid():
         best_score_line = lines[leaderboard_idx + 1]
         best_score = int(best_score_line.split()[1])
 
+    # SECURITY FIX: Extract official start and end file content from vimgolf output
+    official_start_content, official_end_content = _extract_official_files(
+        vimgolf_output
+    )
+
+    # SECURITY FIX: Validate that submitted files match official challenge files
+    with open(start_path, "r") as f:
+        submitted_start = f.read()
+    with open(end_path, "r") as f:
+        submitted_end = f.read()
+
+    assert submitted_start == official_start_content, (
+        f"Start file does not match official challenge file. "
+        f"Expected official content from challenge {challenge_id}, got different content. "
+        f"This prevents cheating with arbitrary start files."
+    )
+
+    assert submitted_end == official_end_content, (
+        f"End file does not match official challenge file. "
+        f"Expected official content from challenge {challenge_id}, got different content. "
+        f"This prevents cheating with arbitrary end files."
+    )
+
     # Read the score content and test it
     with open(score_path, "r") as f:
         score_content = f.read().strip()
@@ -103,41 +126,42 @@ def _extract_official_files(vimgolf_output):
     """
     lines = vimgolf_output.split("\n")
 
-    # Find Start File section
-    start_idx = None
-    end_idx = None
+    # Find Start File and End File sections
+    start_file_idx = None
     end_file_idx = None
 
     for i, line in enumerate(lines):
         if line.strip() == "Start File":
-            start_idx = i + 1
+            start_file_idx = i
         elif line.strip() == "End File":
-            end_file_idx = i + 1
-            if start_idx is not None:
-                end_idx = i
-        elif (
-            line.startswith("--------------------------------------------------")
-            and end_file_idx is not None
-        ):
-            # End of End File section
-            break
+            end_file_idx = i
 
-    if start_idx is None or end_idx is None or end_file_idx is None:
+    if start_file_idx is None or end_file_idx is None:
         raise ValueError(
             "Could not find Start File or End File sections in vimgolf output"
         )
 
-    # Extract content
-    start_content = "\n".join(lines[start_idx:end_idx]).rstrip("\n")
-
-    # Find the end of End File section
-    end_content_end = len(lines)
-    for i in range(end_file_idx, len(lines)):
-        if lines[i].startswith("--------------------------------------------------"):
-            end_content_end = i
+    # Extract start file content (from line after "Start File" to line before "End File")
+    start_content_lines = []
+    for i in range(start_file_idx + 1, end_file_idx):
+        line = lines[i]
+        # Stop if we hit a separator line before End File
+        if line.startswith("--------------------------------------------------"):
             break
+        start_content_lines.append(line)
 
-    end_content = "\n".join(lines[end_file_idx:end_content_end]).rstrip("\n")
+    # Extract end file content (from line after "End File" to next separator)
+    end_content_lines = []
+    for i in range(end_file_idx + 1, len(lines)):
+        line = lines[i]
+        # Stop when we hit the separator line
+        if line.startswith("--------------------------------------------------"):
+            break
+        end_content_lines.append(line)
+
+    # Join lines and remove trailing whitespace
+    start_content = "\n".join(start_content_lines).rstrip()
+    end_content = "\n".join(end_content_lines).rstrip()
 
     return start_content, end_content
 
