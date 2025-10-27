@@ -34,7 +34,7 @@ Notice the `--dataset-path annotated_tasks` flag. This is because this folder is
 
 ### docker-compose.yaml
 
-This file will need to be changed if you have an additional service you want to deploy in the agent's environment. For example, if you want to deploy a minio container in the same environment, you can do that via this file.
+This file will only need to be changed if you have an additional service you want to deploy in the agent's environment. For example, if you want to deploy a minio container in the same environment, you can do that via this file. Otherwise, do not change this file.
 
 ### Dockerfile
 
