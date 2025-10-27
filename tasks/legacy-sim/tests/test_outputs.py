@@ -270,14 +270,23 @@ def test_results_file_has_expected_headers():
     header_lines = [line for line in lines if line.startswith("#")]
     assert header_lines, "results.dat should begin with header lines starting with '#'."
 
+    expected_exact = [
+        "# 1D Wave Simulation Results",
+        "# Grid Points: 1000",
+        "# Time Step: 0.001",
+        "# Iterations: 500",
+    ]
+
+    for index, expected in enumerate(expected_exact):
+        assert len(header_lines) > index, (
+            "results.dat must include all required header lines."
+        )
+        assert header_lines[index] == expected, (
+            f"Header line {index + 1} must be exactly '{expected}', got "
+            f"'{header_lines[index]}'."
+        )
+
     expected_patterns = [
-        (r"# 1D Wave Simulation Results", "exact simulation title header"),
-        (r"# Grid Points:\s+[0-9]+", "grid points header with integer value"),
-        (
-            r"# Time Step:\s+[0-9]*\.?[0-9]+(?:[eE][-+]?[0-9]+)?",
-            "time step header with numeric value",
-        ),
-        (r"# Iterations:\s+[0-9]+", "iterations header with integer value"),
         (
             r"# Final Energy:\s+[-+]?[0-9]*\.?[0-9]+(?:[eE][-+]?[0-9]+)?",
             "final energy header with numeric value",
@@ -292,16 +301,48 @@ def test_results_file_has_expected_headers():
         ),
     ]
 
-    assert len(header_lines) >= len(expected_patterns), (
+    base_index = len(expected_exact)
+
+    assert len(header_lines) >= base_index + len(expected_patterns), (
         "results.dat is missing one or more required header lines."
     )
 
-    for index, (pattern, description) in enumerate(expected_patterns):
+    for offset, (pattern, description) in enumerate(expected_patterns):
+        index = base_index + offset
         line = header_lines[index]
         assert re.fullmatch(pattern, line), (
             f"Header line {index + 1} must match '{pattern}' ({description}), "
             f"but got '{line}'."
         )
+
+
+def test_results_header_matches_input_values():
+    """
+    Test: Header metadata must reflect values defined in input.txt (task.yaml 64-70).
+    Ensures the simulation actually consumes the provided configuration file.
+    """
+    input_path = LEGACY_SIM_ROOT / "input.txt"
+    with input_path.open("r") as f:
+        grid_points = f.readline().strip()
+        time_step = f.readline().strip()
+        iterations = f.readline().strip()
+
+    with RESULTS_PATH.open("r") as f:
+        header_lines = [line.rstrip("\n") for line in f if line.startswith("#")]
+
+    expected_lines = {
+        f"# Grid Points: {grid_points}",
+        f"# Time Step: {time_step}",
+        f"# Iterations: {iterations}",
+    }
+
+    missing = expected_lines.difference(header_lines)
+    assert not missing, (
+        "results.dat headers must reflect values from input.txt; "
+        f"missing entries: {missing}"
+    )
+
+
 def test_simulation_binary_contains_fortran_symbols():
     """
     Test: Simulation binary links the provided Fortran code (anti-cheat).
@@ -340,4 +381,3 @@ def test_fortran_sources_unmodified():
 
 if __name__ == "__main__":
     pytest.main([__file__, "-v"])
-

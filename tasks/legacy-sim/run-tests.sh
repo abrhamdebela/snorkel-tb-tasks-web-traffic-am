@@ -7,7 +7,17 @@ if [ "$PWD" = "/" ]; then
     exit 1
 fi
 
-python3 -m venv .venv
-. .venv/bin/activate
-python3 -m pip install --no-input --quiet pytest==8.4.1
-python3 -m pytest "$TEST_DIR/test_outputs.py" -rA
+if ! command -v uv >/dev/null 2>&1; then
+    if command -v curl >/dev/null 2>&1; then
+        curl -LsSf https://astral.sh/uv/install.sh | sh
+        export PATH="$HOME/.local/bin:$PATH"
+    else
+        python3 -m ensurepip --upgrade >/dev/null 2>&1 || true
+        python3 -m pip install --no-input --quiet uv
+    fi
+fi
+
+uv venv .tbench-testing
+source .tbench-testing/bin/activate
+pip install --no-input --quiet pytest==8.4.1
+pytest "$TEST_DIR/test_outputs.py" -rA
