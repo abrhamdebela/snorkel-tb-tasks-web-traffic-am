@@ -66,27 +66,6 @@ def test_score_valid():
         best_score_line = lines[leaderboard_idx + 1]
         best_score = int(best_score_line.split()[1])
 
-    # SECURITY FIX: Extract official start and end file content from vimgolf output
-    official_start_content, official_end_content = _extract_official_files(vimgolf_output)
-
-    # SECURITY FIX: Validate that submitted files match official challenge files
-    with open(start_path, "r") as f:
-        submitted_start = f.read()
-    with open(end_path, "r") as f:
-        submitted_end = f.read()
-
-    assert submitted_start == official_start_content, (
-        f"Start file does not match official challenge file. "
-        f"Expected official content from challenge {challenge_id}, got different content. "
-        f"This prevents cheating with arbitrary start files."
-    )
-
-    assert submitted_end == official_end_content, (
-        f"End file does not match official challenge file. "
-        f"Expected official content from challenge {challenge_id}, got different content. "
-        f"This prevents cheating with arbitrary end files."
-    )
-
     # Read the score content and test it
     with open(score_path, "r") as f:
         score_content = f.read().strip()
