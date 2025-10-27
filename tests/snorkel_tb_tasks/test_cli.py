@@ -21,7 +21,6 @@ def test_tasks_create():
     input = "my-first-task\n"
     input += "Create a file called /app/hello.txt. Write 'Hello, world!' to it.\n"
     input += "END\n"
-    input += "n\n"
     input += "2\n"
     input += "tag1\n"
     input += "easy\n"

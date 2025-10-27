@@ -155,7 +155,7 @@ def create(
     interactive: Annotated[
         bool | None,
         Option(help="Whether the solution is interactive."),
-    ] = None,
+    ] = False,
     category: Annotated[
         str | None,
         Option(help="Task category."),
