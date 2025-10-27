@@ -1,0 +1,17 @@
+```
+2025-10-27 14:23:15 INFO Server started on port 8000
+2025-10-27 14:23:45 INFO Request: GET /api/users
+2025-10-27 14:24:12 ERROR Connection timeout to database
+2025-10-27 14:24:13 ERROR Failed to fetch user data: DatabaseError
+2025-10-27 14:25:30 INFO Request: POST /api/login
+2025-10-27 14:25:35 CRITICAL Authentication service unavailable
+2025-10-27 14:26:01 INFO Request: GET /api/products
+2025-10-27 14:27:15 ERROR Connection timeout to database
+2025-10-27 14:28:22 INFO Request: GET /api/orders
+2025-10-27 14:28:50 ERROR Connection timeout to database
+2025-10-27 14:29:10 INFO Request: GET /api/users
+2025-10-27 14:30:05 ERROR Failed to fetch user data: DatabaseError
+2025-10-27 14:30:45 INFO Server health check: OK
+2025-10-27 14:31:20 ERROR Connection timeout to database
+2025-10-27 14:32:00 CRITICAL Out of memory: heap exhausted
+```

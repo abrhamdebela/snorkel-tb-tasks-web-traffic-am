@@ -1,0 +1,16 @@
+```
+2025-10-27 14:23:20 INFO Redis cache connected
+2025-10-27 14:24:11 INFO Cache hit: user:123
+2025-10-27 14:24:14 ERROR Cache miss: user:123 - falling back to database
+2025-10-27 14:25:32 INFO Cache invalidated: session:*
+2025-10-27 14:25:36 ERROR Failed to connect to Redis: Connection refused
+2025-10-27 14:25:37 CRITICAL Redis cluster unreachable
+2025-10-27 14:26:30 INFO Cache reconnected
+2025-10-27 14:27:14 INFO Cache hit: product:electronics
+2025-10-27 14:28:49 ERROR Cache miss: order:456 - falling back to database
+2025-10-27 14:29:30 INFO Cache eviction: 1000 keys removed
+2025-10-27 14:30:06 ERROR Cache miss: user:test@example.com - falling back to database
+2025-10-27 14:30:55 INFO Cache statistics: hit_rate=78%
+2025-10-27 14:31:19 ERROR Cache miss: product:789 - falling back to database
+2025-10-27 14:31:58 ERROR High memory usage: 89% of limit
+```
