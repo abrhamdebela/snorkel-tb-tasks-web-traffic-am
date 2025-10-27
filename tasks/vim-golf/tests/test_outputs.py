@@ -178,11 +178,11 @@ def test_official_files_match():
 
     # Validate files match
     assert submitted_start == official_start_content, (
-        f"Start file does not match official challenge file. "
-        f"This prevents cheating with arbitrary start files."
+        "Start file does not match official challenge file. "
+        "This prevents cheating with arbitrary start files."
     )
 
     assert submitted_end == official_end_content, (
-        f"End file does not match official challenge file. "
-        f"This prevents cheating with arbitrary end files."
+        "End file does not match official challenge file. "
+        "This prevents cheating with arbitrary end files."
     )
