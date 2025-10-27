@@ -244,6 +244,22 @@ def test_final_momentum_between_minus_1_and_1():
     )
 
 
+def test_position_column_between_zero_and_one():
+    """
+    Test: Position column values lie within [0.0, 1.0] as documented in task.yaml.
+    """
+    with RESULTS_PATH.open("r") as f:
+        for line in f:
+            stripped = line.strip()
+            if not stripped or stripped.startswith("#"):
+                continue
+            parts = stripped.split()
+            assert len(parts) >= 2, "Data lines must include position and amplitude."
+            position = float(parts[0])
+            assert 0.0 <= position <= 1.0, (
+                f"Position values must be within [0.0, 1.0]; found {position}."
+            )
+
 def test_final_temperature_line_exists():
     """
     Test: Output includes a 'Final Temperature:' line (criterion from task.yaml line 74).
@@ -270,23 +286,14 @@ def test_results_file_has_expected_headers():
     header_lines = [line for line in lines if line.startswith("#")]
     assert header_lines, "results.dat should begin with header lines starting with '#'."
 
-    expected_exact = [
-        "# 1D Wave Simulation Results",
-        "# Grid Points: 1000",
-        "# Time Step: 0.001",
-        "# Iterations: 500",
-    ]
-
-    for index, expected in enumerate(expected_exact):
-        assert len(header_lines) > index, (
-            "results.dat must include all required header lines."
-        )
-        assert header_lines[index] == expected, (
-            f"Header line {index + 1} must be exactly '{expected}', got "
-            f"'{header_lines[index]}'."
-        )
-
     expected_patterns = [
+        (r"# 1D Wave Simulation Results", "exact simulation title header"),
+        (r"# Grid Points:\s+[0-9]+", "grid points header with integer value"),
+        (
+            r"# Time Step:\s+[0-9]*\.?[0-9]+(?:[eE][-+]?[0-9]+)?",
+            "time step header with numeric value",
+        ),
+        (r"# Iterations:\s+[0-9]+", "iterations header with integer value"),
         (
             r"# Final Energy:\s+[-+]?[0-9]*\.?[0-9]+(?:[eE][-+]?[0-9]+)?",
             "final energy header with numeric value",
@@ -301,20 +308,16 @@ def test_results_file_has_expected_headers():
         ),
     ]
 
-    base_index = len(expected_exact)
-
-    assert len(header_lines) >= base_index + len(expected_patterns), (
+    assert len(header_lines) >= len(expected_patterns), (
         "results.dat is missing one or more required header lines."
     )
 
-    for offset, (pattern, description) in enumerate(expected_patterns):
-        index = base_index + offset
+    for index, (pattern, description) in enumerate(expected_patterns):
         line = header_lines[index]
         assert re.fullmatch(pattern, line), (
             f"Header line {index + 1} must match '{pattern}' ({description}), "
             f"but got '{line}'."
         )
-
 
 def test_results_header_matches_input_values():
     """
