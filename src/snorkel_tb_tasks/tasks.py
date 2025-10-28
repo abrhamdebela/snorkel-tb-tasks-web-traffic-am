@@ -167,11 +167,11 @@ def create(
             "-t",
             help="Task tags. Can be set multiple times to add multiple tags.",
         ),
-    ] = None,
+    ] = [],
     difficulty: Annotated[
         TaskDifficulty | None,
         Option(help="Task difficulty."),
-    ] = None,
+    ] = TaskDifficulty.UNKNOWN,
     expert_time_estimate_min: Annotated[
         int | None,
         Option(help="Expert time estimate in minutes."),

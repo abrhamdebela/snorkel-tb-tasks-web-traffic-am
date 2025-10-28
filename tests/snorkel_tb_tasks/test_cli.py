@@ -43,8 +43,8 @@ def test_tasks_create():
     assert task_yaml["author_name"] == "anonymous"
     assert task_yaml["author_email"] == "anonymous"
     assert task_yaml["category"] == "build-and-dependency-management"
-    assert task_yaml["tags"] == ["tag1"]
-    assert task_yaml["difficulty"] == "easy"
+    assert task_yaml["tags"] == []
+    assert task_yaml["difficulty"] == "unknown"
     assert task_yaml["expert_time_estimate_min"] == 120
     assert task_yaml["junior_time_estimate_min"] == 60
 
