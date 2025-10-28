@@ -1,8 +1,2 @@
 runs/
 __pycache__
-.venv/
-**/.venv/
-**/venv/
-.pytest_cache/
-**/.pytest_cache/
-*.pyc

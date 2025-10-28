@@ -52,9 +52,8 @@ CATEGORIES = [
         "category": "scientific-computing",
         "name": "Scientific-computing",
         "description": "Tasks using scientific libraries or workflows, such as numerical computation, simulations, or domain-specific research code.",
-    },
+    }
 ]
-
 
 class SnorkelWizard(Wizard):
     _TEMPLATE_DIR = Path(__file__).parent.parent.parent / "template-task"
@@ -104,7 +103,7 @@ class SnorkelWizard(Wizard):
             name = category_dict["name"]
             description = category_dict["description"]
             self._print_with_color(
-                f"{i + 1}. {name} (category: {category}): ",
+                f"{i+1}. {name} (category: {category}): ",
                 color=color + Colors.BOLD,
             )
             self._print_with_color(
@@ -126,8 +125,8 @@ class SnorkelWizard(Wizard):
                 .strip()
             )
 
-            if category_number in [str(i + 1) for i in range(len(CATEGORIES))]:
-                self._category = CATEGORIES[int(category_number) - 1]["category"]
+            if category_number in [str(i+1) for i in range(len(CATEGORIES))]:
+                self._category = CATEGORIES[int(category_number)-1]["category"]
                 break
 
             self._print_with_color(
@@ -138,7 +137,6 @@ class SnorkelWizard(Wizard):
     def _create_files(self, color: str) -> None:
         super()._create_files(color)
         self._copy_template_file(".dockerignore")
-
 
 @tasks_app.command()
 def create(

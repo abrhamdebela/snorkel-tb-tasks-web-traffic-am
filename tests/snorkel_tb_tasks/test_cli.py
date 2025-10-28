@@ -39,10 +39,7 @@ def test_tasks_create():
     # Check if task.yaml was created correctly
     with open("tasks/my-first-task/task.yaml", "r") as f:
         task_yaml = yaml.safe_load(f)
-    assert (
-        task_yaml["instruction"]
-        == "Create a file called /app/hello.txt. Write 'Hello, world!' to it."
-    )
+    assert task_yaml["instruction"] == "Create a file called /app/hello.txt. Write 'Hello, world!' to it."
     assert task_yaml["author_name"] == "anonymous"
     assert task_yaml["author_email"] == "anonymous"
     assert task_yaml["category"] == "build-and-dependency-management"
