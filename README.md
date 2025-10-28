@@ -17,6 +17,10 @@ git clone git@github.com:snorkel-ai/snorkel-tb-tasks.git
 cd snorkel-tb-tasks
 ```
 
+## Read the annotated task readme
+
+Read annotated_task/README.md
+
 ## Create a new task using Task Wizard
 
 ```bash
