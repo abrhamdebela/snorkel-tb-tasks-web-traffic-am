@@ -95,8 +95,34 @@ jobs:
       task: ${{ matrix.task }}
     secrets: inherit
 
-  test-agents:
+  test-non-agents:
     needs: find-modified-tasks
+    strategy:
+      fail-fast: false
+      matrix:
+        agent:
+          - name: "oracle"
+            display: "Oracle Solution"
+            required: true
+            key: "oracle"
+          - name: "nop"
+            display: "NOP Agent (Should Fail)"
+            required: true
+            key: "nop"
+        run: [1]
+        task: ${{ fromJSON(needs.find-modified-tasks.outputs.tasks) }}
+    name: Test Non-Agents with ${{ matrix.agent.display }} - ${{ matrix.task }} - ${{ matrix.run }}
+    uses: ./.github/workflows/test-single-task.yaml
+    with:
+      agent: ${{ matrix.agent.name }}
+      run: ${{ matrix.run }}
+      key: ${{ matrix.agent.key }}
+      model: ${{ matrix.agent.model }}
+      required: ${{ matrix.agent.required }}
+      task: ${{ matrix.task }}
+
+  test-agents:
+    needs: [find-modified-tasks, test-non-agents]
     strategy:
       fail-fast: false
       matrix:
@@ -123,32 +149,6 @@ jobs:
       required: ${{ matrix.agent.required }}
       task: ${{ matrix.task }}
     secrets: inherit
-
-  test-non-agents:
-    needs: find-modified-tasks
-    strategy:
-      fail-fast: false
-      matrix:
-        agent:
-          - name: "oracle"
-            display: "Oracle Solution"
-            required: true
-            key: "oracle"
-          - name: "nop"
-            display: "NOP Agent (Should Fail)"
-            required: true
-            key: "nop"
-        run: [1]
-        task: ${{ fromJSON(needs.find-modified-tasks.outputs.tasks) }}
-    name: Test Non-Agents with ${{ matrix.agent.display }} - ${{ matrix.task }} - ${{ matrix.run }}
-    uses: ./.github/workflows/test-single-task.yaml
-    with:
-      agent: ${{ matrix.agent.name }}
-      run: ${{ matrix.run }}
-      key: ${{ matrix.agent.key }}
-      model: ${{ matrix.agent.model }}
-      required: ${{ matrix.agent.required }}
-      task: ${{ matrix.task }}
 
   # Summary job to provide clear PR status
   test-summary:
@@ -191,7 +191,7 @@ jobs:
             echo "Label '$LABEL' already exists, no change needed"
           else
             # Remove any existing difficulty labels
-            for difficulty in "difficulty:hard" "difficulty:medium" "difficulty:easy" "difficulty:trivial"; do
+            for difficulty in "difficulty:hard" "difficulty:medium" "difficulty:easy" "difficulty:trivial" "difficulty:n/a"; do
               if echo "$EXISTING_LABELS" | grep -q "^${difficulty}$"; then
                 echo "Removing old label: $difficulty"
                 gh pr edit "$NUMBER" --remove-label "$difficulty" || true

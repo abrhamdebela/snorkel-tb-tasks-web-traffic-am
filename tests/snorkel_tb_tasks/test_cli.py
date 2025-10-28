@@ -21,7 +21,6 @@ def test_tasks_create():
     input = "my-first-task\n"
     input += "Create a file called /app/hello.txt. Write 'Hello, world!' to it.\n"
     input += "END\n"
-    input += "n\n"
     input += "2\n"
     input += "tag1\n"
     input += "easy\n"
@@ -51,6 +50,11 @@ def test_tasks_create():
     assert task_yaml["difficulty"] == "easy"
     assert task_yaml["expert_time_estimate_min"] == 120
     assert task_yaml["junior_time_estimate_min"] == 60
+
+    # Check if Snorkel's hints were added to the task.yaml file
+    with open("tasks/my-first-task/task.yaml", "r") as f:
+        canary_string = "".join([line for line in f.readlines() if line.startswith("#")])
+    assert "Hint from Snorkel" in canary_string
 
     # clean up
     shutil.rmtree("tasks/my-first-task")
