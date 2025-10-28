@@ -1,6 +1,5 @@
-# Hint from Snorkel
-# Configuration file that defines how containers, volumes, and networks are orchestrated for the task.
-# It should reference the base image from the Dockerfile and include any necessary environment variables or mounted resources.
+# You usually don't need to modify anything in this file, but you can use it to add
+# more containers or configure the client container, if needed.
 
 services:
   client:
