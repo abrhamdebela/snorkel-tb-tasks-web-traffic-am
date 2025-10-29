@@ -132,10 +132,15 @@ instruction: |-
 
     **5. Data Persistence**
     - Data must persist between API calls
-    - You may use any storage mechanism you prefer (JSON files, SQLite, in-memory with thread safety, etc.)
-    - The storage should be located in `/app/data/` if using files
-    - If using SQLite, the database file must be at `/app/data/database.db`
-    - Tests will verify data integrity by examining the database file directly
+    - You must use SQLite for data storage
+    - The database file must be located at `/app/data/database.db`
+    - Use the following table names (tests will query these tables directly):
+      - `users` - stores user records with id, username
+      - `projects` - stores projects with id, name, owner_id
+      - `tasks` - stores tasks with id, title, project_id, description, due_date, status, comments
+      - `tags` - stores unique tag names with id, name
+      - `task_tags` - junction table for many-to-many relationship with task_id, tag_id
+    - Tests will verify data integrity by directly querying these tables
 
     **6. Input Validation Rules**
     - Username: non-empty, ≤ 50 characters

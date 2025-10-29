@@ -1,2 +1,6 @@
 runs/
 __pycache__
+
+# Terminal-bench run outputs
+runs/
+tasks/runs/
