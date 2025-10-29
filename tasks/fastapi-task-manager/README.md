@@ -71,17 +71,17 @@ uv run tb run --agent terminus --model <model-name> --task-id fastapi-task-manag
 
 ## Test Coverage
 
-The test suite includes 55 comprehensive tests covering:
+The test suite includes 65 comprehensive tests covering:
 
 - ✅ Basic CRUD operations (5 tests)
-- ✅ Authorization checks (7 tests)
-- ✅ Input validation (11 tests)
+- ✅ Authorization checks (15 tests) - 401 on all protected endpoints
+- ✅ Input validation (12 tests)
 - ✅ Task status updates (3 tests)
 - ✅ Task descriptions (3 tests)
 - ✅ Due dates & sorting (6 tests)
 - ✅ Tag operations (6 tests)
 - ✅ Cascading deletes (4 tests)
-- ✅ Edge cases (10 tests)
+- ✅ Edge cases (11 tests)
 
 ## Database Schema
 

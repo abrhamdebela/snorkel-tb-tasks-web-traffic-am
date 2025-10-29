@@ -28,10 +28,8 @@ FROM ghcr.io/laude-institute/t-bench/python-3-13:20250620
 # (uv run) tb tasks interact --help
 # Don't forget to prefix with 'uv run' if you're using uv.
 
-# Install Python dependencies for the FastAPI task with pinned versions
+# Install Python runtime dependencies
 RUN pip install --no-cache-dir \
     fastapi==0.115.5 \
     uvicorn[standard]==0.32.1 \
-    httpx==0.27.2 \
-    pytest==8.3.4 \
     pydantic==2.10.3
