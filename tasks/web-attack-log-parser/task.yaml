@@ -41,20 +41,20 @@ instruction: |-
   
   Look for these attack patterns in the URL path. Matching is case-insensitive, so "UNION SELECT" matches "union select" or "UnIoN SeLeCt". A single request can match multiple patterns.
   
-  SQL Injection (look for these substrings anywhere in the URL):
-  "' OR ", "UNION SELECT", "1=1--", "DROP TABLE", "INSERT INTO", "DELETE FROM", "--", "/**/", "SELECT * FROM"
+  SQL Injection (trigger when any of these substrings appear in the URL path):
+  "union", "select", "insert", "update", "delete", "drop", "create", "alter", "--", "xp_", "sp_", "exec", "execute", "script", "javascript", "concat", "declare", "char(", "nchar(", "varchar(", "nvarchar(", "sys.", "0x", "unhex", "md5", "' or '", "\" or \"", "or 1=1", "or true", "and 1=1"
   
-  Path Traversal (look for these substrings):
-  "../", "..\\", "%2e%2e/", "%2e%2e\\", "etc/passwd", "windows/system32"
+  Path Traversal:
+  "../", "..\\", "%2e%2e/", "%2e%2e\\", "dot-dot-slash"
   
-  XSS - Cross-Site Scripting (look for these substrings):
-  "<script", "javascript:", "onerror=", "onload=", "alert(", "document.cookie", "<iframe"
+  XSS - Cross-Site Scripting:
+  "<script", "</script", "javascript:", "onerror=", "onload=", "onclick=", "onmouseover=", "<iframe", "<object", "<embed", "alert(", "prompt(", "confirm(", "document.cookie", "document.write", "window.location", "eval("
   
-  Admin Probing (URL must START with one of these):
-  "/admin", "/wp-admin", "/phpmyadmin", "/administrator", "/.env", "/config.php"
+  Admin Probing (the requested path must start with one of):
+  "/admin", "/wp-admin", "/phpmyadmin", "/administrator", "/manager", "/console", "/cpanel", "/webadmin", "/.env", "/config"
   
-  Scanner Activity (look in the User-Agent field, case-insensitive):
-  "scanner", "bot", "sqlmap", "nikto", "nmap", "masscan"
+  Scanner Activity (match these tokens inside the User-Agent header):
+  "scanner", "bot", "crawler", "spider", "scraper", "sqlmap", "nikto", "nmap", "masscan", "nessus", "metasploit", "burp"
   
   Also flag IPs that are:
   - In the blacklist.txt file AND made at least one request in the logs
@@ -96,7 +96,7 @@ instruction: |-
       - `ip_addresses`: array of attacker IPs involved (alphabetically sorted when detected, otherwise empty)
       - `shared_attack_types`: array of shared attack type names (alphabetically sorted)
       - `evidence`: explanatory sentence (may be "None observed..." if not detected)
-  - `top_attackers`: array (≤10 entries) in descending `requests` order, alphabetical tie-breaker, each entry containing:
+  - `top_attackers`: array (≤10 entries) in descending `requests` order (break ties alphabetically by IP), each entry containing:
     * `ip`, `requests`, `malicious_requests`, `attack_types` (alphabetically sorted list), `first_seen`, `last_seen`, `blacklisted`, `is_private`, `client_errors`, `server_errors`, `rate_limited`
     * Include an IP if it triggered at least one attack pattern, violated rate limits, or appears in blacklist.txt while active.
   - `timeline`: array sorted by `hour`. Each element is `{ "hour": ISO hour, "requests": <int>, "unique_ips": <int>, "attacks_detected": <int> }`
@@ -105,7 +105,7 @@ instruction: |-
     * `response_codes`: object mapping each IP to `{ "4xx": <int>, "5xx": <int> }`
   
   Additional definitions:
-  - Count an IP as malicious if it is blacklisted and active, violated the rate limit, or generated >10 attack-tagged requests.
+  - Count an IP as malicious if it generated at least one request that matched any attack pattern.
   - Use integer counters throughout; no floats.
   - All timestamps must be ISO 8601 with `+00:00`.
   
