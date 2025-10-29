@@ -94,26 +94,7 @@ instruction: |-
   - Once any 60-second window for an IP exceeds the threshold, mark that entire IP as a rate limit violator
   - Rate limit violators should be included in the blocked IP list even if they didn't match any attack patterns
 
-  TASK 4: DETECT COORDINATED ATTACKS
-
-  A coordinated attack occurs when multiple IPs work together using similar attack methods. Detect this by checking if:
-  1. At least 3 different IPs (COORDINATED_IP_THRESHOLD = 3)
-  2. Each made more than 50 requests per minute (COORDINATED_REQUEST_THRESHOLD = 50, checked via rate limit detection)
-  3. Each matched at least 2 different attack patterns (COORDINATED_PATTERN_OVERLAP = 2)
-  4. All qualifying IPs share at least 2 attack patterns in common (Example: all used sql_injection AND xss_attempts)
-
-  If all conditions are met:
-  - Set `detected: true`
-  - List the qualifying IP addresses in `ip_addresses` array
-  - List the shared attack patterns in `shared_attack_types` array (alphabetically sorted)
-  - Provide evidence like: "3 IPs exceeded 50 req/min with shared attack types: sql_injection, xss_attempts"
-
-  If conditions are NOT met:
-  - Set `detected: false`
-  - Set `ip_addresses` and `shared_attack_types` to empty arrays
-  - Set `evidence` to empty string ""
-
-  TASK 5: CREATE THE OUTPUT FILES
+  TASK 4: CREATE THE OUTPUT FILES
   
   A. Create /app/output/security_analysis.json
   
@@ -133,8 +114,9 @@ instruction: |-
         "admin_probing": <int>,
         "scanner_activity": <int>
       },
-      "peak_attack_time": "<ISO timestamp>",  // Start of busiest 5-min window, such as "2025-10-20T12:00:00+00:00"
-      "requests_during_peak": <int>,       // Total requests in that 5-minute window
+      "peak_attack_hour": "<ISO timestamp>",  // Start of busiest 5-min window, e.g., "2025-10-20T12:00:00+00:00"
+      "requests_during_peak": <int>,       // Total requests in that window
+      "attacks_during_peak": <int>,        // Number of malicious requests in that window
       "quiet_periods": [                   // All 5-min windows with <5 requests
         {
           "start": "<ISO timestamp>",
@@ -145,7 +127,7 @@ instruction: |-
         "detected": <boolean>,
         "ip_addresses": [<string>],        // IPs involved (any order acceptable)
         "shared_attack_types": [<string>], // Shared patterns (any order acceptable)
-        "evidence": "<string>"             // Narrative description; use "None observed within the analyzed period." when not detected
+        "evidence": "<string>"
       }
     },
     "top_attackers": [                     // Up to 10 IPs, sorted by total requests descending
@@ -187,9 +169,10 @@ instruction: |-
 
   Important field definitions:
   - `malicious_ips`: Count of IPs that generated at least one request matching an attack pattern (NOT just blacklisted or rate-limited)
-  - `peak_attack_time`: Divide time into 5-minute buckets (Example: 12:00-12:04:59, 12:05-12:09:59). Find the bucket with the most total requests. On ties, use the earliest bucket. Report the bucket's start time.
-  - `quiet_periods`: List ALL 5-minute windows (from first to last request) that have fewer than 5 requests, sorted by start time
-  - `coordinated_attack`: Mark as detected when at least three distinct IPs each have ≥50 requests, were flagged for rate-limit violations (>60 requests inside some rolling 60-second window), and share at least two attack types in common. The IP and attack-type lists may appear in any order.
+  - `peak_attack_hour`: Start timestamp of the busiest five-minute window (on ties, choose the earliest window)
+  - `requests_during_peak`: Total number of requests observed in that window
+  - `attacks_during_peak`: Count of malicious requests (requests matching attack patterns) during that window
+  - `quiet_periods`: List every five-minute window between the first and last request that had fewer than five total requests, sorted chronologically
   - `top_attackers`: Include an IP if it (1) matched at least one attack pattern, OR (2) violated rate limits, OR (3) appears in blacklist.txt and made requests. Sort by total requests descending. Ties may appear in any order.
   - Use integer counters throughout; no floats
   - All timestamps must be ISO 8601 with `+00:00` timezone
@@ -234,121 +217,6 @@ instruction: |-
     * MEDIUM when the IP produced between 6 and 20 malicious requests (inclusive)
     * LOW otherwise
   - Ensure the CSV ends with a newline character.
-  
-  D. Create /app/output/executive_summary.txt
-
-  Provide a human-readable summary in this exact format:
-
-  ```
-  Security Incident Executive Summary
-  ===================================
-  Total Requests Analyzed: <number with commas>
-  Malicious Requests: <number with commas>
-  Unique Attacking IPs: <number WITHOUT commas>
-  Data Exfiltration Volume: <KB with 2 decimals> KB (<bytes with commas> bytes)
-
-  Top Attack Vectors:
-  1. <Attack Type>: <count with commas> attempts
-  2. <Attack Type>: <count with commas> attempts
-  3. <Attack Type>: <count with commas> attempts
-
-  COORDINATED ATTACK ASSESSMENT: YES|NO
-  Evidence: <description or "None observed within the analyzed period.">
-  ```
-
-  Specific Requirements:
-  - Total Requests Analyzed: Use thousands separator (`1,234`)
-  - Malicious Requests: Use thousands separator (`5,678`)
-  - Unique Attacking IPs: Plain integer with NO thousands separator (`42` not `42,000`)
-  - Data Exfiltration Volume:
-    * Calculate as: Sum of bytes_sent for all malicious requests with 2xx status codes (successful responses)
-    * Data exfiltration = responses to attack requests that succeeded (status 200-299)
-    * Format: `<KB> KB (<bytes> bytes)` where KB has 2 decimal places and bytes uses comma separators
-    * Example: `15.42 KB (15,789 bytes)`
-  - Top Attack Vectors:
-    * List the top 3 attack patterns by count, descending
-    * Format attack type as Title Case with spaces: `sql_injection` → `Sql Injection`
-    * Use thousands separator for attempt counts
-    * If fewer than 3 attack types exist, only show what's available
-  - COORDINATED ATTACK ASSESSMENT: Show `YES` or `NO` based on coordinated attack detection
-  - Evidence: If coordinated attack detected, show the evidence string. Otherwise: `None observed within the analyzed period.`
-  - The file must end with a newline character
-
-  IMPLEMENTATION HINTS AND COMMON PITFALLS:
-
-  This is a challenging task. Here are critical points to avoid common mistakes:
-
-  1. Rate Limit Detection (Sliding Window Algorithm):
-     - Use a two-pointer sliding window approach, NOT fixed 60-second buckets
-     - For each request at time T, count all requests in window [T - 60 seconds, T]
-     - Violation occurs when count > 60 (meaning 61 or more requests)
-     - Example: 60 requests in 60 seconds = OK; 61 requests in 60 seconds = VIOLATED
-     - Implementation tip: Sort request times, use left/right pointers to maintain window
-
-  2. Coordinated Attack Detection (ALL 4 Conditions Required):
-     - Condition 1: At least 3 IPs qualify (not 2, not exactly 3 - three or more)
-     - Condition 2: Each qualifying IP made >50 requests (check using rate limit detection)
-     - Condition 3: Each qualifying IP matched at least 2 different attack types
-     - Condition 4: All qualifying IPs share at least 2 attack types in common (use set intersection)
-     - If ANY condition fails: set detected=false, empty arrays, evidence=""
-
-  3. Five-Minute Window Bucketing:
-     - Floor timestamps to 5-minute intervals: 0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55
-     - Examples: 12:03:45 → 12:00:00, 12:07:22 → 12:05:00, 12:58:59 → 12:55:00
-     - Peak: Find the 5-min bucket with MOST requests; on ties use earliest bucket
-     - Quiet periods: List ALL 5-min windows from first to last request that have <5 requests
-
-  4. Malicious IPs Definition (Critical):
-     - Count ONLY IPs that matched at least one attack pattern
-     - Does NOT include IPs that are only blacklisted or only rate-limited
-     - Example: IP with 100 clean requests but rate-limited → NOT malicious
-     - Example: IP with 1 SQL injection attempt → IS malicious
-
-  5. Output Format Requirements:
-     - response_codes: Dictionary keys MUST be sorted alphabetically by IP
-     - All 4 output files: MUST end with newline character (\n)
-     - ips_to_block.txt: Attack reasons must be alphabetically sorted; include "rate_limit" as a reason
-     - Executive summary: "Unique Attacking IPs" has NO comma separator (unlike other numbers)
-
-  6. Top Attackers Inclusion Rule:
-     - Include IP if it meets ANY of these criteria:
-       * Matched at least 1 attack pattern, OR
-       * Violated rate limit, OR
-       * Appears in blacklist.txt AND made at least 1 request
-     - Sort by total requests descending, then by IP alphabetically for ties
-     - Include up to 10 IPs maximum
-
-  7. Data Exfiltration Calculation:
-     - Sum bytes_sent for requests that are BOTH malicious AND successful (status 200-299)
-     - Represents data sent in response to successful attack requests
-
-  8. Attack Pattern Matching:
-     - SQL injection, path traversal, XSS, admin probing: Check URL path (case-insensitive)
-     - Scanner activity: Check User-Agent header (case-insensitive) - ONLY pattern that uses User-Agent
-     - Admin probing: Use startswith() for path prefixes
-     - All others: Use substring contains (in operator)
-
-  9. Timestamp Conversion:
-     - Input format: "20/Oct/2025:08:10:00 +0000"
-     - Output format: "2025-10-20T08:10:00+00:00"
-     - Python: strptime("%d/%b/%Y:%H:%M:%S +0000") then strftime("%Y-%m-%dT%H:%M:%S+00:00")
-
-  10. Self-Test Questions:
-      Q: IP makes exactly 60 requests in 60 seconds - is it rate limited?
-      A: NO (must be MORE than 60, meaning 61+)
-
-      Q: What counts toward the malicious_ips summary field?
-      A: Only IPs that matched at least one attack pattern
-
-      Q: Coordinated attack: 3 IPs, each with 70 requests and 2 attack types, but only 1 shared type?
-      A: NOT detected (need at least 2 shared attack types across all IPs)
-
-      Q: What format for peak_attack_time?
-      A: ISO timestamp of the 5-minute window start (e.g., "2025-10-20T12:05:00+00:00")
-
-      Q: Where does "rate_limit" appear in outputs?
-      A: In ips_to_block.txt reasons list, and as rate_limited boolean in top_attackers
-
   REQUIREMENTS:
   - Process all 6 log files
   - Substring matching for attack patterns is case-insensitive
@@ -358,11 +226,11 @@ instruction: |-
   - Use a JSON library to generate valid JSON (don't build JSON strings manually)
   - All numeric values must be integers
   - Tests are executed with the system-wide Python environment provided in the container; avoid installing extra packages during runtime
-  - The CSV and text summary must also end with newline characters
+  - All output files must end with newline characters
   - `incident_timeline.csv` header must be exactly: timestamp,ip,method,path,status,attack_type,severity
   - Severity levels: assign HIGH for blacklisted IPs or when the IP has >20 malicious requests, MEDIUM for 6–20, LOW otherwise
   - Ensure `top_attackers`, `ip_analysis` arrays, and `ips_to_block` entries follow the specified sorting rules
-  
+
   SUCCESS CRITERIA:
   - All four output files exist at the exact paths specified
   - JSON is valid and contains all required fields
@@ -373,14 +241,14 @@ instruction: |-
 
 author_name: Hammam
 author_email: hammam.almomani@menadevs.io
-difficulty: hard
+difficulty: medium
 category: data-processing
 tags:
   - log-analysis
   - security
   - pattern-detection
 parser_name: pytest
-max_agent_timeout_sec: 1000.0
+max_agent_timeout_sec: 600.0
 max_test_timeout_sec: 90.0
 run_tests_in_same_shell: false
 disable_asciinema: false

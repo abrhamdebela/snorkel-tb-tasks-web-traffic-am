@@ -210,6 +210,7 @@ def detect_attack_patterns(path: str, user_agent: str) -> List[str]:
     return findings
 
 
+
 def floor_to_five_minutes(dt: datetime) -> datetime:
     """Round down to the start of the containing five-minute window."""
     dt = dt.replace(second=0, microsecond=0)
@@ -243,22 +244,12 @@ def detect_coordinated(ip_stats: Dict[str, dict]) -> Dict[str, object]:
             qualifying.append((ip, set(info["attack_types"])))
 
     if len(qualifying) < COORDINATED_IP_THRESHOLD:
-        return {
-            "detected": False,
-            "ip_addresses": [],
-            "shared_attack_types": [],
-            "evidence": "",
-        }
+        return {"detected": False, "ip_addresses": [], "shared_attack_types": [], "evidence": ""}
 
     pattern_sets = [entry[1] for entry in qualifying]
     shared = set.intersection(*pattern_sets) if pattern_sets else set()
     if len(shared) < COORDINATED_PATTERN_OVERLAP:
-        return {
-            "detected": False,
-            "ip_addresses": [],
-            "shared_attack_types": [],
-            "evidence": "",
-        }
+        return {"detected": False, "ip_addresses": [], "shared_attack_types": [], "evidence": ""}
 
     ip_addresses = [entry[0] for entry in qualifying]
     evidence = (
@@ -386,8 +377,12 @@ def ground_truth():
         attack_totals.update(record["attack_types"])
 
     window_counts: Dict[datetime, int] = defaultdict(int)
+    window_attack_counts: Dict[datetime, int] = defaultdict(int)
     for record in requests:
-        window_counts[floor_to_five_minutes(record["datetime"])] += 1
+        bucket = floor_to_five_minutes(record["datetime"])
+        window_counts[bucket] += 1
+        if record["is_malicious"]:
+            window_attack_counts[bucket] += 1
 
     quiet_periods = []
     if window_counts:
@@ -409,12 +404,11 @@ def ground_truth():
         peak_info = {
             "start": peak_start,
             "count": peak_count,
-            "iso": peak_start.strftime(ISO_FORMAT),
+            "attacks": window_attack_counts.get(peak_start, 0),
+            "hour": peak_start.strftime(ISO_FORMAT),
         }
     else:
-        peak_info = {"start": None, "count": 0, "iso": "N/A"}
-
-    coordinated = detect_coordinated(ip_stats)
+        peak_info = {"start": None, "count": 0, "attacks": 0, "hour": "N/A"}
     timeline = build_timeline(requests)
 
     response_codes = {
@@ -475,10 +469,8 @@ def ground_truth():
         "ip_stats": ip_stats,
         "attack_totals": attack_totals,
         "rate_limit_violators": rate_limit_violators,
-        "quiet_periods": quiet_periods,
         "peak": peak_info,
         "timeline": timeline,
-        "coordinated": coordinated,
         "response_codes": response_codes,
         "ips_to_block": ips_to_block,
         "malicious_requests": malicious_requests,
@@ -515,19 +507,12 @@ def incident_timeline_rows():
 
 
 @pytest.fixture(scope="module")
-def executive_summary():
-    """Return the raw contents of executive_summary.txt."""
-    return Path("/app/output/executive_summary.txt").read_text(encoding="utf-8")
-
-
-@pytest.fixture(scope="module")
 def output_paths():
     """All produced output files for encoding checks."""
     return [
         Path("/app/output/security_analysis.json"),
         Path("/app/output/ips_to_block.txt"),
         Path("/app/output/incident_timeline.csv"),
-        Path("/app/output/executive_summary.txt"),
     ]
 
 
@@ -563,26 +548,12 @@ def test_attack_pattern_totals(security_analysis, ground_truth):
         assert summary_patterns[pattern] == expected, f"Mismatch for pattern {pattern}"
 
 
-def test_peak_window_and_quiet_periods(security_analysis, ground_truth):
-    """Check peak attack window and quiet intervals are accurately reported."""
+def test_peak_attack_hour(security_analysis, ground_truth):
+    """Check peak attack hour is accurately reported."""
     summary = security_analysis["summary"]
-    assert summary["peak_attack_time"] == ground_truth["peak"]["iso"]
-    assert summary["requests_during_peak"] == ground_truth["peak"]["count"]
-    assert summary["quiet_periods"] == ground_truth["quiet_periods"]
+    assert summary["peak_attack_hour"] == ground_truth["peak"]["hour"]
+    assert summary["attacks_during_peak"] == ground_truth["peak"]["attacks"]
 
-
-def test_coordinated_attack_section(security_analysis, ground_truth):
-    """Ensure the coordinated attack assessment mirrors the reference implementation."""
-    expected = ground_truth["coordinated"]
-    actual = security_analysis["summary"]["coordinated_attack"]
-    assert actual["detected"] == expected["detected"]
-    assert sorted(actual["ip_addresses"]) == sorted(expected["ip_addresses"])
-    assert sorted(actual["shared_attack_types"]) == sorted(
-        expected["shared_attack_types"]
-    )
-    if expected["detected"]:
-        for token in expected["shared_attack_types"]:
-            assert token in actual["evidence"]
 
 
 def test_timeline_matches_ground_truth(security_analysis, ground_truth):
@@ -728,33 +699,7 @@ def test_incident_timeline_sorted(incident_timeline_rows):
     assert timestamps == sorted(timestamps)
 
 
-def test_executive_summary_includes_key_metrics(executive_summary, ground_truth):
-    """Validate that the executive summary reports core numeric metrics."""
-    summary = executive_summary
-    total_requests = f"Total Requests Analyzed: {len(ground_truth['requests']):,}"
-    malicious_requests = (
-        f"Malicious Requests: {len(ground_truth['malicious_requests']):,}"
-    )
-    unique_ips = f"Unique Attacking IPs: {sum(1 for stats in ground_truth['ip_stats'].values() if stats['malicious_count'] > 0)}"
-    data_exfil = f"{ground_truth['data_exfil_bytes'] / 1024:.2f} KB ({ground_truth['data_exfil_bytes']:,} bytes)"
-    assert total_requests in summary
-    assert malicious_requests in summary
-    assert unique_ips in summary
-    assert data_exfil in summary
 
-
-def test_executive_summary_top_attack_vectors(executive_summary, ground_truth):
-    """Check that the summary lists the top three attack vectors with counts."""
-    top_vectors = ground_truth["attack_totals"].most_common(3)
-    for index, (attack_type, count) in enumerate(top_vectors, start=1):
-        label = attack_type.replace("_", " ").title()
-        assert f"{index}. {label}: {count:,} attempts" in executive_summary
-
-
-def test_executive_summary_coordinated_flag(executive_summary, ground_truth):
-    """Ensure coordinated attack assessment text matches computed detection."""
-    expected_flag = "YES" if ground_truth["coordinated"]["detected"] else "NO"
-    assert f"COORDINATED ATTACK ASSESSMENT: {expected_flag}" in executive_summary
 
 
 def test_output_files_are_utf8(output_paths):

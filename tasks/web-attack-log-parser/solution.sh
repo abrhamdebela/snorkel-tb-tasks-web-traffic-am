@@ -190,7 +190,6 @@ def detect_attack_patterns(path: str, user_agent: str):
 
     return findings
 
-
 def floor_to_five_minutes(dt: datetime) -> datetime:
     dt = dt.replace(second=0, microsecond=0)
     minute = dt.minute - (dt.minute % 5)
@@ -352,8 +351,12 @@ def main():
         attack_totals.update(record["attack_types"])
 
     window_counts = defaultdict(int)
+    window_attack_counts = defaultdict(int)
     for record in requests:
-        window_counts[floor_to_five_minutes(record["datetime"])] += 1
+        bucket = floor_to_five_minutes(record["datetime"])
+        window_counts[bucket] += 1
+        if record["is_malicious"]:
+            window_attack_counts[bucket] += 1
 
     quiet_periods = []
     if window_counts:
@@ -367,19 +370,30 @@ def main():
                     {"start": current.strftime(ISO_FORMAT), "requests": count}
                 )
             current += FIVE_MINUTES
-        peak_start, peak_count = min(
+
+        peak_bucket, peak_requests = min(
             window_counts.items(),
             key=lambda item: (-item[1], item[0]),
         )
         peak_info = {
-            "start": peak_start,
-            "count": peak_count,
-            "iso": peak_start.strftime(ISO_FORMAT),
+            "bucket": peak_bucket,
+            "hour": peak_bucket.strftime(ISO_FORMAT),
+            "requests": peak_requests,
+            "attacks": window_attack_counts.get(peak_bucket, 0),
         }
     else:
-        peak_info = {"start": None, "count": 0, "iso": "N/A"}
+        peak_info = {"bucket": None, "hour": "N/A", "requests": 0, "attacks": 0}
+        quiet_periods = []
 
     coordinated = detect_coordinated(ip_stats)
+    if not coordinated["detected"]:
+        coordinated = {
+            "detected": False,
+            "ip_addresses": [],
+            "shared_attack_types": [],
+            "evidence": "None observed within the analyzed period.",
+        }
+
     timeline = build_timeline(requests)
 
     response_codes = {
@@ -446,12 +460,13 @@ def main():
                 "sql_injection",
                 "path_traversal",
                 "xss_attempts",
-                "admin_probing",
-                "scanner_activity",
-            ]
+            "admin_probing",
+            "scanner_activity",
+        ]
         },
-        "peak_attack_time": peak_info["iso"],
-        "requests_during_peak": peak_info["count"],
+        "peak_attack_hour": peak_info["hour"],
+        "requests_during_peak": peak_info["requests"],
+        "attacks_during_peak": peak_info["attacks"],
         "quiet_periods": quiet_periods,
         "coordinated_attack": coordinated,
     }
@@ -511,13 +526,12 @@ def main():
         for row in malicious_requests:
             writer.writerow(row)
 
+    unique_attackers = sum(1 for stats in ip_stats.values() if stats["malicious_count"] > 0)
     total_requests = len(requests)
     total_malicious = len(malicious_requests)
-    unique_attackers = sum(1 for stats in ip_stats.values() if stats["malicious_count"] > 0)
     data_exfil_summary = f"{data_exfil_bytes / 1024:.2f} KB ({data_exfil_bytes:,} bytes)"
     coordinated_flag = "YES" if coordinated["detected"] else "NO"
-
-    top_vectors = Counter({k: summary["attack_patterns"][k] for k in summary["attack_patterns"]}).most_common(3)
+    top_vectors = Counter(summary["attack_patterns"]).most_common(3)
 
     lines = [
         "Security Incident Executive Summary",
@@ -544,14 +558,10 @@ def main():
         ]
     )
 
-    if coordinated["detected"]:
-        lines.append(f"Evidence: {coordinated['evidence']}")
-    else:
-        lines.append("Evidence: None observed within the analyzed period.")
+    lines.append(f"Evidence: {coordinated['evidence']}")
 
     with open(output_dir / "executive_summary.txt", "w", encoding="utf-8") as handle:
-        handle.write("\n".join(lines))
-        handle.write("\n")
+        handle.write("\n".join(lines) + "\n")
 
     print("Analysis complete!")
 
