@@ -38,93 +38,183 @@ instruction: |-
   Important: Malformed entries do NOT count toward your total_requests number. Only valid, successfully parsed entries count.
   
   TASK 2: FIND THE ATTACKS
-  
-  Look for these attack patterns in the URL path. Matching is case-insensitive, so "UNION SELECT" matches "union select" or "UnIoN SeLeCt". A single request can match multiple patterns.
-  
+
+  Look for these attack patterns in requests. Pattern matching is case-insensitive, so "UNION SELECT" matches "union select" or "UnIoN SeLeCt". A single request can match multiple attack patterns, and each matching pattern should be counted separately.
+
+  IMPORTANT TERMINOLOGY:
+  - "Attack pattern" or "attack type" = A category of attack (sql_injection, path_traversal, xss_attempts, admin_probing, scanner_activity)
+  - "Malicious request" = A request that matched at least one attack pattern
+  - "Malicious IP" = An IP address that generated at least one malicious request
+
+  Attack Pattern Detection Rules:
+
   SQL Injection (trigger when any of these substrings appear in the URL path):
   "union", "select", "insert", "update", "delete", "drop", "create", "alter", "--", "xp_", "sp_", "exec", "execute", "script", "javascript", "concat", "declare", "char(", "nchar(", "varchar(", "nvarchar(", "sys.", "0x", "unhex", "md5", "' or '", "\" or \"", "or 1=1", "or true", "and 1=1"
-  
-  Path Traversal:
+
+  Path Traversal (trigger when any of these substrings appear in the URL path):
   "../", "..\\", "%2e%2e/", "%2e%2e\\", "dot-dot-slash"
-  
-  XSS - Cross-Site Scripting:
+
+  XSS - Cross-Site Scripting (trigger when any of these substrings appear in the URL path):
   "<script", "</script", "javascript:", "onerror=", "onload=", "onclick=", "onmouseover=", "<iframe", "<object", "<embed", "alert(", "prompt(", "confirm(", "document.cookie", "document.write", "window.location", "eval("
-  
-  Admin Probing (the requested path must start with one of):
+
+  Admin Probing (trigger when the URL path starts with any of these, case-insensitive):
   "/admin", "/wp-admin", "/phpmyadmin", "/administrator", "/manager", "/console", "/cpanel", "/webadmin", "/.env", "/config"
-  
-  Scanner Activity (match these tokens inside the User-Agent header):
+
+  Scanner Activity (NOTE: This checks the User-Agent header, not the URL path):
+  Match when any of these tokens appear in the User-Agent header (case-insensitive):
   "scanner", "bot", "crawler", "spider", "scraper", "sqlmap", "nikto", "nmap", "masscan", "nessus", "metasploit", "burp"
-  
-  Also flag IPs that are:
-  - In the blacklist.txt file AND made at least one request in the logs
-  - Violated the rate limit (explained in Task 3)
-  - From private IP ranges: 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16, 127.0.0.0/8, ::1, fe80::/10, fc00::/7
-  
-  Note: Private IPs aren't automatically bad. They only get flagged as malicious if they also meet other criteria like being blacklisted, violating rate limits, or making more than 10 attack attempts.
+
+  Additional IP Categories to Track:
+
+  Track these IP categories separately in your analysis (they are NOT automatically considered malicious):
+  - Blacklisted IPs: IPs in blacklist.txt that made at least one request in the logs
+  - Rate limit violators: IPs that violated the rate limit (explained in Task 3)
+  - Private IPs: IPs from private ranges (10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16, 127.0.0.0/8, ::1/128, fe80::/10, fc00::/7)
+
+  IMPORTANT: An IP is only counted as "malicious" if it generated at least one request matching an attack pattern. Blacklisted IPs, rate limit violators, and private IPs are tracked separately but do not count as "malicious" unless they also match attack patterns.
   
   TASK 3: CHECK FOR RATE LIMIT VIOLATIONS
-  
+
   The company policy is maximum 60 requests per minute per IP. You need to check if any IP exceeded this limit using a sliding 60-second window.
-  
-  Here's how it works:
-  For each request at time T, count all requests from the same IP between time (T minus 60 seconds) and T, including both endpoints. If this count is MORE than 60 (meaning 61 or more), that IP violated the rate limit.
-  
-  Example:
+
+  Algorithm:
+  For each request at time T, count all requests from the same IP in the time window [T - 60 seconds, T] (inclusive on both ends). If this count is MORE than 60 (meaning 61 or more requests within any 60-second window), that IP violated the rate limit.
+
+  Examples:
   - IP makes 61 requests from 12:00:00 to 12:01:00 -> VIOLATED (61 > 60)
   - IP makes 60 requests from 12:00:00 to 12:01:00 -> OK (60 is not more than 60)
-  - IP makes 100 requests but spread out over 3 minutes -> Might be OK if no 60-second window has more than 60
-  
+  - IP makes 100 requests spread over 3 minutes -> Might be OK if no 60-second window contains more than 60
+
   Important notes:
-  - IPv4 and IPv6 addresses are counted separately
-  - The logs are already sorted by time
-  - Once any request from an IP triggers this violation, mark that entire IP as a rate violator
-  
-  TASK 4: CREATE THE OUTPUT FILES
+  - IPv4 and IPv6 addresses are counted separately (Example: 192.168.1.1 and ::1 are different IPs)
+  - Once any 60-second window for an IP exceeds the threshold, mark that entire IP as a rate limit violator
+  - Rate limit violators should be included in the blocked IP list even if they didn't match any attack patterns
+
+  TASK 4: DETECT COORDINATED ATTACKS
+
+  A coordinated attack occurs when multiple IPs work together using similar attack methods. Detect this by checking if:
+  1. At least 3 different IPs (COORDINATED_IP_THRESHOLD = 3)
+  2. Each made more than 50 requests per minute (COORDINATED_REQUEST_THRESHOLD = 50, checked via rate limit detection)
+  3. Each matched at least 2 different attack patterns (COORDINATED_PATTERN_OVERLAP = 2)
+  4. All qualifying IPs share at least 2 attack patterns in common (Example: all used sql_injection AND xss_attempts)
+
+  If all conditions are met:
+  - Set `detected: true`
+  - List the qualifying IP addresses in `ip_addresses` array
+  - List the shared attack patterns in `shared_attack_types` array (alphabetically sorted)
+  - Provide evidence like: "3 IPs exceeded 50 req/min with shared attack types: sql_injection, xss_attempts"
+
+  If conditions are NOT met:
+  - Set `detected: false`
+  - Set `ip_addresses` and `shared_attack_types` to empty arrays
+  - Set `evidence` to empty string ""
+
+  TASK 5: CREATE THE OUTPUT FILES
   
   A. Create /app/output/security_analysis.json
   
   Produce valid JSON with this exact structure:
-  - `summary`: object containing
-    * `total_requests`, `unique_ips`, `malicious_ips`, `malformed_entries` (all integers)
-    * `attack_patterns`: object with integer counts for `sql_injection`, `path_traversal`, `xss_attempts`, `admin_probing`, `scanner_activity`
-    * `peak_attack_time`: ISO hour string for the busiest hour (earliest on ties)
-    * `requests_during_peak`: integer total requests during `peak_attack_time`
-    * `quiet_periods`: array of objects `{ "start": ISO timestamp, "requests": <int> }` for every five-minute window with <5 requests, sorted by `start` ascending
-    * `coordinated_attack`: object with:
-      - `detected`: boolean
-      - `ip_addresses`: array of attacker IPs involved (alphabetically sorted when detected, otherwise empty)
-      - `shared_attack_types`: array of shared attack type names (alphabetically sorted)
-      - `evidence`: explanatory sentence (may be "None observed..." if not detected)
-  - `top_attackers`: array (≤10 entries) in descending `requests` order (break ties alphabetically by IP), each entry containing:
-    * `ip`, `requests`, `malicious_requests`, `attack_types` (alphabetically sorted list), `first_seen`, `last_seen`, `blacklisted`, `is_private`, `client_errors`, `server_errors`, `rate_limited`
-    * Include an IP if it triggered at least one attack pattern, violated rate limits, or appears in blacklist.txt while active.
-  - `timeline`: array sorted by `hour`. Each element is `{ "hour": ISO hour, "requests": <int>, "unique_ips": <int>, "attacks_detected": <int> }`
-  - `ip_analysis`: object with
-    * `rate_limit_violators`, `blacklisted_ips`, `private_ips` (each a sorted array of IP strings)
-    * `response_codes`: object mapping each IP to `{ "4xx": <int>, "5xx": <int> }`
-  
-  Additional definitions:
-  - Count an IP as malicious if it generated at least one request that matched any attack pattern.
-  - Use integer counters throughout; no floats.
-  - All timestamps must be ISO 8601 with `+00:00`.
+
+  ```json
+  {
+    "summary": {
+      "total_requests": <int>,           // Total valid parsed requests
+      "unique_ips": <int>,                // Total unique IP addresses that made requests
+      "malicious_ips": <int>,             // IPs that matched at least one attack pattern
+      "malformed_entries": <int>,         // Log entries that couldn't be parsed
+      "attack_patterns": {                 // Count of requests matching each pattern
+        "sql_injection": <int>,
+        "path_traversal": <int>,
+        "xss_attempts": <int>,
+        "admin_probing": <int>,
+        "scanner_activity": <int>
+      },
+      "peak_attack_time": "<ISO timestamp>",  // Start of busiest 5-min window, such as "2025-10-20T12:00:00+00:00"
+      "requests_during_peak": <int>,       // Total requests in that 5-minute window
+      "quiet_periods": [                   // All 5-min windows with <5 requests
+        {
+          "start": "<ISO timestamp>",
+          "requests": <int>
+        }
+      ],
+      "coordinated_attack": {
+        "detected": <boolean>,
+        "ip_addresses": [<string>],        // IPs involved (any order acceptable)
+        "shared_attack_types": [<string>], // Shared patterns (any order acceptable)
+        "evidence": "<string>"             // Empty string "" if not detected
+      }
+    },
+    "top_attackers": [                     // Up to 10 IPs, sorted by total requests descending
+      {
+        "ip": "<string>",
+        "requests": <int>,                 // Total requests from this IP
+        "malicious_requests": <int>,       // Requests matching attack patterns
+        "attack_types": [<string>],        // Attack patterns matched (alphabetically sorted)
+        "first_seen": "<ISO timestamp>",
+        "last_seen": "<ISO timestamp>",
+        "blacklisted": <boolean>,
+        "is_private": <boolean>,
+        "client_errors": <int>,            // 4xx responses
+        "server_errors": <int>,            // 5xx responses
+        "rate_limited": <boolean>
+      }
+    ],
+    "timeline": [                          // Hourly aggregation, sorted by hour
+      {
+        "hour": "<ISO hour>",              // Such as "2025-10-20T12:00:00+00:00"
+        "requests": <int>,
+        "unique_ips": <int>,
+        "attacks_detected": <int>          // Malicious requests in this hour
+      }
+    ],
+    "ip_analysis": {
+      "rate_limit_violators": [<string>],  // Sorted alphabetically
+      "blacklisted_ips": [<string>],       // Sorted alphabetically
+      "private_ips": [<string>],           // Sorted alphabetically
+      "response_codes": {                   // For each IP, sorted by IP
+        "<ip>": {
+          "4xx": <int>,
+          "5xx": <int>
+        }
+      }
+    }
+  }
+  ```
+
+  Important field definitions:
+  - `malicious_ips`: Count of IPs that generated at least one request matching an attack pattern (NOT just blacklisted or rate-limited)
+  - `peak_attack_time`: Divide time into 5-minute buckets (Example: 12:00-12:04:59, 12:05-12:09:59). Find the bucket with the most total requests. On ties, use the earliest bucket. Report the bucket's start time.
+  - `quiet_periods`: List ALL 5-minute windows (from first to last request) that have fewer than 5 requests, sorted by start time
+  - `top_attackers`: Include an IP if it (1) matched at least one attack pattern, OR (2) violated rate limits, OR (3) appears in blacklist.txt and made requests. Sort by total requests descending. Ties may appear in any order.
+  - Use integer counters throughout; no floats
+  - All timestamps must be ISO 8601 with `+00:00` timezone
   
   The file must end with a newline character.
   
   B. Create /app/output/ips_to_block.txt
-  
-  List IPs that should be blocked, one per line in this format:
+
+  List IPs that should be blocked, one per line in this exact format:
+  ```
   192.0.2.100 # 150 attacks:[admin_probing,sql_injection]
-  
-  Include an IP if it meets ANY of these criteria:
-  - In blacklist.txt AND made at least one request in the logs
-  - Violated the rate limit (more than 60 requests in any 60-second window)
-  - Made more than 10 requests matching attack patterns
-  
+  203.0.113.42 # 75 attacks:[rate_limit,sql_injection]
+  ```
+
+  Blocking Criteria - Include an IP if it meets ANY of these:
+  1. Appears in blacklist.txt AND made at least one request in the logs
+  2. Violated the rate limit (more than 60 requests in any 60-second window)
+  3. Made more than 10 malicious requests (requests matching attack patterns)
+
+  Format Requirements:
+  - Each line: `<IP> # <count> attacks:[<reasons>]`
+  - `<count>` is the number of malicious requests (requests that matched attack patterns)
+  - `<reasons>` is a comma-separated list of attack types, alphabetically sorted
+  - If the IP violated rate limits, include the literal string `rate_limit` in the reasons list (sorted with other reasons)
+  - Example: An IP with 5 SQL injection attempts and rate limiting would show: `# 5 attacks:[rate_limit,sql_injection]`
+
   Sorting:
-  - Sort by malicious request count (highest first); break ties alphabetically by IP.
-  - Attack reasons inside `attacks:[...]` must be alphabetically sorted. Include the literal token `rate_limit` whenever the IP violated rate limiting (tests treat this as a reason).
-  - The integer after the `#` marker is the malicious request count used for sorting.
+  - Primary sort: By malicious request count (highest first)
+  - Tie-breaker: Alphabetically by IP address
+  - The reasons within `attacks:[...]` must be alphabetically sorted
   
   The file must end with a newline character.
   
@@ -141,14 +231,43 @@ instruction: |-
   - Ensure the CSV ends with a newline character.
   
   D. Create /app/output/executive_summary.txt
-  
-  Provide a human-readable summary that highlights:
-  - Total Requests Analyzed, Malicious Requests, and Unique Attacking IPs (render numeric values with thousands separators)
-  - Data Exfiltration Volume reported in both kilobytes (two decimals) and raw bytes
-  - A "Top Attack Vectors" section listing the top three attack patterns in descending order with the format `1. Sql Injection: 1,234 attempts`
-  - A line beginning with `COORDINATED ATTACK ASSESSMENT: YES|NO` indicating whether coordinated behaviour was detected
-  - An evidence line describing the coordinated activity when present or stating that none was observed
-  - The file must end with a newline character.
+
+  Provide a human-readable summary in this exact format:
+
+  ```
+  Security Incident Executive Summary
+  ===================================
+  Total Requests Analyzed: <number with commas>
+  Malicious Requests: <number with commas>
+  Unique Attacking IPs: <number WITHOUT commas>
+  Data Exfiltration Volume: <KB with 2 decimals> KB (<bytes with commas> bytes)
+
+  Top Attack Vectors:
+  1. <Attack Type>: <count with commas> attempts
+  2. <Attack Type>: <count with commas> attempts
+  3. <Attack Type>: <count with commas> attempts
+
+  COORDINATED ATTACK ASSESSMENT: YES|NO
+  Evidence: <description or "None observed within the analyzed period.">
+  ```
+
+  Specific Requirements:
+  - Total Requests Analyzed: Use thousands separator (`1,234`)
+  - Malicious Requests: Use thousands separator (`5,678`)
+  - Unique Attacking IPs: Plain integer with NO thousands separator (`42` not `42,000`)
+  - Data Exfiltration Volume:
+    * Calculate as: Sum of bytes_sent for all malicious requests with 2xx status codes (successful responses)
+    * Data exfiltration = responses to attack requests that succeeded (status 200-299)
+    * Format: `<KB> KB (<bytes> bytes)` where KB has 2 decimal places and bytes uses comma separators
+    * Example: `15.42 KB (15,789 bytes)`
+  - Top Attack Vectors:
+    * List the top 3 attack patterns by count, descending
+    * Format attack type as Title Case with spaces: `sql_injection` → `Sql Injection`
+    * Use thousands separator for attempt counts
+    * If fewer than 3 attack types exist, only show what's available
+  - COORDINATED ATTACK ASSESSMENT: Show `YES` or `NO` based on coordinated attack detection
+  - Evidence: If coordinated attack detected, show the evidence string. Otherwise: `None observed within the analyzed period.`
+  - The file must end with a newline character
   
   REQUIREMENTS:
   - Process all 6 log files
