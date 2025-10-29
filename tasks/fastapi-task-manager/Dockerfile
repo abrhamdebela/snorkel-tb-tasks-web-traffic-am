@@ -5,8 +5,8 @@
 # Base Dockerfile or image that fully sets up the environment, including all required tools, resources, and dependencies.
 # It should be reproducible, lightweight, and run without privileged mode.
 
-FROM ghcr.io/laude-institute/t-bench/ubuntu-24-04:20250624
-# FROM ghcr.io/laude-institute/t-bench/python-3-13:20250620
+# FROM ghcr.io/laude-institute/t-bench/ubuntu-24-04:20250624
+FROM ghcr.io/laude-institute/t-bench/python-3-13:20250620
 
 # View the list of available base images here:
 # https://github.com/laude-institute/terminal-bench/packages
@@ -29,9 +29,3 @@ FROM ghcr.io/laude-institute/t-bench/ubuntu-24-04:20250624
 # Don't forget to prefix with 'uv run' if you're using uv.
 
 # Install Python dependencies for the FastAPI task
-# RUN pip install --no-cache-dir \
-#     fastapi==0.115.5 \
-#     uvicorn[standard]==0.32.1 \
-#     httpx==0.27.2 \
-#     pytest==8.3.4 \
-#     pydantic==2.10.3
