@@ -10,8 +10,6 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends python3-venv \
     && rm -rf /var/lib/apt/lists/*
 
-RUN python -m pip install --no-cache-dir pytest==8.4.1
-
 # Copy log files and blacklist into the container
 COPY logs/ /app/logs/
 COPY data/ /app/data/

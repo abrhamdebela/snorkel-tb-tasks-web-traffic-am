@@ -84,61 +84,30 @@ instruction: |-
   
   A. Create /app/output/security_analysis.json
   
-  This must be valid JSON with exactly this structure. All numbers must be integers (no decimals).
+  Produce valid JSON with this exact structure:
+  - `summary`: object containing
+    * `total_requests`, `unique_ips`, `malicious_ips`, `malformed_entries` (all integers)
+    * `attack_patterns`: object with integer counts for `sql_injection`, `path_traversal`, `xss_attempts`, `admin_probing`, `scanner_activity`
+    * `peak_attack_time`: ISO hour string for the busiest hour (earliest on ties)
+    * `requests_during_peak`: integer total requests during `peak_attack_time`
+    * `quiet_periods`: array of objects `{ "start": ISO timestamp, "requests": <int> }` for every five-minute window with <5 requests, sorted by `start` ascending
+    * `coordinated_attack`: object with:
+      - `detected`: boolean
+      - `ip_addresses`: array of attacker IPs involved (alphabetically sorted when detected, otherwise empty)
+      - `shared_attack_types`: array of shared attack type names (alphabetically sorted)
+      - `evidence`: explanatory sentence (may be "None observed..." if not detected)
+  - `top_attackers`: array (≤10 entries) in descending `requests` order, alphabetical tie-breaker, each entry containing:
+    * `ip`, `requests`, `malicious_requests`, `attack_types` (alphabetically sorted list), `first_seen`, `last_seen`, `blacklisted`, `is_private`, `client_errors`, `server_errors`, `rate_limited`
+    * Include an IP if it triggered at least one attack pattern, violated rate limits, or appears in blacklist.txt while active.
+  - `timeline`: array sorted by `hour`. Each element is `{ "hour": ISO hour, "requests": <int>, "unique_ips": <int>, "attacks_detected": <int> }`
+  - `ip_analysis`: object with
+    * `rate_limit_violators`, `blacklisted_ips`, `private_ips` (each a sorted array of IP strings)
+    * `response_codes`: object mapping each IP to `{ "4xx": <int>, "5xx": <int> }`
   
-  {
-    "summary": {
-      "total_requests": [number of valid parsed requests],
-      "unique_ips": [count of distinct IP addresses],
-      "malicious_ips": [count of IPs that are malicious - see below],
-      "malformed_entries": [count of unparseable log lines],
-      "attack_patterns": {
-        "sql_injection": [requests matching SQL patterns],
-        "path_traversal": [requests matching path traversal patterns],
-        "xss_attempts": [requests matching XSS patterns],
-        "admin_probing": [requests starting with admin paths],
-        "scanner_activity": [requests with scanner user-agents]
-      },
-      "peak_attack_time": "2025-10-20T12:00:00+00:00",
-      "requests_during_peak": [total requests in that hour]
-    },
-    "top_attackers": [
-      {
-        "ip": "192.0.2.100",
-        "requests": 150,
-        "attack_types": ["admin_probing", "sql_injection"],
-        "first_seen": "2025-10-20T08:10:00+00:00",
-        "last_seen": "2025-10-20T14:30:00+00:00",
-        "blacklisted": false
-      }
-    ],
-    "timeline": [
-      {
-        "hour": "2025-10-20T08:00:00+00:00",
-        "requests": 120,
-        "unique_ips": 15,
-        "attacks_detected": 25
-      }
-    ]
-  }
-  
-  Field definitions:
-  
-  - total_requests: Count only valid, successfully parsed log entries
-  - malicious_ips: An IP is malicious if it meets ANY of these criteria:
-    * Is in blacklist.txt AND made at least one request
-    * Violated the rate limit
-    * Made more than 10 requests matching attack patterns
-  - peak_attack_time: The hour with the most total requests (not just attacks). If there's a tie, use the earliest hour.
-  - requests_during_peak: Total number of requests in that peak hour
-  - top_attackers: List the top 10 IPs by total request count (not attack count). An IP qualifies for this list if it:
-    * Made at least 1 request matching an attack pattern, OR
-    * Violated the rate limit, OR  
-    * Is blacklisted and made requests
-    Sort by requests descending, then by IP address alphabetically if tied. Include fewer than 10 if there aren't 10 attackers.
-  - attack_types: List which attack patterns this IP triggered. Must be alphabetically sorted and unique. Use exact names: "admin_probing", "path_traversal", "scanner_activity", "sql_injection", "xss_attempts"
-  - timeline: One entry per hour that had requests. Sort by hour ascending. Skip hours with zero requests.
-  - attacks_detected: Count of requests in that hour matching any attack pattern
+  Additional definitions:
+  - Count an IP as malicious if it is blacklisted and active, violated the rate limit, or generated >10 attack-tagged requests.
+  - Use integer counters throughout; no floats.
+  - All timestamps must be ISO 8601 with `+00:00`.
   
   The file must end with a newline character.
   
@@ -153,9 +122,9 @@ instruction: |-
   - Made more than 10 requests matching attack patterns
   
   Sorting:
-  - Sort by request count (highest first)
-  - If request counts are equal, sort by IP address alphabetically
-  - Attack types in brackets must be alphabetically sorted
+  - Sort by malicious request count (highest first); break ties alphabetically by IP.
+  - Attack reasons inside `attacks:[...]` must be alphabetically sorted. Include the literal token `rate_limit` whenever the IP violated rate limiting (tests treat this as a reason).
+  - The integer after the `#` marker is the malicious request count used for sorting.
   
   The file must end with a newline character.
   
@@ -190,14 +159,18 @@ instruction: |-
   - Use a JSON library to generate valid JSON (don't build JSON strings manually)
   - All numeric values must be integers
   - Tests are executed with the system-wide Python environment provided in the container; avoid installing extra packages during runtime
+  - The CSV and text summary must also end with newline characters
+  - `incident_timeline.csv` header must be exactly: timestamp,ip,method,path,status,attack_type,severity
+  - Severity levels: assign HIGH for blacklisted IPs or when the IP has >20 malicious requests, MEDIUM for 6–20, LOW otherwise
+  - Ensure `top_attackers`, `ip_analysis` arrays, and `ips_to_block` entries follow the specified sorting rules
   
   SUCCESS CRITERIA:
-  - Both output files exist at the exact paths specified
+  - All four output files exist at the exact paths specified
   - JSON is valid and contains all required fields
   - Attack patterns correctly identified using substring matching (case-insensitive)
   - Rate limiting correctly calculated using sliding 60-second windows
   - All outputs properly sorted as specified
-  - Both files end with a newline character
+  - Every output file ends with a newline character
 
 author_name: Hammam
 author_email: hammam.almomani@menadevs.io
