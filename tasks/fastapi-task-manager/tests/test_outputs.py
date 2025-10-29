@@ -264,9 +264,9 @@ def test_duplicate_username():
 
 
 def test_missing_authentication_header():
-    """Tests that protected endpoints return 401 or 403 when X-User-Id is missing."""
+    """Tests that protected endpoints return 401 when X-User-Id is missing."""
     res = httpx.post(f"{APP_HOST}/projects", json={"name": "Unauthorized Project"})
-    assert res.status_code in [401, 403]
+    assert res.status_code == 401
 
 
 def test_invalid_authentication_header():
@@ -737,9 +737,7 @@ def test_empty_or_nonexistent_tag_filtering():
 
 
 def test_comment_timestamp_is_recent():
-    """Tests that comment timestamps are actually recent (within last minute)."""
-    from datetime import datetime, timezone
-
+    """Tests that comment timestamps are in RFC 2822 format."""
     user_id = httpx.post(
         f"{APP_HOST}/users", json={"username": "timestamp_tester"}
     ).json()["id"]
@@ -753,7 +751,6 @@ def test_comment_timestamp_is_recent():
         headers=headers,
     ).json()["id"]
 
-    before_time = datetime.now(timezone.utc)
     res = httpx.post(
         f"{APP_HOST}/tasks/{task_id}/comments",
         json={"text": "Timestamped"},
@@ -762,21 +759,19 @@ def test_comment_timestamp_is_recent():
 
     comment = res.json()["comments"][0]
 
-    # Check that comment contains some timestamp-like content (digits, colons, etc.)
-    assert any(c.isdigit() for c in comment), "Comment should contain timestamp"
+    # Check that comment contains RFC 2822 timestamp format
+    # Format: [Day, DD Mon YYYY HH:MM:SS GMT] username: text
+    assert "GMT" in comment, "Timestamp must be in GMT timezone (RFC 2822)"
+    assert "[" in comment and "]" in comment, "Timestamp must be in brackets"
     assert "timestamp_tester" in comment, "Comment should contain username"
     assert "Timestamped" in comment, "Comment should contain the text"
 
-    # The timestamp should be between before and after (basic sanity check)
-    # We can't parse exact format without knowing if it's RFC 2822 or ISO 8601
-    # but we verify it contains date/time elements
-    time_indicators = ["202", ":", "GMT"] + [
-        str(before_time.hour),
-        str(before_time.day),
-    ]
-    assert any(indicator in comment for indicator in time_indicators), (
-        "Comment should have timestamp indicators"
-    )
+    # Verify RFC 2822 format indicators: day name, comma, month name, year
+    import re
+
+    # RFC 2822: [Day, DD Mon YYYY HH:MM:SS GMT]
+    rfc2822_pattern = r"\[(Mon|Tue|Wed|Thu|Fri|Sat|Sun), \d{2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d{4} \d{2}:\d{2}:\d{2} GMT\]"
+    assert re.search(rfc2822_pattern, comment), "Timestamp must match RFC 2822 format"
 
 
 # --- New Feature Tests: Task Status Updates ---
@@ -1064,7 +1059,7 @@ def test_sort_tasks_by_due_date_with_nulls():
 
 
 def test_sort_tasks_by_due_date_desc_with_nulls():
-    """Tests that tasks without due_date sort last even when sorting descending."""
+    """Tests that tasks without due_date sort last regardless of order (desc in this case)."""
     user_id = httpx.post(
         f"{APP_HOST}/users", json={"username": "null_desc_sorter"}
     ).json()["id"]
@@ -1103,13 +1098,12 @@ def test_sort_tasks_by_due_date_desc_with_nulls():
     )
     tasks = res.json()
 
-    # With the tuple sort key (is_none, date), when reversed:
-    # (True, "") comes before (False, late_date) comes before (False, early_date)
-    # So NULLs actually come FIRST in desc order
-    assert tasks[0]["title"] == "Task Without Date"
-    assert tasks[0]["due_date"] is None
-    assert tasks[1]["title"] == "Task With Late Date"
-    assert tasks[2]["title"] == "Task With Early Date"
+    # NULLs should sort LAST regardless of order
+    # In desc order: late date, early date, NULL
+    assert tasks[0]["title"] == "Task With Late Date"
+    assert tasks[1]["title"] == "Task With Early Date"
+    assert tasks[2]["title"] == "Task Without Date"
+    assert tasks[2]["due_date"] is None
 
 
 def test_sort_tasks_by_title():
@@ -1426,6 +1420,8 @@ def test_xss_sanitization_in_comments():
     )
     comment = res.json()["comments"][0]
 
-    # Script tags should be sanitized
-    assert "<script>" not in comment
-    assert "&lt;" in comment or "alert" not in comment or comment.count("<") == 0
+    # Both < and > should be sanitized to &lt; and &gt;
+    assert "<script>" not in comment, "Script tags must be removed/escaped"
+    assert "&lt;" in comment, "< must be escaped to &lt;"
+    assert "&gt;" in comment, "> must be escaped to &gt;"
+    assert "Hello" in comment, "Regular text should remain"

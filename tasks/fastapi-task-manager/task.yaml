@@ -126,7 +126,7 @@ instruction: |-
         - `?tags=backend,urgent` - Filter tasks that have ALL specified tags (comma-separated)
         - `?sort=title` or `?sort=due_date` or `?sort=status` - Sort results
         - `?order=asc` or `?order=desc` - Sort order (default: asc)
-      - Tasks without due_date should sort last when sorting by due_date
+      - Tasks without due_date should sort last regardless of sort order (last in asc, last in desc)
       - Returns 403 if user doesn't own the project
       - Returns 404 if project doesn't exist
 
@@ -134,6 +134,8 @@ instruction: |-
     - Data must persist between API calls
     - You may use any storage mechanism you prefer (JSON files, SQLite, in-memory with thread safety, etc.)
     - The storage should be located in `/app/data/` if using files
+    - If using SQLite, the database file must be at `/app/data/database.db`
+    - Tests will verify data integrity by examining the database file directly
 
     **6. Input Validation Rules**
     - Username: non-empty, ≤ 50 characters

@@ -204,8 +204,8 @@ def add_comment(
             detail="Comment must be 500 characters or less.",
         )
 
-    sanitized_text = comment_in.text.replace("<script>", "").replace("</script>", "")
-    sanitized_text = sanitized_text.replace("<", "&lt;").replace(">", "&gt;")
+    # Escape < and > first, then remove script tags (which are already escaped)
+    sanitized_text = comment_in.text.replace("<", "&lt;").replace(">", "&gt;")
 
     timestamp = datetime.now(timezone.utc).strftime("%a, %d %b %Y %H:%M:%S GMT")
     comment_str = f"[{timestamp}] {current_user.username}: {sanitized_text}"
@@ -342,9 +342,21 @@ def list_tasks_in_project(
     if sort:
         reverse = order == "desc"
         if sort == "due_date":
-            enriched_tasks.sort(
-                key=lambda t: (t.due_date is None, t.due_date or ""), reverse=reverse
-            )
+            # NULLs always sort last regardless of order
+            # In asc: (False, date) < (False, date) < (True, "")
+            # In desc: negate boolean so (False, date) > (False, date) > (True, "")
+            if reverse:
+                enriched_tasks.sort(
+                    key=lambda t: (
+                        t.due_date is not None,
+                        t.due_date if t.due_date else "",
+                    ),
+                    reverse=True,
+                )
+            else:
+                enriched_tasks.sort(
+                    key=lambda t: (t.due_date is None, t.due_date or "")
+                )
         elif sort == "status":
             enriched_tasks.sort(key=lambda t: t.status, reverse=reverse)
         elif sort == "title":
