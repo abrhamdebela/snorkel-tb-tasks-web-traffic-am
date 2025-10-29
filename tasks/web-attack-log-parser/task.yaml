@@ -19,10 +19,9 @@ instruction: |-
   3. Track per-IP request totals, attack tags, and whether the IP appears in blacklist.txt.
   
   Outputs
-  - /app/output/summary.json containing total_requests, attack_counts (object keyed by the three patterns), top_ip (object with ip and requests, or null when no traffic), and blacklisted_hits (number of distinct blacklist IPs that appeared).
+  - /app/output/summary.json containing total_requests, attack_counts (object keyed by the three patterns), top_ip (always an object with keys ip and requests, using ip=null and requests=0 when no traffic), and blacklisted_hits (number of distinct blacklist IPs that appeared).
   - /app/output/suspicious.txt listing each IP that triggered attacks, sorted by descending attack-request count then IP, formatted "IP attacks:[tag1,tag2] total:<request_count>".
-  
-  Encode files as UTF-8 and end them with a newline. Never modify the input data.
+  Encode files as UTF-8 and end them with a newline.
 author_name: Hammam
 author_email: hammam.almomani@menadevs.io
 difficulty: medium
