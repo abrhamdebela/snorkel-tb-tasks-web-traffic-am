@@ -72,6 +72,10 @@ instruction: |-
   - Private IPs: IPs from private ranges (10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16, 127.0.0.0/8, ::1/128, fe80::/10, fc00::/7)
 
   IMPORTANT: An IP is only counted as "malicious" if it generated at least one request matching an attack pattern. Blacklisted IPs, rate limit violators, and private IPs are tracked separately but do not count as "malicious" unless they also match attack patterns.
+
+  IMPORTANT: Input Integrity
+
+  - Do NOT modify the provided logs under /app/logs or the blacklist at /app/data/blacklist.txt. The evaluation checks their SHA-256 hashes to confirm they remain unchanged.
   
   TASK 3: CHECK FOR RATE LIMIT VIOLATIONS
 
