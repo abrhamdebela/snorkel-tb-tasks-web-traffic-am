@@ -141,7 +141,7 @@ instruction: |-
         "detected": <boolean>,
         "ip_addresses": [<string>],        // IPs involved (any order acceptable)
         "shared_attack_types": [<string>], // Shared patterns (any order acceptable)
-        "evidence": "<string>"             // Empty string "" if not detected
+        "evidence": "<string>"             // Narrative description; use "None observed within the analyzed period." when not detected
       }
     },
     "top_attackers": [                     // Up to 10 IPs, sorted by total requests descending
@@ -185,6 +185,7 @@ instruction: |-
   - `malicious_ips`: Count of IPs that generated at least one request matching an attack pattern (NOT just blacklisted or rate-limited)
   - `peak_attack_time`: Divide time into 5-minute buckets (Example: 12:00-12:04:59, 12:05-12:09:59). Find the bucket with the most total requests. On ties, use the earliest bucket. Report the bucket's start time.
   - `quiet_periods`: List ALL 5-minute windows (from first to last request) that have fewer than 5 requests, sorted by start time
+  - `coordinated_attack`: Mark as detected when at least three distinct IPs each have ≥50 requests, were flagged for rate-limit violations (>60 requests inside some rolling 60-second window), and share at least two attack types in common. The IP and attack-type lists may appear in any order.
   - `top_attackers`: Include an IP if it (1) matched at least one attack pattern, OR (2) violated rate limits, OR (3) appears in blacklist.txt and made requests. Sort by total requests descending. Ties may appear in any order.
   - Use integer counters throughout; no floats
   - All timestamps must be ISO 8601 with `+00:00` timezone

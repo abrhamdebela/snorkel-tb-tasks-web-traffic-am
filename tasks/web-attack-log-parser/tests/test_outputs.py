@@ -12,6 +12,7 @@ from typing import Dict, Iterable, List, Tuple
 
 import ipaddress
 import pytest
+import hashlib
 
 APACHE_REGEX = re.compile(r'^(\S+) \S+ \S+ \[(.*?)\] "(\S+) (\S+) \S+" (\d+) (\S+)')
 NGINX_REGEX = re.compile(
@@ -118,6 +119,16 @@ COORDINATED_REQUEST_THRESHOLD = 50
 COORDINATED_PATTERN_OVERLAP = 2
 FIVE_MINUTES = timedelta(minutes=5)
 ISO_FORMAT = "%Y-%m-%dT%H:%M:%S+00:00"
+
+EXPECTED_FILE_HASHES = {
+    Path("/app/data/blacklist.txt"): "ee7197c8c3e6785cf0caeff76bda2fe285dfe7cf5ae16e5af03da6fe2e99e3cc",
+    Path("/app/logs/apache/apache1.log"): "9ee4a5a8d5aa9afe1fa6a74bf32e7c2577850fb64f065d232383beed407075ff",
+    Path("/app/logs/apache/apache2.log"): "1df62234673790d1baf63b137c03255e1519deb1dfdd621ea7404901e7ee7742",
+    Path("/app/logs/apache/apache3.log"): "124cc9bf318a58ef1175c33f3841218f2006db71c8a62e97427905a07747b7b6",
+    Path("/app/logs/nginx/nginx1.log"): "c0b8074339c48620068e7e3e642fb7281ac231d5a840fdebff3d7939ef01bdee",
+    Path("/app/logs/nginx/nginx2.log"): "5e9b41d66d50ca96a04642a967025db5e69c6e51b67ec9203c8e0b4cbe8104df",
+    Path("/app/logs/nginx/nginx3.log"): "321f7d32fed3a2a35777ee36b3484e684dcc8dc8f056b58a28a4198db868056b",
+}
 
 
 def parse_apache_line(line: str):
@@ -524,6 +535,13 @@ def test_output_files_exist(output_paths):
     """Ensure every required output file exists before deeper assertions."""
     for path in output_paths:
         assert path.exists(), f"Expected output file missing: {path}"
+
+
+def test_input_files_immutable():
+    """Verify that log and data inputs remain unchanged by the agent."""
+    for path, expected_hash in EXPECTED_FILE_HASHES.items():
+        actual_hash = hashlib.sha256(path.read_bytes()).hexdigest()
+        assert actual_hash == expected_hash, f"Input file mutated: {path}"
 
 
 def test_summary_totals_match_ground_truth(security_analysis, ground_truth):
