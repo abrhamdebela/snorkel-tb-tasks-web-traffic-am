@@ -237,7 +237,6 @@ echo "Even though the traps exist, the final compatible versions work together d
 echo ""
 echo "Let's implement this comprehensive solution:"
 echo ""
-sed -i 's/PackageA>=7.0.0,<8.0.0/PackageA==1.4.7/' requirements.txt
 sed -i 's/PackageI>=3.1.0,<4.0.0/PackageI==1.2.3/' requirements.txt
 sed -i 's/PackageK>=1.0.0,<2.0.0/PackageK==0.9.8/' requirements.txt
 sed -i 's/PackageL>=2.1.0,<3.0.0/PackageL==1.8.5/' requirements.txt
@@ -260,9 +259,6 @@ echo "✓ Installation successful!"
 echo ""
 echo "Installed packages:"
 pip freeze | grep -E "Package[A-J]" | sort
-echo ""
-echo "Dependency tree:"
-pipdeptree | grep -E "Package[A-J]" -A 2 | head -40
 echo ""
 
 echo "========================================="

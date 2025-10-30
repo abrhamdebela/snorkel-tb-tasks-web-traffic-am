@@ -22,11 +22,12 @@ if [ "$PWD" = "/" ]; then
     exit 1
 fi
 
+# Install pipdeptree in the main environment (tests call it via subprocess to inspect agent's packages)
+pip install --no-cache-dir pipdeptree==2.29.0
+
+# Create test venv and install pytest
 uv venv .tbench-testing
-source .tbench-testing/bin/activate
-uv pip install pytest==8.4.1
+uv pip install --python .tbench-testing pytest==8.4.1
 
-# Install test dependencies (pipdeptree is needed for dependency tree validation tests)
-uv pip install pipdeptree==2.29.0
-
-uv run pytest $TEST_DIR/test_outputs.py -rA
+# Run tests using the venv's pytest directly
+.tbench-testing/bin/pytest $TEST_DIR/test_outputs.py -rA
