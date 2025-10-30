@@ -51,11 +51,12 @@ def test_dependencies_are_correctly_installed():
     result = subprocess.run(['pip', 'freeze'], capture_output=True, text=True)
     installed_packages = result.stdout.lower()
 
-    # The expected compatible set of versions
+    # The expected compatible set of versions (diamond dependency resolved)
     expected_packages = {
         "packagea==1.0",
         "packageb==1.0",
         "packagec==1.0",
+        "packaged==1.0",  # Must be 1.0, not 2.0, to be compatible with PackageC 1.0
     }
 
     for package in expected_packages:
@@ -64,10 +65,11 @@ def test_dependencies_are_correctly_installed():
 
 def test_no_conflicting_package_versions():
     """
-    Verifies that PackageC version 2.0 is NOT installed (it would indicate
-    the conflict wasn't properly resolved).
+    Verifies that incompatible versions are NOT installed.
+    PackageC 2.0 and PackageD 2.0 would indicate the conflict wasn't properly resolved.
     """
     result = subprocess.run(['pip', 'freeze'], capture_output=True, text=True)
     installed_packages = result.stdout.lower()
 
     assert "packagec==2.0" not in installed_packages, "PackageC==2.0 should not be installed; the conflict was not resolved."
+    assert "packaged==2.0" not in installed_packages, "PackageD==2.0 should not be installed; it conflicts with PackageC 1.0 required by PackageB."
