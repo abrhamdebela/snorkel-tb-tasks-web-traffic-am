@@ -66,23 +66,33 @@ instruction: |-
 
   4. transfer_recommendations.csv - CSV with columns: sku,from_warehouse,to_warehouse,recommended_quantity,priority,estimated_cost
      - Analyze overstock (ratio > 3.0) and understock (ratio < 0.5) situations
+     - Only recommend transfers between warehouses that both have the SKU in cleaned inventory
      - recommended_quantity: integer
      - priority: HIGH or MEDIUM
      - estimated_cost: decimal with 2 decimal places
 
   5. anomaly_clusters.json - JSON object with:
      - clusters: array of exactly 3 cluster objects, each containing:
-       - id: cluster identifier (0, 1, or 2)
+       - id: cluster identifier (must be 0, 1, or 2)
        - severity: "low", "medium", or "high"
        - record_count: number of records in cluster
        - description: text description of the cluster
+     - Sum of all record_count values must equal total output records (every record assigned to exactly one cluster)
 
-  6. executive_summary.txt - Text report with high-level statistics and recommended actions
+  6. executive_summary.txt - Text report with sections including:
+     - Total records processed and records requiring review
+     - Duplicate conflicts resolved
+     - Total inventory value
+     - Confidence distribution (high/medium/low percentages)
+     - Top issues found with counts
+     - Recommended actions list
+     - Data quality score
+     - Next steps
 
-  Requirements: implement Levenshtein distance yourself, implement k-means yourself, no external fuzzy matching or ML libraries. Should complete in under 2 minutes. Handle missing or malformed data gracefully. UTF-8 encoding with LF line endings.
+  Requirements: implement Levenshtein distance yourself (for fuzzy matching with edit distance up to 2), implement k-means yourself (no external fuzzy matching or ML libraries). Include all input records in output even if flagged or invalid. Should complete in under 2 minutes. Handle missing or malformed data gracefully. UTF-8 encoding with LF line endings.
 
 author_name: Tasnim Makableh
-author_email: tasnim.makableh@menadevs.ai
+author_email: tasnim.makableh@menadevs.io
 difficulty: hard
 category: data-processing
 tags:
