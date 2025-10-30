@@ -41,8 +41,8 @@ def levenshtein_distance(s1, s2):
 def normalize_sku(sku_raw, supplier_catalog):
     """Clean SKU and apply OCR fixes"""
     if not sku_raw:
-        return None, []
-    
+        return 'INVALID', ['SKU_MISSING']
+
     sku = sku_raw.strip().upper()
     
     parts = sku.split('-')
@@ -68,9 +68,9 @@ def normalize_sku(sku_raw, supplier_catalog):
             elif len(matches) > 1:
                 return sku, ['SKU_AMBIGUOUS']
             else:
-                return None, ['UNKNOWN_PRODUCT']
-    
-    return None, ['INVALID_SKU_FORMAT']
+                return sku, ['UNKNOWN_PRODUCT']
+
+    return sku, ['INVALID_SKU_FORMAT']
 
 
 def validate_quantity(qty_raw, sku, warehouse, history_data, warehouse_rules):
@@ -96,19 +96,20 @@ def validate_quantity(qty_raw, sku, warehouse, history_data, warehouse_rules):
             if isinstance(hist_qty, (int, float)):
                 historical_qtys.append(hist_qty)
     
-    if historical_qtys and len(historical_qtys) > 1:
+    if historical_qtys:
         avg = statistics.mean(historical_qtys)
         if avg > 0 and abs(qty - avg) / avg > 2.0:
             flags.append('QUANTITY_ANOMALY')
-        
-        try:
-            stdev = statistics.stdev(historical_qtys)
-            if stdev > 0:
-                z_score = (qty - avg) / stdev
-                if abs(z_score) > 3.0:
-                    flags.append('STATISTICAL_OUTLIER')
-        except:
-            pass
+
+        if len(historical_qtys) > 1:
+            try:
+                stdev = statistics.stdev(historical_qtys)
+                if stdev > 0:
+                    z_score = (qty - avg) / stdev
+                    if abs(z_score) > 3.0:
+                        flags.append('STATISTICAL_OUTLIER')
+            except:
+                pass
     
     wh_dict = {w.get('code'): w for w in warehouse_rules.get('warehouses', [])}
     if warehouse in wh_dict:
@@ -394,10 +395,7 @@ def main():
     
     for record in raw_records:
         sku, sku_flags = normalize_sku(record.get('sku'), supplier_catalog)
-        
-        if not sku or 'UNKNOWN_PRODUCT' in sku_flags:
-            continue
-        
+
         warehouse, wh_flags = validate_warehouse(record.get('warehouse'), warehouse_rules)
         quantity, qty_flags = validate_quantity(record.get('quantity'), sku, warehouse, 
                                                 history_data, warehouse_rules)
@@ -444,13 +442,45 @@ def main():
                     conflicts.append({
                         'sku': key[0],
                         'warehouse': key[1],
-                        'kept_record': best,
-                        'discarded_record': dup,
+                        'kept_record': dict(best),  # Make a copy
+                        'discarded_record': dict(dup),  # Make a copy
                         'reason': 'higher_confidence_or_more_recent'
                     })
             
             final_records.append(best)
-    
+
+    # Second pass: check cross-warehouse price variance on cleaned data
+    sku_prices = defaultdict(list)
+    for record in final_records:
+        if record['unit_cost'] not in ['INVALID', '0.00']:
+            try:
+                price = float(record['unit_cost'])
+                if price > 0:
+                    sku_prices[record['sku']].append((price, record))
+            except ValueError:
+                pass
+
+    # Flag records with >5% price variance across warehouses
+    for sku, price_data in sku_prices.items():
+        if len(price_data) > 1:
+            prices = [p[0] for p in price_data]
+            avg_price = statistics.mean(prices)
+
+            for price, record in price_data:
+                if avg_price > 0:
+                    variance = abs(price - avg_price) / avg_price
+                    if variance > 0.05:
+                        # Add PRICE_INCONSISTENCY flag if not already present
+                        current_flags = record['anomaly_flags']
+                        if current_flags == 'CLEAN':
+                            record['anomaly_flags'] = 'PRICE_INCONSISTENCY'
+                        elif 'PRICE_INCONSISTENCY' not in current_flags:
+                            record['anomaly_flags'] = current_flags + ',PRICE_INCONSISTENCY'
+
+                        # Recalculate confidence score
+                        flags_list = record['anomaly_flags'].split(',')
+                        record['confidence_score'] = f"{calculate_confidence_score(flags_list):.2f}"
+
     final_records.sort(key=lambda r: (float(r['confidence_score']), r['sku'], r['warehouse']))
     
     Path('/app/output').mkdir(parents=True, exist_ok=True)
