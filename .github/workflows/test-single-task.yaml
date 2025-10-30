@@ -92,6 +92,15 @@ jobs:
           # Cat the tests.log file
           cat $log_file
 
+      - name: Debug an agent run if failure
+        run: |
+          # Note that this step runs only for agent failure because non-agent failure comes with required=true and steps will be skipped unless if: always().
+          result=$(cat /tmp/agent_test_result.txt)
+          echo "Test result: $result"
+          if [ "$result" = "failure" ]; then
+            uv run tb tasks debug --run-id github-action-${{ inputs.key }}_${{ inputs.task }}_${{ inputs.run }} ${{ inputs.task }}
+          fi
+
       - name: Upload test results
         if: always()
         uses: actions/upload-artifact@v4
