@@ -35,9 +35,7 @@ def _normalize_key(original_key: str) -> str:
 
 def _assert_structures_match(input_obj: Any, output_obj: Any):
     if isinstance(input_obj, dict):
-        assert isinstance(output_obj, dict), (
-            f"Expected dict, got {type(output_obj)}"
-        )
+        assert isinstance(output_obj, dict), f"Expected dict, got {type(output_obj)}"
 
         expected = {}
         for k, v in input_obj.items():
@@ -63,9 +61,7 @@ def _assert_structures_match(input_obj: Any, output_obj: Any):
             _assert_structures_match(in_v, output_obj[norm_k])
 
     elif isinstance(input_obj, list):
-        assert isinstance(output_obj, list), (
-            f"Expected list, got {type(output_obj)}"
-        )
+        assert isinstance(output_obj, list), f"Expected list, got {type(output_obj)}"
         assert len(input_obj) == len(output_obj), (
             "List lengths differ after normalization.\n"
             f"Expected length {len(input_obj)}, got {len(output_obj)}"
