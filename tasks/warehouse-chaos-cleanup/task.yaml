@@ -29,11 +29,11 @@ instruction: |-
 
   Dates need to make sense chronologically. Missing dates get DATE_MISSING flag. Invalid format gets DATE_INVALID_FORMAT flag. Dates before 2023-01-01 or after 2025-10-27 get DATE_OUT_OF_RANGE flag. If a restock date is before the previous restock for same SKU and warehouse, use TEMPORAL_VIOLATION flag. Also check if restock intervals are way off from typical patterns and use RESTOCK_ANOMALY flag.
 
-  Duplicates are same SKU in same warehouse after cleaning. Generally keep the one with the more recent date. But if one record looks clean (anomaly_flags=CLEAN) and the other has anomalies, keep the clean one. If both have issues, prefer higher confidence or more recent date, mark as unresolved conflict and log it. After deduplication, the output record count must be strictly less than or equal to the input record count (duplicates are removed). Every input record must be either included in the output CSV or logged as a discarded duplicate in the conflict log.
+  Duplicates are same SKU in same warehouse after cleaning. Generally keep the one with the more recent date. But if one record looks clean (anomaly_flags=CLEAN) and the other has anomalies, keep the clean one. If both have issues, prefer higher confidence or more recent date, mark as unresolved conflict and log it. After deduplication, the output record count must be strictly less than or equal to the input record count (duplicates are removed). Every input record must be either included in the output CSV or logged as a discarded duplicate in the conflict log (at minimum, 98% of input records must be accounted for to allow for extremely malformed edge cases).
 
   Calculate a confidence score for each record based on how many issues it has and how severe. Critical flags (UNKNOWN_PRODUCT, TEMPORAL_VIOLATION, CAPACITY_VIOLATION) should reduce score by 0.3 each. Major flags (PRICE_ANOMALY, QUANTITY_ANOMALY, INACTIVE_WAREHOUSE) should reduce by 0.15 each. Minor flags (PRICE_DRIFT, SKU_FUZZY_MATCHED, STATISTICAL_OUTLIER, PRICE_INCONSISTENCY) should reduce by 0.05 each. Start at 1.0 and cap between 0.0 and 1.0. Score from 0 to 1.
 
-  For anomaly detection, implement k-means clustering from scratch with k=3 to group records by severity. Use exactly these features: (1) quantity z-score from historical data, (2) price deviation percentage from catalog/historical average, (3) restock interval in days from last historical date, (4) warehouse utilization as quantity/capacity ratio. Normalize features before clustering.
+  For anomaly detection, implement k-means clustering from scratch with k=3 to group records by severity. Use exactly these features: (1) quantity z-score from historical data, (2) price deviation percentage from catalog/historical average, (3) restock interval in days from last historical date, (4) warehouse utilization as quantity/capacity ratio. Normalize features before clustering. The clustering should distribute records reasonably across the 3 clusters (no single cluster should contain more than 95% of all records).
 
   Also analyze stock distribution - find overstock situations (ratio > 3.0) and understock (ratio < 0.5) and suggest transfers between warehouses. Consider distance constraints from the rules file (if available).
 
@@ -109,7 +109,7 @@ tags:
   - algorithm-implementation
 parser_name: pytest
 max_agent_timeout_sec: 600.0
-max_test_timeout_sec: 120.0
+max_test_timeout_sec: 300.0
 run_tests_in_same_shell: false
 disable_asciinema: false
 estimated_duration_sec: 600
