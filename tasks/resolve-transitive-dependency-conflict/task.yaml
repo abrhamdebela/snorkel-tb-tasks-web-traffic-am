@@ -38,15 +38,25 @@ instruction: |-
   7. The business-critical script `/app/run_analysis.py` must execute successfully after installation.
 
   **Important Notes on Constraints:**
-  Due to the complex interlocking dependency constraints, environmental traps, and business requirements in this task, you will be forced to make difficult trade-offs. The constraints are designed such that there is only one valid solution that satisfies all requirements. Specifically:
-  - The SECURITY constraint on PackageA cannot be maintained due to conflicts with other packages
-  - The PERFORMANCE constraint on PackageI cannot be maintained due to compliance requirements on PackageJ
-  - The COST constraint on PackageK cannot be maintained due to environmental configuration issues
-  - The PLATFORM constraint on PackageL cannot be maintained due to environmental configuration issues
-  - The COMPLIANCE constraint on PackageJ must be maintained (non-negotiable)
-  - The MAINTENANCE constraint on PackageM must be maintained (non-negotiable)
+  Due to the complex interlocking dependency constraints, environmental traps, and business requirements in this task, you will be forced to make difficult trade-offs. The constraints are designed such that there is only one valid solution that satisfies all requirements.
 
-  Your investigation should reveal why these trade-offs are necessary and document the final versions chosen.
+  **The solution will require:**
+  - Converting all version ranges to exact pinned versions (using == instead of ranges)
+  - Making trade-offs on SECURITY (PackageA), PERFORMANCE (PackageI), COST (PackageK), and PLATFORM (PackageL) constraints
+  - Maintaining COMPLIANCE (PackageJ) and MAINTENANCE (PackageM) constraints as non-negotiable
+  - Pinning PackageF, PackageG, and PackageH to specific compatible versions
+  - Ensuring all transitive dependencies (PackageB, PackageC, PackageD, PackageE) resolve to mutually compatible versions
+  - Discovering and working around environmental traps (zero-width spaces, unicode homoglyphs, control characters)
+  - Understanding that configuration files and environment variables may contain hidden sabotage
+
+  **Expected outcomes:**
+  - All 9 direct packages will be pinned to exact versions (no ranges)
+  - All 4 transitive dependencies will be installed at compatible versions
+  - The complete dependency graph will have no conflicts (pip check passes)
+  - Multiple business constraints will need to be violated to achieve a working installation
+  - The final solution represents the only combination of versions that satisfies all hard constraints while minimizing violations of soft constraints
+
+  Your investigation should reveal the specific versions through dependency analysis, conflict resolution, and environmental forensics.
 author_name: David Gene Householter
 author_email: householter.david@gmail.com
 difficulty: hard
