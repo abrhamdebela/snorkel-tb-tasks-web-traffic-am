@@ -78,6 +78,20 @@ jobs:
           # Run the command (it will write result to runs/github-action-$task-$RUN/results.json)
           $CMD
 
+      - name: Print agent logs
+        run: |
+          # Find the tests.log file
+          log_file=$(find runs/github-action-${{ inputs.key }}_${{ inputs.task }}_${{ inputs.run }} -name "agent.log")
+          # Cat the agent.log file
+          cat $log_file
+
+      - name: Print tests logs
+        run: |
+          # Find the tests.log file
+          log_file=$(find runs/github-action-${{ inputs.key }}_${{ inputs.task }}_${{ inputs.run }} -name "tests.log")
+          # Cat the tests.log file
+          cat $log_file
+
       - name: Upload test results
         if: always()
         uses: actions/upload-artifact@v4
