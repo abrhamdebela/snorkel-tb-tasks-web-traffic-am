@@ -26,18 +26,20 @@ def test_requirements_file_was_modified():
     with open(REQUIREMENTS_FILE, 'r') as f:
         content = f.read()
 
-    # The original had PackageA>=7.0.0,<8.0.0, PackageF==2.8.9, PackageG>=3.5.0,<4.0.0, PackageH>=4.2.0,<5.0.0, PackageI>=3.1.0,<4.0.0, PackageJ>=2.0.0,<3.0.0, PackageK>=1.0.0,<2.0.0, PackageL>=2.1.0,<3.0.0, PackageM>=3.0.0,<4.0.0
-    # The agent should have changed at least PackageA, PackageI, PackageK, and PackageL to resolve conflicts
-    has_original_conflict_a = "PackageA==7.0.3" in content
-    has_original_conflict_i = "PackageI==3.1.4" in content
-    has_original_conflict_k = "PackageK==1.0.0" in content
-    has_original_conflict_l = "PackageL==2.1.0" in content
+    # The original requirements.txt had version ranges:
+    # PackageA>=7.0.0,<8.0.0, PackageI>=3.1.0,<4.0.0, PackageK>=1.0.0,<2.0.0, PackageL>=2.1.0,<3.0.0, etc.
+    # The agent must modify these to specific pinned versions to resolve conflicts.
+    # We check that certain "obvious but wrong" versions are NOT chosen:
+    has_bad_version_a = "PackageA==7.0.3" in content  # High version that conflicts with PackageH
+    has_bad_version_i = "PackageI==3.1.4" in content  # High version that conflicts with compliance
+    has_bad_version_k = "PackageK==1.0.0" in content  # Licensed version that requires env var
+    has_bad_version_l = "PackageL==2.1.0" in content  # Windows-only version that requires env var
 
-    # If the original conflicting versions are still there, the agent didn't fix it
-    assert not has_original_conflict_a, "The requirements.txt was not modified. PackageA must be changed from 7.0.3 to resolve conflicts."
-    assert not has_original_conflict_i, "The requirements.txt was not modified. PackageI must be changed from 3.1.4 to resolve conflicts."
-    assert not has_original_conflict_k, "The requirements.txt was not modified. PackageK must be changed from 1.0.0 to resolve conflicts."
-    assert not has_original_conflict_l, "The requirements.txt was not modified. PackageL must be changed from 2.1.0 to resolve conflicts."
+    # These "obvious" versions cause conflicts and must be avoided
+    assert not has_bad_version_a, "PackageA==7.0.3 causes conflicts. Must choose a different version outside the original range."
+    assert not has_bad_version_i, "PackageI==3.1.4 causes conflicts. Must choose a different version outside the original range."
+    assert not has_bad_version_k, "PackageK==1.0.0 has licensing issues. Must choose a different version outside the original range."
+    assert not has_bad_version_l, "PackageL==2.1.0 has platform issues. Must choose a different version outside the original range."
 
     # Should still have all 9 packages
     assert "PackageA" in content or "packagea" in content.lower(), "PackageA was removed from requirements.txt"
@@ -71,9 +73,9 @@ def test_dependencies_are_correctly_installed():
     result = subprocess.run(['/usr/local/bin/pip', 'freeze'], capture_output=True, text=True)
     installed_packages = result.stdout.lower()
 
-    # All sixteen packages must be installed (9 direct + 7 transitive dependencies)
+    # All thirteen packages must be installed (9 direct + 4 transitive dependencies)
     # Direct: A, F, G, H, I, J, K, L, M
-    # Transitive: B (from A), C (from B/E/F/G/J), D (from B/I), E (from D/J), etc.
+    # Transitive: B (from A), C (from B/E/F/G/J), D (from B/I), E (from D/J)
     required_packages = ["packagea", "packageb", "packagec", "packaged", "packagee", "packagef", "packageg", "packageh", "packagei", "packagej", "packagek", "packagel", "packagem"]
     for package_name in required_packages:
         assert package_name in installed_packages, f"Package '{package_name}' was not installed. Installed packages:\n{result.stdout}"
