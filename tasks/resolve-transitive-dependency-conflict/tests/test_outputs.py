@@ -26,7 +26,7 @@ def test_requirements_file_was_modified():
     with open(REQUIREMENTS_FILE, 'r') as f:
         content = f.read()
 
-    # The original had PackageA==7.0.3, PackageF==2.8.9, PackageG==3.5.2, PackageH==4.2.6, PackageI==3.1.4, PackageJ==2.0.0, PackageK==1.0.0, PackageL==2.1.0, PackageM==3.0.0
+    # The original had PackageA>=7.0.0,<8.0.0, PackageF==2.8.9, PackageG>=3.5.0,<4.0.0, PackageH>=4.2.0,<5.0.0, PackageI>=3.1.0,<4.0.0, PackageJ>=2.0.0,<3.0.0, PackageK>=1.0.0,<2.0.0, PackageL>=2.1.0,<3.0.0, PackageM>=3.0.0,<4.0.0
     # The agent should have changed at least PackageA, PackageI, PackageK, and PackageL to resolve conflicts
     has_original_conflict_a = "PackageA==7.0.3" in content
     has_original_conflict_i = "PackageI==3.1.4" in content
