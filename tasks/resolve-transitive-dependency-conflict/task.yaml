@@ -30,7 +30,7 @@ instruction: |-
   5. The solution must be based on a thorough investigation of the dependency tree and any environmental factors affecting package installation.
 author_name: David Gene Householter
 author_email: householter.david@gmail.com
-difficulty: expert
+difficulty: hard
 category: build-and-dependency-management
 tags: [python, pip, dependency-management, build, debugging]
 parser_name: pytest
@@ -38,6 +38,6 @@ max_agent_timeout_sec: 360.0
 max_test_timeout_sec: 60.0
 run_tests_in_same_shell: false
 disable_asciinema: false
-estimated_duration_sec:
-expert_time_estimate_min:
-junior_time_estimate_min:
+estimated_duration_sec: 
+expert_time_estimate_min: 30
+junior_time_estimate_min: 60
