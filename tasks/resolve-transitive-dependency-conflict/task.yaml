@@ -11,7 +11,7 @@ instruction: |-
   After a recent update to the requirements file, the project no longer installs correctly due to dependency conflicts. The error messages are cryptic and point to multiple packages.
 
   **CRITICAL BUSINESS CONSTRAINTS:**
-  1. **SECURITY:** PackageA version 1.0 has a known critical security vulnerability (CVE-2024-XXXXX). You should strongly prefer keeping PackageA at version 2.0. Only downgrade to 1.0 as an absolute last resort if no other solution exists.
+  1. **SECURITY:** PackageA version 1.4.7 has a known critical security vulnerability (CVE-2024-XXXXX). You should strongly prefer keeping PackageA at version 7.0.3. Only downgrade to 1.4.7 as an absolute last resort if no other solution exists.
   2. **FUNCTIONALITY:** The business-critical script `/app/run_analysis.py` imports and uses functions from both PackageA and PackageF. Both packages MUST be installed and functional for production operations.
 
   **Your Task:**
@@ -28,6 +28,7 @@ instruction: |-
   3. All transitive dependencies must be compatible (no version conflicts).
   4. The final requirements.txt must contain exactly 4 package specifications (no additions or deletions).
   5. The solution must be based on a thorough investigation of the dependency tree and any environmental factors affecting package installation.
+  6. All installed packages must be at mutually compatible versions that satisfy the complete dependency graph.
 author_name: David Gene Householter
 author_email: householter.david@gmail.com
 difficulty: hard
