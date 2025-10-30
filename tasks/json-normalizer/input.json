@@ -1,0 +1,35 @@
+{
+  " User Name ": "John Doe",
+  "Contact-Info": {
+    " Email ": "john.doe@example.com",
+    "Phone---Number": "123456789",
+    " Favorite  Snacks  ": [
+      {
+        " Snack-Name ": "chocolate",
+        "   rating  ": 10
+      },
+      {
+        " Snack-Name ": "chips",
+        "   rating  ": 9
+      }
+    ]
+  },
+  " Session-Data ": [
+    {
+      " Start Time ": "2025-10-30T18:44:00Z",
+      " End Time ": "2025-10-30T19:10:00Z",
+      " was-successful? ": true
+    },
+    {
+      " Start Time ": "2025-10-29T09:00:00Z",
+      " End Time ": "2025-10-29T09:03:00Z",
+      " was-successful? ": false
+    }
+  ],
+  " Preferences---Flags ": {
+    " DARK-MODE ": true,
+    "   Email-Opt-In   ": false,
+    "  timezone  ": "America/Chicago"
+  },
+  " Empty-Section ": {}
+}
