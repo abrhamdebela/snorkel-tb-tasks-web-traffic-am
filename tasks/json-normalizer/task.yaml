@@ -12,8 +12,8 @@ instruction: |-
     "Normalize" a key using this exact algorithm:
     1. Trim leading/trailing whitespace.
     2. Lowercase the string.
-    3. Replace any run of spaces or hyphens (" " or "-") with a single underscore "_".
-       - Treat 1+ spaces/hyphens in a row as one underscore.
+    3. Replace any space or hyphen (" " or "-") with a single underscore "_".
+       - Treat consequent spaces/hyphens in a row as one underscore.
     4. Collapse multiple underscores into one underscore.
     5. Remove a leading underscore or trailing underscore if it remains after collapsing.
     
