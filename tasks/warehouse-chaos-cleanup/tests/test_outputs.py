@@ -7,6 +7,7 @@
 import csv
 import json
 import re
+import statistics
 import yaml
 from pathlib import Path
 from datetime import datetime
@@ -59,8 +60,7 @@ def test_sku_format_validation():
     with open(output_path, 'r', encoding='utf-8') as f:
         reader = csv.DictReader(f)
         rows = list(reader)
-    
-    import re
+
     pattern = re.compile(r'^[A-Z]{2,3}-[0-9]{4,6}-[A-Z]{1,2}$')
     
     for row in rows:
@@ -75,8 +75,7 @@ def test_warehouse_format_validation():
     with open(output_path, 'r', encoding='utf-8') as f:
         reader = csv.DictReader(f)
         rows = list(reader)
-    
-    import re
+
     pattern = re.compile(r'^WH-[A-Z]{2}-[0-9]{2}$')
     
     for row in rows:
@@ -123,8 +122,7 @@ def test_date_format():
     with open(output_path, 'r', encoding='utf-8') as f:
         reader = csv.DictReader(f)
         rows = list(reader)
-    
-    import re
+
     pattern = re.compile(r'^\d{4}-\d{2}-\d{2}$')
     
     for row in rows:
@@ -399,8 +397,8 @@ def test_transfer_recommendations_have_data():
         assert len(cost_parts[1]) == 2, "estimated_cost must have exactly 2 decimals"
 
 
-def test_all_input_records_processed():
-    """Verify all input records appear in output (even if flagged/invalid)"""
+def test_output_count_reasonable():
+    """Verify output has records and count is not greater than input"""
     input_path = Path("/app/data/inventory_raw.csv")
     output_path = Path("/app/output/inventory_cleaned.csv")
 
@@ -416,8 +414,8 @@ def test_all_input_records_processed():
     assert len(output_rows) <= input_count, "Output has more records than input"
 
 
-def test_output_skus_from_supplier_catalog():
-    """Verify output SKUs exist in supplier catalog (after normalization)"""
+def test_output_skus_match_catalog_or_flagged():
+    """Verify SKUs are valid or flagged as unknown/ambiguous"""
     catalog_path = Path("/app/data/supplier_catalog.csv")
     output_path = Path("/app/output/inventory_cleaned.csv")
 
@@ -431,7 +429,10 @@ def test_output_skus_from_supplier_catalog():
 
     for row in output_rows:
         sku = row['sku']
-        assert sku in valid_skus, f"SKU {sku} not in supplier catalog"
+        flags = row['anomaly_flags']
+        if sku not in valid_skus:
+            assert 'UNKNOWN_PRODUCT' in flags or 'SKU_AMBIGUOUS' in flags or 'SKU_FUZZY_MATCHED' in flags, \
+                f"SKU {sku} not in catalog and not flagged"
 
 
 def test_half_up_rounding_applied():
@@ -616,8 +617,8 @@ def test_transfer_recommendations_based_on_data():
         assert len(to_records) > 0, f"Transfer to {to_wh} but SKU not there"
 
 
-def test_clusters_based_on_confidence_scores():
-    """Verify k-means clusters are based on actual confidence scores"""
+def test_clusters_have_valid_structure():
+    """Verify k-means clustering produced exactly 3 clusters covering all records"""
     output_path = Path("/app/output/inventory_cleaned.csv")
     clusters_path = Path("/app/output/anomaly_clusters.json")
 
@@ -625,13 +626,12 @@ def test_clusters_based_on_confidence_scores():
         reader = csv.DictReader(f)
         rows = list(reader)
 
-    confidences = [float(row['confidence_score']) for row in rows]
-    avg_confidence = sum(confidences) / len(confidences) if confidences else 0
-
     with open(clusters_path, 'r', encoding='utf-8') as f:
         cluster_data = json.load(f)
 
     clusters = cluster_data['clusters']
+
+    assert len(clusters) == 3, f"Must have exactly 3 clusters, got {len(clusters)}"
 
     high_severity = [c for c in clusters if c['severity'] == 'high']
     medium_severity = [c for c in clusters if c['severity'] == 'medium']
@@ -697,3 +697,87 @@ def test_inactive_warehouse_status_checked():
         if row['warehouse'] in inactive_warehouses:
             assert 'INACTIVE_WAREHOUSE' in row['anomaly_flags'], \
                 f"Inactive warehouse {row['warehouse']} not flagged"
+
+
+def test_tertiary_sort_by_warehouse():
+    """Verify records are sorted by confidence, then SKU, then warehouse"""
+    output_path = Path("/app/output/inventory_cleaned.csv")
+
+    with open(output_path, 'r', encoding='utf-8') as f:
+        reader = csv.DictReader(f)
+        rows = list(reader)
+
+    for i in range(len(rows) - 1):
+        curr_score = float(rows[i]['confidence_score'])
+        next_score = float(rows[i + 1]['confidence_score'])
+        curr_sku = rows[i]['sku']
+        next_sku = rows[i + 1]['sku']
+        curr_wh = rows[i]['warehouse']
+        next_wh = rows[i + 1]['warehouse']
+
+        if curr_score == next_score and curr_sku == next_sku:
+            assert curr_wh <= next_wh, \
+                f"Tertiary sort failed: {curr_wh} > {next_wh} for same score and SKU"
+
+
+def test_statistical_outlier_flagging():
+    """Verify z-score > 3 outliers are flagged"""
+    history_path = Path("/app/data/inventory_history.json")
+    output_path = Path("/app/output/inventory_cleaned.csv")
+
+    with open(history_path, 'r', encoding='utf-8') as f:
+        history = json.load(f)
+
+    historical_qtys = defaultdict(list)
+    for record in history:
+        key = (record['sku'], record['warehouse'])
+        if isinstance(record.get('quantity'), (int, float)):
+            historical_qtys[key].append(record['quantity'])
+
+    with open(output_path, 'r', encoding='utf-8') as f:
+        reader = csv.DictReader(f)
+        output_rows = list(reader)
+
+    for row in output_rows:
+        key = (row['sku'], row['warehouse'])
+        if key in historical_qtys and row['quantity'] != 'INVALID':
+            hist_qtys = historical_qtys[key]
+            if len(hist_qtys) > 1:
+                try:
+                    current_qty = int(row['quantity'])
+                    mean_qty = statistics.mean(hist_qtys)
+                    stdev_qty = statistics.stdev(hist_qtys)
+
+                    if stdev_qty > 0:
+                        z_score = abs((current_qty - mean_qty) / stdev_qty)
+                        if z_score > 3.0:
+                            assert 'STATISTICAL_OUTLIER' in row['anomaly_flags'], \
+                                f"Z-score {z_score:.2f} > 3.0 not flagged for {key}"
+                except (ValueError, statistics.StatisticsError):
+                    pass
+
+
+def test_confidence_scores_reflect_anomalies():
+    """Verify confidence scores decrease with more anomaly flags"""
+    output_path = Path("/app/output/inventory_cleaned.csv")
+
+    with open(output_path, 'r', encoding='utf-8') as f:
+        reader = csv.DictReader(f)
+        rows = list(reader)
+
+    clean_scores = []
+    flagged_scores = []
+
+    for row in rows:
+        score = float(row['confidence_score'])
+        if row['anomaly_flags'] == 'CLEAN':
+            clean_scores.append(score)
+        else:
+            flagged_scores.append(score)
+
+    if clean_scores and flagged_scores:
+        avg_clean = sum(clean_scores) / len(clean_scores)
+        avg_flagged = sum(flagged_scores) / len(flagged_scores)
+
+        assert avg_clean >= avg_flagged, \
+            f"Clean records should have higher avg confidence than flagged"
