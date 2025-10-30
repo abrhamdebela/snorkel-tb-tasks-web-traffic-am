@@ -337,9 +337,6 @@ RUN mkdir -p /tmp/packagej-3.5.7 && \
     cp dist/*.tar.gz /packages/ && \
     cd / && rm -rf /tmp/packagej-3.5.7
 
-# Install pipdeptree for dependency analysis (pinned for reproducibility)
-RUN pip install --no-cache-dir pipdeptree==2.29.0
-
 # ============================================================================
 # THE EVIL ENVIRONMENTAL TRAPS (MULTIPLE TYPES)
 # ============================================================================

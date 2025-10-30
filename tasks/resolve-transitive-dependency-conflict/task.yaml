@@ -36,6 +36,17 @@ instruction: |-
   5. The solution must be based on a thorough investigation of the dependency tree, environmental factors, and configuration files.
   6. All installed packages must be at mutually compatible versions that satisfy the complete dependency graph.
   7. The business-critical script `/app/run_analysis.py` must execute successfully after installation.
+
+  **Important Notes on Constraints:**
+  Due to the complex interlocking dependency constraints, environmental traps, and business requirements in this task, you will be forced to make difficult trade-offs. The constraints are designed such that there is only one valid solution that satisfies all requirements. Specifically:
+  - The SECURITY constraint on PackageA cannot be maintained due to conflicts with other packages
+  - The PERFORMANCE constraint on PackageI cannot be maintained due to compliance requirements on PackageJ
+  - The COST constraint on PackageK cannot be maintained due to environmental configuration issues
+  - The PLATFORM constraint on PackageL cannot be maintained due to environmental configuration issues
+  - The COMPLIANCE constraint on PackageJ must be maintained (non-negotiable)
+  - The MAINTENANCE constraint on PackageM must be maintained (non-negotiable)
+
+  Your investigation should reveal why these trade-offs are necessary and document the final versions chosen.
 author_name: David Gene Householter
 author_email: householter.david@gmail.com
 difficulty: hard

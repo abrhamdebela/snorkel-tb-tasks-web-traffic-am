@@ -26,7 +26,7 @@ uv venv .tbench-testing
 source .tbench-testing/bin/activate
 uv pip install pytest==8.4.1
 
-# Install other dependencies if needed (remember, by default this is a different venv
-# than your agent's)
+# Install test dependencies (pipdeptree is needed for dependency tree validation tests)
+uv pip install pipdeptree==2.29.0
 
 uv run pytest $TEST_DIR/test_outputs.py -rA
