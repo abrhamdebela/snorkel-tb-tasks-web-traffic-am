@@ -39,23 +39,50 @@ instruction: |-
 
   Output files to /app/output/:
 
-  inventory_cleaned.csv with columns: sku,warehouse,quantity,unit_cost,last_restocked,anomaly_flags,confidence_score
-  Sort by confidence score ascending then by sku and warehouse. Include all records even flagged ones.
+  1. inventory_cleaned.csv - CSV with columns: sku,warehouse,quantity,unit_cost,last_restocked,anomaly_flags,confidence_score
+     - sku: format AB-1234-R (2-3 letters, hyphen, 4-6 digits, hyphen, 1-2 letters, all uppercase)
+     - warehouse: format WH-XX-NN or INVALID
+     - quantity: positive integer as string or INVALID
+     - unit_cost: decimal with exactly 2 decimal places (e.g., 12.50)
+     - last_restocked: YYYY-MM-DD format or INVALID
+     - anomaly_flags: comma-separated flag names or CLEAN
+     - confidence_score: 0.00 to 1.00 with 2 decimal places
+     - Sort by confidence score ascending, then by sku, then by warehouse
+     - Include all records even flagged ones
 
-  conflict_log.json logging every duplicate resolution with what you kept and why
+  2. conflict_log.json - JSON array where each entry has:
+     - sku: the SKU that had duplicates
+     - warehouse: the warehouse that had duplicates
+     - kept_record: object with the record that was kept
+     - discarded_record: object with the record that was discarded
+     - reason: string explaining why (e.g., "higher_confidence_or_more_recent")
 
-  anomaly_report.txt with counts by confidence tier, breakdown by anomaly type, top 10 problematic SKUs, warehouse health scores
+  3. anomaly_report.txt - Text file starting with "Total records processed: N" and containing:
+     - Confidence tier breakdown (high/medium/low counts)
+     - Number of duplicates resolved
+     - Breakdown by anomaly type with counts
+     - Top 10 problematic SKUs with issue counts
+     - Warehouse health scores (0-100)
 
-  transfer_recommendations.csv with columns: sku,from_warehouse,to_warehouse,recommended_quantity,priority,estimated_cost
+  4. transfer_recommendations.csv - CSV with columns: sku,from_warehouse,to_warehouse,recommended_quantity,priority,estimated_cost
+     - Analyze overstock (ratio > 3.0) and understock (ratio < 0.5) situations
+     - recommended_quantity: integer
+     - priority: HIGH or MEDIUM
+     - estimated_cost: decimal with 2 decimal places
 
-  anomaly_clusters.json with cluster assignments and what each cluster represents
+  5. anomaly_clusters.json - JSON object with:
+     - clusters: array of exactly 3 cluster objects, each containing:
+       - id: cluster identifier (0, 1, or 2)
+       - severity: "low", "medium", or "high"
+       - record_count: number of records in cluster
+       - description: text description of the cluster
 
-  executive_summary.txt with high-level stats and recommended actions
+  6. executive_summary.txt - Text report with high-level statistics and recommended actions
 
   Requirements: implement Levenshtein distance yourself, implement k-means yourself, no external fuzzy matching or ML libraries. Should complete in under 2 minutes. Handle missing or malformed data gracefully. UTF-8 encoding with LF line endings.
 
 author_name: Tasnim Makableh
-author_email: tasnim.makableh@menadevs.io
+author_email: tasnim.makableh@menadevs.ai
 difficulty: hard
 category: data-processing
 tags:
