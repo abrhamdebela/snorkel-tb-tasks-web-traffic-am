@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(tb run:*)",
+      "Bash(docker build:*)",
+      "Bash(python:*)",
+      "Bash(cat:*)",
+      "Bash(ruff check:*)",
+      "Bash(git -C tasks/warehouse-chaos-cleanup status --porcelain)",
+      "Bash(xargs cat:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
