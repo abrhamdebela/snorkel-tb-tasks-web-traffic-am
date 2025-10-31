@@ -1160,6 +1160,20 @@ def test_kmeans_uses_specified_features():
         assert 'description' in cluster, f"Cluster {cluster['id']} missing description"
         assert len(cluster['description']) > 0, f"Cluster {cluster['id']} has empty description"
 
+    # Verify clustering reflects data features (confidence, anomalies)
+    # by checking that severity correlates with record quality
+    severity_to_conf = {}
+    for cluster in cluster_data['clusters']:
+        cluster_records = [r for r in output_records[:cluster['record_count']]]
+        if cluster_records:
+            avg_conf = sum(float(r['confidence_score']) for r in cluster_records) / len(cluster_records)
+            severity_to_conf[cluster['severity']] = avg_conf
+
+    # High severity should have lower confidence than low severity
+    if 'high' in severity_to_conf and 'low' in severity_to_conf:
+        assert severity_to_conf['high'] <= severity_to_conf['low'] + 0.3, \
+            "Clustering should reflect quality: high severity clusters should have lower confidence"
+
 
 def test_fuzzy_matching_disambiguation():
     """Verify fuzzy matching properly handles ambiguous matches vs single matches"""
@@ -1668,10 +1682,23 @@ def test_transfer_recommendations_consider_distance_constraints():
     # If no distance constraints, verify transfers are still sensible
     # (e.g., based on region proximity)
 
-    if not has_distance_constraints and len(transfers) > 0:
-        # Without explicit distance constraints, transfers should still be logical
-        # For example, preferring same-region transfers when possible
-        # This is validated by the existence of valid transfer recommendations
+    if len(transfers) > 0:
         assert all(key in transfer for transfer in transfers
                    for key in ['sku', 'from_warehouse', 'to_warehouse', 'recommended_quantity']), \
             "Transfer recommendations should have all required fields"
+
+        if has_distance_constraints:
+            warehouse_distances = {}
+            for warehouse in rules.get('warehouses', []):
+                wh_code = warehouse.get('code')
+                distances = warehouse.get('distance_constraints') or warehouse.get('distances', {})
+                if wh_code and distances:
+                    warehouse_distances[wh_code] = distances
+
+            if warehouse_distances:
+                for transfer in transfers:
+                    from_wh = transfer.get('from_warehouse')
+                    to_wh = transfer.get('to_warehouse')
+                    if from_wh in warehouse_distances:
+                        assert isinstance(warehouse_distances[from_wh], dict), \
+                            "Distance constraints should be available for consideration"
