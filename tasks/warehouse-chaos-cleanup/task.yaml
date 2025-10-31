@@ -35,7 +35,7 @@ instruction: |-
 
   For anomaly detection, implement k-means clustering from scratch with k=3 to group records by severity. The clustering should distribute records reasonably across the 3 clusters (no single cluster should contain more than 95% of all records).
 
-  Also analyze stock distribution - find overstock situations (ratio > 3.0) and understock (ratio < 0.5) and suggest transfers between warehouses. Distance constraints from the rules file can be considered if available.
+  Also analyze stock distribution - find overstock and understock situations and suggest transfers between warehouses. For each SKU, calculate the average quantity across all warehouses that have it. Then for each warehouse, calculate the ratio as: warehouse_quantity / average_quantity_for_that_sku. A warehouse is overstocked if its ratio > 3.0 (more than 3x the average). A warehouse is understocked if its ratio < 0.5 (less than half the average). Distance constraints from the rules file can be considered if available.
 
   Important: Include all input records in the output even if they have invalid/flagged data. Records with UNKNOWN_PRODUCT should still appear in output. Do not filter out any input records.
 
@@ -67,7 +67,10 @@ instruction: |-
      - Warehouse health scores (0-100)
 
   4. transfer_recommendations.csv - CSV with columns: sku,from_warehouse,to_warehouse,recommended_quantity,priority,estimated_cost
-     - Analyze overstock (ratio > 3.0) and understock (ratio < 0.5) situations
+     - Analyze stock distribution by calculating for each SKU: average_quantity = mean of quantities across all warehouses that have it
+     - For each warehouse, calculate ratio = warehouse_quantity / average_quantity
+     - Overstock: ratio > 3.0 (warehouse has more than 3x the average)
+     - Understock: ratio < 0.5 (warehouse has less than half the average)
      - Only recommend transfers between warehouses that both have the SKU in cleaned inventory
      - recommended_quantity: integer
      - priority: HIGH or MEDIUM
