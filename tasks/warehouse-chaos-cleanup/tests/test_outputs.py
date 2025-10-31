@@ -1187,8 +1187,6 @@ def test_kmeans_uses_specified_features():
     # Verify clustering reflects data quality by analyzing confidence distribution
     # Since output is sorted by confidence (ascending), we can analyze the overall distribution
     all_confidences = [float(r['confidence_score']) for r in output_records]
-    all_anomaly_counts = [len(r['anomaly_flags'].split(',')) if r['anomaly_flags'] != 'CLEAN' else 0
-                          for r in output_records]
 
     # Verify severity distribution makes sense
     # Each cluster should have a severity assigned
