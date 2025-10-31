@@ -19,7 +19,7 @@ instruction: |-
 
   What you need to do:
 
-  SKU format is supposed to be like AB-1234-R (2-3 letters, hyphen, 4-6 digits, hyphen, 1-2 letter variant code). Lots of OCR errors where 0 became O, 1 became I, 5 became S, 8 became B in the letter parts. Fix those when you can. If a SKU still doesn't match anything in the supplier catalog, try fuzzy matching with edit distance up to 2 (maximum 2 character differences). If you get exactly one match, use SKU_FUZZY_MATCHED flag. If you get multiple matches, use SKU_AMBIGUOUS flag. If no matches, use UNKNOWN_PRODUCT flag. Invalid format gets INVALID_SKU_FORMAT flag.
+  SKU format is supposed to be like AB-1234-R (2-3 letters, hyphen, 4-6 digits, hyphen, 1-2 letter variant code). There are OCR errors that may have mixed up letters and numbers. Clean these up so letter parts contain only letters and number parts contain only digits. If a SKU still doesn't match anything in the supplier catalog, try fuzzy matching with edit distance up to 2 (maximum 2 character differences). If you get exactly one match, use SKU_FUZZY_MATCHED flag. If you get multiple matches, use SKU_AMBIGUOUS flag. If no matches, use UNKNOWN_PRODUCT flag. Invalid format gets INVALID_SKU_FORMAT flag.
 
   Quantities need validation. Missing/non-numeric quantities get QUANTITY_MISSING or QUANTITY_NOT_NUMERIC flags. Non-positive values get QUANTITY_NON_POSITIVE flag. Some are way off from historical averages. Check the history file and calculate moving averages. If current quantity is more than 200% different from the 90-day average, use QUANTITY_ANOMALY flag. Also check against warehouse capacity limits from the rules file. If quantity exceeds warehouse max_capacity, use CAPACITY_VIOLATION flag. Calculate z-scores and flag outliers above 3.0 with STATISTICAL_OUTLIER flag. Keep records even if flagged.
 
@@ -33,9 +33,9 @@ instruction: |-
 
   Calculate a confidence score for each record based on how many issues it has and how severe. Critical flags (UNKNOWN_PRODUCT, TEMPORAL_VIOLATION, CAPACITY_VIOLATION) should reduce score by 0.3 each. Major flags (PRICE_ANOMALY, QUANTITY_ANOMALY, INACTIVE_WAREHOUSE) should reduce by 0.15 each. Minor flags (PRICE_DRIFT, SKU_FUZZY_MATCHED, STATISTICAL_OUTLIER, PRICE_INCONSISTENCY) should reduce by 0.05 each. Start at 1.0 and cap between 0.0 and 1.0. Score from 0 to 1.
 
-  For anomaly detection, implement k-means clustering from scratch with k=3 to group records by severity. Use exactly these features: (1) quantity z-score from historical data, (2) price deviation percentage from catalog/historical average, (3) restock interval in days from last historical date, (4) warehouse utilization as quantity/capacity ratio. Normalize features before clustering. The clustering should distribute records reasonably across the 3 clusters (no single cluster should contain more than 95% of all records).
+  For anomaly detection, implement k-means clustering from scratch with k=3 to group records by severity. The clustering should distribute records reasonably across the 3 clusters (no single cluster should contain more than 95% of all records).
 
-  Also analyze stock distribution - find overstock situations (ratio > 3.0) and understock (ratio < 0.5) and suggest transfers between warehouses. Consider distance constraints from the rules file (if available).
+  Also analyze stock distribution - find overstock situations (ratio > 3.0) and understock (ratio < 0.5) and suggest transfers between warehouses. Distance constraints from the rules file can be considered if available.
 
   Important: Include all input records in the output even if they have invalid/flagged data. Records with UNKNOWN_PRODUCT should still appear in output. Do not filter out any input records.
 

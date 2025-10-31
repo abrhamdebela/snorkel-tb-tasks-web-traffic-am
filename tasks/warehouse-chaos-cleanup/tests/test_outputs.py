@@ -1117,8 +1117,8 @@ def test_all_input_records_accounted_for():
 
 
 def test_kmeans_uses_specified_features():
-    """Verify k-means clustering output structure and distribution.
-    Task requires k=3 clusters with reasonable distribution across severity levels.
+    """Verify k-means clustering output has 3 clusters with reasonable distribution.
+    Checks cluster structure, record assignment, and distribution across severity levels.
     """
     clusters_path = Path("/app/output/anomaly_clusters.json")
     output_path = Path("/app/output/inventory_cleaned.csv")
@@ -1451,7 +1451,9 @@ def test_transfer_recommendations_validate_warehouses():
 
 
 def test_ocr_error_correction():
-    """Verify OCR errors in SKU format are corrected (O→0, I→1, S→5, B→8 in number part)"""
+    """Verify SKU format has correct character types in each part.
+    Checks that number parts contain only digits and letter parts contain only letters.
+    """
     output_path = Path("/app/output/inventory_cleaned.csv")
     
     with open(output_path, 'r', encoding='utf-8') as f:
@@ -1656,7 +1658,9 @@ def test_graceful_handling_of_malformed_data():
 
 
 def test_transfer_recommendations_consider_distance_constraints():
-    """Verify transfer recommendations consider distance constraints if available in rules file"""
+    """Verify transfer recommendations file has required fields.
+    Checks if distance constraints exist in rules file (if present).
+    """
     transfer_path = Path("/app/output/transfer_recommendations.csv")
     rules_path = Path("/app/data/warehouse_rules.yaml")
 
@@ -1698,6 +1702,7 @@ def test_transfer_recommendations_consider_distance_constraints():
             if warehouse_distances:
                 for transfer in transfers:
                     from_wh = transfer.get('from_warehouse')
+                    to_wh = transfer.get('to_warehouse')
                     if from_wh in warehouse_distances:
                         assert isinstance(warehouse_distances[from_wh], dict), \
                             "Distance constraints should be available for consideration"
