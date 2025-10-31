@@ -23,9 +23,9 @@ import subprocess
 import unicodedata
 from typing import Any, Dict, List, Tuple
 
-INPUT_PATH = pathlib.Path("/app/input.json")
-OUTPUT_PATH = pathlib.Path("/app/output.json")
-KEY_MAP_PATH = pathlib.Path("/app/key_map.json")
+INPUT_PATH = pathlib.Path("/app/data/input.json")
+OUTPUT_PATH = pathlib.Path("/app/data/output.json")
+KEY_MAP_PATH = pathlib.Path("/app/data/key_map.json")
 
 EXPECTED_INPUT_SHA256 = (
     "158287d1d20b79aa9d60de1958eb5458095f21aaa7d7e1c327b741852e0f06ec"
