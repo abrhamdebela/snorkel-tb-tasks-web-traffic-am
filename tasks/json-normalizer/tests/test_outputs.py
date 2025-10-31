@@ -67,7 +67,6 @@ def _normalize_key_pipeline(orig: str) -> str:
     # same full pipeline we defined: NFKD → strip combining marks →
     # lowercase → spaces/hyphens -> "_" → collapse "_" → drop non [a-z0-9_]
     # → collapse "_" again → strip "_" → fallback "key"
-    import unicodedata, re
 
     if orig is None:
         orig = ""
