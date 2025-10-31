@@ -49,7 +49,7 @@ def _load_json(p: pathlib.Path) -> Any:
 
 def _assert_input_is_authentic() -> Any:
     """
-    Make sure /app/input.json was NOT modified by the agent.
+    Make sure /app/data/input.json was NOT modified by the agent.
     We verify by hashing its raw bytes and comparing to a known SHA256.
     Returns the parsed JSON so callers can reuse it.
     """
@@ -158,7 +158,7 @@ def test_input_is_authentic_and_unmodified():
 
 def test_key_map_completeness_and_validity():
     """
-    Ensure /app/key_map.json:
+    Ensure /app/data/key_map.json:
     - contains every original key string from the entire authentic input tree
     - maps each original key string to a syntactically valid normalized key
     We do NOT require global uniqueness of mapped values, because reuse of names
@@ -194,7 +194,7 @@ def test_key_map_completeness_and_validity():
 
 def test_output_matches_expected_normalization_and_order():
     """
-    Verify /app/output.json equals the deterministic transform of the authentic input,
+    Verify /app/data/output.json equals the deterministic transform of the authentic input,
     and key_map.json matches the computed per-object collision logic.
     """
     orig_data = _assert_input_is_authentic()
