@@ -9,8 +9,8 @@ import pathlib
 import re
 from typing import Any
 
-INPUT_PATH = pathlib.Path("/app/input.json")
-OUTPUT_PATH = pathlib.Path("/app/output.json")
+INPUT_PATH = pathlib.Path("/app/data/input.json")
+OUTPUT_PATH = pathlib.Path("/app/data/output.json")
 
 VALID_KEY_RE = re.compile(r"^[a-z0-9_]+$")
 
@@ -30,6 +30,8 @@ def _normalize_key(original_key: str) -> str:
     key = re.sub(r"[ -]+", "_", key)
     key = re.sub(r"_+", "_", key)
     key = key.strip("_")
+    key = re.sub(r"[^a-z0-9_]", "", key)
+    key = re.sub(r"_+", "_", key).strip("_")
     return key
 
 

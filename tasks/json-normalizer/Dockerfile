@@ -21,7 +21,7 @@ FROM ghcr.io/laude-institute/t-bench/python-3-13:20250620
 
 WORKDIR /app
 
-COPY input.json /app/input.json
+COPY data/input.json /app/data/input.json
 # ======================================================================================
 
 # If you'd like to step into the container and run commands to help you develop the task

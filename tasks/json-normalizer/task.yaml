@@ -6,16 +6,18 @@
 # The instructions will include references to the relevant resources necessary for task completion, rules and additional constraints, and a description of the success criteria.
 # This will also contain task metadata that is not available to the agent at runtime.
 instruction: |-
-    You are given a JSON file at /app/input.json.
-    Your task is to normalize ALL object keys in that JSON and write the result to /app/output.json.
+    You are given a JSON file at /app/data/input.json.
+    Your task is to normalize ALL object keys in that JSON and write the result to /app/data/output.json.
 
     "Normalize" a key using this exact algorithm:
     1. Trim leading/trailing whitespace.
     2. Lowercase the string.
     3. Replace any space or hyphen (" " or "-") with a single underscore "_".
-       - Treat consequent spaces/hyphens in a row as one underscore.
+       - Treat consecutive spaces/hyphens in a row as one underscore.
     4. Collapse multiple underscores into one underscore.
     5. Remove a leading underscore or trailing underscore if it remains after collapsing.
+    6. Remove any remaining characters that are not lowercase letters, digits, or underscore.
+    7. Collapse multiple underscores again and trim leading/trailing underscores.
     
     Examples:
       "User Name"           -> "user_name"
@@ -33,24 +35,27 @@ instruction: |-
       - Scalar values (strings, numbers, booleans, null) must not be changed.
 
     The deliverables are:
-      /app/input.json     (provided to you)
-      /app/output.json    (you must create this)
+      /app/data/input.json     (provided to you)
+      /app/data/output.json    (you must create this)
 
     You may solve the task however you like (shell utilities, Python, jq+sed+python combo, etc.)
-    but the final file must exist at /app/output.json when you are done.
+    but the final file must exist at /app/data/output.json when you are done.
 
     Success criteria:
-      - /app/input.json exists and is valid JSON.
-      - /app/output.json exists and is valid JSON.
-      - All dictionary/object keys in /app/output.json follow the regex ^[a-z0-9_]+$.
-      - The structure and values of /app/output.json match /app/input.json
+      - /app/data/input.json exists and is valid JSON.
+      - /app/data/output.json exists and is valid JSON.
+      - All dictionary/object keys in /app/data/output.json follow the regex ^[a-z0-9_]+$.
+      - The structure and values of /app/data/output.json match /app/data/input.json
         except for normalized keys.
       - No keys are dropped or added: every original key appears exactly once in normalized form.
 author_name: Akzhol Imangaliyev
 author_email: akzhol.im@gmail.com
 difficulty: easy
 category: data-processing
-tags: []
+tags:
+  - json
+  - parsing
+  - reformatting
 parser_name: pytest
 max_agent_timeout_sec: 360.0
 max_test_timeout_sec: 60.0
