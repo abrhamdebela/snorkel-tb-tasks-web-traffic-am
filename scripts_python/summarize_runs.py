@@ -89,6 +89,7 @@ def main():
                 f.write("|-------------|------------|----------|--------|\n")
                 for agent, data in task_summary["agents"].items():
                     f.write(f"| {agent} | {data['n_runs']} | {data['accuracy']} | {data['pass_at_5']} |\n")
+        f.write("<!-- test-summary-end -->")
     # Send the difficulty of the last task to $GITHUB_OUTPUT
     # Note: last task but it should be fine as a PR should only contain one task
     with open(os.environ["GITHUB_OUTPUT"], "a") as f:

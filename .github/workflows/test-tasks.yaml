@@ -179,6 +179,12 @@ jobs:
       - name: Run a Python script
         run: python scripts_python/summarize_runs.py
         id: summarize_runs
+      - name: Hide comment
+        id: hide-comment
+        uses: int128/hide-comment-action@v1
+        with:
+          authors: "github-actions[bot]"
+          ends-with: <!-- test-summary-end -->
       - name: Add comment
         uses: peter-evans/create-or-update-comment@v4
         with:
