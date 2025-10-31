@@ -40,7 +40,7 @@ instruction: |-
 
 author_name: Akzhol Imangaliyev
 author_email: akzhol.im@gmail.com
-difficulty: easy
+difficulty: hard
 category: data-processing
 tags:
   - json
