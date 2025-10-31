@@ -33,7 +33,7 @@ instruction: |-
       and the value is the final normalized key assigned to it.
 
   Rules:
-    - You MUST NOT modify /app/data/input.json. A golden copy is available at /app/data/.input_original.json for tests.
+    - You MUST NOT modify /app/data/input.json. The evaluator will verify that `/app/data/input.json` is byte-for-byte identical to the canonical file via a cryptographic hash.
     - You MUST preserve values, list order, and overall structure.
     - Use only Python standard library in your solution.
     - The tests are strict: they require the exact normalization algorithm and deterministic collision resolution.
@@ -52,6 +52,6 @@ max_agent_timeout_sec: 360.0
 max_test_timeout_sec: 60.0
 run_tests_in_same_shell: false
 disable_asciinema: false
-estimated_duration_sec:
+estimated_duration_sec: 300
 expert_time_estimate_min: 60
 junior_time_estimate_min: 120
