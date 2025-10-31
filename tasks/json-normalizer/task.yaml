@@ -6,61 +6,52 @@
 # The instructions will include references to the relevant resources necessary for task completion, rules and additional constraints, and a description of the success criteria.
 # This will also contain task metadata that is not available to the agent at runtime.
 instruction: |-
-    You are given a JSON file at /app/data/input.json.
-    Your task is to normalize ALL object keys in that JSON and write the result to /app/data/output.json.
+  You are given a JSON file at /app/data/input.json.
 
-    "Normalize" a key using this exact algorithm:
-    1. Trim leading/trailing whitespace.
-    2. Lowercase the string.
-    3. Replace any space or hyphen (" " or "-") with a single underscore "_".
-       - Treat consecutive spaces/hyphens in a row as one underscore.
-    4. Collapse multiple underscores into one underscore.
-    5. Remove a leading underscore or trailing underscore if it remains after collapsing.
-    6. Remove any remaining characters that are not lowercase letters, digits, or underscore.
-    7. Collapse multiple underscores again and trim leading/trailing underscores.
-    
-    Examples:
-      "User Name"           -> "user_name"
-      " Contact-Info "      -> "contact_info"
-      "Phone---Number"      -> "phone_number"
-      "  Favorite  Snacks  "-> "favorite_snacks"
+  Produce /app/data/output.json which is the same structure and values as input.json
+  but with every object key normalized using the exact algorithm below.
+  Also produce /app/data/key_map.json mapping each original key string to the final normalized key.
 
-    Rules:
-      - You MUST preserve the structure and values.
-        If input.json has nested objects, arrays, strings, numbers, booleans, nulls, etc.,
-        output.json must keep them exactly the same, just with normalized dict keys.
-      - You MUST recurse through the entire structure.
-        That means: normalize keys for objects anywhere, even inside arrays.
-      - Arrays/lists must remain arrays/lists in the same order.
-      - Scalar values (strings, numbers, booleans, null) must not be changed.
+  Normalization algorithm (MUST be followed exactly, deterministic):
+    1. Unicode NFKD normalize the original key string.
+    2. Remove all Unicode combining marks (strip diacritics).
+    3. Convert the result to lowercase.
+    4. Replace any run of spaces or hyphens (" " or "-") with a single underscore "_".
+    5. Collapse multiple underscores into one underscore.
+    6. Remove any characters that are not ASCII letters (a-z), digits (0-9), or underscore.
+       (This will drop characters which can't be transliterated to ASCII letters/digits/underscore.)
+    7. Collapse multiple underscores again and strip leading/trailing underscores.
+    8. If the resulting normalized base key is empty, replace it with "key".
+    9. Collision resolution: within each object, if two or more original keys map to
+       the same normalized base, append deterministic numeric suffixes to subsequent keys:
+       normalized, normalized_1, normalized_2, ...
+       The suffix numbering must be assigned in the order the original keys appear in the input object.
+    10. Preserve the iteration order of keys within each object when producing the output object.
 
-    The deliverables are:
-      /app/data/input.json     (provided to you)
-      /app/data/output.json    (you must create this)
+  Additional required outputs:
+    - /app/data/key_map.json : JSON object where each key is the original key (exact string)
+      and the value is the final normalized key assigned to it.
 
-    You may solve the task however you like (shell utilities, Python, jq+sed+python combo, etc.)
-    but the final file must exist at /app/data/output.json when you are done.
+  Rules:
+    - You MUST NOT modify /app/data/input.json. A golden copy is available at /app/data/.input_original.json for tests.
+    - You MUST preserve values, list order, and overall structure.
+    - Use only Python standard library in your solution.
+    - The tests are strict: they require the exact normalization algorithm and deterministic collision resolution.
 
-    Success criteria:
-      - /app/data/input.json exists and is valid JSON.
-      - /app/data/output.json exists and is valid JSON.
-      - All dictionary/object keys in /app/data/output.json follow the regex ^[a-z0-9_]+$.
-      - The structure and values of /app/data/output.json match /app/data/input.json
-        except for normalized keys.
-      - No keys are dropped or added: every original key appears exactly once in normalized form.
 author_name: Akzhol Imangaliyev
 author_email: akzhol.im@gmail.com
 difficulty: easy
 category: data-processing
 tags:
   - json
-  - parsing
-  - reformatting
+  - normalization
+  - unicode
+  - deterministic
 parser_name: pytest
 max_agent_timeout_sec: 360.0
 max_test_timeout_sec: 60.0
 run_tests_in_same_shell: false
 disable_asciinema: false
 estimated_duration_sec:
-expert_time_estimate_min: 30
-junior_time_estimate_min: 60
+expert_time_estimate_min: 60
+junior_time_estimate_min: 120

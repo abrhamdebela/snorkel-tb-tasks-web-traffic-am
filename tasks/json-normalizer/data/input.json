@@ -6,30 +6,67 @@
     " Favorite  Snacks  ": [
       {
         " Snack-Name ": "chocolate",
-        "   rating  ": 10
+        "   rating  ": 10,
+        "Råté": "S-tier"
       },
       {
         " Snack-Name ": "chips",
-        "   rating  ": 9
+        "   rating  ": 9,
+        "Råté": "A-tier"
+      }
+    ],
+    " Preferred-Lang ": [
+      {
+        " display ": "English",
+        " i18n-code ": "en-US"
+      },
+      {
+        " display ": "Polski",
+        " i18n-code ": "pl-PL"
       }
     ]
   },
+
   " Session-Data ": [
     {
       " Start Time ": "2025-10-30T18:44:00Z",
       " End Time ": "2025-10-30T19:10:00Z",
-      " was-successful? ": true
+      " was-successful? ": true,
+      " Client City ": "Austin",
+      " Client City  ": "Austin, TX",
+      "Clïënt-Cïtÿ": "Łódź"
     },
     {
       " Start Time ": "2025-10-29T09:00:00Z",
       " End Time ": "2025-10-29T09:03:00Z",
-      " was-successful? ": false
+      " was-successful? ": false,
+      " Client City ": "Dallas",
+      "Clïënt-Cïtÿ": "Kraków",
+      "non-ascii-key-東京": "Shinjuku"
     }
   ],
+
   " Preferences---Flags ": {
     " DARK-MODE ": true,
     "   Email-Opt-In   ": false,
-    "  timezone  ": "America/Chicago"
+    "  timezone  ": "America/Chicago",
+    " UI Language ": "Señor Español",
+    "UI–Language": "Español (MX)",
+    "Москва": "ru",
+    "東京": "jp"
   },
-  " Empty-Section ": {}
+
+  " Empty-Section ": {},
+
+  "   ---   ": {
+    "   ---   ": "nested weird key level 1",
+    "   - - -   ": {
+      "   ---   ": "nested weird key level 2"
+    }
+  },
+
+  "   ": {
+    "   ": "top-level blanklike key inner value",
+    " --- ": "another value"
+  }
 }
