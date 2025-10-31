@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(tb run:*)",
+      "Bash(chcp 65001:*)",
+      "Bash(PYTHONIOENCODING=utf-8 tb run:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
