@@ -1702,7 +1702,6 @@ def test_transfer_recommendations_consider_distance_constraints():
             if warehouse_distances:
                 for transfer in transfers:
                     from_wh = transfer.get('from_warehouse')
-                    to_wh = transfer.get('to_warehouse')
                     if from_wh in warehouse_distances:
                         assert isinstance(warehouse_distances[from_wh], dict), \
                             "Distance constraints should be available for consideration"
