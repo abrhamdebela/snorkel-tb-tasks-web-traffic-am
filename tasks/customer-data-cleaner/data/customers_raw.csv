@@ -1,0 +1,856 @@
+email,phone,amount,date
+nancy@test,555.226.7113,-1325.79,08-07-2020
+bob.johnson@gmail.com,2-555-558-6230,,2022/11/05
+victor.johnson@gmail.com,555.281.1330,$910.50,13/45/2024
+yara.davis@gmail.com,1234567890123456,"2793,99",2026/01/01
+wendy.johnson@yahoo.com,2-555-534-4291,"€4173,56",2026/01/01
+wendy.johnson@test.com,2-555-816-4040,,20-10-2024
+quinn.wilson@test.com,1-555-537-1768,$1811.36,06/19/2023
+yara.brown@yahoo.com,(555) 420-5969,,01/15/2025
+xavier.moore@outlook.com,５５５-987-1407,"£1,458.59","Nov 28, 2023"
+zack.moore@example.com,555-938-5379,invalid,2026/01/01
+ZACK.WILSON@example.com,(555) 218-7254,4961.161,"Jul 17, 2024"
+charlie.taylor@test.com,86993,"4083,97",
+jack.johnson@outlook.com,1-555-342-3969,"€927,61",27-12-2024
+xavier.johnson@gmail.com,555-517-9909,"3118,96",2021/09/18
+anna.davis@gmail.com,57489,879.68,2026/01/01
+  alice.davis@company.com  ,1234567890123456,-2349.69,2026/01/01
+irene.brown@gmail.com,97801,"£2,504.85",2020/08/06
+victor.brown@outlook.com,,2459.556,"Jun 26, 2025"
+paul.jones@company.com,1234567890123456,invalid,2023/05/03
+brian.wilson@yahoo.com,５５５-849-2432,invalid,
+QUINN.DAVIS@test.com,５５５-200-7638,"€4050,78",04/01/2025
+steve.brown@company.com,555-832-8858,,2026/01/01
+brian.brown@example.com,(555) 939-8002,$2366.17,2022/04/07
+leo.smith@outlook.com,2-555-102-3158,$839.26,13/45/2024
+rachel.miller@company.com,,-2725.07,"May 24, 2020"
+eve.miller@gmail.com,５５５-939-4114,$3133.23,2026/01/01
+jane.davis@example.com,(555) 151-8792,"806,05",
+diana.johnson@gmail.com,1234567890123456,"1653,27",
+kate.davis@outlook.com,５５５-777-9881,-3132.88,13/45/2024
+wendy.taylor@gmail.com,５５５-833-9731,¥4558,
+quinn.johnson@outlok.com,５５５-848-2854,-4345.39,13/45/2024
+paul.smith@outlook.com,555.204.1607,"€2138,03",13-01-2023
+leo.johnson@example.com,1-555-548-1597,"£3,838.29",01/24/2025
+jane.brown@test.com,1234567890123456,"£4,501.03",23-07-2021
+victor.jones@yahoo.com,555.563.4210,$2538.53,02-07-2020
+jack.miller@test.com,1234567890123456,,2024/01/07
+zack.jones@gmail.com,５５５-375-7316,,2026/01/01
+charlie.johnson@gmail.com,555.180.4212,¥2098,"Nov 26, 2021"
+steve.williams@outlook.com,５５５-419-1592,$4433.58,2021/04/05
+victor.wilson@yahoo.com,５５５-902-1755,3303.757,2025/09/03
+XAVIER.TAYLOR@example.com,,1324.923,2021/11/21
+uma.miller@example.com,５５５-801-6189,$2517.41,2023/01/06
+alice.brown@outlook.com,,$680.34,13/45/2024
+quinn.miller@gmail.com,(555) 620-2969,310.50,2026/01/01
+brian.davis@example.com,1-555-913-6013,$2439.83,"Apr 8, 2024"
+  eve.wilson@test.com  ,1234567890123456,,08/02/2023
+olivia.davis@example.com,５５５-870-4792,"€1947,23",
+jane.johnson@gmail.com,555-207-3580,"2697,50",
+irene.taylor@example.com,555-303-9087,"2937,12",17-05-2021
+paul.brown@company.com,1-555-590-5119,-2107.02,13/45/2024
+duplicate.test@gmail.com,555-123-4567,"$1,234.56",03/15/2024
+charlie.miller@yahoo.com,５５５-718-5719,-3884.60,12-05-2023
+nick.davis@test.com,５５５-871-4124,,05-12-2020
+zack.wilson@example.com,５５５-742-7486,1075.654,
+rachel.wilson@yahoo.com,,"£3,226.31",
+uma.miller@gmail.com,2-555-429-5207,$602.99,2026/01/01
+john.smith@company.com,79410,"€3564,26",22-10-2023
+rachel.davis@test.com,2-555-145-6682,$403.41,"Oct 7, 2021"
+olivia.miller@outlook.com,,768.64,"Apr 8, 2021"
+anna.jones@test.com,,"1315,04",02-02-2023
+yara.miller@yahooo.com,89039,"1185,86",2020/10/08
+henry.jones@example.com,1234567890123456,$3196.44,11-03-2023
+john.smith@outlook.com,(555) 791-7137,"€3945,01",16-04-2022
+xavier.miller@test.com,17370,¥911,13/45/2024
+bob.williams@gmail.com,1234567890123456,"1,040.16",13/45/2024
+john.johnson@gmail.com,555-781-7904,$3996.22,14-08-2024
+bob.smith@test.com,46954,"€4433,06",13/45/2024
+jack.williams@yahoo.com,５５５-686-4131,3217.806,2026/01/01
+yara.miller@gmail.com,,$2102.02,"Oct 10, 2024"
+xavier.smith@gmail.com,,-3336.56,"Dec 19, 2021"
+BRIAN.WILSON@example.com,555-158-1450,¥3315,12-10-2022
+eve.davis@yahoo.com,1234567890123456,"2888,42",
+bob.miller@example.com,(555) 854-3311,-4026.07,2023/01/25
+quinn.taylor@test.com,2-555-700-1995,"£3,845.70",2023/03/13
+mary.johnson@example.com,,"€435,98",
+  paul.davis@test.com  ,555.254.4075,,"Jan 2, 2024"
+anna.brown@test.com,1234567890123456,4588.436,03-01-2020
+kate.smith@company.com,58434,,2022/12/10
+uma.jones@outlook.com,2-555-738-6160,"4,479.69",10-01-2022
+charlie.brown@gmail.com,13614,,03/26/2021
+PAUL.WILLIAMS@test.com,2-555-699-4212,$2605.89,13/45/2024
+bob.williams@test.com,2-555-173-6612,-4775.28,13-06-2020
+kate.johnson@gmail.com,,"£1,368.86",14-06-2023
+rachel.johnson@gmail.com,５５５-619-2649,,08-04-2025
+charlie.moore@gmail.com,,,05/23/2025
+victor.wilson@example.com,2-555-446-9158,"€4575,63",2024/05/23
+irene.davis@outlook.com,2-555-822-6933,"2,297.50",2024/01/13
+jack.taylor@gmail.com,555.666.5142,invalid,13/45/2024
+mary.wilson@gmail.com,５５５-148-1734,-1330.90,06/09/2021
+jane.johnson@yahoo.com,(555) 913-8886,"4156,74",13/45/2024
+nick.jones@yahooo.com,(555) 186-5031,"£1,471.40",05/01/2022
+anna.taylor@yahoo.com,32622,"442,18",08-11-2021
+mary.davis@example.com,５５５-403-1603,-287.17,13/45/2024
+anna.moore@company.com,,¥2266,"Oct 15, 2020"
+kate.williams@company.com,1234567890123456,invalid,09/05/2023
+uma.wilson@gmail.com,５５５-479-7602,111.266,17-10-2022
+xavier.smith@test.com,555-813-4375,"€4795,31",12/17/2024
+olivia.moore@gmail.com,33430,¥672,03/06/2023
+yara.brown@company.com,(555) 417-9275,2873.567,02/23/2025
+frank.smith@example.com,555.891.5557,,13/45/2024
+nancy@test,2-555-555-3661,¥2066,2021/08/21
+leo.taylor@example.com,,invalid,12/25/2020
+jane.johnson@test.com,1234567890123456,¥2938,10/28/2024
+paul.moore@test.com,,invalid,2026/01/01
+eve.johnson@test.com,2-555-490-7004,"3,950.90",20-02-2024
+  yara.johnson@example.com  ,555-916-8118,"£3,198.22","Jun 22, 2024"
+rachel.miller@company.com,,4320.991,21-10-2023
+kate.moore@gmail.com,(555) 285-7127,"£1,430.00",2021/12/20
+tina.johnson@test.com,555-213-9235,"£4,071.44",2026/01/01
+zack.johnson@example.com,35787,"€162,13","Mar 24, 2025"
+UMA.DAVIS@test.com,94479,-1938.16,13/45/2024
+paul.brown@example.com,2-555-116-3908,$4461.72,13/45/2024
+yara.jones@example.com,(555) 520-8213,"£2,925.23",2022/01/21
+leo.miller@yahoo.com,1-555-682-6729,"£4,148.64",08/21/2020
+nick.wilson@gmail.com,1234567890123456,,2020/08/11
+jane.johnson@test.com,555.656.7747,"€4576,45","Dec 24, 2023"
+brian.williams@gmail.com,(555) 159-9861,"4,825.35",27-02-2022
+zack.smith@outlook.com,2-555-376-3858,¥3985,08/27/2024
+yara.johnson@company.com,30245,"4,772.20","Dec 22, 2021"
+bob.moore@yahoo.com,５５５-741-4815,,2026/01/01
+henry.davis@outlok.com,88462,328.95,
+charlie.smith@yahoo.com,1234567890123456,"€241,11",06/19/2023
+yara.wilson@example.com,555-363-3132,"1,606.87",2026/01/01
+wendy.smith@gmail.com,2-555-569-5106,"£2,742.12",16-03-2025
+eve.brown@test.com,68967,invalid,04/19/2023
+kate.taylor@example.com,５５５-477-7428,"2283,64",06/24/2021
+brian.wilson@company.com,555-677-2738,¥2294,05/04/2025
+zack.smith@example.com,1-555-951-4370,2423.923,"Sep 18, 2021"
+eve.taylor@test.com,(555) 929-7760,invalid,"Mar 4, 2024"
+irene.moore@gmail.com,555.464.6850,"1042,54","Sep 9, 2025"
+RACHEL.BROWN@yahoo.com,５５５-388-8864,"€283,81",12/16/2020
+yara.johnson@gmail.com,(555) 682-4257,"286,91",2026/01/01
+tina.jones@gmail.com,2-555-682-7642,"£4,819.26","Apr 19, 2022"
+olivia.smith@example.com,2-555-669-6988,753.40,2023/02/06
+frank.brown@test.com,2-555-745-1737,"€1945,61",2021/05/08
+  leo.jones@company.com  ,,"3,878.25",13/45/2024
+anna.smith@company.com,1234567890123456,"£1,771.90",11/10/2024
+paul.davis@gmail.com,,¥2628,
+brian.wilson@example.com,1-555-371-3415,invalid,2026/01/01
+xavier.williams@example.com,2-555-559-7532,-2752.93,
+PAUL.MOORE@test.com,555.630.4762,¥2223,05/13/2024
+rachel.moore@example.com,2-555-441-7830,"€860,68","Feb 8, 2024"
+yara.wilson@gmail.com,1234567890123456,"1,738.56",2026/01/01
+john.wilson@company.com,555.958.9211,4669.615,"Jun 25, 2021"
+jane.wilson@gmail.com,1234567890123456,"3,088.63",
+jack.miller@outlook.com,555.232.3952,"€2300,70",18-02-2023
+bob.jones@gmail.com,555-377-3343,-2353.40,2026/01/01
+zack.wilson@gmail.com,５５５-945-8384,invalid,02/25/2025
+grace.davis@example.com,555.796.1169,invalid,19-06-2024
+quinn.moore@example.com,555.608.9450,361.14,2026/01/01
+no-at-sign.com,５５５-264-3703,invalid,2025/11/13
+henry.brown@test.com,2-555-508-2674,invalid,2026/01/01
+irene.smith@yahoo.com,25218,"2,819.05",2021/03/20
+quinn.miller@yahoo.com,87738,"£4,049.00",
+xavier.moore@example.com,(555) 413-7246,"1661,52",25-12-2024
+leo.johnson@gmail.com,1-555-514-1922,"2544,56",
+steve.smith@test.com,５５５-829-3536,"2,856.50",09-11-2024
+henry.brown@company.com,1-555-918-8456,invalid,2026/01/01
+grace.moore@outlook.com,５５５-682-8946,invalid,2026/01/01
+paul.miller@example.com,５５５-483-9255,-1891.84,"Mar 9, 2024"
+YARA.TAYLOR@company.com,41080,"£1,662.60",15-05-2020
+rachel.miller@example.com,(555) 208-9579,-2906.44,10-11-2021
+yara.wilson@outlook.com,56596,453.845,2025/04/20
+frank.williams@outlook.com,555.715.2681,invalid,13/45/2024
+rachel.taylor@outlook.com,2-555-321-2295,"2,088.89",10-12-2021
+  anna.johnson@example.com  ,1234567890123456,-1884.13,
+jane.williams@yahoo.com,555.146.4074,232.859,"Mar 22, 2023"
+victor.jones@example.com,,"3,330.49",12-02-2024
+frank.taylor@test.com,30569,,22-08-2024
+diana.jones@outlook.com,,"3,504.23",2026/01/01
+FRANK.JOHNSON@example.com,68339,$1850.12,25-12-2020
+wendy.moore@yahoo.com,(555) 661-5290,"€4678,32",2026/01/01
+charlie.taylor@company.com,,¥2626,"Jul 4, 2022"
+quinn.davis@outlook.com,(555) 268-4454,"482,75",2025/01/04
+john.brown@outlook.com,2-555-431-4080,invalid,06/25/2020
+yara.smith@company.com,,"€4617,61",
+diana.davis@company.com,2-555-406-5692,invalid,13/45/2024
+quinn.jones@test.com,91031,invalid,2021/07/20
+mary.williams@yahoo.com,2-555-647-2294,,2026/01/01
+charlie.taylor@gmail.com,52341,"£4,716.37",
+john.smith@gmial.com,555-990-5688,"£3,690.41",2026/01/01
+yara.davis@example.com,81063,"2843,91",13/45/2024
+olivia.smith@example.com,92526,"€813,61",2020/02/23
+henry.wilson@example.com,５５５-170-4028,"2664,82",08/17/2023
+brian.wilson@gmail.com,(555) 938-7313,$1857.33,02-06-2023
+grace.wilson@yahoo.com,1234567890123456,$2850.32,2026/01/01
+jack.williams@example.com,1234567890123456,,2021/12/12
+charlie.brown@outlook.com,555-438-6189,"1127,95",28-01-2023
+paul.johnson@gmail.com,555-817-2955,invalid,2025/01/26
+eve.davis@outlook.com,５５５-207-2162,"725,17",13/45/2024
+JANE.MILLER@yahoo.com,58517,$4431.72,
+rachel.johnson@outlook.com,2-555-200-6938,3337.583,13/45/2024
+tina.brown@yahoo.com,1234567890123456,¥3203,13/45/2024
+leo.miller@outlook.com,555.378.6234,"2090,69","Nov 16, 2024"
+frank.wilson@yahoo.com,1234567890123456,"£1,260.68",07-09-2023
+  victor.smith@outlook.com  ,2-555-840-6379,¥1465,2025/06/04
+steve.davis@test.com,2-555-433-4162,¥1021,04-05-2020
+xavier.johnson@yahoo.com,(555) 239-9283,"€3194,68",2020/07/15
+john.jones@test.com,1-555-386-5525,"739,19",10/07/2020
+nick.jones@test.com,５５５-519-3206,,2026/01/01
+duplicate.test@gmail.com,555-123-4567,"$1,234.56",03/15/2024
+irene.brown@test.com,５５５-230-2442,"3290,81",10/11/2021
+paul.smith@example.com,５５５-419-5378,-4328.17,13/45/2024
+quinn.williams@example.com,555-877-5973,,13/45/2024
+wendy.wilson@outlook.com,1234567890123456,,"Aug 28, 2023"
+steve.williams@gmail.com,1-555-503-5791,"£4,810.57",2023/01/15
+paul.brown@outlook.com,28672,"4968,77",13/45/2024
+victor.wilson@yahoo.com,(555) 293-8736,¥3161,01/08/2022
+paul.smith@gmail.com,555.868.2419,$1781.26,2020/06/07
+yara.brown@test.com,(555) 104-2026,"€1496,74",13/45/2024
+irene.jones@outlok.com,(555) 435-5063,,"Sep 13, 2021"
+steve.taylor@gmail.com,1-555-863-6157,,10-11-2025
+brian.jones@example.com,1234567890123456,¥4081,
+diana.williams@example.com,(555) 547-6098,2319.159,12-04-2024
+john.moore@company.com,1-555-713-8841,2929.394,2021/09/14
+grace.smith@example.com,89978,2505.145,2026/01/01
+kate.johnson@gmail.com,(555) 918-9158,"€4373,78",2022/02/24
+henry.smith@test.com,(555) 550-6601,"823,58",
+xavier.brown@example.com,555-234-6446,"1,470.74",2026/01/01
+jack.smith@test.com,88744,¥2505,2021/01/10
+MARY.DAVIS@company.com,,"3,799.70",02/13/2020
+paul.wilson@example.com,555-835-5442,,
+wendy.miller@yahoo.com,36247,"£4,574.05",
+frank.williams@outlook.com,(555) 176-5979,-2609.17,"Jun 15, 2021"
+quinn.moore@example.com,1-555-494-5010,,16-11-2021
+  irene.smith@company.com  ,,"£3,937.98",04-02-2025
+jack.moore@example.com,５５５-656-6882,"€2103,25",2026/01/01
+nick.brown@gmail.com,(555) 416-2037,,
+irene.miller@outlook.com,555-346-3137,"£4,487.76",15-10-2024
+uma.smith@example.com,５５５-540-4988,-3536.33,07/12/2020
+YARA.WILSON@gmail.com,1234567890123456,£351.95,2020/08/12
+zack.jones@example.com,,"€283,22",08/03/2024
+frank.wilson@gmail.com,,547.81,
+irene.brown@test.com,,¥2266,13/45/2024
+henry.davis@example.com,1234567890123456,invalid,15-04-2025
+victor.smith@yahoo.com,５５５-620-7533,-4923.73,10/20/2020
+diana.taylor@test.com,1234567890123456,$2434.11,07/16/2025
+jane.moore@example.com,,,08/27/2020
+mary.davis@company.com,2-555-519-4562,"€2960,63",
+eve.miller@test.com,５５５-325-2860,$2313.64,24-07-2023
+zack.davis@yahooo.com,555-477-9737,"£4,366.21",2026/01/01
+alice.miller@example.com,555.248.6745,"3249,66","Dec 1, 2024"
+leo.smith@outlook.com,555.126.9420,"€230,95",2026/01/01
+mary.smith@outlook.com,2-555-161-2740,"3,179.50",06/06/2021
+wendy.brown@example.com,21905,605.53,08-10-2021
+olivia.wilson@yahoo.com,1-555-705-4287,807.155,2025/12/26
+quinn.jones@gmail.com,73780,"3,366.41",05/10/2024
+olivia.williams@gmail.com,2-555-632-5465,,01/22/2023
+jane.miller@gmail.com,555.805.1048,"2,225.85",2026/01/01
+zack.wilson@test.com,2-555-442-8416,-2517.73,2024/04/15
+no-at-sign.com,54476,"1508,82",
+brian.williams@outlook.com,５５５-625-5166,¥1589,26-06-2020
+mary.moore@outlook.com,1-555-622-3864,"£4,191.72",
+diana.smith@outlook.com,,,12/27/2020
+steve.wilson@test.com,,"3238,16",07-06-2024
+  yara.davis@outlook.com  ,(555) 771-3583,"1402,79",02/08/2022
+rachel.brown@gmail.com,555-823-7698,"3905,72","May 12, 2023"
+tina.moore@gmail.com,,"1,288.44",2021/03/03
+diana.taylor@test.com,,invalid,
+anna.brown@outlook.com,1-555-192-8628,"€3426,86",21-05-2020
+BOB.WILLIAMS@example.com,555.795.3229,¥2587,10-09-2023
+victor.taylor@test.com,５５５-777-9390,"3,128.11","Dec 3, 2024"
+jack.davis@gmail.com,1234567890123456,"€1091,07",
+yara.jones@gmail.com,2-555-864-5440,$2062.74,
+bob.moore@gmail.com,1-555-945-6881,-3739.07,
+quinn.johnson@gmail.com,2-555-117-6235,"318,49",08-10-2021
+kate.smith@example.com,(555) 285-2018,-4462.33,13/45/2024
+jack.davis@outlook.com,2-555-998-5785,$811.04,2026/01/01
+nick.johnson@gmail.com,1234567890123456,"3313,11",06/22/2020
+mary.williams@test.com,2-555-476-3581,61.61,09/03/2024
+olivia.johnson@outlok.com,1234567890123456,996.57,2022/06/16
+jack.taylor@yahoo.com,５５５-124-1389,"3,478.73",2020/12/22
+irene.davis@example.com,５５５-967-7601,"4,697.52",2026/01/01
+yara.brown@outlook.com,５５５-944-9064,invalid,02/01/2021
+john.williams@company.com,555.323.2600,-4369.31,2026/01/01
+zack.moore@outlook.com,,-3996.32,13/45/2024
+charlie.jones@outlook.com,555.644.4130,invalid,"Nov 24, 2024"
+nick.jones@test.com,2-555-685-2179,,2026/01/01
+irene.miller@company.com,59134,$1236.05,2025/11/08
+victor.taylor@example.com,2-555-574-2036,$99.57,01/14/2025
+XAVIER.BROWN@company.com,555-715-8613,-3069.31,21-01-2022
+frank.moore@outlook.com,,"2530,14",13/45/2024
+steve.moore@test.com,(555) 201-7877,,2026/01/01
+olivia.jones@example.com,555.951.6392,"1526,25",2024/07/09
+leo.smith@outlook.com,,4516.305,2026/01/01
+  brian.jones@company.com  ,５５５-950-1275,,2026/01/01
+anna.williams@yahoo.com,,"2,776.95",02/03/2022
+irene.davis@gmail.com,,"£1,299.73",07/15/2023
+henry.miller@outlook.com,58449,invalid,08/06/2022
+xavier.wilson@outlook.com,555.768.9230,"£4,000.14","Mar 20, 2024"
+ALICE.JONES@example.com,1-555-964-5288,"3127,16",23-05-2022
+frank.smith@outlook.com,2-555-320-8016,,
+eve.wilson@gmail.com,1-555-494-9252,"3,329.49",2026/01/01
+irene.taylor@gmail.com,(555) 122-2216,"3674,93",2021/05/11
+kate.brown@example.com,2-555-155-1607,invalid,"Nov 20, 2025"
+john.johnson@outlook.com,1234567890123456,2047.790,05/08/2024
+victor.taylor@gmail.com,555.869.3418,"£2,733.62",
+olivia.miller@test.com,2-555-968-4818,$248.19,"Jun 4, 2025"
+steve.miller@company.com,74329,,2026/01/01
+jane.johnson@gmail.com,60238,"2802,71",
+user@@domain.com,(555) 283-5041,-1341.82,"Mar 19, 2024"
+alice.jones@company.com,1-555-244-4932,"1901,15",2026/01/01
+leo.williams@yahoo.com,,"2601,34","May 11, 2023"
+mary.davis@gmail.com,23986,,"Nov 21, 2025"
+irene.miller@yahoo.com,(555) 224-1478,"1,148.77",05/18/2025
+henry.taylor@test.com,1234567890123456,"£2,279.11",07/24/2023
+anna.jones@gmail.com,555-183-1873,"€3743,35",11-12-2024
+jane.taylor@yahoo.com,555.138.1880,$733.20,2020/02/16
+alice.davis@company.com,2-555-834-7716,"4,284.84","Dec 9, 2021"
+paul.williams@example.com,555-673-2381,$4574.20,
+BRIAN.WILLIAMS@test.com,(555) 102-4530,650.646,"Sep 11, 2023"
+steve.taylor@test.com,2-555-124-8148,$976.05,
+eve.moore@yahoo.com,555-840-3666,invalid,12/26/2023
+victor.brown@test.com,,-3245.94,
+nick.williams@gmail.com,1-555-971-1060,invalid,13/45/2024
+  brian.jones@company.com  ,1234567890123456,$1459.44,2026/01/01
+mary.williams@gmail.com,25511,$3021.48,
+quinn.miller@company.com,1-555-926-7010,-3648.67,13/45/2024
+mary.moore@example.com,５５５-698-9199,"€460,01",2026/01/01
+bob.davis@yahoo.com,555-422-1943,"£4,922.60",2026/01/01
+YARA.MOORE@company.com,2-555-361-3704,636.13,2024/08/26
+mary.davis@outlook.com,1-555-792-8241,"4,182.04",13/45/2024
+john.smith@gmail.com,(555) 753-4655,"1,557.02",
+jack.moore@yahoo.com,1234567890123456,$3950.84,
+john.johnson@company.com,555-528-5463,321.08,2020/06/25
+leo.williams@company.com,(555) 626-4773,55.814,20-06-2021
+rachel.johnson@yahoo.com,５５５-673-7852,1988.631,13/45/2024
+bob.williams@outlook.com,1-555-528-9986,invalid,13/45/2024
+john.jones@company.com,５５５-308-3563,"€2890,81","May 21, 2021"
+victor.johnson@company.com,1-555-341-9554,"£4,706.20",04/03/2023
+tina.johnson@yahooo.com,1234567890123456,£973.99,2020/06/18
+uma.williams@yahoo.com,555.453.7311,-671.94,
+brian.williams@gmail.com,５５５-228-8668,"4,879.75",
+alice.davis@test.com,2-555-631-3427,"€2996,27",15-11-2023
+wendy.taylor@test.com,５５５-501-4877,$1593.53,
+tina.williams@outlook.com,(555) 144-5807,-1038.32,2026/01/01
+quinn.miller@outlook.com,555.866.8199,342.847,27-11-2024
+alice.davis@example.com,79494,"3,131.06","Dec 21, 2024"
+bob.williams@company.com,555-913-4211,¥2017,
+jane.miller@gmail.com,(555) 330-2949,"€4429,23","Aug 28, 2020"
+HENRY.JOHNSON@company.com,2-555-207-2581,"£2,495.42",
+wendy.williams@example.com,555.148.8727,-3837.04,2026/01/01
+paul.taylor@gmail.com,,46.6,13/45/2024
+henry.miller@example.com,,"€2135,26",
+leo.wilson@outlook.com,,$3119.99,2023/10/25
+  irene.davis@company.com  ,(555) 115-5931,¥1649,09/07/2020
+john.brown@yahoo.com,555-264-6681,,05/02/2021
+grace.brown@gmail.com,1234567890123456,$686.69,2024/07/14
+zack.brown@example.com,５５５-722-3181,,2024/07/12
+victor.taylor@example.com,1-555-544-9981,133.47,2023/02/08
+no-at-sign.com,1234567890123456,70.821,19-08-2021
+tina.brown@example.com,1234567890123456,$749.85,2021/02/07
+tina.williams@test.com,1-555-762-8286,292.278,23-10-2022
+steve.wilson@yahoo.com,５５５-434-2032,invalid,2022/08/13
+nick.smith@company.com,(555) 981-9417,£126.22,02-09-2020
+mary.wilson@test.com,(555) 842-8873,"4114,23",
+yara.taylor@outlook.com,５５５-291-4462,¥300,13/45/2024
+olivia.jones@example.com,(555) 189-5867,,2026/01/01
+jack.brown@example.com,1-555-929-6166,$3106.42,2026/01/01
+charlie.smith@example.com,555.691.3632,$2141.47,
+uma.wilson@yahooo.com,1-555-978-1728,-2830.89,10/28/2025
+steve.moore@example.com,555.645.5172,"4,744.50","Jun 25, 2025"
+leo.miller@gmail.com,73523,¥1111,05/25/2025
+nick.smith@gmail.com,555.849.6273,"3,908.64",2026/01/01
+henry.miller@gmail.com,(555) 606-2777,"£4,715.97",16-01-2025
+eve.brown@company.com,(555) 833-2181,271.86,13/45/2024
+mary.williams@gmail.com,1234567890123456,$2209.37,
+uma.williams@outlook.com,,"€2681,09",28-01-2023
+zack.miller@example.com,555.212.6169,1109.551,"Jun 11, 2022"
+brian.miller@company.com,(555) 423-9790,"3830,90",10/17/2024
+KATE.MOORE@gmail.com,555-563-4683,"€992,86",08/11/2020
+grace.wilson@test.com,555.560.1607,164.38,2026/01/01
+steve.wilson@outlook.com,92236,"4940,56",02-06-2023
+brian.smith@outlook.com,５５５-424-4550,"£3,850.86",13/45/2024
+henry.taylor@company.com,,¥1389,2021/08/22
+  wendy.brown@gmail.com  ,1-555-484-9374,£514.50,2026/01/01
+brian.moore@example.com,(555) 982-2108,"£4,407.94","Jul 25, 2022"
+olivia.brown@company.com,1234567890123456,"€1984,43",2026/01/01
+wendy.moore@example.com,80647,"243,69","May 15, 2020"
+mary.jones@gmail.com,５５５-343-6768,¥2998,06/03/2024
+KATE.WILSON@example.com,555.900.9736,invalid,2021/05/18
+xavier.williams@company.com,(555) 854-7184,"3,196.08",13/45/2024
+wendy.brown@outlook.com,2-555-275-6615,3640.700,05/25/2021
+paul.davis@outlook.com,５５５-418-1052,555.64,"Nov 24, 2023"
+xavier.jones@outlook.com,1234567890123456,,04/15/2020
+eve.moore@company.com,555-501-6139,3893.854,13/45/2024
+henry.johnson@gmail.com,1-555-856-1195,"1,750.59",2026/01/01
+grace.moore@company.com,555.109.8637,invalid,
+quinn.williams@test.com,555.165.3931,"1,396.71",13/45/2024
+leo.moore@example.com,555-115-3795,$3142.35,09-02-2025
+irene.jones@yahooo.com,555-383-4859,$3862.94,"Dec 21, 2022"
+bob.taylor@company.com,1-555-517-9002,566.632,01-08-2024
+zack.miller@outlook.com,555.284.8012,,10/15/2024
+olivia.williams@company.com,86412,"£2,035.92",13/45/2024
+yara.wilson@company.com,2-555-831-9387,2889.956,10/07/2025
+mary.smith@test.com,555-917-9058,-2976.05,"Nov 11, 2024"
+brian.davis@outlook.com,1234567890123456,$4417.52,
+yara.moore@example.com,1-555-335-8067,¥3249,
+paul.smith@test.com,(555) 408-8468,,"Jun 5, 2021"
+jane.brown@outlook.com,(555) 816-4717,"1,984.07",08-11-2025
+user@@domain.com,2-555-510-5193,-2570.23,12-04-2025
+mary.williams@gmail.com,555-519-7973,"€2057,07",2025/02/07
+grace.davis@yahoo.com,1234567890123456,"£3,032.15",2023/11/08
+zack.brown@test.com,2-555-524-3284,"3707,36",
+paul.brown@yahoo.com,555.509.7746,"£4,837.03",06/24/2020
+  paul.taylor@example.com  ,,3835.800,
+yara.jones@company.com,1234567890123456,"€1773,73",20-02-2025
+brian.moore@test.com,,"£4,243.41",
+mary.johnson@yahoo.com,555-386-3509,"3645,38",
+jane.taylor@test.com,(555) 733-2161,$709.40,2024/04/22
+WENDY.WILLIAMS@yahoo.com,555.722.9257,"£3,855.01",13/45/2024
+leo.johnson@test.com,,141.178,"Aug 5, 2023"
+brian.jones@outlook.com,1234567890123456,"3,255.55",23-01-2021
+bob.taylor@company.com,(555) 125-4692,"£3,585.07",2026/01/01
+victor.wilson@company.com,1-555-963-2555,invalid,"Jul 18, 2020"
+paul.brown@company.com,555-891-8722,-997.49,13/45/2024
+tina.johnson@example.com,1234567890123456,¥3657,13/45/2024
+olivia.miller@test.com,2-555-188-5070,"€3098,95",2026/01/01
+eve.wilson@yahoo.com,1234567890123456,711.98,11/25/2020
+nick.miller@yahoo.com,,$1665.93,13/45/2024
+eve.taylor@gmial.com,,-2640.43,2025/09/15
+mary.williams@example.com,2-555-678-6971,,"Mar 17, 2022"
+paul.johnson@company.com,(555) 478-4819,478.900,
+brian.brown@outlook.com,1-555-397-8968,¥1347,"Oct 21, 2021"
+yara.davis@company.com,,invalid,2026/01/01
+grace.brown@gmail.com,(555) 543-4501,,07-04-2020
+henry.moore@gmail.com,555-608-7556,-3849.42,2021/05/18
+mary.johnson@yahoo.com,(555) 254-8181,"£3,181.58",09-12-2021
+henry.davis@example.com,５５５-847-8576,"€1692,63","Jan 18, 2020"
+uma.jones@outlook.com,555.591.7187,invalid,
+OLIVIA.DAVIS@outlook.com,1234567890123456,invalid,"May 12, 2022"
+charlie.smith@yahoo.com,(555) 920-5416,"€399,83",01-11-2023
+henry.moore@gmail.com,2-555-145-5756,£688.65,13/45/2024
+kate.taylor@yahoo.com,,$2591.15,2026/01/01
+olivia.davis@yahoo.com,,-4341.62,2021/05/19
+  leo.moore@example.com  ,1-555-128-2387,¥4874,13/45/2024
+diana.miller@test.com,2-555-384-4927,¥4372,2023/04/14
+diana.brown@yahoo.com,1234567890123456,-2686.96,
+anna.johnson@gmail.com,,"€331,05",05/23/2020
+eve.wilson@example.com,1234567890123456,"€2643,78",13/45/2024
+LEO.JOHNSON@company.com,1234567890123456,"4436,75",2026/01/01
+jane.davis@test.com,555.337.3877,"3,208.10",08/27/2020
+paul.davis@gmail.com,５５５-205-7192,"£3,456.03",10-11-2022
+brian.johnson@test.com,555.578.4326,¥257,06/28/2022
+steve.williams@test.com,,"€4169,25",2020/04/14
+jack.smith@gmail.com,555-893-9193,"3619,58",13/45/2024
+leo.taylor@test.com,2-555-789-2488,"4,332.37",
+victor.jones@company.com,555-323-9903,3054.545,2022/09/18
+eve.jones@example.com,1234567890123456,¥851,02-12-2025
+john.moore@gmail.com,555-627-7843,invalid,13/45/2024
+user@@domain.com,1234567890123456,invalid,"Oct 14, 2020"
+mary.brown@company.com,(555) 730-9954,¥4460,02/28/2022
+victor.brown@test.com,555-557-9528,"708,42",27-01-2021
+alice.wilson@test.com,1234567890123456,¥1010,2026/01/01
+kate.wilson@company.com,1234567890123456,,2025/03/20
+olivia.wilson@gmail.com,555-175-8673,¥1209,13/45/2024
+eve.brown@yahoo.com,2-555-198-5341,,2026/01/01
+rachel.jones@test.com,555-446-9461,¥1353,07-03-2025
+anna.taylor@example.com,47182,1579.598,2020/02/03
+nick.taylor@yahoo.com,(555) 640-7379,invalid,
+DIANA.JOHNSON@example.com,５５５-630-5957,"€3857,37","Sep 14, 2021"
+henry.johnson@company.com,555.804.5715,"€4964,54","Oct 23, 2020"
+alice.taylor@yahoo.com,555-303-2444,"€2544,64",2020/05/08
+brian.smith@gmail.com,(555) 713-4304,invalid,2026/01/01
+irene.jones@gmail.com,555.583.6164,"€4513,07",16-04-2024
+  yara.jones@outlook.com  ,2-555-560-5854,"4,767.44",2026/01/01
+uma.wilson@test.com,555-983-5949,"2,614.35",2020/01/20
+steve.johnson@test.com,５５５-733-8395,¥2289,2026/01/01
+henry.moore@company.com,1234567890123456,"1,219.01",2026/01/01
+paul.wilson@gmail.com,５５５-545-3982,"€2106,95",20-12-2023
+BRIAN.JOHNSON@outlook.com,５５５-919-1088,2395.768,
+diana.jones@company.com,2-555-573-5312,"€2950,19",2026/01/01
+tina.moore@outlook.com,５５５-383-1114,"£3,986.50",03/13/2024
+alice.taylor@gmail.com,1-555-144-5570,¥3049,2021/03/15
+anna.moore@example.com,2-555-433-6121,¥2681,18-06-2022
+xavier.moore@example.com,５５５-474-8249,invalid,13/45/2024
+wendy.brown@company.com,555-205-8794,¥1929,2026/01/01
+anna.wilson@yahoo.com,(555) 543-1853,invalid,2026/01/01
+eve.smith@outlook.com,1234567890123456,$4498.07,"Oct 27, 2023"
+leo.davis@gmail.com,555.803.7875,£918.27,2022/11/03
+henry.taylor@gmial.com,2-555-358-6340,"£3,455.28",13/45/2024
+kate.brown@example.com,555-617-9496,¥4772,13/45/2024
+jack.brown@company.com,５５５-156-7743,$1457.03,01/03/2024
+rachel.davis@example.com,1-555-114-7227,"1321,24",2022/06/24
+eve.jones@yahoo.com,2-555-182-8368,¥4677,10-06-2023
+paul.williams@gmail.com,,"£1,050.07","Dec 22, 2020"
+tina.smith@outlook.com,2-555-377-8274,$966.56,2026/01/01
+frank.brown@example.com,５５５-976-5593,¥4348,"Sep 17, 2025"
+frank.smith@outlook.com,83279,"€2941,30",2026/01/01
+eve.jones@yahoo.com,52502,$3145.36,2026/01/01
+TINA.JOHNSON@gmail.com,1234567890123456,$4058.42,19-12-2020
+alice.moore@example.com,93912,"€4237,09",13/45/2024
+diana.miller@gmail.com,,¥3473,2026/01/01
+wendy.taylor@gmail.com,(555) 280-5160,-2502.29,2022/04/20
+tina.jones@example.com,1234567890123456,$2756.73,
+  eve.wilson@gmail.com  ,2-555-910-1473,"1,215.07",02/17/2022
+charlie.jones@example.com,５５５-533-4090,1704.591,04/10/2023
+bob.jones@gmail.com,72101,"2267,52",2024/04/14
+brian.brown@gmail.com,５５５-764-7852,"£4,751.61",12/08/2021
+diana.moore@gmail.com,５５５-115-4466,¥4574,25-06-2022
+duplicate.test@gmail.com,555-123-4567,"$1,234.56",03/15/2024
+paul.williams@gmail.com,27917,£948.10,17-09-2023
+nick.taylor@company.com,1234567890123456,,13/45/2024
+tina.taylor@test.com,555.967.8743,"€462,03",13/45/2024
+nick.wilson@gmail.com,15463,,12/04/2020
+tina.brown@company.com,,"1223,81",2026/01/01
+john.brown@outlook.com,,invalid,13/45/2024
+irene.smith@outlook.com,1-555-613-9031,invalid,13/45/2024
+henry.williams@company.com,1-555-392-7909,,05-07-2020
+frank.wilson@gmail.com,1234567890123456,invalid,
+victor.wilson@yahooo.com,1234567890123456,-1929.79,13/45/2024
+jack.brown@outlook.com,,"€1605,10",04-10-2020
+john.johnson@example.com,2-555-676-8092,"£2,929.55",2026/01/01
+kate.williams@outlook.com,,$3485.89,"May 13, 2023"
+jane.smith@test.com,1234567890123456,"2,424.86","Nov 13, 2024"
+irene.brown@yahoo.com,1234567890123456,"1976,58",05/02/2025
+jack.moore@outlook.com,(555) 875-1192,4269.709,
+paul.johnson@yahoo.com,555.979.6109,$2077.71,25-03-2025
+irene.jones@company.com,５５５-636-2926,805.41,2023/06/11
+steve.miller@gmail.com,５５５-963-4454,,05/18/2024
+KATE.DAVIS@outlook.com,,866.544,02/06/2023
+wendy.brown@example.com,555.389.1336,$2950.92,2026/01/01
+quinn.smith@example.com,555-838-6595,invalid,2026/01/01
+irene.johnson@yahoo.com,2-555-184-3585,433.72,2026/01/01
+nick.taylor@test.com,555.986.8074,¥3101,2026/01/01
+  brian.johnson@outlook.com  ,555-383-1829,£338.45,28-10-2024
+tina.miller@company.com,５５５-446-1944,"€1301,37",08/02/2025
+eve.moore@outlook.com,５５５-556-6500,¥4764,2026/01/01
+quinn.johnson@test.com,５５５-782-1980,"516,37",06/23/2025
+rachel.smith@example.com,27432,2070.307,12/09/2021
+FRANK.DAVIS@test.com,17700,-2912.43,13/45/2024
+bob.moore@outlook.com,59831,,
+charlie.smith@outlook.com,89451,145.117,13/45/2024
+nick.miller@company.com,2-555-870-7127,$2270.20,12/16/2024
+jane.davis@company.com,555.927.2873,invalid,2020/10/26
+nick.jones@gmail.com,,invalid,2026/01/01
+quinn.jones@yahoo.com,1-555-937-4696,,08/19/2022
+uma.smith@test.com,73515,"£4,451.89",2026/01/01
+frank.brown@example.com,1-555-766-4520,"1,166.05","Sep 25, 2025"
+rachel.smith@yahoo.com,５５５-754-2904,"£3,640.08","Jan 14, 2020"
+leo.smith@yahooo.com,1234567890123456,-598.73,13/45/2024
+john.taylor@yahoo.com,(555) 837-6817,"125,03",
+jack.brown@company.com,５５５-218-9937,"2608,86",
+grace.davis@yahoo.com,555.553.1823,$4992.38,"Jun 22, 2021"
+eve.moore@yahoo.com,555.318.9114,1895.143,2026/01/01
+leo.johnson@example.com,15008,101.03,"Apr 7, 2022"
+steve.johnson@example.com,71283,-552.65,13/45/2024
+quinn.johnson@yahoo.com,555-513-3389,invalid,2023/11/27
+jane.johnson@gmail.com,555.260.9705,-3389.75,"Mar 20, 2023"
+charlie.smith@gmail.com,13052,¥1274,05/17/2025
+no-at-sign.com,555.274.7808,-4127.57,12/03/2020
+kate.williams@company.com,５５５-907-2296,-3889.42,13/45/2024
+anna.williams@gmail.com,555-845-5511,-3517.60,2026/01/01
+diana.smith@company.com,1-555-729-7721,¥3082,13/45/2024
+kate.brown@company.com,,-3677.15,"Nov 19, 2024"
+  frank.miller@test.com  ,1-555-924-7298,"€119,00",13/45/2024
+jane.smith@example.com,,-3627.77,
+henry.wilson@outlook.com,99648,"2603,66","Aug 16, 2021"
+zack.moore@outlook.com,2-555-584-9378,invalid,2024/03/21
+zack.williams@yahoo.com,555-535-4813,¥4358,
+EVE.MILLER@yahoo.com,(555) 844-8638,invalid,27-09-2024
+brian.johnson@test.com,1234567890123456,$1600.39,08/25/2025
+kate.davis@example.com,555.669.8497,invalid,
+john.miller@gmail.com,５５５-495-5029,£505.74,2024/04/05
+paul.davis@outlook.com,28518,556.55,"May 1, 2021"
+xavier.moore@test.com,５５５-879-3345,"€2669,31",13/45/2024
+xavier.wilson@outlook.com,1234567890123456,$4125.62,"Sep 5, 2023"
+quinn.williams@yahoo.com,1234567890123456,"£3,467.86",13/45/2024
+steve.moore@gmail.com,555.325.5275,"€3215,91",20-11-2024
+leo.williams@outlook.com,555-894-9912,"£1,883.51",2023/01/18
+xavier.williams@gmial.com,555.740.2477,$3138.12,2020/12/08
+grace.wilson@outlook.com,1-555-837-3398,"€4992,50","Feb 24, 2022"
+leo.smith@gmail.com,2-555-664-2380,$4819.52,11/21/2025
+bob.davis@example.com,1234567890123456,¥3913,2026/01/01
+jane.taylor@company.com,(555) 387-3312,¥2988,
+anna.miller@test.com,555.834.8414,-2922.98,2021/10/19
+victor.taylor@yahoo.com,92189,"£2,985.39",
+eve.smith@example.com,77279,,
+frank.johnson@outlook.com,1234567890123456,317.10,03/09/2023
+quinn.miller@example.com,1-555-802-1603,¥2290,"May 3, 2025"
+BRIAN.TAYLOR@test.com,73226,"2812,54","Aug 19, 2021"
+henry.jones@test.com,71228,invalid,2025/01/10
+jack.jones@test.com,30707,2033.0,2023/06/05
+alice.miller@gmail.com,38832,,13/45/2024
+bob.davis@company.com,555.605.9004,"£1,308.05",2026/01/01
+  victor.taylor@outlook.com  ,,"4916,18",13/45/2024
+alice.williams@test.com,(555) 548-2393,"3481,68",2026/01/01
+quinn.taylor@gmail.com,555-148-8814,-3985.43,"Aug 1, 2022"
+nick.johnson@example.com,,$1636.58,13/45/2024
+kate.miller@outlook.com,５５５-603-6152,$4266.18,2026/01/01
+QUINN.MILLER@gmail.com,61577,"3802,82",07/24/2021
+leo.miller@yahoo.com,1234567890123456,,
+quinn.johnson@gmail.com,555-397-2253,invalid,"Mar 14, 2021"
+leo.brown@example.com,555-266-6027,"3314,20",2026/01/01
+rachel.davis@outlook.com,2-555-830-6696,4262.252,13/45/2024
+tina.wilson@company.com,1-555-599-8044,¥1830,
+eve.davis@example.com,５５５-516-2270,-4475.80,"Feb 24, 2024"
+jack.moore@test.com,,invalid,12-05-2021
+uma.taylor@example.com,555.365.4982,,13/45/2024
+zack.miller@yahoo.com,５５５-513-4399,"£2,095.57",08-07-2020
+duplicate.test@gmail.com,555-123-4567,"$2,000.00",03/15/2024
+eve.taylor@company.com,５５５-914-6915,-353.94,2023/05/05
+zack.williams@gmail.com,555.893.9195,1334.25,"Jul 17, 2023"
+jane.miller@company.com,555.350.9604,"€4907,18",2024/11/02
+jack.jones@example.com,1234567890123456,"€3036,54",
+eve.taylor@outlook.com,555-386-7528,,13/45/2024
+alice.johnson@outlook.com,555-166-3285,¥2715,
+uma.davis@gmail.com,1-555-583-9683,"€2970,20",2022/06/08
+steve.williams@outlook.com,1-555-933-8897,,"Oct 27, 2023"
+victor.moore@gmail.com,555.933.2092,-4053.48,2026/01/01
+LEO.BROWN@gmail.com,1-555-854-7929,1823.364,05/08/2024
+jack.johnson@yahoo.com,1234567890123456,"4,985.55",2020/08/01
+zack.miller@example.com,５５５-386-5253,-3998.96,06-06-2022
+yara.jones@company.com,1-555-156-9381,"€501,06",13/45/2024
+john.miller@yahoo.com,2-555-450-8657,invalid,"Jan 23, 2020"
+  quinn.brown@yahoo.com  ,1-555-621-4180,3153.968,"Jun 15, 2025"
+john.williams@test.com,555.401.2950,,
+eve.williams@gmail.com,５５５-655-9648,-1213.68,2020/10/11
+bob.moore@example.com,５５５-160-7549,,2026/01/01
+tina.moore@example.com,1-555-540-7662,invalid,
+BOB.WILSON@test.com,,"€2100,19",13/45/2024
+bob.taylor@yahoo.com,2-555-370-7538,"4326,59",2020/04/08
+irene.johnson@yahoo.com,,$2833.43,
+john.jones@company.com,1-555-952-1132,invalid,2022/01/22
+mary.johnson@example.com,1-555-468-8193,,26-07-2020
+wendy.jones@company.com,2-555-112-8417,¥4261,13/45/2024
+olivia.williams@test.com,1-555-824-6053,"1595,18",13/45/2024
+jane.moore@gmail.com,(555) 857-2646,"3,240.80",05/16/2024
+jack.wilson@company.com,1-555-904-2238,-548.41,06/02/2024
+henry.taylor@outlook.com,,,13/45/2024
+yara.taylor@gmial.com,５５５-869-9210,"£4,353.89",2025/01/19
+quinn.jones@outlook.com,555-779-8958,"3244,83",13/45/2024
+eve.brown@yahoo.com,98097,$3418.90,
+diana.johnson@yahoo.com,５５５-994-6200,,"May 21, 2024"
+yara.miller@gmail.com,2-555-993-2385,888.893,01/19/2022
+paul.smith@yahoo.com,555.640.7822,$922.45,"Aug 25, 2022"
+bob.williams@yahoo.com,96019,$725.97,2026/01/01
+kate.brown@example.com,555.270.7152,,05/09/2020
+john.williams@outlook.com,1-555-653-9465,2533.700,
+charlie.brown@gmail.com,29519,invalid,2026/01/01
+VICTOR.WILLIAMS@test.com,1234567890123456,"4,240.52",2026/01/01
+rachel.moore@yahoo.com,555.182.3449,¥2014,
+diana.williams@company.com,37459,"2688,26",13/45/2024
+nick.brown@outlook.com,,"4,625.31",24-07-2022
+john.jones@example.com,５５５-875-5896,"135,60",
+  john.jones@yahoo.com  ,(555) 334-3523,"2,736.41",
+frank.wilson@gmail.com,５５５-242-9668,,2025/06/18
+xavier.wilson@yahoo.com,５５５-645-9477,¥3246,2020/12/09
+charlie.wilson@gmail.com,５５５-513-8843,-1997.62,13/45/2024
+diana.taylor@yahoo.com,555.712.1440,34.54,
+no-at-sign.com,17867,,13/45/2024
+charlie.johnson@example.com,555.900.8249,494.38,
+paul.williams@gmail.com,(555) 358-2364,¥2183,2026/01/01
+olivia.johnson@yahoo.com,(555) 442-3201,$1496.19,01-11-2020
+quinn.smith@yahoo.com,(555) 830-7709,-2851.06,"Nov 5, 2021"
+john.miller@example.com,５５５-153-5727,"£4,751.40",02-04-2024
+john.miller@example.com,37688,¥288,2022/03/16
+yara.moore@company.com,５５５-251-1526,"3,914.25",
+irene.williams@yahoo.com,1234567890123456,£897.59,2023/02/18
+steve.brown@example.com,,-4330.91,2026/01/01
+kate.miller@gmial.com,1234567890123456,"€4177,29",13/45/2024
+quinn.smith@gmail.com,(555) 723-6376,£796.30,"Mar 8, 2022"
+alice.brown@example.com,５５５-988-5152,-902.99,"Oct 25, 2021"
+steve.taylor@gmail.com,79765,$4272.72,11/24/2025
+mary.taylor@test.com,1234567890123456,-445.42,2020/11/02
+john.brown@gmail.com,(555) 443-3807,¥4958,01/06/2021
+kate.moore@gmail.com,12918,invalid,"Jun 2, 2024"
+quinn.taylor@yahoo.com,1234567890123456,"£3,883.15",21-11-2021
+jane.wilson@yahoo.com,555-790-1610,invalid,13/45/2024
+tina.smith@gmail.com,,-2677.58,28-04-2024
+FRANK.JOHNSON@yahoo.com,,48.676,06/01/2023
+leo.smith@example.com,1-555-619-6421,3576.328,10/05/2025
+mary.williams@example.com,1234567890123456,¥3621,13/45/2024
+jack.brown@company.com,555.862.2538,-3752.71,16-01-2023
+paul.moore@test.com,2-555-528-5127,"1395,65","Feb 18, 2020"
+  jane.brown@test.com  ,1-555-205-2229,"2,671.16",2023/01/28
+mary.davis@outlook.com,71959,,01/07/2023
+henry.johnson@company.com,2-555-376-9853,invalid,
+tina.smith@gmail.com,５５５-677-1827,¥1789,02/12/2025
+xavier.taylor@test.com,555.627.6873,"€4713,93",22-03-2022
+EVE.TAYLOR@company.com,1234567890123456,"2135,65",02/14/2022
+alice.wilson@example.com,2-555-970-8449,invalid,2020/12/20
+xavier.wilson@company.com,５５５-359-1485,"1,194.78",
+jane.moore@test.com,1-555-736-2424,-4966.22,01/02/2022
+eve.jones@example.com,1234567890123456,$4658.07,13/45/2024
+uma.smith@gmail.com,555-655-6568,invalid,07/24/2025
+bob.wilson@outlook.com,,"1,220.90","Jul 19, 2025"
+henry.davis@gmail.com,(555) 945-4543,-1094.48,
+kate.johnson@company.com,91793,,2021/01/02
+yara.johnson@gmail.com,2-555-917-5653,"£1,408.39",27-02-2024
+uma.miller@gmial.com,(555) 447-2317,$3394.04,2025/11/14
+john.williams@test.com,555.422.2090,,13/45/2024
+alice.jones@example.com,21167,-4934.17,"Dec 28, 2023"
+victor.moore@test.com,(555) 854-3049,"4719,32",2026/01/01
+brian.davis@company.com,1-555-261-5345,,2026/01/01
+eve.williams@gmail.com,1234567890123456,-4298.50,03/24/2023
+irene.brown@outlook.com,５５５-639-6581,£978.88,2024/02/28
+grace.miller@test.com,47210,¥2877,"Jan 8, 2021"
+uma.brown@gmail.com,1-555-105-1094,-4653.44,2026/01/01
+zack.brown@outlook.com,５５５-587-8131,invalid,19-07-2024
+duplicate.test@gmail.com,555-123-4567,"$1,234.56",04/20/2024
+nick.johnson@example.com,,invalid,
+jane.taylor@outlook.com,555-812-4461,-2950.19,2022/06/04
+uma.brown@company.com,５５５-968-4386,"£1,400.87",2021/06/24
+steve.smith@yahoo.com,2-555-666-6761,¥2050,18-06-2021
+  paul.brown@example.com  ,555-170-2985,-4770.55,01/11/2023
+jane.moore@test.com,,-3508.59,19-07-2022
+anna.williams@gmail.com,1234567890123456,invalid,07/21/2025
+steve.jones@example.com,34063,"€3046,46",15-04-2024
+olivia.williams@test.com,,-4510.57,2020/04/10
+ANNA.WILSON@yahoo.com,555-531-7951,"3968,91","Apr 13, 2025"
+xavier.smith@yahoo.com,,-2650.60,2025/01/07
+zack.smith@company.com,５５５-714-5204,invalid,13/45/2024
+brian.moore@example.com,56363,925.23,26-02-2025
+jane.brown@outlook.com,53658,"€4955,19",2026/01/01
+paul.brown@yahoo.com,(555) 242-7392,$4767.11,"May 25, 2023"
+alice.johnson@company.com,,invalid,2026/01/01
+nick.miller@gmail.com,75797,,2023/06/21
+steve.miller@company.com,1-555-874-2484,invalid,"Dec 3, 2020"
+wendy.williams@yahoo.com,1234567890123456,-191.75,09-03-2023
+jack.williams@yahooo.com,(555) 282-5184,"2869,89",
+yara.johnson@company.com,71524,$2102.42,"Jun 5, 2020"
+wendy.davis@company.com,1234567890123456,4346.343,13/45/2024
+bob.davis@yahoo.com,2-555-423-5786,3133.69,12/16/2024
+leo.johnson@test.com,1234567890123456,"£4,900.26",
+kate.johnson@yahoo.com,2-555-985-9972,£971.57,2023/02/06
+henry.miller@test.com,555-295-1307,invalid,"Sep 12, 2020"
+yara.jones@company.com,1234567890123456,$4546.48,2026/01/01
+quinn.wilson@outlook.com,555.316.3464,"4832,25",
+victor.davis@gmail.com,555.486.8657,"£4,687.60",2026/01/01
+JANE.MOORE@gmail.com,555-212-6541,-2563.57,13/45/2024
+diana.brown@outlook.com,５５５-454-9126,,2026/01/01
+frank.taylor@test.com,555.620.9171,3186.432,06/09/2020
+eve.jones@gmail.com,555-831-7533,¥1244,19-05-2024
+brian.smith@gmail.com,1234567890123456,-2070.21,2026/01/01
+  charlie.moore@company.com  ,1-555-366-9032,$4435.86,
+olivia.miller@outlook.com,1-555-158-3245,"€4067,72",07-04-2021
+leo.smith@yahoo.com,1234567890123456,-1947.31,13/45/2024
+uma.johnson@yahoo.com,(555) 257-1480,"2,517.67",
+alice.williams@gmail.com,５５５-798-2298,invalid,
+MARY.TAYLOR@outlook.com,,"2369,07",2020/10/12
+wendy.smith@test.com,79145,-2141.14,
+john.taylor@example.com,555.264.7207,"€3404,92",11-08-2025
+zack.wilson@company.com,５５５-757-3646,"2,953.63",2026/01/01
+rachel.smith@company.com,555-735-3982,$2463.43,02/17/2023
+nick.taylor@outlook.com,1234567890123456,,"Oct 19, 2025"
+irene.johnson@outlook.com,555-649-8470,¥3672,2022/02/01
+diana.smith@company.com,５５５-661-3370,"3,016.65",
+jack.wilson@gmail.com,35790,273.05,"Jan 15, 2021"
+nick.jones@outlook.com,,"3856,14","Jan 17, 2022"
+user@@domain.com,(555) 152-5765,2624.121,2024/02/15
+frank.miller@test.com,2-555-270-5047,-3384.63,
+kate.wilson@test.com,2-555-150-1019,¥4390,09/18/2023
+bob.brown@example.com,555-887-7622,-2357.78,13/45/2024
+wendy.taylor@gmail.com,555.695.5862,-918.11,
+xavier.smith@test.com,５５５-760-6115,invalid,13/45/2024
+bob.jones@example.com,(555) 808-2813,"€3454,31",
+kate.miller@test.com,1-555-552-1347,-2300.76,13/45/2024
+charlie.jones@test.com,1-555-644-9229,-704.02,01/09/2021
+jack.wilson@company.com,56936,"2339,74",13/45/2024
+PAUL.JOHNSON@test.com,555-442-8410,£432.10,24-09-2022
+eve.johnson@test.com,1-555-870-1870,"4,193.02",23-05-2022
+rachel.jones@company.com,2-555-493-8624,"1,982.95",
+yara.miller@company.com,555.830.4790,¥1353,"May 2, 2025"
+olivia.williams@test.com,555-853-5163,-1468.13,17-07-2021
+  brian.williams@outlook.com  ,(555) 284-6057,$2218.98,13/45/2024
+brian.davis@example.com,５５５-806-2248,invalid,13/45/2024
+jack.moore@company.com,2-555-242-4141,"3171,40",2024/02/25
+quinn.jones@example.com,2-555-637-9427,"405,93",
+henry.johnson@example.com,555-174-1711,¥3344,2023/02/18
+MARY.WILLIAMS@yahoo.com,1234567890123456,4689.884,"Jun 20, 2025"
+irene.smith@yahoo.com,2-555-863-9910,-2473.48,
+irene.moore@yahoo.com,,686.64,02-12-2025
+diana.brown@company.com,555.616.3113,"€3357,44",
+jack.johnson@example.com,(555) 638-5091,"€1661,14","Aug 15, 2022"
+rachel.brown@test.com,2-555-413-3064,"2,966.52",10/20/2025
+john.jones@yahoo.com,555-678-4619,"€1325,39",13/45/2024
+bob.brown@gmail.com,2-555-500-5325,,08/17/2024
+yara.smith@yahoo.com,,1125.3,2026/01/01
+xavier.wilson@outlook.com,,,"Jun 18, 2022"
+diana.williams@outlok.com,(555) 325-3628,-1905.37,2026/01/01
+paul.williams@example.com,５５５-979-6359,invalid,13/45/2024
+anna.brown@yahoo.com,５５５-470-6199,-724.55,01-11-2024
+wendy.moore@yahoo.com,５５５-575-3785,$1865.46,2026/01/01
+quinn.miller@company.com,1234567890123456,4216.978,
+victor.johnson@yahoo.com,37613,"339,66",
+jack.johnson@gmail.com,1-555-962-8230,$4110.61,2021/01/13
+eve.taylor@test.com,555-702-8781,4928.133,2026/01/01
+jack.taylor@outlook.com,,¥3762,"Jul 20, 2025"
+paul.williams@example.com,(555) 642-6385,541.182,2022/04/13
+VICTOR.JONES@company.com,(555) 630-4378,,19-03-2022
+anna.moore@test.com,1-555-473-6230,4123.742,
+xavier.brown@example.com,555-521-6822,¥926,03/09/2024
+paul.jones@yahoo.com,555-547-4186,-1804.65,03/05/2023
+jane.miller@company.com,(555) 105-8504,$553.64,13/45/2024
+  uma.miller@outlook.com  ,1234567890123456,2275.698,13/45/2024
+nick.taylor@gmail.com,1-555-421-2934,3177.796,19-07-2022
+rachel.smith@yahoo.com,2-555-180-3120,-1806.77,05/22/2021
+eve.smith@outlook.com,555.177.9710,"4,399.64",2026/01/01
+wendy.taylor@company.com,(555) 501-5709,invalid,2022/03/18
+no-at-sign.com,,979.70,2026/01/01
+wendy.smith@gmail.com,2-555-999-4569,"2089,50",
+irene.miller@gmail.com,555.803.9201,562.65,2024/03/01
+bob.brown@gmail.com,2-555-760-3423,$1580.95,2020/05/26
+victor.moore@company.com,,-2825.06,04-06-2023
+yara.wilson@company.com,(555) 401-8359,"€1160,34",2020/02/04
+diana.jones@test.com,2-555-410-7109,-522.96,24-04-2022
+victor.jones@example.com,1234567890123456,invalid,"Apr 7, 2020"
+jack.davis@gmail.com,2-555-158-5549,"£2,933.74",2026/01/01
+mary.wilson@example.com,５５５-640-7374,-2366.62,"Jun 2, 2022"
+xavier.williams@outlok.com,1234567890123456,"€2208,18",13/45/2024
+kate.johnson@gmail.com,26880,invalid,
+charlie.davis@example.com,,"€4909,84",2025/08/10
+charlie.wilson@outlook.com,,$4466.07,"May 5, 2020"
+xavier.moore@gmail.com,555.619.4174,"4,909.21",2026/01/01
+xavier.smith@company.com,2-555-793-7761,"€2144,57",25-06-2022
+eve.jones@yahoo.com,(555) 663-8642,"3144,86",13/45/2024
+eve.smith@test.com,５５５-568-1575,¥1242,13/45/2024
+rachel.johnson@example.com,５５５-968-3298,-1086.63,2023/04/21
+frank.brown@yahoo.com,５５５-413-1179,788.20,13/45/2024
+OLIVIA.DAVIS@yahoo.com,2-555-767-9925,-1396.72,13/45/2024
+eve.taylor@company.com,1234567890123456,"1,115.77",2024/04/10
+diana.johnson@outlook.com,2-555-505-5515,¥2263,2026/01/01
+irene.wilson@company.com,,$821.71,
+jane.taylor@company.com,2-555-307-7104,,
+  diana.johnson@outlook.com  ,555.376.4559,"1505,14","Aug 10, 2021"
+uma.moore@yahoo.com,,invalid,
+leo.brown@test.com,2-555-808-3911,¥2243,10/04/2022
+yara.taylor@company.com,555-314-3190,"3,570.00",2026/01/01
+jane.davis@outlook.com,,$3455.91,08/07/2023
+MARY.JOHNSON@company.com,555-138-5287,£777.80,2026/01/01
+frank.smith@yahoo.com,1-555-909-2528,1220.45,
+yara.wilson@gmail.com,2-555-369-4142,¥3452,
+quinn.moore@outlook.com,,"4,660.72","Jun 11, 2025"
+wendy.moore@company.com,22190,-4155.76,10/24/2021
+grace.davis@example.com,91447,"€879,19",02/08/2022
+rachel.jones@yahoo.com,1234567890123456,"530,79","Nov 7, 2022"
+leo.johnson@yahoo.com,1234567890123456,-1329.26,"Aug 13, 2025"
+yara.wilson@yahoo.com,2-555-539-5682,,2022/05/15
+irene.davis@example.com,555-636-6097,2539.891,13/45/2024
+victor.brown@outlok.com,1-555-802-4017,,05/07/2021
+eve.wilson@example.com,1-555-790-4553,£911.92,10-04-2022
+charlie.brown@test.com,1234567890123456,"£4,198.01",03/12/2021
+quinn.johnson@example.com,62658,,
+uma.smith@test.com,５５５-238-6439,335.725,2020/11/14
+steve.wilson@example.com,,-1667.20,28-10-2023
+diana.brown@gmail.com,(555) 340-6338,"£1,232.34","Feb 12, 2020"
+john.williams@yahoo.com,(555) 407-9000,-1609.39,
+anna.wilson@example.com,1234567890123456,"£3,727.90",2026/01/01
+frank.johnson@test.com,(555) 501-9123,"1,016.18",2020/04/21
+evil.homograph@g̱mail.com,(555) 321-9999,$123,"Mar 5, 2024"
+dot.only@example.com,555-000-0000,.,02/14/2024
+negative.euro@test.com,55512345678,-€,2024-07-01
+old.date@sample.org,1-555-111-2222,$10.00,12/31/2019
+blank.line@example.com,,,
