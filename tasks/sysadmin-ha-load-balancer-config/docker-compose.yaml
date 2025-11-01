@@ -1,0 +1,85 @@
+# You usually don't need to modify anything in this file, but you can use it to add
+# more containers or configure the client container, if needed.
+
+services:
+  web1:
+    build:
+      dockerfile: web/Dockerfile
+    container_name: web1
+    command: sh -c 'echo "Response from web1" > index.html && echo "OK" > health && python3 -m http.server 80'
+    networks:
+      app_net:
+        ipv4_address: 172.28.1.2
+        ipv6_address: 2001:db8::2
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:80/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+
+  web2:
+    build:
+      dockerfile: web/Dockerfile
+    container_name: web2
+    command: sh -c 'echo "Response from web2" > index.html && echo "OK" > health && python3 -m http.server 80'
+    networks:
+      app_net:
+        ipv4_address: 172.28.1.3
+        ipv6_address: 2001:db8::3
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:80/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+
+  prometheus:
+    image: prom/prometheus:v2.54.1
+    container_name: prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      app_net:
+        ipv4_address: 172.28.1.10
+        ipv6_address: 2001:db8::10
+
+  client:
+    build:
+      dockerfile: loadbalancer/Dockerfile
+    image: ${T_BENCH_TASK_DOCKER_CLIENT_IMAGE_NAME}
+    container_name: ${T_BENCH_TASK_DOCKER_CLIENT_CONTAINER_NAME}
+    command: [ "sh", "-c", "sleep infinity" ]
+    sysctls:
+      - net.ipv6.conf.all.disable_ipv6=0
+      - net.ipv6.conf.default.disable_ipv6=0
+    environment:
+      - TEST_DIR=${T_BENCH_TEST_DIR}
+    volumes:
+      - ${T_BENCH_TASK_LOGS_PATH}:${T_BENCH_CONTAINER_LOGS_PATH}
+      - ${T_BENCH_TASK_AGENT_LOGS_PATH}:${T_BENCH_CONTAINER_AGENT_LOGS_PATH}
+    networks:
+      app_net:
+        ipv4_address: 172.28.1.1
+        ipv6_address: 2001:db8::1
+    depends_on:
+      web1:
+        condition: service_healthy
+      web2:
+        condition: service_healthy
+
+networks:
+  app_net:
+    driver: bridge
+    enable_ipv6: true
+    ipam:
+      config:
+        - subnet: 172.28.0.0/16
+          gateway: 172.28.0.1
+        - subnet: 2001:db8::/64
+          gateway: 2001:db8::254

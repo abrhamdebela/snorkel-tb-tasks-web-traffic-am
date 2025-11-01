@@ -1,0 +1,189 @@
+172.16.0.100 - - [20/Oct/2025:09:10:00 +0000] "GET /images/logo.png HTTP/1.1" 200 49842 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+192.0.2.88 - - [20/Oct/2025:09:10:24 +0000] "POST /search?q=<script>alert('XSS')</script> HTTP/1.1" 200 18876 "https://google.com/" "Nikto/2.1.6"
+198.51.100.25 - - [20/Oct/2025:09:10:48 +0000] "GET /images/logo.png HTTP/1.1" 200 32606 "https://google.com/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+198.51.100.125 - - [20/Oct/2025:09:11:12 +0000] "GET /about.html HTTP/1.1" 200 20001 "https://google.com/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+203.0.113.100 - - [20/Oct/2025:09:11:36 +0000] "POST /about.html HTTP/1.1" 404 255 "https://example.com/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"
+192.168.1.25 - - [20/Oct/2025:09:12:00 +0000] "GET /index.html HTTP/1.1" 200 9797 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+192.0.2.156 - - [20/Oct/2025:09:12:24 +0000] "POST /search?q=<script>alert('XSS')</script> HTTP/1.1" 400 180 "https://google.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+185.220.101.34 - - [20/Oct/2025:09:12:48 +0000] "GET /cpanel/ HTTP/1.1" 403 55 "https://example.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+192.0.2.156 - - [20/Oct/2025:09:13:12 +0000] "GET /download.php?file=%2e%2e%2f%2e%2e%2f%2e%2e%2fetc%2fpasswd HTTP/1.1" 403 41 "-" "Nikto/2.1.6"
+203.0.113.150 - - [20/Oct/2025:09:13:36 +0000] "GET / HTTP/1.1" 200 25906 "https://google.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+203.0.113.150 - - [20/Oct/2025:09:14:00 +0000] "POST /api/status HTTP/1.1" 200 32602 "https://example.com/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+192.0.2.33 - - [20/Oct/2025:09:14:24 +0000] "POST /admin HTTP/1.1" 404 257 "https://google.com/" "Mozilla/5.0 (compatible; Nmap Scripting Engine)"
+198.51.100.125 - - [20/Oct/2025:09:14:48 +0000] "GET /static/js/app.js HTTP/1.1" 200 36853 "https://example.com/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+172.16.0.100 - - [20/Oct/2025:09:15:12 +0000] "GET /index.html HTTP/1.1" 200 47082 "https://google.com/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"
+192.0.2.200 - - [20/Oct/2025:09:15:36 +0000] "GET /api/v1/items HTTP/1.1" 404 314 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+203.0.113.50 - - [20/Oct/2025:09:16:00 +0000] "GET /index.html HTTP/1.1" 200 11775 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+203.0.113.100 - - [20/Oct/2025:09:16:24 +0000] "GET /api/status HTTP/1.1" 200 32859 "https://example.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+192.0.2.88 - - [20/Oct/2025:09:16:48 +0000] "GET /products?category=electronics' OR 1=1-- HTTP/1.1" 200 21733 "https://example.com/" "Nikto/2.1.6"
+192.168.1.10 - - [20/Oct/2025:09:17:12 +0000] "GET /static/css/main.css HTTP/1.1" 404 324 "https://google.com/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+172.16.0.100 - - [20/Oct/2025:09:17:36 +0000] "GET /products HTTP/1.1" 200 30591 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"
+
+[20/Oct/2025:11:15:00 +0000] missing ip address before timestamp
+just random garbage text that cannot be parsed
+192.0.2.33 - - [20/Oct/2025:09:18:00 +0000] "POST /contact HTTP/1.1" 404 24 "https://google.com/" "Metasploit RSPEC HTTP"
+203.0.113.15 - - [20/Oct/2025:09:18:24 +0000] "POST /page?id=1' UNION SELECT password FROM accounts-- HTTP/1.1" 500 273 "https://google.com/" "Mozilla/5.0 (compatible; Nmap Scripting Engine)"
+198.51.100.75 - - [20/Oct/2025:09:18:48 +0000] "GET /contact HTTP/1.1" 200 27697 "https://google.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+203.0.113.77 - - [20/Oct/2025:09:19:12 +0000] "GET /static/css/main.css HTTP/1.1" 404 123 "https://example.com/" "Nikto/2.1.6"
+198.51.100.150 - - [20/Oct/2025:09:19:36 +0000] "POST /config.php HTTP/1.1" 401 237 "https://google.com/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"
+203.0.113.150 - - [20/Oct/2025:09:20:00 +0000] "GET /static/js/app.js HTTP/1.1" 200 10119 "https://google.com/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"
+192.0.2.88 - - [20/Oct/2025:09:20:24 +0000] "POST /static/css/main.css HTTP/1.1" 404 51 "-" "sqlmap/1.0"
+198.51.100.125 - - [20/Oct/2025:09:20:48 +0000] "GET /index.html HTTP/1.1" 304 486 "https://example.com/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+192.168.1.10 - - [20/Oct/2025:09:21:12 +0000] "GET /static/css/main.css HTTP/1.1" 200 42909 "https://example.com/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"
+198.51.100.150 - - [20/Oct/2025:09:21:36 +0000] "GET /post?content=<img src=x onerror=alert(document.cookie)> HTTP/1.1" 200 31329 "https://google.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+198.51.100.42 - - [20/Oct/2025:09:22:00 +0000] "GET /admin/login.php HTTP/1.1" 403 49 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"
+192.0.2.200 - - [20/Oct/2025:09:22:24 +0000] "GET /images/logo.png HTTP/1.1" 200 18273 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"
+198.51.100.201 - - [20/Oct/2025:09:22:48 +0000] "GET /admin/login.php HTTP/1.1" 401 174 "https://example.com/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"
+10.0.1.50 - - [20/Oct/2025:09:23:12 +0000] "GET /static/css/main.css HTTP/1.1" 200 47487 "https://google.com/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"
+203.0.113.15 - - [20/Oct/2025:09:23:36 +0000] "GET /products?id=1' OR '1'='1 HTTP/1.1" 403 269 "https://example.com/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+185.220.101.34 - - [20/Oct/2025:09:24:00 +0000] "GET /post?content=<img src=x onerror=alert(document.cookie)> HTTP/1.1" 200 31104 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"
+198.51.100.75 - - [20/Oct/2025:09:24:24 +0000] "GET /api/status HTTP/1.1" 200 17563 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+203.0.113.50 - - [20/Oct/2025:09:24:48 +0000] "GET /images/logo.png HTTP/1.1" 200 6265 "https://google.com/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+185.220.101.34 - - [20/Oct/2025:09:25:12 +0000] "GET /comment?text=<iframe src=javascript:alert('XSS')> HTTP/1.1" 400 402 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"
+198.51.100.25 - - [20/Oct/2025:09:25:36 +0000] "POST /api/v1/items HTTP/1.1" 404 269 "https://google.com/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"
+192.168.1.25 - - [20/Oct/2025:09:26:00 +0000] "POST /static/css/main.css HTTP/1.1" 200 41536 "https://google.com/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"
+172.16.0.100 - - [20/Oct/2025:09:26:24 +0000] "GET /index.html HTTP/1.1" 304 353 "https://example.com/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"
+185.220.101.34 - - [20/Oct/2025:09:26:48 +0000] "GET /download.php?file=%2e%2e%2f%2e%2e%2f%2e%2e%2fetc%2fpasswd HTTP/1.1" 403 106 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+203.0.113.150 - - [20/Oct/2025:09:27:12 +0000] "GET /images/logo.png HTTP/1.1" 404 233 "https://example.com/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+198.51.100.99 - - [20/Oct/2025:09:27:36 +0000] "GET /download.php?file=%2e%2e%2f%2e%2e%2f%2e%2e%2fetc%2fpasswd HTTP/1.1" 403 130 "-" "python-requests/2.25.1"
+203.0.113.150 - - [20/Oct/2025:09:28:00 +0000] "POST /about.html HTTP/1.1" 200 21373 "https://google.com/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"
+192.168.1.10 - - [20/Oct/2025:09:28:24 +0000] "GET /static/css/main.css HTTP/1.1" 404 300 "https://google.com/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+203.0.113.50 - - [20/Oct/2025:09:28:48 +0000] "GET /api/v1/items HTTP/1.1" 200 42242 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+198.51.100.75 - - [20/Oct/2025:09:29:12 +0000] "GET /static/js/app.js HTTP/1.1" 200 10245 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+198.51.100.125 - - [20/Oct/2025:09:29:36 +0000] "GET /api/v1/items HTTP/1.1" 304 200 "https://google.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+
+45.142.212.61 - - [20/Oct/2025:12:30:25 +0000] "GET /administrator/ HTTP/1.1" 401 150
+45.142.212.61 - - [20/Oct/2025:12:30:26 +0000] "GET /.env HTTP/1.1" 403 150
+45.142.212.61 - - [20/Oct/2025:12:30:27 +0000] "GET /admin HTTP/1.1" 403 150
+45.142.212.61 - - [20/Oct/2025:12:30:28 +0000] "GET /wp-admin/ HTTP/1.1" 401 150
+45.142.212.61 - - [20/Oct/2025:12:30:29 +0000] "GET /phpmyadmin/ HTTP/1.1" 404 150
+45.142.212.61 - - [20/Oct/2025:12:30:30 +0000] "GET /config.php HTTP/1.1" 404 150
+45.142.212.61 - - [20/Oct/2025:12:30:31 +0000] "GET /admin/login.php HTTP/1.1" 403 150
+45.142.212.61 - - [20/Oct/2025:12:30:32 +0000] "GET /administrator/ HTTP/1.1" 401 150
+45.142.212.61 - - [20/Oct/2025:12:30:33 +0000] "GET /.env HTTP/1.1" 403 150
+45.142.212.61 - - [20/Oct/2025:12:30:34 +0000] "GET /admin HTTP/1.1" 403 150
+45.142.212.61 - - [20/Oct/2025:12:30:35 +0000] "GET /wp-admin/ HTTP/1.1" 401 150
+45.142.212.61 - - [20/Oct/2025:12:30:36 +0000] "GET /phpmyadmin/ HTTP/1.1" 404 150
+45.142.212.61 - - [20/Oct/2025:12:30:37 +0000] "GET /config.php HTTP/1.1" 404 150
+45.142.212.61 - - [20/Oct/2025:12:30:38 +0000] "GET /admin/login.php HTTP/1.1" 403 150
+45.142.212.61 - - [20/Oct/2025:12:30:39 +0000] "GET /administrator/ HTTP/1.1" 401 150
+45.142.212.61 - - [20/Oct/2025:12:30:40 +0000] "GET /.env HTTP/1.1" 403 150
+45.142.212.61 - - [20/Oct/2025:12:30:41 +0000] "GET /admin HTTP/1.1" 403 150
+45.142.212.61 - - [20/Oct/2025:12:30:42 +0000] "GET /wp-admin/ HTTP/1.1" 401 150
+45.142.212.61 - - [20/Oct/2025:12:30:43 +0000] "GET /phpmyadmin/ HTTP/1.1" 404 150
+45.142.212.61 - - [20/Oct/2025:12:30:44 +0000] "GET /config.php HTTP/1.1" 404 150
+45.142.212.61 - - [20/Oct/2025:12:30:45 +0000] "GET /admin/login.php HTTP/1.1" 403 150
+45.142.212.61 - - [20/Oct/2025:12:30:46 +0000] "GET /administrator/ HTTP/1.1" 401 150
+45.142.212.61 - - [20/Oct/2025:12:30:47 +0000] "GET /.env HTTP/1.1" 403 150
+45.142.212.61 - - [20/Oct/2025:12:30:48 +0000] "GET /admin HTTP/1.1" 403 150
+45.142.212.61 - - [20/Oct/2025:12:30:49 +0000] "GET /wp-admin/ HTTP/1.1" 401 150
+45.142.212.61 - - [20/Oct/2025:12:30:50 +0000] "GET /phpmyadmin/ HTTP/1.1" 404 150
+45.142.212.61 - - [20/Oct/2025:12:30:51 +0000] "GET /config.php HTTP/1.1" 404 150
+45.142.212.61 - - [20/Oct/2025:12:30:52 +0000] "GET /admin/login.php HTTP/1.1" 403 150
+45.142.212.61 - - [20/Oct/2025:12:30:53 +0000] "GET /administrator/ HTTP/1.1" 401 150
+45.142.212.61 - - [20/Oct/2025:12:30:54 +0000] "GET /.env HTTP/1.1" 403 150
+45.142.212.61 - - [20/Oct/2025:12:30:55 +0000] "GET /admin HTTP/1.1" 403 150
+45.142.212.61 - - [20/Oct/2025:12:30:56 +0000] "GET /wp-admin/ HTTP/1.1" 401 150
+45.142.212.61 - - [20/Oct/2025:12:30:57 +0000] "GET /phpmyadmin/ HTTP/1.1" 404 150
+45.142.212.61 - - [20/Oct/2025:12:30:58 +0000] "GET /config.php HTTP/1.1" 404 150
+45.142.212.61 - - [20/Oct/2025:12:30:59 +0000] "GET /admin/login.php HTTP/1.1" 403 150
+192.0.2.100 - - [20/Oct/2025:09:30:00 +0000] "POST /index.html HTTP/1.1" 404 288 "https://example.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+192.168.1.10 - - [20/Oct/2025:09:30:24 +0000] "GET /static/js/app.js HTTP/1.1" 200 30940 "https://google.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+203.0.113.100 - - [20/Oct/2025:09:30:48 +0000] "GET /products HTTP/1.1" 200 44556 "https://example.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+192.0.2.200 - - [20/Oct/2025:09:31:12 +0000] "GET /static/js/app.js HTTP/1.1" 200 29504 "https://google.com/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+203.0.113.15 - - [20/Oct/2025:09:31:36 +0000] "GET /images?src=../../../../var/www/html/config.php HTTP/1.1" 404 476 "-" "python-requests/2.25.1"
+45.142.212.61 - - [20/Oct/2025:09:32:00 +0000] "GET /login.php?user=admin'-- HTTP/1.1" 403 221 "-" "python-requests/2.25.1"
+192.168.1.10 - - [20/Oct/2025:09:32:24 +0000] "GET /about.html HTTP/1.1" 200 18233 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+192.0.2.100 - - [20/Oct/2025:09:32:48 +0000] "POST /about.html HTTP/1.1" 200 22619 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+198.51.100.201 - - [20/Oct/2025:09:33:12 +0000] "POST /static/js/app.js HTTP/1.1" 404 258 "-" "python-requests/2.25.1"
+192.0.2.33 - - [20/Oct/2025:09:33:36 +0000] "POST /profile?bio=<script>document.write(document.cookie)</script> HTTP/1.1" 400 49 "-" "sqlmap/1.0"
+198.51.100.75 - - [20/Oct/2025:09:34:00 +0000] "POST /api/v1/items HTTP/1.1" 304 212 "https://example.com/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+192.168.1.25 - - [20/Oct/2025:09:34:24 +0000] "POST /api/status HTTP/1.1" 304 100 "https://google.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+10.0.1.50 - - [20/Oct/2025:09:34:48 +0000] "GET /api/v1/items HTTP/1.1" 200 41778 "https://google.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+192.0.2.88 - - [20/Oct/2025:09:35:12 +0000] "GET /api/v1/items HTTP/1.1" 404 157 "https://example.com/" "Nikto/2.1.6"
+10.0.1.50 - - [20/Oct/2025:09:35:36 +0000] "GET /contact HTTP/1.1" 200 19987 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+203.0.113.150 - - [20/Oct/2025:09:36:00 +0000] "POST /static/js/app.js HTTP/1.1" 200 43473 "https://google.com/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"
+192.0.2.88 - - [20/Oct/2025:09:36:24 +0000] "GET /config.php HTTP/1.1" 401 462 "https://google.com/" "Mozilla/5.0 (compatible; Nmap Scripting Engine)"
+198.51.100.25 - - [20/Oct/2025:09:36:48 +0000] "POST /api/v1/items HTTP/1.1" 404 105 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"
+172.16.0.100 - - [20/Oct/2025:09:37:12 +0000] "POST /static/js/app.js HTTP/1.1" 200 18663 "https://google.com/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"
+198.51.100.150 - - [20/Oct/2025:09:37:36 +0000] "GET /images/logo.png HTTP/1.1" 404 325 "https://example.com/" "python-requests/2.25.1"
+192.168.1.25 - - [20/Oct/2025:09:38:00 +0000] "GET /contact HTTP/1.1" 404 424 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"
+192.0.2.100 - - [20/Oct/2025:09:38:24 +0000] "POST /index.html HTTP/1.1" 200 5462 "https://google.com/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"
+203.0.113.50 - - [20/Oct/2025:09:38:48 +0000] "GET /api/v1/items HTTP/1.1" 404 10 "https://google.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+192.168.1.10 - - [20/Oct/2025:09:39:12 +0000] "GET /contact HTTP/1.1" 404 446 "https://example.com/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+10.0.1.50 - - [20/Oct/2025:09:39:36 +0000] "GET /products HTTP/1.1" 304 221 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"
+192.0.2.100 - - [20/Oct/2025:09:40:00 +0000] "POST /contact HTTP/1.1" 200 31709 "https://example.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+203.0.113.100 - - [20/Oct/2025:09:40:24 +0000] "GET /static/css/main.css HTTP/1.1" 200 24776 "https://example.com/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"
+192.0.2.33 - - [20/Oct/2025:09:40:48 +0000] "GET /images?src=../../../../var/www/html/config.php HTTP/1.1" 403 324 "https://google.com/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+203.0.113.234 - - [20/Oct/2025:09:41:12 +0000] "GET /search?q=<script>alert('XSS')</script> HTTP/1.1" 200 34343 "-" "Metasploit RSPEC HTTP"
+198.51.100.99 - - [20/Oct/2025:09:41:36 +0000] "GET /profile?bio=<script>document.write(document.cookie)</script> HTTP/1.1" 200 12444 "https://example.com/" "Metasploit RSPEC HTTP"
+203.0.113.150 - - [20/Oct/2025:09:42:00 +0000] "GET /about.html HTTP/1.1" 304 194 "https://google.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+203.0.113.77 - - [20/Oct/2025:09:42:24 +0000] "GET /config.php HTTP/1.1" 401 137 "-" "python-requests/2.25.1"
+198.51.100.25 - - [20/Oct/2025:09:42:48 +0000] "GET /static/js/app.js HTTP/1.1" 200 1905 "https://google.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+192.0.2.200 - - [20/Oct/2025:09:43:12 +0000] "POST /about.html HTTP/1.1" 304 180 "https://google.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+185.220.101.34 - - [20/Oct/2025:09:43:36 +0000] "GET /about.html HTTP/1.1" 404 157 "-" "Mozilla/5.0 (compatible; Nmap Scripting Engine)"
+198.51.100.42 - - [20/Oct/2025:09:44:00 +0000] "GET /search?q=<script>alert('XSS')</script> HTTP/1.1" 400 284 "https://google.com/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+45.142.212.61 - - [20/Oct/2025:09:44:24 +0000] "GET /admin/login.php HTTP/1.1" 401 432 "https://example.com/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+10.0.1.50 - - [20/Oct/2025:09:44:48 +0000] "GET /static/js/app.js HTTP/1.1" 200 5641 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+203.0.113.100 - - [20/Oct/2025:09:45:12 +0000] "POST /static/js/app.js HTTP/1.1" 200 5592 "https://google.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+203.0.113.50 - - [20/Oct/2025:09:45:36 +0000] "GET /products HTTP/1.1" 304 387 "https://google.com/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+192.168.1.25 - - [20/Oct/2025:09:46:00 +0000] "GET / HTTP/1.1" 200 38524 "https://example.com/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"
+203.0.113.100 - - [20/Oct/2025:09:46:24 +0000] "GET /static/js/app.js HTTP/1.1" 200 33561 "https://google.com/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"
+45.142.212.61 - - [20/Oct/2025:09:46:48 +0000] "GET /admin HTTP/1.1" 403 140 "https://google.com/" "python-requests/2.25.1"
+192.0.2.200 - - [20/Oct/2025:09:47:12 +0000] "GET /static/js/app.js HTTP/1.1" 200 44846 "https://google.com/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"
+192.168.1.25 - - [20/Oct/2025:09:47:36 +0000] "POST /about.html HTTP/1.1" 200 4763 "https://example.com/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"
+172.16.0.100 - - [20/Oct/2025:09:48:00 +0000] "GET /contact HTTP/1.1" 200 13793 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"
+203.0.113.100 - - [20/Oct/2025:09:48:24 +0000] "POST / HTTP/1.1" 304 123 "https://google.com/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+198.51.100.25 - - [20/Oct/2025:09:48:48 +0000] "GET /contact HTTP/1.1" 304 312 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+192.168.1.25 - - [20/Oct/2025:09:49:12 +0000] "POST /about.html HTTP/1.1" 404 114 "https://example.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+185.220.101.34 - - [20/Oct/2025:09:49:36 +0000] "GET /api/files?path=..\..\..\windows\system32\config\sam HTTP/1.1" 404 22 "https://google.com/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"
+10.0.1.50 - - [20/Oct/2025:09:50:00 +0000] "GET /contact HTTP/1.1" 304 8 "https://example.com/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+198.51.100.25 - - [20/Oct/2025:09:50:24 +0000] "GET /api/v1/items HTTP/1.1" 200 14125 "https://example.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+192.168.1.10 - - [20/Oct/2025:09:50:48 +0000] "POST /api/status HTTP/1.1" 200 45124 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+192.0.2.156 - - [20/Oct/2025:09:51:12 +0000] "GET /about.html HTTP/1.1" 404 67 "https://example.com/" "sqlmap/1.0"
+203.0.113.50 - - [20/Oct/2025:09:51:36 +0000] "POST /api/status HTTP/1.1" 200 20409 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+198.51.100.201 - - [20/Oct/2025:09:52:00 +0000] "GET /download.php?file=%2e%2e%2f%2e%2e%2f%2e%2e%2fetc%2fpasswd HTTP/1.1" 404 293 "-" "sqlmap/1.0"
+198.51.100.25 - - [20/Oct/2025:09:52:24 +0000] "POST /static/js/app.js HTTP/1.1" 200 42768 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+203.0.113.150 - - [20/Oct/2025:09:52:48 +0000] "POST /static/css/main.css HTTP/1.1" 200 28132 "https://google.com/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+192.0.2.33 - - [20/Oct/2025:09:53:12 +0000] "GET /wp-admin/ HTTP/1.1" 401 242 "https://google.com/" "python-requests/2.25.1"
+198.51.100.75 - - [20/Oct/2025:09:53:36 +0000] "GET /static/js/app.js HTTP/1.1" 200 43344 "https://example.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+198.51.100.42 - - [20/Oct/2025:09:54:00 +0000] "GET /search?q=<script>alert('XSS')</script> HTTP/1.1" 400 3 "https://google.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+198.51.100.75 - - [20/Oct/2025:09:54:24 +0000] "POST /static/css/main.css HTTP/1.1" 200 27091 "https://example.com/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+198.51.100.125 - - [20/Oct/2025:09:54:48 +0000] "POST /index.html HTTP/1.1" 200 2117 "https://google.com/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+10.0.1.50 - - [20/Oct/2025:09:55:12 +0000] "POST /about.html HTTP/1.1" 200 44686 "https://google.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+198.51.100.150 - - [20/Oct/2025:09:55:36 +0000] "POST /phpmyadmin/ HTTP/1.1" 404 230 "-" "Nikto/2.1.6"
+203.0.113.77 - - [20/Oct/2025:09:56:00 +0000] "GET /products?id=1' OR '1'='1 HTTP/1.1" 403 54 "https://google.com/" "python-requests/2.25.1"
+45.142.212.61 - - [20/Oct/2025:09:56:24 +0000] "GET /search.php?term=test' DROP TABLE users-- HTTP/1.1" 500 83 "-" "Metasploit RSPEC HTTP"
+192.0.2.156 - - [20/Oct/2025:09:56:48 +0000] "GET /profile?bio=<script>document.write(document.cookie)</script> HTTP/1.1" 400 281 "-" "Metasploit RSPEC HTTP"
+192.0.2.200 - - [20/Oct/2025:09:57:12 +0000] "GET /products HTTP/1.1" 404 174 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+198.51.100.42 - - [20/Oct/2025:09:57:36 +0000] "GET /profile?bio=<script>document.write(document.cookie)</script> HTTP/1.1" 200 15408 "-" "Mozilla/5.0 (compatible; Nmap Scripting Engine)"
+203.0.113.100 - - [20/Oct/2025:09:58:00 +0000] "POST /api/status HTTP/1.1" 404 223 "https://google.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+203.0.113.50 - - [20/Oct/2025:09:58:24 +0000] "GET / HTTP/1.1" 200 47852 "https://google.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+198.51.100.42 - - [20/Oct/2025:09:58:48 +0000] "POST /images/logo.png HTTP/1.1" 404 173 "https://google.com/" "sqlmap/1.0"
+203.0.113.15 - - [20/Oct/2025:09:59:12 +0000] "POST /api/query?sql=SELECT * FROM products WHERE id= HTTP/1.1" 200 41483 "-" "Mozilla/5.0 (compatible; Nmap Scripting Engine)"
+198.51.100.75 - - [20/Oct/2025:09:59:36 +0000] "GET /api/v1/items HTTP/1.1" 304 384 "https://google.com/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+198.51.100.125 - - [20/Oct/2025:10:00:00 +0000] "GET /api/v1/items HTTP/1.1" 404 114 "https://google.com/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+192.0.2.100 - - [20/Oct/2025:10:00:24 +0000] "GET /contact HTTP/1.1" 200 19087 "https://example.com/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+203.0.113.150 - - [20/Oct/2025:10:00:48 +0000] "POST / HTTP/1.1" 304 229 "https://example.com/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+203.0.113.100 - - [20/Oct/2025:10:01:12 +0000] "POST / HTTP/1.1" 200 25645 "https://google.com/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"
+203.0.113.100 - - [20/Oct/2025:10:01:36 +0000] "POST /static/js/app.js HTTP/1.1" 404 393 "https://google.com/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+192.168.1.10 - - [20/Oct/2025:10:02:00 +0000] "GET /about.html HTTP/1.1" 200 12330 "https://example.com/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"
+192.0.2.88 - - [20/Oct/2025:10:02:24 +0000] "GET /comment?text=<iframe src=javascript:alert('XSS')> HTTP/1.1" 400 183 "https://example.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+172.16.0.100 - - [20/Oct/2025:10:02:48 +0000] "POST /images/logo.png HTTP/1.1" 304 296 "https://example.com/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"
+198.51.100.125 - - [20/Oct/2025:10:03:12 +0000] "GET / HTTP/1.1" 304 249 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"
+192.0.2.100 - - [20/Oct/2025:10:03:36 +0000] "GET /static/css/main.css HTTP/1.1" 200 12877 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+192.168.1.25 - - [20/Oct/2025:10:04:00 +0000] "POST /static/css/main.css HTTP/1.1" 200 904 "https://example.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+172.16.0.100 - - [20/Oct/2025:10:04:24 +0000] "GET /contact HTTP/1.1" 200 38894 "https://example.com/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"
+203.0.113.234 - - [20/Oct/2025:10:04:48 +0000] "GET /admin/login.php HTTP/1.1" 403 54 "https://example.com/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"
+198.51.100.25 - - [20/Oct/2025:10:05:12 +0000] "GET /index.html HTTP/1.1" 200 22524 "https://example.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+192.0.2.33 - - [20/Oct/2025:10:05:36 +0000] "GET /comment?text=<iframe src=javascript:alert('XSS')> HTTP/1.1" 400 338 "-" "Metasploit RSPEC HTTP"
+203.0.113.234 - - [20/Oct/2025:10:06:00 +0000] "GET /comment?text=<iframe src=javascript:alert('XSS')> HTTP/1.1" 400 124 "https://google.com/" "sqlmap/1.0"
+198.51.100.201 - - [20/Oct/2025:10:06:24 +0000] "GET /images/logo.png HTTP/1.1" 404 206 "https://example.com/" "Nikto/2.1.6"
+198.51.100.25 - - [20/Oct/2025:10:06:48 +0000] "GET /static/js/app.js HTTP/1.1" 200 38495 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"
+192.0.2.100 - - [20/Oct/2025:10:07:12 +0000] "GET /index.html HTTP/1.1" 304 160 "https://google.com/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+203.0.113.234 - - [20/Oct/2025:10:07:36 +0000] "GET /.env HTTP/1.1" 403 147 "https://google.com/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"
+192.0.2.156 - - [20/Oct/2025:10:08:00 +0000] "GET /products?category=electronics' OR 1=1-- HTTP/1.1" 403 7 "-" "Mozilla/5.0 (compatible; Nmap Scripting Engine)"
+198.51.100.99 - - [20/Oct/2025:10:08:24 +0000] "GET /download.php?file=%2e%2e%2f%2e%2e%2f%2e%2e%2fetc%2fpasswd HTTP/1.1" 403 403 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+203.0.113.77 - - [20/Oct/2025:10:08:48 +0000] "GET /profile?bio=<script>document.write(document.cookie)</script> HTTP/1.1" 400 141 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+185.220.101.34 - - [20/Oct/2025:10:09:12 +0000] "GET /cpanel/ HTTP/1.1" 401 193 "https://example.com/" "Nikto/2.1.6"
+10.0.1.50 - - [20/Oct/2025:10:09:36 +0000] "GET /images/logo.png HTTP/1.1" 200 10288 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"

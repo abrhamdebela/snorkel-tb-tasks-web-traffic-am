@@ -51,7 +51,13 @@ jobs:
              else .value.outcome
              end) as $outcome |
             "| \(.key) | \($outcome) | \(.value.explanation) |"' output.json >> quality-by-llm-comment.md
-
+          echo "<!-- check-quality-by-llm-end -->" >> quality-by-llm-comment.md
+      - name: Hide comment
+        id: hide-comment
+        uses: int128/hide-comment-action@v1
+        with:
+          authors: "github-actions[bot]"
+          ends-with: <!-- check-quality-by-llm-end -->
       - name: Add comment
         uses: peter-evans/create-or-update-comment@v4
         with:
