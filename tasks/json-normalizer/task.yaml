@@ -22,10 +22,28 @@ instruction: |-
        (This will drop characters which can't be transliterated to ASCII letters/digits/underscore.)
     7. Collapse multiple underscores again and strip leading/trailing underscores.
     8. If the resulting normalized base key is empty, replace it with "key".
-    9. Collision resolution: within each object, if two or more original keys map to
-       the same normalized base, append deterministic numeric suffixes to subsequent keys:
-       normalized, normalized_1, normalized_2, ...
-       The suffix numbering must be assigned in the order the original keys appear in the input object.
+    9. Collision resolution for duplicate normalized keys
+
+    If two or more original keys normalize to the same name (for example,
+    "Client.City", "client city", and "client-city" → "client_city"), you must
+    make each final key unique by appending numeric suffixes.
+
+    Rules:
+    - Process keys in the same order they appear in the input.
+    - The first time a normalized key appears, use it as-is (no suffix).
+    - For each later occurrence of the same normalized key, append "_1", "_2",
+      "_3", etc., counting from 1 in the order they appear.
+
+    Example:
+
+    Input keys:
+      "Client.City", "client city", "Zip", "client-city"
+
+    Normalized base names:
+      "client_city", "client_city", "zip", "client_city"
+
+    Output keys:
+      "client_city", "client_city_1", "zip", "client_city_2"
     10. Preserve the iteration order of keys within each object when producing the output object.
 
   Additional required outputs:
