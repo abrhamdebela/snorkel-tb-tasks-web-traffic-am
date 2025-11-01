@@ -95,7 +95,7 @@ def main():
             debug = safe_read_json(Path(f"debug-output-{task}.json"))
             # Replace "pass" with "✅" and "fail" with "❌"
             debug["outcome"] = debug["outcome"].replace("PASS", "✅ PASS").replace("FAIL", "❌ FAIL").replace("NOT_APPLICABLE", "➖ NOT_APPLICABLE")
-            f.write(f"### Analysis on Agent Failures\n")
+            f.write("### Analysis on Agent Failures\n")
             f.write("| Check       | Outcome  | Explanation              |\n")
             f.write("|-------------|----------|--------------------------|\n")
             f.write(f"| Task Instruction Sufficiency | {debug['outcome']} | {debug['explanation']} |\n")
