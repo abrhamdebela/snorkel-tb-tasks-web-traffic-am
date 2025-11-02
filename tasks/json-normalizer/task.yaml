@@ -22,28 +22,123 @@ instruction: |-
        (This will drop characters which can't be transliterated to ASCII letters/digits/underscore.)
     7. Collapse multiple underscores again and strip leading/trailing underscores.
     8. If the resulting normalized base key is empty, replace it with "key".
-    9. Collision resolution for duplicate normalized keys
+    9. Collision resolution and final output key naming
+      This section defines exactly how to produce unique final keys. This MUST match
+      what the tests expect.
 
-    If two or more original keys normalize to the same name (for example,
-    "Client.City", "client city", and "client-city" → "client_city"), you must
-    make each final key unique by appending numeric suffixes.
+      9.1. Base normalization
+      For each original input key (in the order they appear in the input object):
+        - Lowercase it.
+        - Convert any sequence of non-alphanumeric characters (anything other than
+          [A-Za-z0-9]) into a single underscore "_".
+        - Strip leading/trailing underscores.
+        - Apply any Unicode folding/diacritic removal (for example, "Cité" and "Cíte"
+          and "Cite" must all normalize to the same ASCII base "cite", not three
+          different keys). After folding, repeat the same cleanup: lowercase,
+          non-alnum -> "_", collapse multiple "_", strip leading/trailing "_".
+        - The result is called the normalized base name for that key.
 
-    Rules:
-    - Process keys in the same order they appear in the input.
-    - The first time a normalized key appears, use it as-is (no suffix).
-    - For each later occurrence of the same normalized key, append "_1", "_2",
-      "_3", etc., counting from 1 in the order they appear.
+      Example:
+        "Client.City"      → "client_city"
+        "client city"      → "client_city"
+        "client-city!!!"   → "client_city"
+        "Cité"             → "cite"
+        "CÍTE"             → "cite"
+        "  "               → ""      (empty after cleanup)
+        "***"              → ""      (empty after cleanup)
 
-    Example:
+      9.2. Fallback for empty normalized names
+      If the normalized base name is the empty string "":
+        - Use the literal string "key" as the base name.
+        - Treat "key" exactly like any other normalized base name for the purposes of
+          uniqueness and suffix numbering below.
 
-    Input keys:
-      "Client.City", "client city", "Zip", "client-city"
+      That means " ", "***", etc. all normalize to the same base "key".
 
-    Normalized base names:
-      "client_city", "client_city", "zip", "client_city"
+      9.3. Per-base-name counters
+      You MUST keep a running counter for each normalized base name separately.
 
-    Output keys:
-      "client_city", "client_city_1", "zip", "client_city_2"
+      For each input key in order:
+        - Let BASE = the normalized base name after applying the fallback rule
+          (so "" becomes "key").
+        - Check how many times we've seen BASE before.
+
+        • If this is the FIRST time we've seen BASE:
+            - The final output key is BASE with NO suffix.
+              (e.g. first "client_city" → "client_city")
+            - Record that BASE has now been used once.
+
+        • If we've seen BASE N times already (N ≥ 1):
+            - The final output key is BASE + "_" + (N).
+              (second time → suffix "_1", third time → "_2", etc.)
+            - Then increment the counter.
+
+      So suffix numbering starts at "_1" for the SECOND occurrence of a base name.
+      The very first occurrence never gets a suffix.
+
+      This applies to ALL base names, including the fallback "key".
+
+      9.4. This counter is per-base
+      Collisions only compete within the same BASE string. Different BASE values
+      ("client_city" vs "zip" vs "key" vs "cite") have independent counters.
+
+      9.5. Full examples
+
+      Example A: repeated normal keys
+      Input keys in order:
+        "Client.City", "client city", "Zip", "client-city"
+      Normalized bases in order (after folding):
+        "client_city", "client_city", "zip", "client_city"
+      Final output keys MUST be:
+        "client_city", "client_city_1", "zip", "client_city_2"
+
+      Explanation:
+        - "client_city" first time → "client_city"
+        - "client_city" second time → "client_city_1"
+        - "zip" first time → "zip"
+        - "client_city" third time → "client_city_2"
+
+      Example B: empty / garbage keys
+      Input keys in order:
+        " ", "***", "   ", "Name"
+      Normalized bases before fallback:
+        "", "", "", "name"
+      After fallback:
+        "key", "key", "key", "name"
+      Final output keys MUST be:
+        "key", "key_1", "key_2", "name"
+
+      Explanation:
+        - All whitespace / punctuation-only keys normalize to "" → fallback "key".
+        - First "key" → "key"
+        - Second "key" → "key_1"
+        - Third "key" → "key_2"
+        - First "name" → "name"
+
+      Example C: Unicode / diacritics
+      Input keys in order:
+        "Cité", "CÍTE", "Cite", "cité", "Zip"
+      All of these forms normalize (after diacritic removal + cleanup) to "cite",
+      and "Zip" normalizes to "zip".
+      So normalized bases become:
+        "cite", "cite", "cite", "cite", "zip"
+      Final output keys MUST be:
+        "cite", "cite_1", "cite_2", "cite_3", "zip"
+
+      Notes:
+        - "cite" first time → "cite"
+        - "cite" second time → "cite_1"
+        - "cite" third time → "cite_2"
+        - "cite" fourth time → "cite_3"
+        - "zip" first time → "zip"
+
+      9.6. Summary rule
+      - First occurrence of a (possibly folded) normalized base name → no suffix.
+      - Second occurrence of the same normalized base name → "_1".
+      - Third → "_2".
+      - Fourth → "_3".
+      - This applies equally to ordinary keys ("client_city"), fallback keys ("key"),
+        and keys merged by Unicode folding ("cite").
     10. Preserve the iteration order of keys within each object when producing the output object.
 
   Additional required outputs:
