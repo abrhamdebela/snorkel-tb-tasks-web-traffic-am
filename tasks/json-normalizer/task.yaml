@@ -57,10 +57,9 @@ instruction: |-
       Else:
         Final key = BASE + "_" + N
         (So second occurrence → BASE_1, third → BASE_2, etc.)
-
     4. Increment the stored count for BASE by 1.
 
-  This applies to all keys, including "key".
+  The above algorithm (steps 1-4) applies to all keys, including "key".
 
 
   Examples
