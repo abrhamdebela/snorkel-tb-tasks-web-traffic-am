@@ -117,6 +117,10 @@ class Lexer:
 
     def read_number(self) -> str:
         result = ""
+        # Handle negative sign
+        if self.current_char() == '-':
+            result += self.current_char()
+            self.advance()
         while self.current_char() and (self.current_char().isdigit() or self.current_char() == '.'):
             result += self.current_char()
             self.advance()
@@ -165,8 +169,8 @@ class Lexer:
                 value = self.read_string()
                 self.tokens.append(Token(TokenType.STRING, value, line, column))
 
-            # Number
-            elif char.isdigit():
+            # Number (including negative numbers)
+            elif char.isdigit() or (char == '-' and self.peek_char() and self.peek_char().isdigit()):
                 value = self.read_number()
                 self.tokens.append(Token(TokenType.NUMBER, value, line, column))
 
@@ -436,10 +440,11 @@ class NoEmptySections(LintRule):
 
     def check(self, node: ASTNode, context: dict) -> list[LintError]:
         if isinstance(node, Section):
-            non_comment_statements = [
-                s for s in node.statements if not isinstance(s, Comment)
+            # Only count Assignment nodes as content (not nested sections or comments)
+            assignments = [
+                s for s in node.statements if isinstance(s, Assignment)
             ]
-            if not non_comment_statements:
+            if not assignments:
                 return [LintError(
                     rule=self.name,
                     message=f"Section '{node.name}' is empty",
@@ -522,17 +527,17 @@ class NoMagicNumbersRule(LintRule):
     def check(self, node: ASTNode, context: dict) -> list[LintError]:
         errors = []
 
-        if isinstance(node, Assignment):
-            if isinstance(node.value, NumberValue):
-                # Allow 0, 1, -1 as common constants
-                if node.value.value not in [0, 1, -1]:
-                    errors.append(LintError(
-                        rule=self.name,
-                        message=f"Magic number {node.value.value} should be a named constant",
-                        line=node.value.line,
-                        column=node.value.column,
-                        severity="warning"
-                    ))
+        # Check NumberValue nodes directly (handles numbers in lists and assignments)
+        if isinstance(node, NumberValue):
+            # Allow 0, 1, -1 as common constants
+            if node.value not in [0, 1, -1]:
+                errors.append(LintError(
+                    rule=self.name,
+                    message=f"Magic number {node.value} should be a named constant",
+                    line=node.line,
+                    column=node.column,
+                    severity="warning"
+                ))
 
         return errors
 
@@ -575,16 +580,16 @@ class StringQuoteConsistencyRule(LintRule):
     def check(self, node: ASTNode, context: dict) -> list[LintError]:
         errors = []
 
-        if isinstance(node, Assignment):
-            if isinstance(node.value, StringValue):
-                if not node.value.value.strip():
-                    errors.append(LintError(
-                        rule=self.name,
-                        message=f"String value for '{node.name}' is empty or whitespace",
-                        line=node.value.line,
-                        column=node.value.column,
-                        severity="warning"
-                    ))
+        # Check StringValue nodes directly (handles strings in lists and assignments)
+        if isinstance(node, StringValue):
+            if not node.value.strip():
+                errors.append(LintError(
+                    rule=self.name,
+                    message=f"String value is empty or whitespace",
+                    line=node.line,
+                    column=node.column,
+                    severity="warning"
+                ))
 
         return errors
 

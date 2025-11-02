@@ -25,7 +25,7 @@ instruction: |-
      - Create a Lexer class with a tokenize() method
      - Define a TokenType enum with these token types: IDENTIFIER, STRING, NUMBER, TRUE,
        FALSE, SECTION, EQUALS, LBRACE, RBRACE, LBRACKET, RBRACKET, COMMA, COMMENT, NEWLINE, EOF
-     - Each token must track line and column numbers for error reporting
+     - Create a Token class with these attributes: type (TokenType), value (string), line (int), column (int)
      - The lexer must correctly handle all grammar elements including nested structures
 
   2. Parser Implementation
