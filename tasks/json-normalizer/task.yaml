@@ -68,6 +68,26 @@ instruction: |-
     -	"Client.City", "client city", "Clïënt-Cítÿ" may all normalize to the same base (e.g. "client_city").
   The first one becomes "client_city", the second "client_city_1", the third "client_city_2", in the order they appear in the object in the input.
 
+  Collision counters are maintained independently for each object.
+  That is, for every JSON object encountered, a new empty counter dictionary is created to track normalized base names within that object only.
+
+  Counters reset when entering a new nested object or list element.
+  Collisions are resolved relative only to the sibling keys within the same object.
+
+  For example, this input:
+    {
+      " ": 1,
+      "nested": {
+        " ": 2
+      }
+    }
+  becomes:
+    {
+      "key": 1,
+      "nested": {
+        "key": 2
+      }
+    }
 
   Examples
 
