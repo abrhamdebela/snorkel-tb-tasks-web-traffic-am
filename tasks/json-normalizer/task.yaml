@@ -75,6 +75,12 @@ instruction: |-
   The numbering is determined strictly by the order of keys in the source object. 
   Do not reorder keys and do not sort them before counting collisions.
 
+  For each object, you MUST reset the collision counter. 
+  Do not carry normalized names across objects. 
+  The first time a normalized base (including "key") appears in that object, 
+  it is used with no suffix. 
+  The second time in that SAME object gets _1, the third _2, etc.
+
   Collision counters are maintained independently for each object.
   That is, for each JSON object, start with an empty dictionary seen = {} and counter = 0. 
   Do not reuse seen across objects. Lists do not have counters; only dicts do.
