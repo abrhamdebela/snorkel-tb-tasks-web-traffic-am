@@ -51,9 +51,9 @@ instruction: |-
   For each original key (in order):
     1. Compute BASE = normalized base name (after fallback: "" → "key").
     2. Look up how many times we've already assigned a key starting with this BASE.
-      Let that count be N (default 0 if we've never seen BASE before).
+      Let that count be N (default is 0 if we've never seen BASE before).
     3. If N == 0:
-        Final key = BASE
+        Final key = BASE (first occurrence → no suffix)
       Else:
         Final key = BASE + "_" + N
         (So second occurrence → BASE_1, third → BASE_2, etc.)
@@ -83,7 +83,7 @@ instruction: |-
 
   Example C: Unicode / Diacritics
 
-  Original Keys	  Normalized Base	  Final Keys
+  Original Keys	  Normalized Bases  Final Keys
   "Cité"	        cite	            cite
   "CÍTE"	        cite	            cite_1
   "Cite"	        cite	            cite_2

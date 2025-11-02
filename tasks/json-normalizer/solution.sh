@@ -7,10 +7,6 @@
 
 set -euo pipefail
 
-INPUT_PATH="/app/data/input.json"
-OUTPUT_PATH="/app/data/output.json"
-KEYMAP_PATH="/app/data/key_map.json"
-
 python3 - << 'EOF'
 import json, re, unicodedata
 
