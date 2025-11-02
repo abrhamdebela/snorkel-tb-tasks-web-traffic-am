@@ -6,137 +6,108 @@
 # The instructions will include references to the relevant resources necessary for task completion, rules and additional constraints, and a description of the success criteria.
 # This will also contain task metadata that is not available to the agent at runtime.
 instruction: |-
+
   You are given a JSON file at /app/data/input.json.
 
-  Produce /app/data/output.json which is the same structure and values as input.json
-  but with every object key normalized using the exact algorithm below.
-  Also produce /app/data/key_map.json mapping each original key string to the final normalized key.
+  Produce /app/data/output.json, which has the same structure and values as input.json,
+  but with every object key normalized using the deterministic algorithm below.
 
-  Normalization algorithm (MUST be followed exactly, deterministic):
-    1. Base normalization
-    For each original input key (in the order they appear in the input object):
-      - Lowercase it.
-      - Convert any sequence of non-alphanumeric characters (anything other than
-        [A-Za-z0-9]) into a single underscore "_".
-      - Strip leading/trailing underscores.
-      - Apply any Unicode folding/diacritic removal (for example, "Cité" and "Cíte"
-        and "Cite" must all normalize to the same ASCII base "cite", not three
-        different keys). After folding, repeat the same cleanup: lowercase,
-        non-alnum -> "_", collapse multiple "_", strip leading/trailing "_".
-      - The result is called the normalized base name for that key.
+  Also produce /app/data/key_map.json, mapping each original key string to its final normalized key.
 
-    Example:
-      "Client.City"      → "client_city"
-      "client city"      → "client_city"
-      "client-city!!!"   → "client_city"
-      "Cité"             → "cite"
-      "CÍTE"             → "cite"
-      "  "               → ""      (empty after cleanup)
-      "***"              → ""      (empty after cleanup)
+  Normalization Algorithm (MUST match tests exactly)
 
-    2. Fallback for empty normalized names
-    If the normalized base name is the empty string "":
-      - Use the literal string "key" as the base name.
-      - Treat "key" exactly like any other normalized base name for the purposes of
-        uniqueness and suffix numbering below.
+  The normalization must be fully deterministic and implemented using Python standard library only.
 
-    That means " ", "***", etc. all normalize to the same base "key".
+  For each key string in every object (recursively):
+    1.  Apply Unicode NFKD normalization.
+      This separates combined letters and accents into their base and combining mark forms.
+    2.	Remove all Unicode combining marks.
+      (This strips diacritics so "Cité", "CÍTE", and "Cite" all normalize to "Cite".)
+    3.	Convert to lowercase.
+    4.	Replace any sequence of characters that are not ASCII letters (a–z, A–Z) or digits (0–9) with a single underscore "_".
+      This means punctuation (such as ., !, @, %, /, etc.) and whitespace are all treated the same — each continuous run becomes one underscore.
+    5.	Collapse multiple underscores again and strip leading/trailing underscores.
+    6.	If the resulting string is empty, use "key" as the normalized base name.
 
-    3. Per-base-name counters
-    You MUST keep a running counter for each normalized base name separately.
 
-    For each input key in order:
-      - Let BASE = the normalized base name after applying the fallback rule
-        (so "" becomes "key").
-      - Check how many times we've seen BASE before.
+  Examples
 
-      • If this is the FIRST time we've seen BASE:
-          - The final output key is BASE with NO suffix.
-            (e.g. first "client_city" → "client_city")
-          - Record that BASE has now been used once.
+  Original Key	    Normalized Base
+  "Client.City"	    client_city
+  "client city"	    client_city
+  "client-city!!!"	client_city
+  "Cité"	          cite
+  "CÍTE"	          cite
+  "***"	(empty → fallback) → key
+  "   "	(empty → fallback) → key
 
-      • If we've seen BASE N times already (N ≥ 1):
-          - The final output key is BASE + "_" + (N).
-            (second time → suffix "_1", third time → "_2", etc.)
-          - Then increment the counter.
 
-    So suffix numbering starts at "_1" for the SECOND occurrence of a base name.
-    The very first occurrence never gets a suffix.
+  Collision Handling (Per Object)
 
-    This applies to ALL base names, including the fallback "key".
+  You must ensure that normalized keys are unique within each object.
 
-    4. This counter is per-base
-    Collisions only compete within the same BASE string. Different BASE values
-    ("client_city" vs "zip" vs "key" vs "cite") have independent counters.
+  Keep a per-object counter of how many times each base name appears.
 
-    5. Full examples
+  For each original key (in order):
+    -	Let BASE = normalized base name (after fallback rule).
+    -	If BASE has not been seen before:
+    -	Final key = BASE
+    -	If BASE has been seen N times before:
+    -	Final key = BASE + "_" + N
+      (so second occurrence → _1, third → _2, etc.)
+    -	Increment the counter for BASE.
 
-    Example A: repeated normal keys
-    Input keys in order:
-      "Client.City", "client city", "Zip", "client-city"
-    Normalized bases in order (after folding):
-      "client_city", "client_city", "zip", "client_city"
-    Final output keys MUST be:
-      "client_city", "client_city_1", "zip", "client_city_2"
+  This applies to all keys, including "key".
 
-    Explanation:
-      - "client_city" first time → "client_city"
-      - "client_city" second time → "client_city_1"
-      - "zip" first time → "zip"
-      - "client_city" third time → "client_city_2"
 
-    Example B: empty / garbage keys
-    Input keys in order:
-      " ", "***", "   ", "Name"
-    Normalized bases before fallback:
-      "", "", "", "name"
-    After fallback:
-      "key", "key", "key", "name"
-    Final output keys MUST be:
-      "key", "key_1", "key_2", "name"
+  Examples
 
-    Explanation:
-      - All whitespace / punctuation-only keys normalize to "" → fallback "key".
-      - First "key" → "key"
-      - Second "key" → "key_1"
-      - Third "key" → "key_2"
-      - First "name" → "name"
+  Example A: Repeated Normal Keys
 
-    Example C: Unicode / diacritics
-    Input keys in order:
-      "Cité", "CÍTE", "Cite", "cité", "Zip"
-    All of these forms normalize (after diacritic removal + cleanup) to "cite",
-    and "Zip" normalizes to "zip".
-    So normalized bases become:
-      "cite", "cite", "cite", "cite", "zip"
-    Final output keys MUST be:
-      "cite", "cite_1", "cite_2", "cite_3", "zip"
+  Original Keys	  Normalized Bases	  Final Output Keys
+  Client.City	    clientcity	        client_city
+  client city	    client_city	        client_city_1
+  Zip	            zip	                zip
+  client-city	    client_city	        client_city_2
 
-    Notes:
-      - "cite" first time → "cite"
-      - "cite" second time → "cite_1"
-      - "cite" third time → "cite_2"
-      - "cite" fourth time → "cite_3"
-      - "zip" first time → "zip"
+  Example B: Empty / Garbage Keys
 
-    6. Summary rule
-    - First occurrence of a (possibly folded) normalized base name → no suffix.
-    - Second occurrence of the same normalized base name → "_1".
-    - Third → "_2".
-    - Fourth → "_3".
-    - This applies equally to ordinary keys ("client_city"), fallback keys ("key"),
-      and keys merged by Unicode folding ("cite").
-    7. Preserve the iteration order of keys within each object when producing the output object.
+  Original Keys	  Normalized Bases	After Fallback	Final Keys
+  " "	            ""	              key	            key
+  "***"	          ""	              key	            key_1
+  "   "	          ""	              key	            key_2
+  "Name"	        name	            name	          name
 
-  Additional required outputs:
-    - /app/data/key_map.json : JSON object where each key is the original key (exact string)
-      and the value is the final normalized key assigned to it.
+  Example C: Unicode / Diacritics
 
-  Rules:
-    - You MUST NOT modify /app/data/input.json. The evaluator will verify that `/app/data/input.json` is byte-for-byte identical to the canonical file via a cryptographic hash.
-    - You MUST preserve values, list order, and overall structure.
-    - Use only Python standard library in your solution.
-    - The tests are strict: they require the exact normalization algorithm and deterministic collision resolution.
+  Original Keys	  Normalized Base	  Final Keys
+  "Cité"	        cite	            cite
+  "CÍTE"	        cite	            cite_1
+  "Cite"	        cite	            cite_2
+  "cité"	        cite	            cite_3
+  "Zip"	          zip	              zip
+
+  Additional Requirements
+    Preserve:
+    -	All values and data types.
+    -	The order of keys within each object.
+    -	The order of elements in lists.
+    -	The structure of /app/data/output.json must be identical to input.json, except for normalized key names.
+    -	/app/data/key_map.json must be a JSON object mapping:
+      {
+        "<original key>": "<final normalized key>",
+        ...
+      }
+
+      It must contain every original key string from the entire input tree.
+
+
+  Constraints
+    -	You MUST NOT modify /app/data/input.json.
+  The evaluator will check it byte-for-byte against a canonical hash.
+    -	Use only the Python standard library.
+    -	The normalization and collision logic must be fully deterministic.
+
 
 author_name: Akzhol Imangaliyev
 author_email: akzhol.im@gmail.com

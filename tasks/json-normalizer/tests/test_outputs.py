@@ -73,9 +73,7 @@ def _normalize_key_pipeline(orig: str) -> str:
     s = unicodedata.normalize("NFKD", orig)
     s = "".join(ch for ch in s if not unicodedata.category(ch).startswith("M"))
     s = s.lower()
-    s = re.sub(r"[ \-]+", "_", s)
-    s = re.sub(r"_+", "_", s)
-    s = re.sub(r"[^a-z0-9_]", "", s)
+    s = re.sub(r"[^a-z0-9]+", "_", s)
     s = re.sub(r"_+", "_", s).strip("_")
     if s == "":
         s = "key"
