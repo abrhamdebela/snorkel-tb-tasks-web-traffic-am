@@ -31,24 +31,39 @@ instruction: |-
   2. Parser Implementation
      - Create a Parser class that accepts a list of tokens
      - Implement recursive descent parsing to build an Abstract Syntax Tree (AST)
-     - Define AST node classes: Program, Section, Assignment, Comment, StringValue,
-       NumberValue, BooleanValue, ListValue
-     - Each AST node must include line and column information
+     - Define AST node classes with these attributes:
+       * Program: statements (list), line (int), column (int)
+       * Section: name (string), statements (list), line (int), column (int)
+       * Assignment: name (string), value (Value node), line (int), column (int)
+       * Comment: text (string), line (int), column (int)
+       * StringValue: value (string), line (int), column (int)
+       * NumberValue: value (int or float), line (int), column (int)
+       * BooleanValue: value (bool), line (int), column (int)
+       * ListValue: values (list of Value nodes), line (int), column (int)
      - The parser must handle nested sections recursively
      - Raise SyntaxError for invalid syntax with clear error messages
 
   3. Linting Rules
-     - Create a base LintRule class with a check() method
+     - Create a base LintRule class with a check() method that takes (node, context) parameters
+     - Create a LintError class with these attributes: rule (string), message (string),
+       line (int), column (int), severity (string, default "error")
      - Implement these specific rule classes (all must be importable):
-       * NoEmptySections - detects sections with no statements (excluding comments)
-       * NamingConventionRule - enforces snake_case for identifiers
-       * NoDuplicateKeysRule - prevents duplicate keys within the same scope
-       * NoMagicNumbersRule - warns about numeric literals (except 0, 1, -1)
-       * RequiredSectionsRule - ensures specified sections exist
-       * StringQuoteConsistencyRule - detects empty or whitespace-only strings
-       * MaxListLengthRule - enforces maximum list length
-     - Each rule must return a list of LintError objects with line, column, message,
-       rule name, and severity (error or warning)
+       * NoEmptySections - rule="no-empty-sections", detects Section nodes where the
+         statements list contains no Assignment nodes (comments don't count as content)
+       * NamingConventionRule - rule="naming-convention", checks Section.name and
+         Assignment.name fields match snake_case pattern (lowercase with underscores)
+       * NoDuplicateKeysRule - rule="no-duplicate-keys", tracks Assignment.name values
+         within same scope, reports duplicates with line/column from second occurrence
+       * NoMagicNumbersRule - rule="no-magic-numbers", detects NumberValue nodes with
+         values other than 0, 1, or -1, returns severity="warning"
+       * RequiredSectionsRule - rule="required-sections", accepts required_sections list
+         in constructor, checks Program.statements for Section nodes with matching names
+       * StringQuoteConsistencyRule - rule="string-quote-consistency", detects StringValue
+         nodes where value.strip() returns empty string
+       * MaxListLengthRule - rule="max-list-length", accepts max_length parameter
+         (default 10), checks ListValue.values list length
+     - Each rule's check() method must return a list of LintError objects
+     - Use node.line and node.column for error positions
 
   4. Linter Engine
      - Create a Linter class that accepts a list of rules

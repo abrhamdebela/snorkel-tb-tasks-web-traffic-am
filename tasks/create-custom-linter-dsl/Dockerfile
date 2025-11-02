@@ -10,8 +10,4 @@ FROM ghcr.io/laude-institute/t-bench/python-3-13:20250620
 # View the list of available base images here:
 # https://github.com/laude-institute/terminal-bench/packages
 
-# Install Python runtime dependencies
-RUN pip install --no-cache-dir \
-    pytest==8.3.4
-
 WORKDIR /app
