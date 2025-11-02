@@ -47,13 +47,14 @@ instruction: |-
   We assign unique final keys within each object using a per-base counter.
   This logic applies equally to all base names, including the fallback "key". "key" is not special.
 
-  For each key in that object, in input order:
-    1.	Compute BASE (normalized + fallback).
-    2.	Let N = seen.get(BASE, 0).
-    3.	If N == 0: FINAL = BASE.
-      Else: FINAL = f"{BASE}_{N}".
-    4.	Set seen[BASE] = N + 1.
-    5.	Use FINAL as the output key.
+  For each original key in the object, in order:
+    1.	Compute BASE by normalizing the key string and applying fallback ("" → "key").
+    2.	Look up how many times BASE has already been used as a final key earlier in this same object.
+        Call that number N. If BASE has not appeared yet, N = 0.
+    3.	If N == 0, the final key for this occurrence is BASE.
+        Otherwise (N >= 1), the final key for this occurrence is BASE + "_" + N.
+        (So the 2nd time we see BASE, we emit BASE_1. The 3rd time, BASE_2. The 4th time, BASE_3.)
+    4.	After assigning the final key, increment the stored count for BASE to N + 1.
 
   Example with only empty / whitespace / punctuation keys:
     -	Original keys: " ", "***", "   "
@@ -68,7 +69,8 @@ instruction: |-
   The first one becomes "client_city", the second "client_city_1", the third "client_city_2", in the order they appear in the object in the input.
 
   Collision counters are maintained independently for each object.
-  That is, for each JSON object, start with an empty dictionary seen = {}. Do not reuse seen across objects. Lists do not have counters; only dicts do.
+  That is, for each JSON object, start with an empty dictionary seen = {} and counter = 0. 
+  Do not reuse seen across objects. Lists do not have counters; only dicts do.
   
 
   For example, this input:
