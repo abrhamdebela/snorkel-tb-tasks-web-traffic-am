@@ -658,3 +658,150 @@ class Linter:
                 self._traverse(value, context)
 EOF
 
+# Create examples directory
+mkdir -p examples
+
+# Create valid_config.conf - demonstrates proper usage with no errors
+cat > examples/valid_config.conf << 'EOF'
+# Valid application configuration
+
+section database {
+    host = "localhost"
+    use_ssl = true
+    auto_reconnect = false
+    connection_timeout = 0
+}
+
+section logging {
+    level = "info"
+    output_format = "json"
+    log_rotation = true
+    verbose = false
+}
+
+section cache {
+    backend = "redis"
+    enabled = true
+    compression = false
+}
+EOF
+
+# Create style_issues.conf - has warnings only (magic numbers, empty strings)
+cat > examples/style_issues.conf << 'EOF'
+# Configuration with style issues (warnings only)
+
+section database {
+    host = "localhost"
+    port = 8080
+    timeout = 5000
+    retry_count = 42
+}
+
+section api {
+    endpoint = ""
+    rate_limit = 999
+}
+EOF
+
+# Create critical_errors.conf - has multiple error types
+cat > examples/critical_errors.conf << 'EOF'
+# Configuration with critical errors
+
+section EmptySection {
+}
+
+section database {
+    Host = "localhost"
+    port = 5432
+    Host = "127.0.0.1"
+}
+
+section AnotherBadName {
+    CamelCase = "value"
+}
+EOF
+
+# Create validation script
+cat > validate_examples.py << 'EOF'
+#!/usr/bin/env python3
+"""Validation script for ConfigLang linter examples"""
+
+from dsl_linter import (
+    Lexer, Parser, Linter,
+    NoEmptySections, NamingConventionRule, NoDuplicateKeysRule,
+    NoMagicNumbersRule, StringQuoteConsistencyRule
+)
+
+def validate_file(filepath, expected_errors, expected_warnings):
+    """Validate a config file and check error/warning counts"""
+    print(f"\nValidating {filepath}...")
+
+    with open(filepath, 'r') as f:
+        source = f.read()
+
+    # Tokenize and parse
+    lexer = Lexer(source)
+    tokens = lexer.tokenize()
+    parser = Parser(tokens)
+    ast = parser.parse()
+
+    # Run linter with all rules
+    rules = [
+        NoEmptySections(),
+        NamingConventionRule(),
+        NoDuplicateKeysRule(),
+        NoMagicNumbersRule(),
+        StringQuoteConsistencyRule()
+    ]
+    linter = Linter(rules)
+    errors = linter.lint(ast)
+
+    # Separate errors and warnings
+    actual_errors = [e for e in errors if e.severity == "error"]
+    actual_warnings = [e for e in errors if e.severity == "warning"]
+
+    print(f"  Found {len(actual_errors)} errors, {len(actual_warnings)} warnings")
+
+    # Report all issues
+    for error in errors:
+        severity_marker = "ERROR" if error.severity == "error" else "WARNING"
+        print(f"  [{severity_marker}] Line {error.line}:{error.column} - {error.rule}: {error.message}")
+
+    # Check expectations
+    success = True
+    if expected_errors != len(actual_errors):
+        print(f"  FAIL: Expected {expected_errors} errors, got {len(actual_errors)}")
+        success = False
+    if expected_warnings != len(actual_warnings):
+        print(f"  FAIL: Expected {expected_warnings} warnings, got {len(actual_warnings)}")
+        success = False
+
+    if success:
+        print(f"  PASS: Validation successful")
+
+    return success
+
+def main():
+    print("ConfigLang Linter Validation")
+    print("=" * 50)
+
+    results = []
+
+    # Validate each example file
+    results.append(validate_file("examples/valid_config.conf", expected_errors=0, expected_warnings=0))
+    results.append(validate_file("examples/style_issues.conf", expected_errors=0, expected_warnings=5))
+    results.append(validate_file("examples/critical_errors.conf", expected_errors=5, expected_warnings=0))
+
+    print("\n" + "=" * 50)
+    if all(results):
+        print("All validations PASSED")
+        return 0
+    else:
+        print("Some validations FAILED")
+        return 1
+
+if __name__ == "__main__":
+    exit(main())
+EOF
+
+chmod +x validate_examples.py

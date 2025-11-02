@@ -26,11 +26,7 @@ instruction: |-
      - Define a TokenType enum with these token types: IDENTIFIER, STRING, NUMBER, TRUE,
        FALSE, SECTION, EQUALS, LBRACE, RBRACE, LBRACKET, RBRACKET, COMMA, COMMENT, NEWLINE, EOF
      - Create a Token class with these attributes: type (TokenType), value (string), line (int), column (int)
-     - The lexer must correctly handle all grammar elements including:
-       * Negative numbers (e.g., -1, -42, -3.14)
-       * Comment tokens should include all text after # up to (but not including) the newline
-       * String tokens should contain the string content without the surrounding quotes
-       * Number tokens should be stored as strings in the token value
+     - The lexer must correctly handle all grammar elements including negative numbers
 
   2. Parser Implementation
      - Create a Parser class that accepts a list of tokens
@@ -52,20 +48,18 @@ instruction: |-
      - Create a LintError class with these attributes: rule (string), message (string),
        line (int), column (int), severity (string, default "error")
      - Implement these specific rule classes (all must be importable):
-       * NoEmptySections - rule="no-empty-sections", detects Section nodes where the
-         statements list contains no Assignment nodes (comments don't count as content)
-       * NamingConventionRule - rule="naming-convention", checks Section.name and
-         Assignment.name fields match snake_case pattern (lowercase with underscores)
-       * NoDuplicateKeysRule - rule="no-duplicate-keys", tracks Assignment.name values
-         within same scope, reports duplicates with line/column from second occurrence
-       * NoMagicNumbersRule - rule="no-magic-numbers", detects NumberValue nodes with
-         values other than 0, 1, or -1, returns severity="warning"
-       * RequiredSectionsRule - rule="required-sections", accepts required_sections list
-         in constructor, checks Program.statements for Section nodes with matching names
-       * StringQuoteConsistencyRule - rule="string-quote-consistency", detects StringValue
-         nodes where value.strip() returns empty string
-       * MaxListLengthRule - rule="max-list-length", accepts max_length parameter
-         (default 10), checks ListValue.values list length
+       * NoEmptySections - rule="no-empty-sections", detects sections with no assignments
+       * NamingConventionRule - rule="naming-convention", checks identifiers follow snake_case
+       * NoDuplicateKeysRule - rule="no-duplicate-keys", detects duplicate assignment names
+         within the same scope (sections create separate scopes)
+       * NoMagicNumbersRule - rule="no-magic-numbers", detects numeric literals except 0, 1, -1,
+         returns severity="warning"
+       * RequiredSectionsRule - rule="required-sections", accepts required_sections list,
+         checks all required sections are present
+       * StringQuoteConsistencyRule - rule="string-quote-consistency", detects empty or
+         whitespace-only strings
+       * MaxListLengthRule - rule="max-list-length", accepts max_length parameter (default 10),
+         checks list length
      - Each rule's check() method must return a list of LintError objects
      - Use node.line and node.column for error positions
 
@@ -76,11 +70,25 @@ instruction: |-
      - Return errors sorted by line number, then column number
      - Ensure all rules are applied to appropriate node types
 
+  5. Practical Validation
+     - Create three example ConfigLang files to validate your linter implementation:
+       * `examples/valid_config.conf` - A valid configuration demonstrating proper usage
+       * `examples/style_issues.conf` - Configuration with style violations (warnings only)
+       * `examples/critical_errors.conf` - Configuration with errors that should be caught
+     - Write a validation script `validate_examples.py` that:
+       * Loads each example file
+       * Runs the linter with appropriate rules
+       * Reports the results for each file
+       * For valid_config.conf: should produce no errors
+       * For style_issues.conf: should produce only warnings (no errors)
+       * For critical_errors.conf: should produce at least 3 different types of errors
+
   Technical Requirements:
   - All classes must be importable from dsl_linter module
   - Tokens and AST nodes must track accurate line/column positions
-  - Error messages must be clear and actionable, describing the specific problem found
-    (e.g., for NoEmptySections, the message should indicate that a section is empty)
+  - Error messages must be clear and actionable
+  - Example files must demonstrate real-world usage patterns
+  - Validation script must clearly report success/failure for each example
 
 author_name: David Gene Householter
 author_email: householter.david@gmail.com
