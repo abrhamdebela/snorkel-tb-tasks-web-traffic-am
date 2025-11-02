@@ -48,7 +48,9 @@ instruction: |-
      - Create a LintError class with these attributes: rule (string), message (string),
        line (int), column (int), severity (string, default "error")
      - Implement these specific rule classes (all must be importable):
-       * NoEmptySections - rule="no-empty-sections", detects sections with no assignments
+       * NoEmptySections - rule="no-empty-sections", detects sections with no direct assignments
+         (sections containing only nested sections or comments should be flagged as empty),
+         error message must include the word "empty"
        * NamingConventionRule - rule="naming-convention", checks identifiers follow snake_case
        * NoDuplicateKeysRule - rule="no-duplicate-keys", detects duplicate assignment names
          within the same scope (sections create separate scopes)
@@ -60,6 +62,32 @@ instruction: |-
          whitespace-only strings
        * MaxListLengthRule - rule="max-list-length", accepts max_length parameter (default 10),
          checks list length
+       * TypeConsistencyRule - rule="type-consistency", detects when the same key name is
+         assigned different value types in different sections (e.g., port=5432 in one section
+         and port="8080" in another). Must track all assignments across the entire AST.
+       * CircularDependencyRule - rule="circular-dependency", detects circular references
+         between sections. A section references another if it has a key ending in "_section"
+         whose string value matches another section name. Must detect cycles of any length.
+       * DepthLimitRule - rule="depth-limit", accepts max_depth parameter (default 3),
+         limits maximum nesting depth of sections (top-level sections are depth 1)
+       * UnusedSectionRule - rule="unused-section", detects sections that are never
+         referenced by any "_section" key in the entire configuration, returns severity="warning"
+       * ValueRangeRule - rule="value-range", validates numeric values based on key name
+         patterns: keys containing "port" must be 1-65535, keys containing "timeout" must be
+         non-negative, keys containing "percentage" or "percent" must be 0-100
+       * RequiredKeysInSectionRule - rule="required-keys-in-section", accepts
+         section_requirements dict mapping section names to lists of required key names,
+         validates that specified sections contain all required keys
+       * MutuallyExclusiveKeysRule - rule="mutually-exclusive-keys", accepts exclusive_pairs
+         list of tuples, detects when both keys from any pair exist in the same section
+       * ConditionalRequiredKeysRule - rule="conditional-required-keys", accepts dependencies
+         dict mapping key names to lists of required keys, validates that if a key exists,
+         all its dependent keys must also exist in the same section
+       * ListElementTypeConsistencyRule - rule="list-element-type-consistency", detects lists
+         containing mixed value types (all elements must be same type: all strings, all numbers,
+         all booleans, or all lists)
+       * KeyOrderingRule - rule="key-ordering", validates that assignment keys within each
+         section appear in alphabetical order, returns severity="warning"
      - Each rule's check() method must return a list of LintError objects
      - Use node.line and node.column for error positions
 
@@ -71,12 +99,12 @@ instruction: |-
      - Ensure all rules are applied to appropriate node types
 
   5. Practical Validation
-     - Create three example ConfigLang files to validate your linter implementation:
-       * `examples/valid_config.conf` - A valid configuration demonstrating proper usage
-       * `examples/style_issues.conf` - Configuration with style violations (warnings only)
-       * `examples/critical_errors.conf` - Configuration with errors that should be caught
+     - Create three example ConfigLang files in `/app/examples/` directory:
+       * `valid_config.conf` - A valid configuration demonstrating proper usage
+       * `style_issues.conf` - Configuration with style violations (warnings only)
+       * `critical_errors.conf` - Configuration with errors that should be caught
      - Write a validation script `validate_examples.py` that:
-       * Loads each example file
+       * Loads each example file using absolute paths (`/app/examples/...`)
        * Runs the linter with appropriate rules
        * Reports the results for each file
        * For valid_config.conf: should produce no errors
@@ -106,5 +134,5 @@ parser_name: pytest
 max_agent_timeout_sec: 1200.0
 max_test_timeout_sec: 300.0
 run_tests_in_same_shell: false
-expert_time_estimate_min: 120
-junior_time_estimate_min: 480
+expert_time_estimate_min: 240
+junior_time_estimate_min: 960
