@@ -6,82 +6,75 @@
 # The instructions will include references to the relevant resources necessary for task completion, rules and additional constraints, and a description of the success criteria.
 # This will also contain task metadata that is not available to the agent at runtime.
 instruction: |-
-  # Advanced JWT Algorithm Confusion + Multi-Stage Exploitation
+  You are presented with a web API exploitation challenge involving JWT authentication with critical vulnerabilities.
   
-  A FastAPI web service uses JWT authentication with RSA (RS256) signing. However, the implementation contains multiple critical vulnerabilities that must be chained together to successfully exploit the system. This challenge requires deep understanding of JWT internals, cryptographic attacks, and creative problem-solving.
+  ## Challenge Overview
   
-  ## Your Task
+  A FastAPI web service uses JWT authentication with RSA (RS256) signing. However, the implementation contains critical vulnerabilities that can be exploited to gain unauthorized access to protected resources.
   
-  The FastAPI web service running at http://localhost:8000 has multiple interconnected JWT vulnerabilities. Your goal is to chain these vulnerabilities together to access the admin endpoint and retrieve the flag.
+  ## Vulnerability Analysis Required
   
-  ## What You Need to Do
+  The FastAPI application at http://localhost:8000 has multiple interconnected JWT vulnerabilities. You should:
+  - Analyze each endpoint's authentication mechanism carefully
+  - Test for common JWT vulnerability classes
+  - Examine how tokens are verified and processed
+  - Identify the cryptographic weaknesses in the implementation
   
-  1. Start the vulnerable application at `/app/app.py`
-  2. Perform reconnaissance to understand the multi-layered authentication mechanism
-  3. Identify and exploit multiple JWT vulnerabilities in sequence
-  4. Bypass rate limiting and additional security controls
-  5. Access the admin endpoint to retrieve the flag
-  6. Save the flag to `/app/flag.txt`
+  Note: The application has multiple security mechanisms that appear to protect it. Understanding these protections and how to bypass them will be crucial to successfully exploiting any vulnerabilities you discover.
+  
+  ## Your Objective
+  
+  Successfully exploit the JWT vulnerabilities to access the protected admin endpoint and retrieve the flag.
+  
+  You will need to:
+  1. Identify exploitable JWT vulnerabilities through analysis and testing
+  2. Develop techniques to bypass the authentication mechanisms
+  3. Construct a working exploit that reliably achieves privilege escalation
+  4. Capture the flag as proof of successful exploitation
+  
+  ## Success Criteria
+  
+  You must create a file `/app/flag.txt` that contains the exact contents of the flag retrieved from the admin endpoint.
+  
+  ## Important Information
+  
+  - Application location: http://localhost:8000
+  - Target: Retrieve the flag from the `/admin/flag` endpoint
+  - Success indicator: Create `/app/flag.txt` containing the flag
+  - The application has all standard JWT libraries available
+  
+  ## General Approach
+  
+  - Start by analyzing the available endpoints and their authentication requirements
+  - Modern JWT exploitation often requires algorithm confusion or key extraction
+  - Public keys are typically discoverable through standard endpoints
+  - Token manipulation may involve cryptographic operations
+  
+  ## Available Tools
+  
+  The environment includes:
+  - Python 3 with requests library
+  - JWT library (PyJWT)
+  - Cryptography library
+  - Standard utilities (curl, etc.)
   
   ## Available Endpoints
   
   - `/health` - Health check endpoint
-  - `/auth/login` - User authentication (requires username/password, returns JWT)
-  - `/auth/public-key` - Returns the RSA public key (rate limited to 3 requests per minute)
-  - `/auth/jwks` - Returns JWKS endpoint with key information (obfuscated)
-  - `/user/profile` - Protected user endpoint (requires valid user JWT)
-  - `/admin/flag` - Protected admin endpoint that returns the flag (requires valid admin JWT with specific claims)
+  - `/auth/login` - User authentication endpoint
+  - `/auth/public-key` - Returns the RSA public key in multiple formats
+  - `/user/profile` - Protected user endpoint
+  - `/admin/flag` - Protected admin endpoint that returns the flag
   
-  ## Challenges & Obstacles
+  ## Getting Started
   
-  1. **Key Extraction Complexity**: The public key endpoint is rate-limited and returns the key in an unconventional format that requires processing
+  1. First, analyze the application to understand its structure and endpoints
+  2. Identify and test the JWT authentication mechanism
+  3. Look for common vulnerabilities (algorithm confusion, key leakage, etc.)
+  4. Develop your exploitation technique
+  5. Test your exploit and capture the flag
   
-  2. **Algorithm Confusion Defense**: Simple HS256 algorithm confusion is blocked - the system validates key types and requires additional claim manipulation
-  
-  3. **Multi-Factor Claims**: The admin endpoint requires:
-     - Correct algorithm bypass
-     - `role: admin` claim
-     - Valid `iat` (issued at) timestamp within last 60 seconds
-     - Correct `iss` (issuer) claim
-     - `jti` (JWT ID) that hasn't been used before (anti-replay)
-  
-  4. **Dynamic Secret**: The HMAC secret (for algorithm confusion) is derived from the public key in a non-obvious way - you must reverse engineer the derivation
-  
-  5. **Token Validation Layers**: Multiple validation checks exist:
-     - Algorithm whitelist bypass required
-     - Claim structure validation
-     - Timestamp verification with tight windows
-     - Custom signature verification logic
-  
-  6. **Obfuscated Response**: The flag endpoint returns data that requires additional decoding/processing
-  
-  ## Success Criteria
-  
-  - Successfully chain all vulnerability stages together
-  - Bypass all authentication and validation mechanisms
-  - Extract the flag from the admin endpoint
-  - Save the flag to `/app/flag.txt`
-  - The file should contain only the flag value (format: `FLAG{...}`)
-  - No additional text or JSON formatting should be included
-  
-  ## Hints (For Extreme Difficulty)
-  
-  - The vulnerability chain requires 4-5 distinct exploitation stages
-  - You'll need to craft custom JWT tokens with precise timing
-  - Standard JWT libraries may need to be used in non-standard ways
-  - The HMAC secret derivation involves cryptographic operations on the public key
-  - Consider how different JWT libraries handle algorithm specification
-  - The `kid` (Key ID) parameter in the JWT header may be significant
-  - Race conditions or timing attacks may be necessary for some stages
-  
-  ## Additional Constraints
-  
-  - No source code access to `/app/app.py` before exploitation (black-box initially)
-  - Rate limiting on critical endpoints
-  - Anti-automation protections (simple scripting may be blocked)
-  - Logging and monitoring that detects obvious attack patterns
-  
-  The application listens on http://localhost:8000
+  Good luck, and remember: with great power comes great responsibility. This is an educational challenge - use these skills ethically!
 
 author_name: Imonikhe Aikoroje
 author_email: imos@aikoroje.com
