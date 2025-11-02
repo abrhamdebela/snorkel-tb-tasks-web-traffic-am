@@ -20,12 +20,11 @@ def test_flag_file_exists():
     assert flag_path.exists(), "Flag file /app/flag.txt does not exist"
 
 
-def test_flag_content_is_string():
-    """Test that the flag file contains a string."""
+def test_flag_content_is_not_empty():
+    """Test that flag file exists and contains content."""
     flag_path = Path("/app/flag.txt")
     flag_content = flag_path.read_text().strip()
     assert len(flag_content) > 0, "Flag file is empty"
-    assert isinstance(flag_content, str), "Flag content is not a string"
 
 
 def test_flag_starts_with_flag():
@@ -33,7 +32,7 @@ def test_flag_starts_with_flag():
     flag_path = Path("/app/flag.txt")
     flag_content = flag_path.read_text().strip()
     assert flag_content.startswith("FLAG{"), (
-        f"Flag does not start with FLAG{{ prefix. Got: {flag_content[:20]}"
+        f"Flag does not start with FLAG{{ prefix. Got: {flag_content}"
     )
 
 
@@ -42,7 +41,7 @@ def test_flag_ends_with_brace():
     flag_path = Path("/app/flag.txt")
     flag_content = flag_path.read_text().strip()
     assert flag_content.endswith("}"), (
-        f"Flag does not end with }}. Got: {flag_content[-20:]}"
+        f"Flag does not end with }}. Got: {flag_content}"
     )
 
 
