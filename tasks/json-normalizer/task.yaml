@@ -42,28 +42,31 @@ instruction: |-
   "   "	(empty → fallback) → key
 
 
-  Collision Handling (Per Object)
+  Collision resolution (must be followed exactly)
 
-  You must ensure that normalized keys are unique within each object.
-
-  Keep a per-object counter of how many times each base name appears.
+  We assign unique final keys within each object using a per-base counter.
+  This logic applies equally to all base names, including the fallback "key". "key" is not special.
 
   For each original key in the object, in order:
+    1.	Compute BASE by normalizing the key string and applying fallback ("" → "key").
+    2.	Look up how many times BASE has already been used as a final key earlier in this same object.
+  Call that number N. If BASE has not appeared yet, N = 0.
+    3.	If N == 0, the final key for this occurrence is BASE.
+  Otherwise (N >= 1), the final key for this occurrence is BASE + "_" + N.
+  (So the 2nd time we see BASE, we emit BASE_1. The 3rd time, BASE_2. The 4th time, BASE_3.)
+    4.	After assigning the final key, increment the stored count for BASE to N + 1.
 
-  1. Compute BASE by normalizing the key and applying fallback
-    (so "" becomes "key").
+  Example with only empty / whitespace / punctuation keys:
+    -	Original keys: " ", "***", "   "
+    -	All normalize (after cleanup + fallback) to BASE = "key"
+    -	Step through:
+    -	First "key": N = 0 → final "key", then count becomes 1
+    -	Second "key": N = 1 → final "key_1", then count becomes 2
+    -	Third "key": N = 2 → final "key_2", then count becomes 3
 
-  2. Look up BASE in a per-object counter dictionary.
-    Let N = counter[BASE] if it exists, otherwise N = 0.
-
-  3. If N == 0:
-      The final key for this occurrence is BASE.
-    Else:
-      The final key for this occurrence is BASE + "_" + N.
-      (So the second occurrence gets suffix "_1", the third gets "_2", etc.)
-
-  4. After assigning the final key, increment the counter for BASE:
-      counter[BASE] = N + 1
+  The same logic applies to non-fallback names:
+    -	"Client.City", "client city", "Clïënt-Cítÿ" may all normalize to the same base (e.g. "client_city").
+  The first one becomes "client_city", the second "client_city_1", the third "client_city_2", in the order they appear in the object in the input.
 
 
   Examples
