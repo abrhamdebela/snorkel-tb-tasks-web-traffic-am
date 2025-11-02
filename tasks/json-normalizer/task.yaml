@@ -48,18 +48,22 @@ instruction: |-
 
   Keep a per-object counter of how many times each base name appears.
 
-  For each original key (in order):
-    1. Compute BASE = normalized base name (after fallback: "" → "key").
-    2. Look up how many times we've already assigned a key starting with this BASE.
-      Let that count be N (default is 0 if we've never seen BASE before).
-    3. If N == 0:
-        Final key = BASE (first occurrence → no suffix)
-      Else:
-        Final key = BASE + "_" + N
-        (So second occurrence → BASE_1, third → BASE_2, etc.)
-    4. Increment the stored count for BASE by 1.
+  For each original key in the object, in order:
 
-  The above algorithm (steps 1-4) applies to all keys, including "key".
+  1. Compute BASE by normalizing the key and applying fallback
+    (so "" becomes "key").
+
+  2. Look up BASE in a per-object counter dictionary.
+    Let N = counter[BASE] if it exists, otherwise N = 0.
+
+  3. If N == 0:
+      The final key for this occurrence is BASE.
+    Else:
+      The final key for this occurrence is BASE + "_" + N.
+      (So the second occurrence gets suffix "_1", the third gets "_2", etc.)
+
+  4. After assigning the final key, increment the counter for BASE:
+      counter[BASE] = N + 1
 
 
   Examples
@@ -78,7 +82,6 @@ instruction: |-
   " "	            ""	              key	            key
   "***"	          ""	              key	            key_1
   "   "	          ""	              key	            key_2
-  "Name"	        name	            name	          name
 
   Example C: Unicode / Diacritics
 
