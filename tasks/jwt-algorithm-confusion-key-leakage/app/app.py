@@ -13,9 +13,7 @@ This application demonstrates the algorithm confusion attack where:
 from datetime import datetime, timedelta
 import hashlib
 import hmac
-import os
 import time
-import json
 import secrets
 from functools import lru_cache
 from typing import Set, Dict, Tuple
@@ -23,7 +21,7 @@ from collections import defaultdict
 from threading import Lock
 
 import jwt
-from cryptography.hazmat.primitives import serialization, hashes
+from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography.hazmat.backends import default_backend
 from fastapi import FastAPI, Depends, HTTPException, Header, Request
