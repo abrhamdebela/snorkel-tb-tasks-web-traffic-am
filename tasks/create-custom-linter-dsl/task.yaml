@@ -33,8 +33,6 @@ instruction: |-
   2. Parser Implementation
      - Create a Parser class that accepts a list of tokens
      - Implement recursive descent parsing to build an Abstract Syntax Tree (AST)
-     - The parser must filter out COMMENT and NEWLINE tokens - do NOT include them in the AST
-     - Comments are consumed during parsing but not stored in any AST nodes
      - Define AST node classes with these attributes:
        * Program: statements (list), line (int), column (int)
        * Section: name (string), statements (list), line (int), column (int)
@@ -44,8 +42,9 @@ instruction: |-
        * NumberValue: value (int or float), line (int), column (int)
        * BooleanValue: value (bool), line (int), column (int)
        * ListValue: values (list of Value nodes), line (int), column (int)
-     - All AST node classes must be hashable (use @dataclass(frozen=True) or implement __hash__)
-     - Hashability is required for nodes to be used as dictionary keys in some linting rules
+     - All AST node classes should be implemented using @dataclass(frozen=True) to make them
+       immutable and hashable (this enables nodes to be used as dictionary keys in linting rules
+       if needed, and follows best practices for AST node design)
      - The parser must handle nested sections recursively
      - Nested sections example: `section outer { section inner { x = 1 } }` produces:
        Program(statements=[Section("outer", statements=[Section("inner", statements=[Assignment("x", NumberValue(1))])])])
