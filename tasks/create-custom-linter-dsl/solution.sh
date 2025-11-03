@@ -102,6 +102,8 @@ class Lexer:
 
     def read_string(self) -> str:
         result = ""
+        start_line = self.line
+        start_column = self.column
         self.advance()  # Skip opening quote
         while self.current_char() and self.current_char() != '"':
             if self.current_char() == '\\' and self.peek_char() == '"':
@@ -113,6 +115,8 @@ class Lexer:
                 self.advance()
         if self.current_char() == '"':
             self.advance()  # Skip closing quote
+        else:
+            raise SyntaxError(f"Unterminated string starting at line {start_line}, column {start_column}")
         return result
 
     def read_number(self) -> str:

@@ -234,6 +234,67 @@ class TestLexerImplementation:
         # Last token should be EOF
         assert tokens[-1].type == TokenType.EOF, "Lexer should end with EOF token"
 
+    def test_lexer_handles_unclosed_string(self):
+        """Test that lexer raises error for unclosed strings"""
+        from dsl_linter import Lexer
+        import pytest
+
+        source = '"unclosed string'
+        lexer = Lexer(source)
+
+        # Should raise an error (SyntaxError or similar) for unclosed string
+        with pytest.raises(Exception) as exc_info:
+            lexer.tokenize()
+
+        # Error message should mention string or quote
+        error_msg = str(exc_info.value).lower()
+        assert 'string' in error_msg or 'quote' in error_msg or 'unclosed' in error_msg or 'unterminated' in error_msg, \
+            "Error message should mention unclosed string"
+
+    def test_lexer_handles_invalid_characters(self):
+        """Test that lexer raises error for invalid characters"""
+        from dsl_linter import Lexer
+        import pytest
+
+        # Test with various invalid characters
+        invalid_sources = [
+            'name = @value',  # @ is not valid in ConfigLang
+            'test $ name',    # $ is not valid
+            'value & other',  # & is not valid
+        ]
+
+        for source in invalid_sources:
+            lexer = Lexer(source)
+
+            # Should raise an error for invalid character
+            with pytest.raises(Exception) as exc_info:
+                lexer.tokenize()
+
+            # Error message should mention invalid or unexpected character
+            error_msg = str(exc_info.value).lower()
+            assert 'invalid' in error_msg or 'unexpected' in error_msg or 'character' in error_msg, \
+                f"Error message should mention invalid character for source: {source}"
+
+    def test_lexer_handles_eof_during_whitespace(self):
+        """Test that lexer handles end-of-input during whitespace skipping"""
+        from dsl_linter import Lexer, TokenType
+
+        # Source ending with whitespace
+        source = 'name = "value"   '
+        lexer = Lexer(source)
+        tokens = lexer.tokenize()
+
+        # Should successfully tokenize and end with EOF
+        assert tokens[-1].type == TokenType.EOF, "Lexer should handle EOF after whitespace"
+
+        # Source with only whitespace
+        source = '   \n  \t  '
+        lexer = Lexer(source)
+        tokens = lexer.tokenize()
+
+        # Should return at least EOF token
+        assert any(t.type == TokenType.EOF for t in tokens), "Lexer should handle whitespace-only input"
+
 
 class TestParserImplementation:
     """Test that parser builds correct AST using recursive descent"""

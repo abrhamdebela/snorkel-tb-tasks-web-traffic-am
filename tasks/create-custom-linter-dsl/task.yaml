@@ -27,12 +27,14 @@ instruction: |-
        FALSE, SECTION, EQUALS, LBRACE, RBRACE, LBRACKET, RBRACKET, COMMA, COMMENT, NEWLINE, EOF
      - Create a Token class with these attributes: type (TokenType), value (string), line (int), column (int)
      - The lexer must correctly handle all grammar elements including negative numbers
-     - Must handle edge cases: end-of-input during whitespace skipping, unclosed strings,
-       invalid characters (lexer must be robust and not crash on malformed input)
+     - The lexer must robustly handle edge cases: unclosed strings (raise appropriate error),
+       invalid characters (raise appropriate error), and end-of-input during whitespace skipping
 
   2. Parser Implementation
      - Create a Parser class that accepts a list of tokens
      - Implement recursive descent parsing to build an Abstract Syntax Tree (AST)
+     - The parser must filter out COMMENT and NEWLINE tokens - do NOT include them in the AST
+     - Comments are consumed during parsing but not stored in any AST nodes
      - Define AST node classes with these attributes:
        * Program: statements (list), line (int), column (int)
        * Section: name (string), statements (list), line (int), column (int)
@@ -42,7 +44,11 @@ instruction: |-
        * NumberValue: value (int or float), line (int), column (int)
        * BooleanValue: value (bool), line (int), column (int)
        * ListValue: values (list of Value nodes), line (int), column (int)
+     - All AST node classes must be hashable (use @dataclass(frozen=True) or implement __hash__)
+     - Hashability is required for nodes to be used as dictionary keys in some linting rules
      - The parser must handle nested sections recursively
+     - Nested sections example: `section outer { section inner { x = 1 } }` produces:
+       Program(statements=[Section("outer", statements=[Section("inner", statements=[Assignment("x", NumberValue(1))])])])
      - Raise SyntaxError for invalid syntax with clear error messages
 
   3. Linting Rules
@@ -118,6 +124,8 @@ instruction: |-
      - Write a validation script `/app/validate_examples.py` that:
        * Implements three test classes: ValidateCleanConfig, ValidateStyleWarnings,
          ValidateCriticalErrors (all must be importable)
+       * Each class __init__() takes NO parameters - filepath is set internally
+       * Example: ValidateCleanConfig().__init__() internally sets name and filepath attributes
        * Each class follows semantic testing pattern with exact method signatures:
          - gather_state() -> returns AST (takes no parameters)
          - simulate_logic(ast) -> takes AST parameter, returns dict with keys: 'errors',
@@ -134,6 +142,8 @@ instruction: |-
        * For style_issues.conf: validates exactly 0 errors and exactly 9 warnings (strict check)
        * For critical_errors.conf: validates exactly 16 errors of at least 5 different rule types
          and exactly 8 warnings (strict check)
+       * These exact counts serve as regression tests ensuring consistent linter behavior across
+         implementations
        * Implements a main() function that runs all three tests and returns exit code 0 if all
          validations pass, 1 otherwise
 
