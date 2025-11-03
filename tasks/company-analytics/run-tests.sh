@@ -20,11 +20,11 @@ if [ "$PWD" = "/" ]; then
     exit 1
 fi
 
-uv init
+uv venv
+source .venv/bin/activate
+
+# Install dependencies
 uv add pytest==8.4.1 pandas numpy pyarrow fastparquet
-# Install other dependencies if needed (remember, by default this is a different venv
-# than your agent's)
 
+# Run tests using uv's isolated environment
 uv run pytest $TEST_DIR/test_outputs.py -rA
-
-

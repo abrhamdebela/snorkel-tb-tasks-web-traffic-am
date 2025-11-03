@@ -4,7 +4,6 @@ import subprocess
 import os
 import json
 import pandas as pd
-import importlib.util
 
 APP_PATH = "/app/solution.py"
 OUTPUT_DIR = "/app/output"
