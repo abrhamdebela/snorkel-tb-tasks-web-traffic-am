@@ -198,6 +198,12 @@ jobs:
             ./scripts_bash/consolidate-parallel-runs.sh --new-run-id consolidated-$task --task-id $task
             uv run tb tasks debug --run-id consolidated-$task -o debug-output-${task}.json $task
           done
+      - name: Upload all session recordings
+        uses: actions/upload-artifact@v4
+        with:
+          name: runs-${{ github.event.pull_request.number }}
+          path: runs/
+          retention-days: 1
       - name: Run a Python script
         run: python scripts_python/summarize_runs.py
         id: summarize_runs
