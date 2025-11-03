@@ -4,39 +4,58 @@ instruction: |-
   My company has complex nested JSON data containing department structures, employee information, project details, and performance metrics.
   Your task is to create Python code `/app/solution.py`to process and transform this complex nested JSON data into multiple structured formats for business intelligence and reporting purposes.
   Data Processing Requirements:
+  The solution must implement all processing logic, flatten nested data, apply calculations, and save
+  the final results into specific CSV, Parquet, and JSON files under `/app/output/`.
+ 
 
   1. Data Extraction and Flattening: Extract and flatten the nested JSON data into the following CSV tables:
-   - departments.csv: Department-level information
-   - employees.csv: Employee details with department associations  
-   - projects.csv: Project information with employee assignments
-   - skills.csv: Employee skills matrix
-   - performance.csv: Performance metrics and calculations
-   - department_analytics.csv: Department productivity and budget analytics
-   - skill_analysis.csv :Department-level skill gap analysis
+    - departments.csv: department_id, name, manager_id, manager_name, budget, employee_count, total_salary_budget.
+    - employees.csv: Employee details with department associations with this columns: employee_id, name, email, department_id, department_name, position, hire_date, salary, performance_rating.
+    - projects.csv: Project information with employee assignments with this columns: project_id, name, description, start_date, end_date, budget, status.
+    - skills.csv: Employee skills matrix with this columns: `employee_id, skill, department_id`
+    - performance.csv: Performance metrics and calculations with this columns: `employee_id, department_id, performance_rating, utilization_rate, performance_score, performance_tier.
+    - department_analytics.csv: Department productivity and budget analytics with this columns:department_id, department_name, total_employees, total_salary_cost, avg_performance_score, avg_utilization_rate, budget, budget_utilization
+    - skill_analysis.csv :Department-level skill gap analysis with this columns: department_id, skill, employee_count, total_employees, skill_coverage.
 
   2. Complex Transformations: Implement the following business logic transformations:
+     - Employee utilization rate = (sum of project hours_logged / 160)  
+     - Performance score = (rating × 0.6) + (normalized utilization_rate × 0.1)  
+     - Performance tiers:
+       - ≥ 4.5 → Top Performer  
+       - ≥ 4.0 → High Performer  
+       - ≥ 3.0 → Solid Performer  
+       - < 3.0 → Needs Improvement  
+     - Department analytics: Calculate totals, averages, and budget utilization per department  
+     - Skill coverage: = employee_count / total_employees per department
 
-    - Calculate employee utilization rate: (total project hours / 160) per month
-    - Compute department productivity scores
-    - Identify skill gaps per department
-    - Calculate project success rates
-    - Generate employee performance rankings
 
   3. Data validation and quality checks
 
-    - Validate data integrity across all relationships
-    - Handle missing values and data inconsistencies
-    - Ensure referential integrity between tables
-    - Generate data quality reports
+    - Validate relationships between all tables (department_id, employee_id consistency)
+    - Handle missing or invalid values gracefully (no NaN in key fields)
+    - Ensure referential integrity between departments, employees, skills, and performance
+    - Generate a data quality report section in the JSON output showing:
+      - total_records
+      - columns_with_nulls
+      - duplicate_records
+      - data_types
 
   4. Output requirements
 
     - Save all CSV files to the app/output/ directory.
-    - Generate a comprehensive analytics report: `/app/output/analytics_report.json`.  
-    - Create a data validation summary report
-    - Export processed data in both CSV and Parquet formats
+    - `/app/output/performance.parquet`: Parquet version of the performance table
+    - `/app/output/analytics_report.json`: JSON analytics report with the following top-level keys:
+      - summary: total counts of departments, employees, projects, skills
+      - top_performers: list of top 3 employees (name, performance_score, department_name)
+      - department_performance: list of average department metrics (avg_performance_score, avg_utilization_rate)
+      - data_quality_report: validation results for each table
 
-  The input JSON file is located at /app/company_data.json.
+
+  After successful processing, print the following CLI summary:
+    === PROCESSING SUMMARY ===
+    Total departments processed: X
+    Total employees processed: Y
+    Total projects processed: Z
 
 
 author_name: Walaa' Atiyh
