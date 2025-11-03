@@ -254,13 +254,12 @@ def main():
     print(f"Valid transaction IDs: {len(cleaned_records)}")
     print(f"Invalid transaction IDs (discarded): {invalid_tx_ids}")
     
-    # Handle duplicates (keep first occurrence based on transaction_id)
-    # Note: Task says "keep last" but tests expect first occurrence
+    # Handle duplicates (keep last occurrence based on transaction_id)
     records_by_tx_id = {}
     for record in cleaned_records:
         tx_id = record['transaction_id']
-        if tx_id not in records_by_tx_id:
-            records_by_tx_id[tx_id] = record
+        # Always overwrite to keep the last occurrence
+        records_by_tx_id[tx_id] = record
     
     final_records = list(records_by_tx_id.values())
     duplicates_removed = len(cleaned_records) - len(final_records)
