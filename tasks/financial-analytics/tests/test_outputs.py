@@ -382,7 +382,6 @@ def test_summary_report_per_country_counts():
 def test_summary_report_sort_order():
     """Verify summary report's per-country counts are sorted by country."""
     report_file = Path("/app/output/summary_report.txt")
-    output_file = Path("/app/output/transactions_cleaned.csv")
     
     # Read report
     report_content = report_file.read_text(encoding="utf-8")
