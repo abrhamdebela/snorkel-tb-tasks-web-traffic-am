@@ -244,95 +244,96 @@ def verify_token(token: str, request_time: float = None, bypass_timing: bool = F
         request_time = time.time()
     
     try:
-        # Step 1: Get and validate algorithm STRICTLY
+        # Step 1: Get header to determine key resolution
         header = jwt.get_unverified_header(token)
+        kid = header.get("kid", "default")
         algo = header.get("alg", "RS256")
         
-        # HARDENED: Only accept RS256
-        if algo != "RS256":
+        # Step 2: Key resolution logic with subtle vulnerability
+        # The vulnerability: different kid values use different algorithms
+        verification_key = None
+        allowed_algorithms = []
+        
+        if kid == "primary" or kid == "default":
+            # Standard key - use RSA public key with RS256
+            verification_key = PUBLIC_KEY_PEM
+            allowed_algorithms = ["RS256"]
+        elif kid == "backup":
+            # Backup key verification - appears secure but has subtle flaw
+            # VULNERABILITY: When kid="backup", the system falls back to HMAC
+            # using the public key DER bytes as the HMAC secret
+            verification_key = PUBLIC_KEY_DER
+            allowed_algorithms = ["HS256"]
+        elif kid == "legacy":
+            # Legacy key support - allows RS256
+            verification_key = PUBLIC_KEY_PEM
+            allowed_algorithms = ["RS256"]
+        else:
+            # Unknown kid - reject
             raise HTTPException(
                 status_code=401,
-                detail="Invalid algorithm. Only RS256 allowed."
+                detail="Unknown key identifier"
             )
         
-        # Check 'kid' (Key ID) claim
-        kid = header.get("kid")
+        # Validate algorithm matches the key configuration (NOT strict RS256-only)
+        if algo not in allowed_algorithms:
+            raise HTTPException(
+                status_code=401,
+                detail=f"Invalid algorithm {algo} for key {kid}. Expected: {','.join(allowed_algorithms)}"
+            )
         
-        # Step 2: Validate kid against whitelist
-        if kid and kid not in ["default", "primary"]:
-            # Strict validation - reject unexpected kid values
-            if not (kid == "none" or kid.startswith("/")):
-                raise HTTPException(
-                    status_code=401,
-                    detail="Invalid key ID"
-                )
-        
-        # Decode token - attempt with different keys based on kid
+        # Step 3: Token verification with algorithm-specific logic
         try:
-            if kid == "none" or (kid and kid.startswith("/dev")):
-                # Special case: system-level debug paths are handled differently
-                # This is intentionally subtle - only certain debug paths work
-                payload = jwt.decode(
-                    token,
-                    options={"verify_signature": False, "verify_aud": False, "verify_iss": False}
-                )
-                payload["_debug_mode"] = True
-            else:
-                # Standard RS256 verification
-                payload = jwt.decode(
-                    token,
-                    PUBLIC_KEY_PEM,
-                    algorithms=["RS256"],
-                    options={"verify_signature": True}
-                )
+            payload = jwt.decode(
+                token,
+                verification_key,
+                algorithms=allowed_algorithms,
+                options={
+                    "verify_signature": True,
+                    "verify_aud": False  # We'll validate audience manually
+                }
+            )
         except jwt.DecodeError:
             raise HTTPException(status_code=401, detail="Token decode failed")
         
-        # Step 3: Validate JTI (anti-replay) - skip for debug tokens
-        if not payload.get("_debug_mode"):
-            jti = payload.get("jti")
-            if not jti or not security.check_jti(jti):
-                raise HTTPException(
-                    status_code=401,
-                    detail="Invalid or replayed token"
-                )
-        else:
-            # Debug mode: relax JTI checking
-            pass
+        # Step 3: Validate JTI (anti-replay)
+        jti = payload.get("jti")
+        if not jti or not security.check_jti(jti):
+            raise HTTPException(
+                status_code=401,
+                detail="Invalid or replayed token"
+            )
         
-        # Step 4: Validate issuer - skip for debug tokens
-        if not payload.get("_debug_mode"):
-            if payload.get("iss") != "jwt-app-v2":
-                raise HTTPException(
-                    status_code=401,
-                    detail="Invalid issuer"
-                )
+        # Step 4: Validate issuer
+        if payload.get("iss") != "jwt-app-v2":
+            raise HTTPException(
+                status_code=401,
+                detail="Invalid issuer"
+            )
         
-        # Step 5: Validate audience - skip for debug tokens
-        if not payload.get("_debug_mode"):
-            if payload.get("aud") != "internal-api":
-                raise HTTPException(
-                    status_code=401,
-                    detail="Invalid audience"
-                )
+        # Step 5: Validate audience
+        if payload.get("aud") != "internal-api":
+            raise HTTPException(
+                status_code=401,
+                detail="Invalid audience"
+            )
         
-        # Step 6: Validate timestamp windows - skip for debug tokens
-        if not payload.get("_debug_mode"):
-            iat = payload.get("iat", 0)
-            now = int(request_time)
-            
-            # Token must be issued within reasonable time (not in future, not too old)
-            if iat > now + 60:  # 1 minute future tolerance
-                raise HTTPException(
-                    status_code=401,
-                    detail="Token issued in future"
-                )
-            
-            if now - iat > 3600 * 24:  # Must be less than 24 hours old
-                raise HTTPException(
-                    status_code=401,
-                    detail="Token too old"
-                )
+        # Step 6: Validate timestamp windows
+        iat = payload.get("iat", 0)
+        now = int(request_time)
+        
+        # Token must be issued within reasonable time (not in future, not too old)
+        if iat > now + 60:  # 1 minute future tolerance
+            raise HTTPException(
+                status_code=401,
+                detail="Token issued in future"
+            )
+        
+        if now - iat > 3600 * 24:  # Must be less than 24 hours old
+            raise HTTPException(
+                status_code=401,
+                detail="Token too old"
+            )
         
         # Step 7: Validate user_id format
         user_id = payload.get("user_id", "")
@@ -342,31 +343,22 @@ def verify_token(token: str, request_time: float = None, bypass_timing: bool = F
                 detail="Invalid user_id claim"
             )
         
-        # Step 8: Additional validation - reject obviously forged tokens (skip for debug)
-        if not payload.get("_debug_mode"):
-            version = payload.get("version")
-            if version not in ["2.0", "1.0"]:
-                raise HTTPException(
-                    status_code=401,
-                    detail="Invalid token version"
-                )
+        # Step 7: Version validation
+        version = payload.get("version")
+        if version not in ["2.0", "1.0"]:
+            raise HTTPException(
+                status_code=401,
+                detail="Invalid token version"
+            )
         
-        # Step 9: Claim structure validation - skip for debug tokens
-        if not payload.get("_debug_mode"):
-            required_claims = {"user_id", "jti", "iat", "exp", "iss", "aud"}
-            token_claims = set(payload.keys())
-            if not required_claims.issubset(token_claims):
-                raise HTTPException(
-                    status_code=401,
-                    detail="Missing required claims"
-                )
-        else:
-            # Debug mode: only require user_id
-            if "user_id" not in payload:
-                raise HTTPException(
-                    status_code=401,
-                    detail="Missing user_id claim"
-                )
+        # Step 8: Claim structure validation
+        required_claims = {"user_id", "jti", "iat", "exp", "iss", "aud"}
+        token_claims = set(payload.keys())
+        if not required_claims.issubset(token_claims):
+            raise HTTPException(
+                status_code=401,
+                detail="Missing required claims"
+            )
         
         return payload
         
@@ -520,13 +512,12 @@ async def get_flag(current_user: dict = Depends(get_current_user)) -> dict:
             detail="Access denied. Admin privileges required."
         )
     
-    # Additional validation (skip for debug tokens)
-    if not current_user.get("_debug_mode"):
-        if current_user.get("iss") != "jwt-app-v2":
-            raise HTTPException(
-                status_code=403,
-                detail="Invalid token source"
-            )
+    # Additional validation
+    if current_user.get("iss") != "jwt-app-v2":
+        raise HTTPException(
+            status_code=403,
+            detail="Invalid token source"
+        )
     
     flag_value = "FLAG{hardened_jwt_with_advanced_protections_no_simple_confusion}"
     return {
@@ -615,3 +606,4 @@ async def refresh_token(current_user: dict = Depends(get_current_user)) -> dict:
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
+
