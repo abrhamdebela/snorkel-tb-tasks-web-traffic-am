@@ -4,14 +4,14 @@ instruction: |-
   My company has complex nested JSON data containing department structures, employee information, project details, and performance metrics.
   Your task is to create Python code `/app/solution.py` to process and transform this complex nested JSON data into multiple structured formats for business intelligence and reporting purposes.
 
-  1- Input File:
+  Input File:
   - `/app/company_data.json`, contains the nested company dataset that must be read and processed by your script.
   
-  2- Data Processing Requirements:
+  Data Processing Requirements:
     The solution must implement all processing logic, flatten nested data, apply calculations, and save
     the final results into specific CSV, Parquet, and JSON files under `/app/output/`.
 
-  3. Data Extraction and Flattening: Extract and flatten the nested JSON data into the following CSV tables:
+  1. Data Extraction and Flattening: Extract and flatten the nested JSON data into the following CSV tables:
     - departments.csv: department_id, name, manager_id, manager_name, budget, employee_count, total_salary_budget.
     - employees.csv: Employee details with department associations with this columns: employee_id, name, email, department_id, department_name, position, hire_date, salary, performance_rating.
     - projects.csv: Project information with employee assignments with this columns: project_id, name, description, start_date, end_date, budget, status.
@@ -20,9 +20,9 @@ instruction: |-
     - department_analytics.csv: Department productivity and budget analytics with this columns:department_id, department_name, total_employees, total_salary_cost, avg_performance_score, avg_utilization_rate, budget, budget_utilization
     - skill_analysis.csv :Department-level skill gap analysis with this columns: department_id, skill, employee_count, total_employees, skill_coverage.
 
-  4. Complex Transformations: Implement the following business logic transformations:
+  2. Complex Transformations: Implement the following business logic transformations:
      - Employee utilization rate = (sum of project hours_logged / 160)  
-     - Performance score = (rating × 0.6) + (normalized utilization_rate × 0.1)  
+     - Performance score = (rating × 0.6) + (normalized utilization_rate × 0.1) where normalized utilization_rate is calculated as min(utilization_rate, 1.5) / 1.5 to cap values above 1.5 for fair scaling. 
      - Performance tiers:
        - ≥ 4.5 → Top Performer  
        - ≥ 4.0 → High Performer  
@@ -32,7 +32,7 @@ instruction: |-
      - Skill coverage: = employee_count / total_employees per department
 
 
-  5. Data validation and quality checks
+  3. Data validation and quality checks
 
     - Validate relationships between all tables (department_id, employee_id consistency)
     - Handle missing or invalid values gracefully (no NaN in key fields)
@@ -42,8 +42,24 @@ instruction: |-
       - columns_with_nulls
       - duplicate_records
       - data_types
+    - The JSON analytics report must include a top-level key "data_quality_report"
+      where each table name (e.g., "departments", "employees", "projects", etc.)
+      is a nested object containing exactly the following keys:
+      total_records, columns_with_nulls, duplicate_records, and data_types.
+      Example structure:
+      {
+        "data_quality_report": {
+          "departments": {
+            "total_records": 3,
+            "columns_with_nulls": {"budget": 0, "name": 0},
+            "duplicate_records": 0,
+            "data_types": {"budget": "float64", "name": "object"}
+          }
+        }
+      }
 
-  6. Output requirements
+
+  4. Output requirements
 
     - Save all CSV files to the app/output/ directory.
     - `/app/output/performance.parquet`: Parquet version of the performance table
@@ -54,13 +70,14 @@ instruction: |-
       - data_quality_report: validation results for each table
 
 
-  7- After successful processing, print the following CLI summary:
+  After successful processing, print the following CLI summary:
+    ```
     === PROCESSING SUMMARY ===
     Total departments processed: X
     Total employees processed: Y
     Total projects processed: Z
     Output location: /app/output/
-    
+    ```
   Note: All performance scores and average performance values are expected to fall within the range 0–5.
 
 

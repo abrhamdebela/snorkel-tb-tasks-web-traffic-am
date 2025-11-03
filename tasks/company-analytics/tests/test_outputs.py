@@ -481,3 +481,125 @@ def test_cli_summary_exact_output():
     assert "Total employees processed:" in out
     assert "Total projects processed:" in out
     assert "Output location: /app/output/" in out
+
+
+
+def test_output_data_reflects_input_json():
+    """
+    Anti-cheating validation:
+    Confirms that at least one value from /app/company_data.json
+    appears in the output CSV files.
+    """
+    import json
+    with open("/app/company_data.json") as f:
+        data = json.load(f)
+
+    sample_names = [
+        emp["personal_info"]["name"]
+        for dept in data["company"]["departments"]
+        for emp in dept["employees"]
+    ]
+    sample_departments = [dept["name"] for dept in data["company"]["departments"]]
+
+    employees_df = pd.read_csv(f"{OUTPUT_DIR}/employees.csv")
+    dept_df = pd.read_csv(f"{OUTPUT_DIR}/departments.csv")
+
+    assert any(name in employees_df["name"].values for name in sample_names), \
+        "No known employee names from company_data.json appear in employees.csv"
+
+    assert any(d in dept_df["name"].values for d in sample_departments), \
+        "No known department names from company_data.json appear in departments.csv"
+
+
+
+def test_top_performers_are_highest_scores():
+    """
+    Anti-cheating validation:
+    Confirms that top_performers in analytics_report.json
+    correspond to the highest performance_score values in performance.csv.
+    """
+    perf = pd.read_csv(f"{OUTPUT_DIR}/performance.csv")
+    with open(f"{OUTPUT_DIR}/analytics_report.json") as f:
+        report = json.load(f)
+
+    top = report["top_performers"]
+    top_names = {t["name"] for t in top}
+    highest_scores = perf.nlargest(3, "performance_score")["name"].tolist()
+
+    assert set(highest_scores) == top_names, \
+        "top_performers in report.json do not match actual top 3 by performance_score"
+
+######
+def test_summary_counts_are_correct():
+    """
+    Ensures analytics_report.json contains correct summary counts
+    matching the number of records in the output CSVs.
+    """
+    with open(f"{OUTPUT_DIR}/analytics_report.json") as f:
+        report = json.load(f)
+    summary = report.get("summary", {})
+    assert set(summary.keys()) == {
+        "total_departments", "total_employees", "total_projects", "total_skills"
+    }, "summary section missing expected keys"
+
+    # Cross-check actual counts
+    depts = pd.read_csv(f"{OUTPUT_DIR}/departments.csv")
+    emps = pd.read_csv(f"{OUTPUT_DIR}/employees.csv")
+    projs = pd.read_csv(f"{OUTPUT_DIR}/projects.csv")
+    skills = pd.read_csv(f"{OUTPUT_DIR}/skills.csv")
+
+    assert summary["total_departments"] == len(depts), "Incorrect department count in summary"
+    assert summary["total_employees"] == len(emps), "Incorrect employee count in summary"
+    assert summary["total_projects"] == len(projs), "Incorrect project count in summary"
+    assert summary["total_skills"] == skills["skill"].nunique(), "Incorrect total_skills in summary"
+
+
+def test_top_performers_match_highest_scores():
+    """
+    Confirms top_performers in analytics_report.json correspond
+    to the top 3 highest performance_score values in performance.csv.
+    """
+    perf = pd.read_csv(f"{OUTPUT_DIR}/performance.csv")
+    with open(f"{OUTPUT_DIR}/analytics_report.json") as f:
+        report = json.load(f)
+
+    top = report["top_performers"]
+    top_names = {t["name"] for t in top}
+    highest_scores = perf.nlargest(3, "performance_score")["name"].tolist()
+    assert set(highest_scores) == top_names, \
+        "top_performers in analytics_report.json do not match actual top 3 performers"
+
+
+def test_budget_utilization_calculation_is_correct():
+    """
+    Verifies that budget_utilization in department_analytics.csv
+    equals total_salary_cost / budget.
+    """
+    df = pd.read_csv(f"{OUTPUT_DIR}/department_analytics.csv")
+    df["computed"] = (df["total_salary_cost"] / df["budget"]).round(3)
+    diff = (df["computed"] - df["budget_utilization"]).abs().max()
+    assert diff < 0.01, f"budget_utilization values differ more than tolerance (max diff={diff})"
+
+
+def test_script_reads_company_data_json_content():
+    """
+    Anti-cheating + behavior verification:
+    Confirms that at least one name and department from /app/company_data.json
+    appear in the generated CSV outputs.
+    """
+    with open("/app/company_data.json") as f:
+        data = json.load(f)
+    known_names = [
+        emp["personal_info"]["name"]
+        for dept in data["company"]["departments"]
+        for emp in dept["employees"]
+    ]
+    known_departments = [dept["name"] for dept in data["company"]["departments"]]
+
+    emps = pd.read_csv(f"{OUTPUT_DIR}/employees.csv")
+    depts = pd.read_csv(f"{OUTPUT_DIR}/departments.csv")
+
+    assert any(name in emps["name"].values for name in known_names), \
+        "No known employee names from JSON appear in employees.csv"
+    assert any(d in depts["name"].values for d in known_departments), \
+        "No known department names from JSON appear in departments.csv"
