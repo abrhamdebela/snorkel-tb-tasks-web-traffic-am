@@ -24,19 +24,6 @@ def run_etl():
 
 # 1 DATA EXTRACTION AND FLATTENING
 
-
-import os
-import pandas as pd
-import subprocess
-
-OUTPUT_DIR = "/app/output"
-
-
-def run_etl():
-    """Helper to run the ETL pipeline"""
-    subprocess.run(["python3", "/app/solution.py"], check=True)
-
-
 def test_data_extraction_creates_required_csvs():
     """
     Task requires: Data Extraction and Flattening
@@ -309,24 +296,6 @@ def test_employee_performance_rankings_and_tiers():
             f"top_performer record missing keys: {required - set(sample.keys())}"
 
 
-import os
-import json
-import pandas as pd
-import subprocess
-
-OUTPUT_DIR = "/app/output"
-
-
-def run_etl():
-    """Helper: runs the ETL pipeline and returns stdout"""
-    result = subprocess.run(
-        ["python3", "/app/solution.py"],
-        text=True,
-        capture_output=True,
-        timeout=60,
-    )
-    assert result.returncode == 0, f"Script exited with {result.returncode}: {result.stderr}"
-    return result.stdout
 
 
 # 3️ DATA VALIDATION AND QUALITY CHECKS
