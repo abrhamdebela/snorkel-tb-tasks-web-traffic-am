@@ -115,13 +115,15 @@ instruction: |-
        * `critical_errors.conf` - Configuration with errors that should be caught.
          Must demonstrate at least 5 different error-level rule violations (e.g., empty sections,
          naming violations, duplicate keys, type inconsistency, range violations).
-     - Write a validation script `validate_examples.py` that:
+     - Write a validation script `/app/validate_examples.py` that:
        * Implements three test classes: ValidateCleanConfig, ValidateStyleWarnings,
          ValidateCriticalErrors (all must be importable)
-       * Each class follows semantic testing pattern with methods: gather_state(),
-         simulate_logic(), assert_outcome(), and run()
-       * simulate_logic() must return a dict with keys: 'errors', 'warnings', 'error_count',
-         'warning_count', 'unique_error_rules', 'unique_warning_rules'
+       * Each class follows semantic testing pattern with exact method signatures:
+         - gather_state() -> returns AST (takes no parameters)
+         - simulate_logic(ast) -> takes AST parameter, returns dict with keys: 'errors',
+           'warnings', 'error_count', 'warning_count', 'unique_error_rules', 'unique_warning_rules'
+         - assert_outcome(result) -> takes result dict parameter, returns boolean
+         - run() -> returns boolean (True for pass, False for fail)
        * Loads each example file using absolute paths (`/app/examples/...`)
        * Runs the linter with a comprehensive set of rules (both basic and advanced)
        * Counts actual errors (severity="error") and warnings (severity="warning") separately
