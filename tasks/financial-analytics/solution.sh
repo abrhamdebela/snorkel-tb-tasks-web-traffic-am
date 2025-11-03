@@ -47,7 +47,7 @@ EXCHANGE_RATES = {
     'JPY': 0.0068,
     'INR': 0.012,
     'USD': 1.00,
-    'AUD': 0.67,  # Add missing currencies with reasonable rates
+    'AUD': 0.67,
     'CAD': 0.74,
     'CHF': 1.10,
     'SEK': 0.092,
@@ -62,8 +62,8 @@ def normalize_amount(amount_str, currency):
     
     amount = str(amount_str).strip()
     
-    # Remove all currency symbols
-    currency_symbols = ['$', '€', '£', '¥', '₹', '₽', '₩', '₱', '฿', '₪', 'R$', 'CAD', 'A$', 'NZ$', 'S$', 'RM', 'ARS', 'CLP', 'S/', 'COP', 'EGP', 'R', 'CHF', 'zł']
+    # Remove all currency symbols (order matters - longer symbols first)
+    currency_symbols = ['A$', 'NZ$', 'S$', 'R$', 'ARS', 'CLP', 'S/', 'COP', 'EGP', 'CAD', 'CHF', '$', '€', '£', '¥', '₹', '₽', '₩', '₱', '฿', '₪', 'RM', 'R', 'zł']
     for symbol in currency_symbols:
         amount = amount.replace(symbol, '')
     
@@ -80,13 +80,9 @@ def normalize_amount(amount_str, currency):
     last_comma_pos = amount.rfind(',')
     last_dot_pos = amount.rfind('.')
     
-    # Special handling for currencies that typically use commas as thousands separators
-    if currency in ['JPY', 'USD', 'GBP', 'AUD', 'CAD']:
-        # These currencies typically use comma as thousands separator
-        amount = amount.replace(',', '')  # Remove thousand separator
-    elif last_comma_pos > last_dot_pos and last_comma_pos > 0:
-        # Check if comma is likely decimal separator (European format)
-        # If there are digits after comma and it's the last separator
+    # Determine format based on currency and separator positions
+    if currency in ['EUR'] and last_comma_pos > last_dot_pos and last_comma_pos > 0:
+        # European format for EUR: 1.234,56
         after_comma = amount[last_comma_pos + 1:]
         if len(after_comma) <= 2 and after_comma.isdigit():
             # European format: comma is decimal separator
@@ -95,8 +91,11 @@ def normalize_amount(amount_str, currency):
         else:
             # Comma is thousands separator
             amount = amount.replace(',', '')
+    elif currency in ['JPY', 'USD', 'GBP', 'AUD', 'CAD', 'INR']:
+        # These currencies typically use comma as thousands separator
+        amount = amount.replace(',', '')  # Remove thousand separator
     else:
-        # US format: dot is decimal separator, comma is thousands separator
+        # Default: US format - dot is decimal separator, comma is thousands separator
         amount = amount.replace(',', '')  # Remove thousand separator
     
     if not amount:
@@ -179,9 +178,9 @@ def main():
     
     print("Loading input data...")
     
-    # Read input data
+    # Read input data with proper CSV parsing
     with open(input_file, 'r', encoding='utf-8', newline='') as f:
-        reader = csv.DictReader(f)
+        reader = csv.DictReader(f, quotechar='"', delimiter=',')
         raw_data = list(reader)
     
     total_input = len(raw_data)
@@ -214,26 +213,27 @@ def main():
         # Normalize amount and convert to USD
         amount_usd = normalize_amount(amount_str, currency)
         
-        # Parse date - handle CSV parsing issues where date might be split
+        # Handle CSV parsing issues where date might be split due to comma
         date_str_full = date_str
         status_str_full = status_str
         
-        # Check if date looks incomplete and status starts with a year
-        if date_str and not date_str.isdigit() and status_str and status_str.strip().startswith(('2020', '2021', '2022', '2023', '2024', '2025')):
+        # Check if date looks incomplete and status starts with a year (CSV split issue)
+        if date_str and status_str and status_str.strip().startswith(('2020', '2021', '2022', '2023', '2024', '2025')):
             # Likely the date was split due to comma - reconstruct it
-            date_str_full = f"{date_str}, {status_str.split(',')[0].strip()}"
-            # Update status to remove the year part
-            status_parts = status_str.split(',', 1)
-            if len(status_parts) > 1:
-                status_str_full = status_parts[1].strip()
-            else:
-                status_str_full = "invalid"
+            date_str_full = f"{date_str}, {status_str.strip()}"
+            # Look for the actual status in the None field or other fields
+            status_str_full = "invalid"  # Default if we can't find the real status
+            # Check if there are extra fields that might contain the real status
+            for key, value in row.items():
+                if key is None and isinstance(value, list) and len(value) > 0:
+                    status_str_full = value[0]
+                    break
         
         date = parse_date(date_str_full)
         if date == "INVALID":
             invalid_dates += 1
         
-        # Use the corrected status
+        # Normalize status
         status = normalize_status(status_str_full)
         
         # Count invalid statuses
