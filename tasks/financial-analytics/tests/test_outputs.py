@@ -133,21 +133,11 @@ def test_amount_currency_conversion():
             if tx_id:
                 original_data[tx_id] = row
     
-    # Check known conversions
-    exchange_rates = {
-        'EUR': 1.08,
-        'GBP': 1.24,
-        'JPY': 0.0068,
-        'INR': 0.012,
-        'USD': 1.00
-    }
-    
     with open(output_file, "r", encoding="utf-8", newline="") as f:
         reader = csv.DictReader(f)
         for row in reader:
             tx_id = row["transaction_id"]
             if tx_id in original_data:
-                orig = original_data[tx_id]
                 # We can't precisely verify due to rounding, but amounts should be reasonable
                 amount_usd = float(row["amount_usd"])
                 assert amount_usd >= 0, f"Negative converted amount for {tx_id}"
@@ -343,8 +333,6 @@ def test_summary_report_statistics_accurate():
         rows = list(csv.DictReader(f))
 
     output_count = len(rows)
-    invalid_dates = sum(1 for r in rows if r["date"] == "INVALID")
-    invalid_statuses = sum(1 for r in rows if r["status"] == "invalid")
     total_amount = sum(Decimal(r["amount_usd"]) for r in rows)
 
     report_content = report_file.read_text(encoding="utf-8")
