@@ -26,7 +26,7 @@ instruction: |-
 
   2. Amount Normalization
 
-  Remove all currency symbols (e.g., $, €, £, ¥, ₹).
+  Remove all currency symbols (example: $, €, £, ¥, ₹).
   Support both US format (1,234.56) and European format (1.234,56):
 
   If the last separator is a comma, interpret as European format.
@@ -48,7 +48,8 @@ instruction: |-
   YYYY-MM-DD
   MM/DD/YYYY
   DD-MM-YYYY
-  Month DD, YYYY (e.g., “March 5, 2024”)
+  YYYY/MM/DD
+  Month DD, YYYY (example: "March 5, 2024")
   Convert all to standard format: YYYY-MM-DD.
   Invalid, future (> 2025-12-31), or pre-2020-01-01 dates → mark as "INVALID" (keep record).
 
