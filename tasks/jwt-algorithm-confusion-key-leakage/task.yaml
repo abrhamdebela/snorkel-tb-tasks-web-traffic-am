@@ -30,11 +30,14 @@ instruction: |-
   
   ## Required Files
   
+  The following file is required:
+  - `/app/app.py` - The vulnerable FastAPI application (created by Docker build)
+  
+  The following file is created:
+  - `/app/flag.txt` - Must contain the exact flag retrieved from the admin endpoint  
+  
   The following file is required and must exist for the exploitation to work:
   - The vulnerable FastAPI application (created by Docker build)
-  
-  The following file is created by your exploit as proof of successful exploitation:
-  - Must contain the exact flag retrieved from the admin endpoint
   
   ## Important Information
   
