@@ -454,7 +454,6 @@ async def get_jwks():
     Contains a subtle vulnerability in the key handling logic.
     """
     import base64
-    from cryptography.hazmat.primitives.asymmetric.rsa import RSAPublicNumbers
     
     # Extract RSA public key components
     public_numbers = PUBLIC_KEY.public_numbers()
