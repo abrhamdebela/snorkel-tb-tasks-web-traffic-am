@@ -47,16 +47,6 @@ instruction: |-
   
   **WARNING**: This is not simple algorithm confusion. You must understand JWT verification mechanics deeply.
   
-  ## Your Objective
-  
-  Successfully exploit the JWT vulnerabilities to access the protected admin endpoint and retrieve the flag.
-  
-  You will need to:
-  1. Identify exploitable JWT vulnerabilities through analysis and testing
-  2. Develop techniques to bypass the authentication mechanisms
-  3. Construct a working exploit that reliably achieves privilege escalation
-  4. Capture the flag as proof of successful exploitation
-  
   ## Success Criteria
   
   You must create a file `/app/flag.txt` that contains the exact contents of the flag retrieved from the admin endpoint.
@@ -98,14 +88,6 @@ instruction: |-
   - `/auth/public-key` - Returns the RSA public key in multiple formats
   - `/user/profile` - Protected user endpoint
   - `/admin/flag` - Protected admin endpoint that returns the flag
-  
-  ## Getting Started
-  
-  1. First, analyze the application to understand its structure and endpoints
-  2. Identify and test the JWT authentication mechanism
-  3. Look for common vulnerabilities (algorithm confusion, key leakage, etc.)
-  4. Develop your exploitation technique
-  5. Test your exploit and capture the flag
   
   Good luck, and remember: with great power comes great responsibility. This is an educational challenge - use these skills ethically!
   
