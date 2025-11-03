@@ -126,7 +126,8 @@ instruction: |-
        * Runs the linter with a comprehensive set of rules (both basic and advanced)
        * Counts actual errors (severity="error") and warnings (severity="warning") separately
        * Reports the results for each file showing counts and listing all issues
-       * Output must include the filename being validated (e.g., "valid_config.conf")
+       * Output must include the filepath being validated (the full absolute path, e.g.,
+         "/app/examples/valid_config.conf")
        * For valid_config.conf: validates exactly 0 errors and 0 warnings (strict check)
        * For style_issues.conf: validates exactly 0 errors and exactly 9 warnings (strict check)
        * For critical_errors.conf: validates exactly 16 errors of at least 5 different rule types
