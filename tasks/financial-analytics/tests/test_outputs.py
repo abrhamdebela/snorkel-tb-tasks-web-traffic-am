@@ -950,7 +950,6 @@ def test_summary_report_statistics_accurate():
     """Verify summary report totals match the cleaned CSV."""
     output_file = Path("/app/output/transactions_cleaned.csv")
     report_file = Path("/app/output/summary_report.txt")
-    input_file = Path("/app/data/transactions_raw.csv")
 
     with open(output_file, "r", encoding="utf-8", newline="") as f:
         rows = list(csv.DictReader(f))
