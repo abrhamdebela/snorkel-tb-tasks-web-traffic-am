@@ -32,7 +32,11 @@ instruction: |-
   If the last separator is a comma, interpret as European format.
   Convert all values to float in USD using the exchange rates below:
 
-  EUR -> 1.08GBP -> 1.24JPY -> 0.0068INR -> 0.012USD -> 1.00
+  EUR -> 1.08
+  GBP -> 1.24
+  JPY -> 0.0068
+  INR -> 0.012
+  USD -> 1.00
 
   Round using HALF_UP rounding (1.005 → 1.01, 2.345 → 2.35).
   Negative, missing, or unparseable amounts → set to 0.00.
@@ -128,6 +132,6 @@ max_agent_timeout_sec: 360.0
 max_test_timeout_sec: 60.0
 run_tests_in_same_shell: false
 disable_asciinema: false
-estimated_duration_sec:
+estimated_duration_sec: 300
 expert_time_estimate_min: 90
 junior_time_estimate_min: 160

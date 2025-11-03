@@ -10,10 +10,10 @@ echo "Processing transaction data with comprehensive cleaning rules..."
 # Create necessary directories
 mkdir -p /app/data /app/output/visuals
 
-# Install required Python packages if not available
+# Verify matplotlib is available (should be installed in Dockerfile)
 if ! python3 -c "import matplotlib; import matplotlib.pyplot" 2>/dev/null; then
-    echo "Installing matplotlib..."
-    pip3 install --quiet matplotlib 2>/dev/null || python3 -m pip install --quiet matplotlib 2>/dev/null || true
+    echo "Error: matplotlib is required but not available. Please ensure Dockerfile installs matplotlib==3.9.3"
+    exit 1
 fi
 
 # Copy the input file to the expected location (if not already there)
