@@ -27,6 +27,8 @@ instruction: |-
        FALSE, SECTION, EQUALS, LBRACE, RBRACE, LBRACKET, RBRACKET, COMMA, COMMENT, NEWLINE, EOF
      - Create a Token class with these attributes: type (TokenType), value (string), line (int), column (int)
      - The lexer must correctly handle all grammar elements including negative numbers
+     - Must handle edge cases: end-of-input during whitespace skipping, unclosed strings,
+       invalid characters (lexer must be robust and not crash on malformed input)
 
   2. Parser Implementation
      - Create a Parser class that accepts a list of tokens
@@ -77,12 +79,14 @@ instruction: |-
          non-negative, keys containing "percentage" or "percent" must be 0-100
        * RequiredKeysInSectionRule - rule="required-keys-in-section", accepts
          section_requirements dict mapping section names to lists of required key names,
-         validates that specified sections contain all required keys
+         validates that specified sections contain all required keys (generates one error
+         per missing key, not one consolidated error)
        * MutuallyExclusiveKeysRule - rule="mutually-exclusive-keys", accepts exclusive_pairs
          list of tuples, detects when both keys from any pair exist in the same section
        * ConditionalRequiredKeysRule - rule="conditional-required-keys", accepts dependencies
          dict mapping key names to lists of required keys, validates that if a key exists,
-         all its dependent keys must also exist in the same section
+         all its dependent keys must also exist in the same section (generates one error
+         per missing dependent key, not one consolidated error)
        * ListElementTypeConsistencyRule - rule="list-element-type-consistency", detects lists
          containing mixed value types (all elements must be same type: all strings, all numbers,
          all booleans, or all lists)
@@ -112,14 +116,23 @@ instruction: |-
          Must demonstrate at least 5 different error-level rule violations (e.g., empty sections,
          naming violations, duplicate keys, type inconsistency, range violations).
      - Write a validation script `validate_examples.py` that:
+       * Implements three test classes: ValidateCleanConfig, ValidateStyleWarnings,
+         ValidateCriticalErrors (all must be importable)
+       * Each class follows semantic testing pattern with methods: gather_state(),
+         simulate_logic(), assert_outcome(), and run()
+       * simulate_logic() must return a dict with keys: 'errors', 'warnings', 'error_count',
+         'warning_count', 'unique_error_rules', 'unique_warning_rules'
        * Loads each example file using absolute paths (`/app/examples/...`)
        * Runs the linter with a comprehensive set of rules (both basic and advanced)
        * Counts actual errors (severity="error") and warnings (severity="warning") separately
        * Reports the results for each file showing counts and listing all issues
+       * Output must include the filename being validated (e.g., "valid_config.conf")
        * For valid_config.conf: validates exactly 0 errors and 0 warnings (strict check)
-       * For style_issues.conf: validates exactly 0 errors and >0 warnings (strict check)
-       * For critical_errors.conf: validates >0 errors of at least 5 different rule types
-       * Returns exit code 0 if all validations pass, 1 otherwise
+       * For style_issues.conf: validates exactly 0 errors and exactly 9 warnings (strict check)
+       * For critical_errors.conf: validates exactly 16 errors of at least 5 different rule types
+         and exactly 8 warnings (strict check)
+       * Implements a main() function that runs all three tests and returns exit code 0 if all
+         validations pass, 1 otherwise
 
   Technical Requirements:
   - All classes must be importable from dsl_linter module
