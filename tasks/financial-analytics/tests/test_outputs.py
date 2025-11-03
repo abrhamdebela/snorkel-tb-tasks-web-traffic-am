@@ -329,6 +329,7 @@ def test_date_parsing_all_formats():
         )
     
     # TX0004: Month DD, YYYY format (March 5, 2024)
+    # Note: This date format is properly quoted in CSV to handle the comma
     if "TX0004" in output_data:
         assert output_data["TX0004"]["date"] == "2024-03-05", (
             "Month DD, YYYY format not parsed correctly for TX0004"

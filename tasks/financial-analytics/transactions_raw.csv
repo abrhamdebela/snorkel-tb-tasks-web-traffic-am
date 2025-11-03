@@ -3,7 +3,7 @@ TX0001,u1001,United States,"$1,234.56",USD,2024-03-15,Completed
 TX0001,u1002,United Kingdom,"£1,234.56",GBP,03/15/2024,completed
 TX0002,u1003,France,"1.234,56",EUR,15-03-2024,Pending
 TX0003,u1004,Japan,"¥150,000",JPY,2023/12/01,FAILED
-TX0004,u1005,India,"₹98,765.43",INR,March 5, 2024,completed
+TX0004,u1005,India,"₹98,765.43",INR,"March 5, 2024",completed
 TX0005,u1006,Germany,"",EUR,2024-04-20,Pending
 TX0006,u1007,Spain,-500.00,EUR,2025-01-10,Completed
 TX0007,u1008,Brazil,"R$ 2.345,67",BRL,2026-07-30,Success

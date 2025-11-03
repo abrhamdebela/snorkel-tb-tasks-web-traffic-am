@@ -37,6 +37,12 @@ instruction: |-
   JPY -> 0.0068
   INR -> 0.012
   USD -> 1.00
+  AUD -> 0.67
+  CAD -> 0.74
+  CHF -> 1.10
+  SEK -> 0.092
+  BRL -> 0.20
+  ARS -> 0.0011
 
   Round using HALF_UP rounding (1.005 → 1.01, 2.345 → 2.35).
   Negative, missing, or unparseable amounts → set to 0.00.
@@ -91,6 +97,7 @@ instruction: |-
   Total USD amount (sum of amount_usd)
   Average transaction amount (2 decimal places)
   Number of completed transactions per country (sorted by country)
+  Final record count in output file
 
   3. Visualization
 
