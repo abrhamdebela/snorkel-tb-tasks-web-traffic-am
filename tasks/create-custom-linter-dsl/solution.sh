@@ -1046,28 +1046,18 @@ EOF
 mkdir -p examples
 
 # Create valid_config.conf - demonstrates proper usage with no errors
+# No sections (avoids unused-section warnings), alphabetically ordered keys, no magic numbers
 cat > examples/valid_config.conf << 'EOF'
 # Valid application configuration
 
-section database {
-    host = "localhost"
-    use_ssl = true
-    auto_reconnect = false
-    connection_timeout = 0
-}
-
-section logging {
-    level = "info"
-    output_format = "json"
-    log_rotation = true
-    verbose = false
-}
-
-section cache {
-    backend = "redis"
-    enabled = true
-    compression = false
-}
+app_name = "myapp"
+auto_reconnect = false
+cache_enabled = true
+connection_timeout = 0
+database_host = "localhost"
+debug_mode = false
+enable_logging = true
+max_connections = 1
 EOF
 
 # Create style_issues.conf - has warnings only (magic numbers, empty strings, key ordering, unused sections)
@@ -1128,10 +1118,17 @@ section level1 {
 }
 EOF
 
-# Create validation script
+# Create validation script following semantic testing framework
 cat > validate_examples.py << 'EOF'
 #!/usr/bin/env python3
-"""Validation script for ConfigLang linter examples"""
+"""
+Validation script for ConfigLang linter examples.
+
+Follows semantic testing framework:
+- Question: Does the linter correctly identify issues in example configurations?
+- Test Names: validate_clean_config, validate_style_warnings, validate_critical_errors
+- Implementation: Gather State → Simulate Logic → Assert Outcome
+"""
 
 from dsl_linter import (
     Lexer, Parser, Linter,
@@ -1141,96 +1138,260 @@ from dsl_linter import (
     KeyOrderingRule, UnusedSectionRule, MutuallyExclusiveKeysRule
 )
 
-def validate_file(filepath, expected_errors, expected_warnings):
-    """Validate a config file and check error/warning counts"""
-    print(f"\nValidating {filepath}...")
 
-    with open(filepath, 'r') as f:
-        source = f.read()
+class ValidationTest:
+    """Base class for validation tests following semantic testing pattern"""
 
-    # Tokenize and parse
-    lexer = Lexer(source)
-    tokens = lexer.tokenize()
-    parser = Parser(tokens)
-    ast = parser.parse()
+    def __init__(self, name: str, filepath: str):
+        self.name = name
+        self.filepath = filepath
 
-    # Run linter with comprehensive set of rules
-    rules = [
-        # Basic rules
-        NoEmptySections(),
-        NamingConventionRule(),
-        NoDuplicateKeysRule(),
-        NoMagicNumbersRule(),
-        StringQuoteConsistencyRule(),
-        # Advanced rules
-        TypeConsistencyRule(),
-        DepthLimitRule(max_depth=3),
-        ValueRangeRule(),
-        ListElementTypeConsistencyRule(),
-        KeyOrderingRule(),
-        UnusedSectionRule(),
-        MutuallyExclusiveKeysRule([("oauth_enabled", "basic_auth_enabled")])
-    ]
-    linter = Linter(rules)
-    errors = linter.lint(ast)
+    def gather_state(self):
+        """Step 1: Gather State - Load and parse the configuration"""
+        with open(self.filepath, 'r') as f:
+            source = f.read()
 
-    # Separate errors and warnings
-    actual_errors = [e for e in errors if e.severity == "error"]
-    actual_warnings = [e for e in errors if e.severity == "warning"]
+        lexer = Lexer(source)
+        tokens = lexer.tokenize()
+        parser = Parser(tokens)
+        ast = parser.parse()
 
-    print(f"  Found {len(actual_errors)} errors, {len(actual_warnings)} warnings")
+        return ast
 
-    # Report all issues grouped by severity
-    if actual_errors:
-        print(f"\n  Errors:")
-        for error in actual_errors:
-            print(f"    Line {error.line}:{error.column} - {error.rule}: {error.message}")
+    def simulate_logic(self, ast):
+        """Step 2: Simulate Logic - Run linter with comprehensive rules"""
+        rules = [
+            # Basic rules
+            NoEmptySections(),
+            NamingConventionRule(),
+            NoDuplicateKeysRule(),
+            NoMagicNumbersRule(),
+            StringQuoteConsistencyRule(),
+            # Advanced rules
+            TypeConsistencyRule(),
+            DepthLimitRule(max_depth=3),
+            ValueRangeRule(),
+            ListElementTypeConsistencyRule(),
+            KeyOrderingRule(),
+            UnusedSectionRule(),
+            MutuallyExclusiveKeysRule([("oauth_enabled", "basic_auth_enabled")])
+        ]
+        linter = Linter(rules)
+        all_issues = linter.lint(ast)
 
-    if actual_warnings:
-        print(f"\n  Warnings:")
-        for warning in actual_warnings:
-            print(f"    Line {warning.line}:{warning.column} - {warning.rule}: {warning.message}")
+        # Separate by severity
+        errors = [e for e in all_issues if e.severity == "error"]
+        warnings = [e for e in all_issues if e.severity == "warning"]
 
-    # Check expectations
-    success = True
-    if expected_errors != len(actual_errors):
-        print(f"\n  FAIL: Expected {expected_errors} errors, got {len(actual_errors)}")
-        success = False
-    if expected_warnings != len(actual_warnings):
-        print(f"\n  FAIL: Expected {expected_warnings} warnings, got {len(actual_warnings)}")
-        success = False
+        # Count unique rule types
+        error_rules = set(e.rule for e in errors)
+        warning_rules = set(w.rule for w in warnings)
 
-    if success:
-        print(f"\n  PASS: Validation successful")
+        return {
+            'errors': errors,
+            'warnings': warnings,
+            'error_count': len(errors),
+            'warning_count': len(warnings),
+            'unique_error_rules': error_rules,
+            'unique_warning_rules': warning_rules
+        }
 
-    return success
+    def assert_outcome(self, result):
+        """Step 3: Assert Outcome - Check expectations (implemented by subclasses)"""
+        raise NotImplementedError
+
+    def run(self):
+        """Execute the test following the three-step pattern"""
+        print(f"\n{'=' * 60}")
+        print(f"Test: {self.name}")
+        print(f"File: {self.filepath}")
+        print(f"{'=' * 60}")
+
+        # Step 1: Gather State
+        print("\n[1/3] Gathering State: Parsing configuration...")
+        ast = self.gather_state()
+        print(f"  ✓ Parsed successfully")
+
+        # Step 2: Simulate Logic
+        print("\n[2/3] Simulating Logic: Running linter with all rules...")
+        result = self.simulate_logic(ast)
+        print(f"  ✓ Found {result['error_count']} errors ({len(result['unique_error_rules'])} types), "
+              f"{result['warning_count']} warnings ({len(result['unique_warning_rules'])} types)")
+
+        # Report all issues
+        if result['errors']:
+            print("\n  Errors detected:")
+            for error in result['errors']:
+                print(f"    Line {error.line}:{error.column} - {error.rule}: {error.message}")
+
+        if result['warnings']:
+            print("\n  Warnings detected:")
+            for warning in result['warnings']:
+                print(f"    Line {warning.line}:{warning.column} - {warning.rule}: {warning.message}")
+
+        # Step 3: Assert Outcome
+        print("\n[3/3] Asserting Outcome: Checking expectations...")
+        success = self.assert_outcome(result)
+
+        if success:
+            print(f"\n  ✅ PASS: {self.name}")
+        else:
+            print(f"\n  ❌ FAIL: {self.name}")
+
+        return success
+
+
+class ValidateCleanConfig(ValidationTest):
+    """
+    Question: Does valid_config.conf produce zero errors and zero warnings?
+
+    Expected: A well-formed configuration using only allowed values (0, 1, -1, booleans,
+    non-empty strings) with snake_case identifiers should produce no issues whatsoever.
+    """
+
+    def __init__(self):
+        super().__init__(
+            "validate_clean_config",
+            "/app/examples/valid_config.conf"
+        )
+
+    def assert_outcome(self, result):
+        """Assert: Must have exactly 0 errors and 0 warnings"""
+        success = True
+
+        if result['error_count'] != 0:
+            print(f"  ✗ Expected 0 errors, got {result['error_count']}")
+            success = False
+        else:
+            print(f"  ✓ Zero errors (as expected)")
+
+        if result['warning_count'] != 0:
+            print(f"  ✗ Expected 0 warnings, got {result['warning_count']}")
+            success = False
+        else:
+            print(f"  ✓ Zero warnings (as expected)")
+
+        return success
+
+
+class ValidateStyleWarnings(ValidationTest):
+    """
+    Question: Does style_issues.conf produce only warnings with no errors?
+
+    Expected: Configuration with style issues (magic numbers, key ordering) should
+    trigger warning-level rules but have no error-level violations.
+    """
+
+    def __init__(self):
+        super().__init__(
+            "validate_style_warnings",
+            "/app/examples/style_issues.conf"
+        )
+
+    def assert_outcome(self, result):
+        """Assert: Must have 0 errors and exactly 9 warnings"""
+        success = True
+
+        if result['error_count'] != 0:
+            print(f"  ✗ Expected 0 errors (style issues only), got {result['error_count']}")
+            success = False
+        else:
+            print(f"  ✓ Zero errors (style issues only)")
+
+        expected_warnings = 9
+        if result['warning_count'] != expected_warnings:
+            print(f"  ✗ Expected {expected_warnings} warnings, got {result['warning_count']}")
+            print(f"    Expected: 4 magic numbers + 1 empty string + 2 key ordering + 3 unused sections")
+            success = False
+        else:
+            print(f"  ✓ Exactly {expected_warnings} warnings (as expected)")
+
+        return success
+
+
+class ValidateCriticalErrors(ValidationTest):
+    """
+    Question: Does critical_errors.conf demonstrate diverse error detection?
+
+    Expected: Configuration with multiple types of errors should trigger at least 5
+    different error-level rules, proving comprehensive linter coverage.
+    """
+
+    def __init__(self):
+        super().__init__(
+            "validate_critical_errors",
+            "/app/examples/critical_errors.conf"
+        )
+
+    def assert_outcome(self, result):
+        """Assert: Must have at least 5 different error rule types and specific count"""
+        success = True
+
+        expected_errors = 16
+        if result['error_count'] != expected_errors:
+            print(f"  ✗ Expected {expected_errors} errors, got {result['error_count']}")
+            print(f"    Expected: empty sections (5) + naming (5) + duplicate keys (1) + "
+                  f"type consistency (2) + port range (1) + list type consistency (1) + "
+                  f"depth limit (1) + mutually exclusive (1)")
+            success = False
+        else:
+            print(f"  ✓ Exactly {expected_errors} errors (as expected)")
+
+        min_unique_error_types = 5
+        if len(result['unique_error_rules']) < min_unique_error_types:
+            print(f"  ✗ Expected at least {min_unique_error_types} unique error types, "
+                  f"got {len(result['unique_error_rules'])}: {result['unique_error_rules']}")
+            success = False
+        else:
+            print(f"  ✓ {len(result['unique_error_rules'])} unique error types detected: "
+                  f"{sorted(result['unique_error_rules'])}")
+
+        expected_warnings = 8
+        if result['warning_count'] != expected_warnings:
+            print(f"  ✗ Expected {expected_warnings} warnings, got {result['warning_count']}")
+            print(f"    Expected: magic numbers (2) + key ordering (2) + unused sections (4)")
+            success = False
+        else:
+            print(f"  ✓ Exactly {expected_warnings} warnings (as expected)")
+
+        return success
+
 
 def main():
-    print("ConfigLang Linter Validation with Advanced Rules")
+    """
+    Question: Does the ConfigLang linter correctly identify issues across different scenarios?
+
+    Test Plan:
+    1. validate_clean_config: Verify clean configurations pass without issues
+    2. validate_style_warnings: Verify style issues trigger warnings only
+    3. validate_critical_errors: Verify diverse errors are detected
+    """
+    print("ConfigLang Linter Validation Suite")
+    print("Following Semantic Testing Framework")
     print("=" * 60)
 
-    results = []
+    tests = [
+        ValidateCleanConfig(),
+        ValidateStyleWarnings(),
+        ValidateCriticalErrors()
+    ]
 
-    # Validate each example file
-    # valid_config.conf should have no issues
-    results.append(validate_file("/app/examples/valid_config.conf", expected_errors=0, expected_warnings=0))
+    results = [test.run() for test in tests]
 
-    # style_issues.conf should have only warnings
-    # Expected: magic numbers (4), empty string (1), key ordering (1), unused section (1) = 7 warnings
-    results.append(validate_file("/app/examples/style_issues.conf", expected_errors=0, expected_warnings=7))
+    print(f"\n{'=' * 60}")
+    print("Summary")
+    print(f"{'=' * 60}")
+    passed = sum(results)
+    total = len(results)
+    print(f"Tests passed: {passed}/{total}")
 
-    # critical_errors.conf should have multiple error types
-    # Expected: empty section (1), naming (3), duplicate keys (1), type consistency (1),
-    #           port range (1), list type consistency (1), depth limit (1), mutually exclusive (1) = ~10 errors
-    results.append(validate_file("/app/examples/critical_errors.conf", expected_errors=10, expected_warnings=0))
-
-    print("\n" + "=" * 60)
     if all(results):
-        print("All validations PASSED")
+        print("\n✅ All validations PASSED")
         return 0
     else:
-        print("Some validations FAILED")
+        print("\n❌ Some validations FAILED")
         return 1
+
 
 if __name__ == "__main__":
     exit(main())
