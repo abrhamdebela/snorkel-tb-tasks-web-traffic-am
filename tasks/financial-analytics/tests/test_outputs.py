@@ -384,16 +384,6 @@ def test_summary_report_sort_order():
     report_file = Path("/app/output/summary_report.txt")
     output_file = Path("/app/output/transactions_cleaned.csv")
     
-    # Get countries with completed transactions
-    country_completed_counts = defaultdict(int)
-    with open(output_file, "r", encoding="utf-8", newline="") as f:
-        reader = csv.DictReader(f)
-        for row in reader:
-            if row["status"] == "completed":
-                country_completed_counts[row["country"]] += 1
-    
-    sorted_countries = sorted(country_completed_counts.keys(), key=str.lower)
-    
     # Read report
     report_content = report_file.read_text(encoding="utf-8")
     
