@@ -28,42 +28,19 @@ instruction: |-
   - **Enhanced claim structure validation**
   - **Debug mode security controls** with conditional bypasses
   
-  ## Vulnerability Analysis Required
-  
-  The FastAPI application at http://localhost:8000 has **sophisticated JWT vulnerabilities** requiring expert-level JWT analysis:
-  
-  **Key Challenge:**
-  - The application implements **multi-key JWK Set support** with different key resolution strategies
-  - Different `kid` (Key ID) values in JWT headers trigger different verification algorithms
-  - This creates a subtle **algorithm confusion vulnerability** that requires careful code analysis
-  
-  **Required Exploitation Steps:**
-  1. **Discover the key resolution logic** - Analyze how different `kid` values are handled
-  2. **Identify the vulnerable configuration** - Find which `kid` value triggers insecure key material usage
-  3. **Extract public key components** - Obtain the DER-encoded RSA public key
-  4. **Perform algorithm confusion** - Use HMAC-SHA256 with the RSA public key bytes as the secret
-  5. **Create valid-looking claims** - Forge a token with all required claims
-  6. **Escalate privileges** - Set `user_id="admin"` and access protected resources
-  
-  **WARNING**: This is not simple algorithm confusion. You must understand JWT verification mechanics deeply.
-  
-  ## Success Criteria
-  
-  You must create a file `/app/flag.txt` that contains the exact contents of the flag retrieved from the admin endpoint.
-  
   ## Required Files
   
   The following file is required and must exist for the exploitation to work:
-  - `/app/app.py` - The vulnerable FastAPI application (created by Docker build)
+  - The vulnerable FastAPI application (created by Docker build)
   
   The following file is created by your exploit as proof of successful exploitation:
-  - `/app/flag.txt` - Must contain the exact flag retrieved from the admin endpoint
+  - Must contain the exact flag retrieved from the admin endpoint
   
   ## Important Information
   
   - Application location: http://localhost:8000
-  - Target: Retrieve the flag from the `/admin/flag` endpoint
-  - Success indicator: Create `/app/flag.txt` containing the flag
+  - Target: Retrieve the flag from the endpoint
+  - Success indicator: Create containing the flag
   - The application has all standard JWT libraries available
   
   ## General Approach
@@ -72,14 +49,6 @@ instruction: |-
   - Modern JWT exploitation often requires algorithm confusion or key extraction
   - Public keys are typically discoverable through standard endpoints
   - Token manipulation may involve cryptographic operations
-  
-  ## Available Tools
-  
-  The environment includes:
-  - Python 3 with requests library
-  - JWT library (PyJWT)
-  - Cryptography library
-  - Standard utilities (curl, etc.)
   
   ## Available Endpoints
   
