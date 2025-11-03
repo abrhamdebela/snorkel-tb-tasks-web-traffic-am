@@ -1,0 +1,4 @@
+172.16.0.20 - - [25/Oct/2025:10:26:00 +0000] "GET /dashboard HTTP/1.1" 200 8901 "https://example.com" "Chrome/120.0"
+10.0.0.15 - - [25/Oct/2025:10:20:15 +0000] "POST /api/login HTTP/1.1" 401 567 "https://example.com" "Mozilla/5.0"
+192.168.1.30 - - [25/Oct/2025:10:36:30 +0000] "HEAD /health HTTP/1.1" 200 0 "https://example.com" "curl/7.68.0"
+
