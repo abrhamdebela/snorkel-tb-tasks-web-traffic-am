@@ -251,7 +251,6 @@ def test_us_and_european_numeric_formats():
     
     # TX0002 has European format: "1.234,56" (should be 1234.56 in USD before conversion)
     if "TX0002" in output_data and "TX0002" in input_data:
-        amount_str = input_data["TX0002"].get("amount", "")
         # Should parse European format correctly
         amount_usd = float(output_data["TX0002"]["amount_usd"])
         # EUR 1.234,56 = 1234.56 EUR -> 1234.56 * 1.08 = 1333.32... USD
@@ -293,26 +292,26 @@ def test_date_parsing_all_formats():
     # TX0001: YYYY-MM-DD format (2024-03-15)
     if "TX0001" in output_data:
         assert output_data["TX0001"]["date"] == "2024-03-15", (
-            f"YYYY-MM-DD format not parsed correctly for TX0001"
+            "YYYY-MM-DD format not parsed correctly for TX0001"
         )
     
     # TX0001 duplicate: MM/DD/YYYY format (03/15/2024) - but this is duplicate, check another
     # TX0002: DD-MM-YYYY format (15-03-2024)
     if "TX0002" in output_data:
         assert output_data["TX0002"]["date"] == "2024-03-15", (
-            f"DD-MM-YYYY format not parsed correctly for TX0002"
+            "DD-MM-YYYY format not parsed correctly for TX0002"
         )
     
     # TX0003: YYYY/MM/DD format (2023/12/01)
     if "TX0003" in output_data:
         assert output_data["TX0003"]["date"] == "2023-12-01", (
-            f"YYYY/MM/DD format not parsed correctly for TX0003"
+            "YYYY/MM/DD format not parsed correctly for TX0003"
         )
     
     # TX0004: Month DD, YYYY format (March 5, 2024)
     if "TX0004" in output_data:
         assert output_data["TX0004"]["date"] == "2024-03-05", (
-            f"Month DD, YYYY format not parsed correctly for TX0004"
+            "Month DD, YYYY format not parsed correctly for TX0004"
         )
     
     # Verify all dates are in correct format
@@ -331,16 +330,6 @@ def test_iso_country_name_validity():
     
     # Country names should be valid strings (task says "valid ISO country name")
     # We check that they're not empty and are reasonable country names
-    known_countries = {
-        "United States", "United Kingdom", "France", "Germany", "Spain", 
-        "Italy", "Japan", "India", "China", "Canada", "Mexico", "Brazil",
-        "Argentina", "Chile", "Peru", "Colombia", "Australia", "New Zealand",
-        "Singapore", "Malaysia", "Thailand", "Indonesia", "Philippines", 
-        "Vietnam", "South Korea", "Netherlands", "Portugal", "Belgium",
-        "Austria", "Switzerland", "Sweden", "Russia", "Egypt", "South Africa",
-        "UNKNOWN"
-    }
-    
     with open(output_file, "r", encoding="utf-8", newline="") as f:
         reader = csv.DictReader(f)
         for row in reader:
@@ -375,8 +364,7 @@ def test_summary_report_per_country_counts():
     )
     
     # Verify at least some countries are listed
-    sorted_countries = sorted(country_completed_counts.keys(), key=str.lower)
-    for country in sorted_countries:
+    for country in sorted(country_completed_counts.keys(), key=str.lower):
         count = country_completed_counts[country]
         # Check that the country and its count appear in the report
         country_line_found = False
