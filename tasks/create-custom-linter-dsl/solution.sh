@@ -1301,7 +1301,7 @@ class ValidateStyleWarnings(ValidationTest):
         expected_warnings = 9
         if result['warning_count'] != expected_warnings:
             print(f"  ✗ Expected {expected_warnings} warnings, got {result['warning_count']}")
-            print(f"    Expected: 4 magic numbers + 1 empty string + 2 key ordering + 3 unused sections")
+            print(f"    Expected: 4 magic numbers + 1 empty string + 1 key ordering + 3 unused sections")
             success = False
         else:
             print(f"  ✓ Exactly {expected_warnings} warnings (as expected)")
@@ -1330,7 +1330,7 @@ class ValidateCriticalErrors(ValidationTest):
         expected_errors = 16
         if result['error_count'] != expected_errors:
             print(f"  ✗ Expected {expected_errors} errors, got {result['error_count']}")
-            print(f"    Expected: empty sections (5) + naming (5) + duplicate keys (1) + "
+            print(f"    Expected: empty sections (4) + naming (5) + duplicate keys (1) + "
                   f"type consistency (2) + port range (1) + list type consistency (1) + "
                   f"depth limit (1) + mutually exclusive (1)")
             success = False
