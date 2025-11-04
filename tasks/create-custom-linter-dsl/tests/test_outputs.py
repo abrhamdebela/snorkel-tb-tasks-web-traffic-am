@@ -8,9 +8,24 @@ import pytest
 class TestFileExistence:
     """Test that all required files are created by the solution"""
 
-    def test_linter_file_exists(self):
-        """Test that dsl_linter.py exists"""
-        assert os.path.exists("/app/dsl_linter.py"), "dsl_linter.py should exist"
+    def test_linter_package_exists(self):
+        """Test that dsl_linter package exists"""
+        assert os.path.exists("/app/dsl_linter"), "dsl_linter package directory should exist"
+        assert os.path.isdir("/app/dsl_linter"), "dsl_linter should be a directory"
+        assert os.path.exists("/app/dsl_linter/__init__.py"), "dsl_linter/__init__.py should exist"
+
+    def test_linter_package_structure(self):
+        """Test that all package files exist"""
+        assert os.path.exists("/app/dsl_linter/lexer.py"), "lexer.py should exist"
+        assert os.path.exists("/app/dsl_linter/ast_nodes.py"), "ast_nodes.py should exist"
+        assert os.path.exists("/app/dsl_linter/parser.py"), "parser.py should exist"
+        assert os.path.exists("/app/dsl_linter/linter.py"), "linter.py should exist"
+        assert os.path.exists("/app/dsl_linter/rules"), "rules directory should exist"
+        assert os.path.isdir("/app/dsl_linter/rules"), "rules should be a directory"
+        assert os.path.exists("/app/dsl_linter/rules/__init__.py"), "rules/__init__.py should exist"
+        assert os.path.exists("/app/dsl_linter/rules/base.py"), "rules/base.py should exist"
+        assert os.path.exists("/app/dsl_linter/rules/basic.py"), "rules/basic.py should exist"
+        assert os.path.exists("/app/dsl_linter/rules/advanced.py"), "rules/advanced.py should exist"
 
     def test_linter_is_importable(self):
         """Test that linter module can be imported"""
@@ -515,6 +530,62 @@ name3 = "value3"
             stmt = ast.statements[0]
             assert hasattr(stmt, 'line'), "Statement nodes should have line attribute"
             assert hasattr(stmt, 'column'), "Statement nodes should have column attribute"
+
+    def test_ast_nodes_are_hashable(self):
+        """Test that AST nodes are hashable (can be used as dictionary keys)"""
+        from dsl_linter import Lexer, Parser
+
+        source = '''# Comment
+name = "value"
+section database {
+    port = 5432
+    items = [1, 2, 3]
+}
+enabled = true'''
+        lexer = Lexer(source)
+        tokens = lexer.tokenize()
+        parser = Parser(tokens)
+        ast = parser.parse()
+
+        # Test that Program node is hashable
+        node_map = {}
+        node_map[ast] = "program"
+        assert node_map[ast] == "program", "Program nodes should be usable as dict keys"
+
+        # Test that all statement types are hashable
+        for stmt in ast.statements:
+            try:
+                test_dict = {stmt: "statement"}
+                assert test_dict[stmt] == "statement"
+            except TypeError as e:
+                assert False, f"AST node {type(stmt).__name__} is not hashable: {e}"
+
+        # Test that value nodes are hashable (check assignments and list values)
+        for stmt in ast.statements:
+            if hasattr(stmt, 'value'):  # Assignment node
+                try:
+                    value_dict = {stmt.value: "value"}
+                    assert value_dict[stmt.value] == "value"
+                except TypeError as e:
+                    assert False, f"Value node {type(stmt.value).__name__} is not hashable: {e}"
+
+                # Check list element hashability
+                if hasattr(stmt.value, 'values'):  # ListValue
+                    for elem in stmt.value.values:
+                        try:
+                            elem_dict = {elem: "element"}
+                            assert elem_dict[elem] == "element"
+                        except TypeError as e:
+                            assert False, f"List element {type(elem).__name__} is not hashable: {e}"
+
+        # Test that section nodes are hashable
+        for stmt in ast.statements:
+            if hasattr(stmt, 'statements'):  # Section node
+                try:
+                    section_dict = {stmt: "section"}
+                    assert section_dict[stmt] == "section"
+                except TypeError as e:
+                    assert False, f"Section node is not hashable: {e}"
 
 
 class TestLintingRules:
