@@ -33,10 +33,14 @@ instruction: |-
   - Build one single scikit-learn Pipeline that includes both preprocessing and the model
   - Don't manually fit or transform data outside the Pipeline—let the Pipeline handle everything
   - Use a ColumnTransformer to handle different column types:
+    * Name the ColumnTransformer step "pre" in your main Pipeline
+    * Name the numeric preprocessing pipeline "num" 
+    * Name the categorical preprocessing pipeline "cat"
     * Numeric columns: fill missing values → clip outliers (1st to 99th percentile) → standardize (zero mean, unit variance)
     * Categorical columns: fill missing values → one-hot encode (handle_unknown="ignore", sparse_output=False)
-  - Put your final classifier at the end of the Pipeline
+  - Name your final classifier step "clf" in the Pipeline
   - Write a custom transformer class for the percentile clipping step so the whole Pipeline can be saved and reloaded
+
   
   3. The Model
   - Use LogisticRegression as your base classifier with these exact settings:
@@ -47,16 +51,17 @@ instruction: |-
   - Wrap it with CalibratedClassifierCV to get better probability estimates:
     * method="isotonic"
     * cv=3
-    * n_jobs=1
-  
+    * n_jobs=1 (important for reproducibility)
+
   4. Train/Test Split and Cross-Validation
   - Split your data: 80% train, 20% test
     * Use: train_test_split(test_size=0.2, stratify=y, random_state=42)
   - Run 5-fold stratified cross-validation on the training data only:
     * Use: StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
-    * Get out-of-fold predicted probabilities
-    * Calculate ROC-AUC and PR-AUC from those predictions
+    * Get out-of-fold predicted probabilities (don't train and predict on same data)
+    * Calculate ROC-AUC and PR-AUC from those out-of-fold predictions
     * Report the mean (you can report std as 0.0 for simplicity)
+
   
   5. Test Set Evaluation
   After training on the full training set, evaluate on the held-out test set.
