@@ -1468,7 +1468,6 @@ def test_all_currency_codes_supported():
     for currency_code in currencies_in_input:
         if currency_code in all_required_currencies:
             # Verify at least one transaction with this currency was converted correctly
-            found_example = False
             for tx_id, output_row in output_data.items():
                 if tx_id in input_data:
                     last_occurrence = input_data[tx_id][-1][1]
@@ -1483,7 +1482,6 @@ def test_all_currency_codes_supported():
                             # If we have a valid amount, verify it was converted
                             # (can't verify exact conversion without reimplementing parser, but verify it's reasonable)
                             currencies_tested.add(currency_code)
-                        found_example = True
                         break
     
     # Verify we tested at least some currencies from the required list
