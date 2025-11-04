@@ -23,6 +23,9 @@ instruction: |-
   Must be non-empty and unique.
   Remove duplicates based on transaction_id (keep last occurrence).
   Any row with missing or empty transaction_id → discard.
+  
+  IMPORTANT: Duplicates are only counted among valid (non-empty) transaction IDs.
+  Duplicates removed = (total rows with valid transaction_id) - (unique transaction_ids in output).
 
   2. Amount Normalization
 
@@ -33,7 +36,12 @@ instruction: |-
   - If ',' is used as the decimal separator (e.g., '1.234,56'), interpret as European.
   - If '.' appears multiple times and acts as a thousands separator (e.g., '1.213.543'),
     interpret as European (comma-less integer with period grouping).
-  - Otherwise, assume standard (US/international) format with '.' as decimal separator.
+  - If a comma appears followed by exactly 3 digits at the end (e.g., '150,000', '¥150,000'), 
+    interpret as thousands separator (US/international format), not decimal separator.
+  - If a comma appears and the digits after it are more than 2 digits (e.g., '1,234'), 
+    interpret as thousands separator (US/international format).
+  - Otherwise, if '.' is present with 1-2 digits after it, assume standard (US/international) 
+    format with '.' as decimal separator.
 
   Convert all values to float in USD using the exchange rates below:
 
@@ -51,6 +59,8 @@ instruction: |-
 
   Round using HALF_UP rounding (1.005 → 1.01, 2.345 → 2.35).
   Negative, missing, or unparseable amounts → set to 0.00.
+  
+  Format all amount_usd values with exactly 2 decimal places (e.g., "55.00", not "55.0" or "55").
 
   3. Date Validation
 
@@ -74,6 +84,11 @@ instruction: |-
 
   Must be a valid ISO country name (non-empty string).
   Any empty, missing, or invalid country names should be mapped to "UNKNOWN".
+  
+  Examples of invalid country names that must become "UNKNOWN":
+  - Empty string or whitespace-only
+  - Invalid country names like "UnknownCountry", "Invalid", etc.
+  - Any value that is not a recognized ISO country name
 
 
 
