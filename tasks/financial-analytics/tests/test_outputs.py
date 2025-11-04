@@ -167,7 +167,7 @@ def test_invalid_amounts_become_exact_zero_point_zero_zero():
                     # Try to detect if it's clearly negative
                     if amount_str.strip().startswith('-'):
                         should_be_zero = True
-                except:
+                except (AttributeError, TypeError):
                     pass
             
             # If we expect it to be zero, verify it's exactly "0.00"
@@ -1337,13 +1337,6 @@ def test_half_up_rounding_specific_cases():
         'BRL': Decimal('0.20'), 'ARS': Decimal('0.0011')
     }
     
-    # Known test cases with expected pre-rounded values
-    # These are amounts we can reliably parse and compute
-    known_test_cases = {
-        # Format: (tx_id, expected_numeric_value, currency, expected_pre_rounded_usd)
-        # We'll compute these from known conversions
-    }
-    
     # Validate HALF_UP rounding for all transactions by computing expected pre-rounded values
     for tx_id, output_row in output_data.items():
         if tx_id in input_data:
@@ -1488,7 +1481,6 @@ def test_all_currency_codes_supported():
     # CRITICAL: Explicitly verify that ALL listed currency codes are supported
     # by checking if the solution code handles them (if we can't test with actual data)
     # We verify that any currency in the required list that appears in input is handled correctly
-    missing_currencies = []
     for currency_code in all_required_currencies.keys():
         if currency_code not in currencies_in_input:
             # Currency not in dataset, but we verify the exchange rate exists
