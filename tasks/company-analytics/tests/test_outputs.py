@@ -371,3 +371,13 @@ def test_summary_counts_exist_in_json():
     for key in summary.keys():
         if any(entity in key.lower() for entity in required_entities):
             assert isinstance(summary[key], int), f"Summary count for {key} should be integer"
+
+
+def test_department_average_scores_within_range():
+    """
+    Task requires: All average performance values (avg_performance_score)
+    should fall within the range 0–5.
+    """
+    df = pd.read_csv(f"{OUTPUT_DIR}/department_analytics.csv")
+    assert df["avg_performance_score"].between(0, 5).all(), \
+        "avg_performance_score values out of 0–5 range"

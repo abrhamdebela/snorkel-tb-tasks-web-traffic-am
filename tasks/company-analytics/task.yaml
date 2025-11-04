@@ -13,12 +13,12 @@ instruction: |-
 
   1. Data Extraction and Flattening: Extract and flatten the nested JSON data into the following CSV tables:
     - departments.csv: department_id, name, manager_id, manager_name, budget, employee_count, total_salary_budget.
-    - employees.csv: Employee details with department associations with this columns: employee_id, name, email, department_id, department_name, position, hire_date, salary, performance_rating.
-    - projects.csv: Project information with employee assignments with this columns: project_id, name, description, start_date, end_date, budget, status.
-    - skills.csv: Employee skills matrix with this columns: `employee_id, skill, department_id`
-    - performance.csv: Performance metrics and calculations with this columns: `employee_id, department_id, performance_rating, utilization_rate, performance_score, performance_tier.
-    - department_analytics.csv: Department productivity and budget analytics with this columns:department_id, department_name, total_employees, total_salary_cost, avg_performance_score, avg_utilization_rate, budget, budget_utilization
-    - skill_analysis.csv :Department-level skill gap analysis with this columns: department_id, skill, employee_count, total_employees, skill_coverage.
+    - employees.csv: Employee details with department associations with these columns: employee_id, name, email, department_id, department_name, position, hire_date, salary, performance_rating.
+    - projects.csv: Project information with employee assignments with these columns: project_id, name, description, start_date, end_date, budget, status.
+    - skills.csv: Employee skills matrix with these columns: employee_id, skill, department_id
+    - performance.csv: Performance metrics and calculations with these columns: employee_id, department_id, performance_rating, utilization_rate, performance_score, performance_tier.
+    - department_analytics.csv: Department productivity and budget analytics with these columns:department_id, department_name, total_employees, total_salary_cost, avg_performance_score, avg_utilization_rate, budget, budget_utilization
+    - skill_analysis.csv :Department-level skill gap analysis with these columns: department_id, skill, employee_count, total_employees, skill_coverage.
 
   2. Complex Transformations: Implement the following business logic transformations:
      - Employee utilization rate = (sum of project hours_logged / 160)  
@@ -82,8 +82,8 @@ tags:
   - pandas
   - data-validation
 parser_name: pytest
-max_agent_timeout_sec: 360.0
-max_test_timeout_sec: 60.0
+max_agent_timeout_sec: 600.0
+max_test_timeout_sec: 120.0
 run_tests_in_same_shell: false
 disable_asciinema: false
 estimated_duration_sec: 10800
