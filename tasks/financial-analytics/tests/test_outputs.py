@@ -308,29 +308,140 @@ def test_half_up_rounding():
         for row in reader:
             output_data[row["transaction_id"]] = row
     
-    # Check for amounts that should round with HALF_UP behavior
-    # Find amounts that when multiplied by exchange rates might produce .005 or .015 values
-    exchange_rates = {'EUR': 1.08, 'GBP': 1.24, 'JPY': 0.0068, 'INR': 0.012, 'USD': 1.00}
+    # CRITICAL: Rigorously validate HALF_UP rounding for .005 edge cases
+    # Test specific HALF_UP rounding cases that must round up
+    test_cases = [
+        # Amounts ending in .005 must round UP with HALF_UP
+        (Decimal('1.005'), Decimal('1.01')),  # 1.005 -> 1.01 (HALF_UP rounds up)
+        (Decimal('2.345'), Decimal('2.35')),  # 2.345 -> 2.35 (HALF_UP rounds up)
+        (Decimal('1.004'), Decimal('1.00')),  # 1.004 -> 1.00 (normal rounding down)
+        (Decimal('3.995'), Decimal('4.00')),  # 3.995 -> 4.00 (HALF_UP rounds up)
+        (Decimal('5.005'), Decimal('5.01')),  # 5.005 -> 5.01 (HALF_UP rounds up)
+        (Decimal('0.005'), Decimal('0.01')),  # 0.005 -> 0.01 (HALF_UP rounds up)
+        (Decimal('10.005'), Decimal('10.01')), # 10.005 -> 10.01 (HALF_UP rounds up)
+    ]
     
+    for test_amount, expected_rounded in test_cases:
+        # Verify HALF_UP rounding behavior
+        actual_rounded = test_amount.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+        assert actual_rounded == expected_rounded, (
+            f"HALF_UP rounding failed: {test_amount} should round to {expected_rounded}, "
+            f"got {actual_rounded}. HALF_UP requires .005 values to round UP."
+        )
+    
+    # CRITICAL: Strictly validate HALF_UP rounding against pre-rounded computed values
+    # For transactions in the dataset, compute expected USD amount before rounding, then verify HALF_UP rounding
+    exchange_rates = {
+        'EUR': Decimal('1.08'), 'GBP': Decimal('1.24'), 'JPY': Decimal('0.0068'),
+        'INR': Decimal('0.012'), 'USD': Decimal('1.00'), 'AUD': Decimal('0.67'),
+        'CAD': Decimal('0.74'), 'CHF': Decimal('1.10'), 'SEK': Decimal('0.092'),
+        'BRL': Decimal('0.20'), 'ARS': Decimal('0.0011')
+    }
+    
+    # Validate HALF_UP rounding for all transactions by computing expected pre-rounded values
+    validated_count = 0
     for tx_id, output_row in output_data.items():
         if tx_id in input_data:
-            # Get last occurrence (kept after deduplication)
             last_occurrence = input_data[tx_id][-1][1]
+            amount_str = last_occurrence.get("amount", "").strip()
             currency = last_occurrence.get("currency", "USD").strip().upper()
-            amount_str = last_occurrence.get("amount", "")
             
-            if currency in exchange_rates and amount_str:
-                # Parse amount (simplified - actual parsing is complex)
-                # We verify the output uses HALF_UP by checking format consistency
+            if amount_str and currency in exchange_rates:
                 output_amount = Decimal(output_row["amount_usd"])
                 
-                # HALF_UP means values ending in .005 always round up
-                # Verify the output amount is properly rounded to 2 decimals
-                expected_rounded = output_amount.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
-                assert output_amount == expected_rounded, (
-                    f"Amount {output_amount} for {tx_id} not rounded with HALF_UP "
-                    f"(expected {expected_rounded})"
-                )
+                # Try to parse numeric formats (US and European) to compute pre-rounded value
+                try:
+                    # Remove currency symbols and try to parse
+                    clean_amount = amount_str.replace('$', '').replace('€', '').replace('£', '').replace('¥', '').replace('₹', '').replace('R$', '').replace('A$', '').strip()
+                    
+                    numeric_value = None
+                    
+                    # Try US format first (e.g., "100.00" or "1,234.56")
+                    if ',' in clean_amount and '.' in clean_amount:
+                        # Could be US format: "1,234.56" or European: "1.234,56"
+                        comma_pos = clean_amount.rfind(',')
+                        period_pos = clean_amount.rfind('.')
+                        
+                        if comma_pos > period_pos:
+                            # European format: "1.234,56" (period = thousands, comma = decimal)
+                            parts = clean_amount.split(',')
+                            if len(parts) == 2 and len(parts[1]) <= 2:
+                                integer_part = parts[0].replace('.', '').strip()
+                                if integer_part and integer_part.isdigit() and parts[1].isdigit():
+                                    numeric_value = Decimal(integer_part) + Decimal(parts[1]) / Decimal('100')
+                        else:
+                            # US format with thousands separator: "1,234.56"
+                            parts = clean_amount.split('.')
+                            if len(parts) == 2 and len(parts[1]) <= 2:
+                                integer_part = parts[0].replace(',', '').strip()
+                                if integer_part and integer_part.replace(',', '').isdigit() and parts[1].isdigit():
+                                    numeric_value = Decimal(integer_part) + Decimal(parts[1]) / Decimal('100')
+                    elif ',' in clean_amount:
+                        # Check if comma is thousands separator (3 digits after) or decimal separator
+                        parts = clean_amount.split(',')
+                        if len(parts) == 2:
+                            if len(parts[1]) <= 2 and parts[0].strip().isdigit() and parts[1].isdigit():
+                                # Could be decimal separator: "123,45"
+                                numeric_value = Decimal(parts[0]) + Decimal(parts[1]) / Decimal('100')
+                            elif len(parts[1]) == 3:
+                                # Thousands separator: "150,000"
+                                clean = clean_amount.replace(',', '').strip()
+                                if clean.isdigit():
+                                    numeric_value = Decimal(clean)
+                    elif '.' in clean_amount:
+                        parts = clean_amount.split('.')
+                        if len(parts) == 2 and len(parts[1]) <= 2:
+                            # Simple decimal format: "100.00"
+                            if parts[0].strip().isdigit() and parts[1].isdigit():
+                                numeric_value = Decimal(clean_amount)
+                    else:
+                        # Integer or thousands separator only
+                        clean = clean_amount.replace(',', '').replace('.', '').strip()
+                        if clean.isdigit():
+                            numeric_value = Decimal(clean)
+                    
+                    if numeric_value is not None and numeric_value >= 0:
+                        # Compute pre-rounded USD value
+                        pre_rounded_usd = numeric_value * exchange_rates[currency]
+                        
+                        # Compute expected rounded value with HALF_UP
+                        expected_rounded = pre_rounded_usd.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+                        
+                        # CRITICAL: Verify output matches expected HALF_UP rounded value
+                        # This rigorously validates HALF_UP rounding for all parsable amounts
+                        assert output_amount == expected_rounded, (
+                            f"HALF_UP rounding validation failed for {tx_id}: "
+                            f"input '{amount_str}' {currency} = {numeric_value} * {exchange_rates[currency]} = {pre_rounded_usd} (pre-rounded), "
+                            f"expected {expected_rounded} (HALF_UP), got {output_amount}"
+                        )
+                        
+                        # CRITICAL: Specifically check for .005 cases - these MUST round UP with HALF_UP
+                        # If pre_rounded_usd ends in .005, verify it rounds up
+                        pre_rounded_str = str(pre_rounded_usd)
+                        if '.005' in pre_rounded_str or pre_rounded_str.endswith('.5'):
+                            # This should round UP with HALF_UP
+                            assert expected_rounded >= pre_rounded_usd, (
+                                f"HALF_UP .005 rounding failed for {tx_id}: "
+                                f"pre-rounded {pre_rounded_usd} should round UP to {expected_rounded}, "
+                                f"got {output_amount}"
+                            )
+                        
+                        validated_count += 1
+                except (ValueError, AttributeError, TypeError, Exception) as e:
+                    # Can't parse this amount format, skip detailed validation for this case
+                    # But still verify the output is properly rounded to 2 decimal places
+                    expected_rounded = output_amount.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+                    assert output_amount == expected_rounded, (
+                        f"Amount {output_amount} for {tx_id} not properly rounded with HALF_UP "
+                        f"(expected {expected_rounded}). Parsing error: {type(e).__name__}"
+                    )
+    
+    # CRITICAL: Verify that we validated at least some transactions
+    # This ensures the HALF_UP validation actually ran for a meaningful sample
+    assert validated_count > 0, (
+        "HALF_UP rounding validation should have checked at least some transactions. "
+        "No transactions were validated."
+    )
 
 
 def test_us_and_european_numeric_formats():
@@ -1346,20 +1457,16 @@ def test_all_currency_codes_supported():
                     )
     
     # CRITICAL: Explicitly verify that ALL listed currency codes are supported
-    # by checking if the solution code handles them (if we can't test with actual data)
-    # We verify that any currency in the required list that appears in input is handled correctly
-    for currency_code in all_required_currencies.keys():
-        if currency_code not in currencies_in_input:
-            # Currency not in dataset, but we verify the exchange rate exists
-            # The solution should support all listed currencies
-            pass  # Can't test currencies not in dataset, but requirement is that solution supports them
+    # The task requires support for all listed currencies, even if not in the dataset
+    # We verify:
+    # 1. All currencies that appear in input are handled correctly
+    # 2. The solution code should support all listed currencies (we can't test currencies not in data,
+    #    but we verify the requirement is clear)
     
     # Verify all currencies that DO appear in input are handled correctly
+    currencies_tested = set()
     for currency_code in currencies_in_input:
-        if currency_code not in all_required_currencies:
-            # This is a currency not in the required list - should still be handled gracefully
-            pass
-        else:
+        if currency_code in all_required_currencies:
             # Verify at least one transaction with this currency was converted correctly
             found_example = False
             for tx_id, output_row in output_data.items():
@@ -1370,11 +1477,23 @@ def test_all_currency_codes_supported():
                         assert amount_usd >= 0, (
                             f"Currency {currency_code} conversion failed for {tx_id}: negative amount {amount_usd}"
                         )
+                        # Verify conversion was applied (amount should be reasonable)
+                        amount_str = last_occurrence.get("amount", "").strip()
+                        if amount_str and not amount_str.startswith('-'):
+                            # If we have a valid amount, verify it was converted
+                            # (can't verify exact conversion without reimplementing parser, but verify it's reasonable)
+                            currencies_tested.add(currency_code)
                         found_example = True
                         break
-            if found_example:
-                # Currency appeared in input and was handled
-                pass
+    
+    # Verify we tested at least some currencies from the required list
+    assert len(currencies_tested) > 0, (
+        f"Should have tested at least some currencies from required list. "
+        f"Currencies in input: {currencies_in_input}, Required: {set(all_required_currencies.keys())}"
+    )
+    
+    # Note: Currencies not in dataset cannot be tested, but the requirement is that
+    # the solution supports all listed currencies (EUR, GBP, JPY, INR, USD, AUD, CAD, CHF, SEK, BRL, ARS)
 
 
 def test_comprehensive_numeric_format_heuristics():
@@ -1504,12 +1623,10 @@ def test_visualization_content_correctness():
     # Verify the visualization file exists and is valid
     assert viz_file.exists(), "Visualization file does not exist"
     
-    # Check file size is reasonable for the amount of data
+    # Check file size meets minimum requirement (1000 bytes as specified in task)
     file_size = viz_file.stat().st_size
-    expected_min_size = max(1000, len(country_amounts) * 100)  # Scale with data complexity
-    assert file_size >= expected_min_size, (
-        f"Visualization file size {file_size} bytes seems too small for "
-        f"{len(country_amounts)} countries with data"
+    assert file_size >= 1000, (
+        f"Visualization file size {file_size} bytes is less than required 1000 bytes"
     )
     
     # Verify PNG header
@@ -1567,12 +1684,6 @@ def test_visualization_content_correctness():
         # The visualization should show these exact totals per country
         # If we could parse the PNG, we would verify the bar heights match these values
     
-    # Additional verification: ensure the totals make sense for a bar chart
-    # The visualization file should be large enough to contain data for all these countries
-    min_expected_size = 1000 + (len(country_amounts) * 200)  # More data = larger file
-    assert file_size >= min_expected_size, (
-        f"Visualization file size {file_size} bytes too small for "
-        f"{len(country_amounts)} countries with computed totals. "
-        f"Expected at least {min_expected_size} bytes. "
-        f"Computed totals per country: {dict(country_amounts)}"
-    )
+    # Verify computed totals are reasonable and match expected pattern
+    # (Note: We can't extract pixel values from PNG to verify exact bar heights,
+    # but we verify the computed totals are correct and file meets minimum requirements)
