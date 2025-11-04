@@ -29,7 +29,12 @@ instruction: |-
   Remove all currency symbols (example: $, €, £, ¥, ₹).
   Support both US format (1,234.56) and European format (1.234,56):
 
-  If the last separator is a comma, interpret as European format.
+  Detect number format:
+  - If ',' is used as the decimal separator (e.g., '1.234,56'), interpret as European.
+  - If '.' appears multiple times and acts as a thousands separator (e.g., '1.213.543'),
+    interpret as European (comma-less integer with period grouping).
+  - Otherwise, assume standard (US/international) format with '.' as decimal separator.
+
   Convert all values to float in USD using the exchange rates below:
 
   EUR -> 1.08
@@ -68,7 +73,7 @@ instruction: |-
   5. Country Validation
 
   Must be a valid ISO country name (non-empty string).
-  Empty or missing → "UNKNOWN".
+  Any empty, missing, or invalid country names should be mapped to "UNKNOWN".
 
 
 
