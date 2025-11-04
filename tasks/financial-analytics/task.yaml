@@ -25,8 +25,21 @@ instruction: |-
   Any row with missing or empty transaction_id → discard.
   
   IMPORTANT: Duplicates are only counted among valid (non-empty) transaction IDs.
-  Duplicates removed = (unique valid transaction_ids in input) - (unique transaction_ids in output).
-  Note: This counts how many duplicate transaction_ids were consolidated (not how many duplicate rows were removed).
+  
+  Duplicates removed calculation:
+  - First, collect all valid (non-empty) transaction_ids from the input into a set (unique IDs)
+  - After processing (keeping last occurrence of each transaction_id), count unique transaction_ids in output
+  - Duplicates removed = (count of unique valid transaction_ids in input) - (count of unique transaction_ids in output)
+  
+  Note: This counts how many unique transaction_ids were consolidated/removed (not how many duplicate rows were removed).
+  If all unique transaction_ids from input are preserved in output, duplicates_removed = 0.
+  If some unique transaction_ids are lost during processing, that difference is counted.
+  
+  Example calculation:
+  - Input rows: [tx1, tx2, tx2, tx3, tx3, tx3] (all valid transaction_ids)
+  - Unique valid transaction_ids in input: {tx1, tx2, tx3} = 3
+  - After keeping last occurrence: output has [tx1, tx2, tx3] with unique IDs: {tx1, tx2, tx3} = 3
+  - Duplicates removed: 3 - 3 = 0 (no unique IDs were lost, duplicates were consolidated)
 
   2. Amount Normalization
 
@@ -113,10 +126,16 @@ instruction: |-
   Save to /app/output/transactions_cleaned.csv
   Format:
 
-  UTF-8 with LF line endings
+  UTF-8 encoding with LF line endings (CRLF line endings are NOT acceptable)
   Comma delimiter, double quotes for fields containing commas (proper CSV quoting)
   Columns (in order): transaction_id, user_id, country, amount_usd, date, status
   Sorted by country (alphabetically, case-insensitive).
+  
+  CRITICAL: When writing CSV files in Python, you MUST explicitly control line endings:
+  - Use `open(file, 'w', newline='', encoding='utf-8')` for CSV files
+  - Use `csv.writer(..., lineterminator='\n')` to ensure LF-only line endings
+  - On Windows, Python defaults to CRLF unless explicitly controlled
+  - The output file must contain only LF (\n) characters, no CR (\r) characters
   
   Efficiency requirement: Output file size should be reasonable (approximately < 300 bytes per record).
   
@@ -125,7 +144,13 @@ instruction: |-
 
   2. Summary Report
 
-  Save to /app/output/summary_report.txt (UTF-8, LF)
+  Save to /app/output/summary_report.txt (UTF-8 encoding with LF line endings)
+  
+  CRITICAL: When writing the report file, explicitly control line endings:
+  - Use `open(file, 'w', encoding='utf-8', newline='\n')` to ensure LF-only line endings
+  - On Windows, Python defaults to CRLF unless explicitly controlled
+  - The output file must contain only LF (\n) characters, no CR (\r) characters
+  
   Must include:
 
   Total input records
@@ -163,7 +188,10 @@ instruction: |-
   Duplicate detection based only on transaction_id (keep last).
   Invalid transaction IDs are excluded entirely.
   “INVALID” dates or statuses remain in output (not removed).
-  All outputs UTF-8 with LF endings.
+  All outputs UTF-8 with LF line endings (CRLF NOT acceptable).
+  When writing files in Python, explicitly control line endings using newline parameter:
+  - CSV files: `open(file, 'w', newline='', encoding='utf-8')` with `csv.writer(..., lineterminator='\n')`
+  - Text files: `open(file, 'w', encoding='utf-8', newline='\n')`
   Efficiently handles 1000+ records.
 
 
