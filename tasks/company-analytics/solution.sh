@@ -160,27 +160,42 @@ class CompanyDataProcessor:
         perf = self.calculate_performance(emps, assigns)
         dept_analytics = self.department_analytics(depts, perf)
         skill_analytics = self.skill_analysis(skills)
-        validation = self.validate({
-            "departments": depts, "employees": emps,
-            "projects": projs, "performance": perf
-        })
+        validation = self.validate(
+            {
+                "departments": depts,
+                "employees": emps,
+                "projects": projs,
+                "skills": skills,
+                "performance": perf,
+                "department_analytics": dept_analytics,
+                "skill_analysis": skill_analytics,
+            }
+        )
+
 
         # -------- Save outputs --------
         depts.to_csv(f"{self.output_dir}/departments.csv", index=False)
         emps.to_csv(f"{self.output_dir}/employees.csv", index=False)
         projs.to_csv(f"{self.output_dir}/projects.csv", index=False)
         skills.to_csv(f"{self.output_dir}/skills.csv", index=False)
-        perf.to_csv(f"{self.output_dir}/performance.csv", index=False)
+        perf_out = perf[[
+    "employee_id",
+    "department_id",
+    "performance_rating",
+    "utilization_rate",
+    "performance_score",
+    "performance_tier"
+]]
+        perf_out.to_csv(f"{self.output_dir}/performance.csv", index=False)
         dept_analytics.to_csv(f"{self.output_dir}/department_analytics.csv", index=False)
         skill_analytics.to_csv(f"{self.output_dir}/skill_analysis.csv", index=False)
-        perf.to_parquet(f"{self.output_dir}/performance.parquet", index=False)
 
         report = {
             "summary": {
-                "total_departments": len(depts),
-                "total_employees": len(emps),
-                "total_projects": len(projs),
-                "total_skills": skills["skill"].nunique()
+                "departments": len(depts),
+                "employees": len(emps),
+                "projects": len(projs),
+                "skills": skills["skill"].nunique()
             },
             "top_performers": perf.nlargest(3, "performance_score")[["name", "performance_score", "department_name"]].to_dict("records"),
             "department_performance": dept_analytics[["department_name", "avg_performance_score", "avg_utilization_rate"]].to_dict("records"),

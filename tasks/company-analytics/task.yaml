@@ -9,7 +9,7 @@ instruction: |-
   
   Data Processing Requirements:
     The solution must implement all processing logic, flatten nested data, apply calculations, and save
-    the final results into specific CSV, Parquet, and JSON files under `/app/output/`.
+    the final results into specific CSV, and JSON files under `/app/output/`.
 
   1. Data Extraction and Flattening: Extract and flatten the nested JSON data into the following CSV tables:
     - departments.csv: department_id, name, manager_id, manager_name, budget, employee_count, total_salary_budget.
@@ -46,23 +46,11 @@ instruction: |-
       where each table name (e.g., "departments", "employees", "projects", etc.)
       is a nested object containing exactly the following keys:
       total_records, columns_with_nulls, duplicate_records, and data_types.
-      Example structure:
-      {
-        "data_quality_report": {
-          "departments": {
-            "total_records": 3,
-            "columns_with_nulls": {"budget": 0, "name": 0},
-            "duplicate_records": 0,
-            "data_types": {"budget": "float64", "name": "object"}
-          }
-        }
-      }
-
+     
 
   4. Output requirements
 
     - Save all CSV files to the app/output/ directory.
-    - `/app/output/performance.parquet`: Parquet version of the performance table
     - `/app/output/analytics_report.json`: JSON analytics report with the following top-level keys:
       - summary: total counts of departments, employees, projects, skills
       - top_performers: list of top 3 employees (name, performance_score, department_name)

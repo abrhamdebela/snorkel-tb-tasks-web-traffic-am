@@ -20,13 +20,10 @@ if [ "$PWD" = "/" ]; then
     exit 1
 fi
 
+uv init
+uv add pytest==8.4.1 pandas numpy pyarrow 
 
-# Create and activate isolated virtual environment
-uv venv
-source .venv/bin/activate
 
-# Install dependencies using uv pip install (no pyproject.toml needed)
-uv pip install pytest==8.4.1 pandas numpy pyarrow fastparquet
+uv run pytest $TEST_DIR/test_outputs.py -rA -vv --maxfail=3
 
-# Run tests using uv
-pytest $TEST_DIR/test_outputs.py -rA
+

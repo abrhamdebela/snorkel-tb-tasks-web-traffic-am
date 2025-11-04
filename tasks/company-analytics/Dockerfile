@@ -48,7 +48,6 @@ RUN apt-get update && apt-get install -y curl wget tmux asciinema && rm -rf /var
 RUN pip install \
     pandas==1.5.3 \
     numpy==1.24.3 \
-    pyarrow==12.0.1 \
     openpyxl==3.1.2 \
     jsonschema==4.17.3
 
