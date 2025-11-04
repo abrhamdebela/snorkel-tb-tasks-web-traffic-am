@@ -72,12 +72,12 @@ instruction: |-
 
   3. Linting Rules
      - Create a base LintRule class with a check() method that takes (node, context) parameters
-       in rules/base.py
+       in /app/dsl_linter/rules/base.py
      - Create a LintError class with these attributes: rule (string), message (string),
-       line (int), column (int), severity (string, default "error") in rules/base.py
+       line (int), column (int), severity (string, default "error") in /app/dsl_linter/rules/base.py
      - Implement these specific rule classes (all must be importable from dsl_linter):
 
-     Basic Rules (rules/basic.py - simple, single-node or single-scope checks):
+     Basic Rules (/app/dsl_linter/rules/basic.py - simple, single-node or single-scope checks):
        * NoEmptySections - rule="no-empty-sections", detects sections with no direct assignments
          (sections containing only nested sections or comments should be flagged as empty),
          error message must include the word "empty"
@@ -101,7 +101,7 @@ instruction: |-
        * KeyOrderingRule - rule="key-ordering", validates that assignment keys within each
          section appear in alphabetical order, returns severity="warning"
 
-     Advanced Rules (rules/advanced.py - complex, multi-node or cross-scope analysis):
+     Advanced Rules (/app/dsl_linter/rules/advanced.py - complex, multi-node or cross-scope analysis):
        * RequiredSectionsRule - rule="required-sections", accepts required_sections list,
          checks all required sections are present
        * TypeConsistencyRule - rule="type-consistency", detects when the same key name is
@@ -174,9 +174,9 @@ instruction: |-
   Technical Requirements:
   - All classes must be importable from dsl_linter package (e.g., `from dsl_linter import Lexer, Parser, Linter, LintError, NoEmptySections`)
   - The __init__.py files must properly export all classes to enable direct imports
-  - Organize code logically: lexer.py for lexical analysis, ast_nodes.py for AST definitions,
-    parser.py for parsing, rules/base.py for base classes, rules/basic.py for simple rules,
-    rules/advanced.py for complex rules, and linter.py for the linting engine
+  - Organize code logically: /app/dsl_linter/lexer.py for lexical analysis, /app/dsl_linter/ast_nodes.py for AST definitions,
+    /app/dsl_linter/parser.py for parsing, /app/dsl_linter/rules/base.py for base classes, /app/dsl_linter/rules/basic.py for simple rules,
+    /app/dsl_linter/rules/advanced.py for complex rules, and /app/dsl_linter/linter.py for the linting engine
   - Tokens and AST nodes must track accurate line/column positions
   - Error messages must be clear and actionable
   - Example files must demonstrate real-world usage patterns
