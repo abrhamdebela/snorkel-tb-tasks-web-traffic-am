@@ -25,7 +25,8 @@ instruction: |-
   Any row with missing or empty transaction_id → discard.
   
   IMPORTANT: Duplicates are only counted among valid (non-empty) transaction IDs.
-  Duplicates removed = (total rows with valid transaction_id) - (unique transaction_ids in output).
+  Duplicates removed = (unique valid transaction_ids in input) - (unique transaction_ids in output).
+  Note: This counts how many duplicate transaction_ids were consolidated (not how many duplicate rows were removed).
 
   2. Amount Normalization
 
@@ -87,8 +88,11 @@ instruction: |-
   
   Examples of invalid country names that must become "UNKNOWN":
   - Empty string or whitespace-only
-  - Invalid country names like "UnknownCountry", "Invalid", etc.
+  - Invalid country names like "UnknownCountry", "Invalid", "TestCountry", "NA", etc.
   - Any value that is not a recognized ISO country name
+  
+  Validation: Check if the country name is a valid ISO country name. If not, map it to "UNKNOWN".
+  This includes both empty/missing values and non-empty invalid country names.
 
 
 
@@ -103,6 +107,8 @@ instruction: |-
   Comma delimiter, double quotes for fields with commas
   Columns (in order): transaction_id, user_id, country, amount_usd, date, status
   Sorted by country (alphabetically, case-insensitive).
+  
+  Efficiency requirement: Output file size should be reasonable (approximately < 300 bytes per record).
 
   2. Summary Report
 
@@ -126,6 +132,9 @@ instruction: |-
   Bar chart: total completed transaction amount per country (USD)
   Must be valid PNG with proper header (89 50 4E 47 0D 0A 1A 0A)
   Minimum file size: 1000 bytes
+  Minimum dimensions: 100x100 pixels
+  Visualization complexity: Must have sufficient visual detail (e.g., multiple distinct colors/bars) 
+  to represent a meaningful bar chart with data for different countries
 
 
 
