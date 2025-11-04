@@ -61,9 +61,14 @@ instruction: |-
   SEK -> 0.092
   BRL -> 0.20
   ARS -> 0.0011
+  
+  Note: The implementation must support all listed currency codes. Not all currencies may appear 
+  in the test dataset, but the conversion logic must correctly handle any currency from this list.
 
   Round using HALF_UP rounding. Examples: 1.005 → 1.01, 2.345 → 2.35, 1.004 → 1.00.
-  Negative, missing, or unparseable amounts → set to 0.00 (must be exactly "0.00" in output).
+  Implementation must use HALF_UP rounding correctly for all amounts (values ending in .005 round up).
+  
+  Negative, missing, or unparseable amounts → set to 0.00 (must be exactly "0.00" in output, not "0" or "0.0").
   
   Format all amount_usd values with exactly 2 decimal places (example: "55.00", not "55.0" or "55").
   All amounts must be non-negative (>= 0.00).
@@ -109,11 +114,14 @@ instruction: |-
   Format:
 
   UTF-8 with LF line endings
-  Comma delimiter, double quotes for fields with commas
+  Comma delimiter, double quotes for fields containing commas (proper CSV quoting)
   Columns (in order): transaction_id, user_id, country, amount_usd, date, status
   Sorted by country (alphabetically, case-insensitive).
   
   Efficiency requirement: Output file size should be reasonable (approximately < 300 bytes per record).
+  
+  CSV Formatting: Fields that contain commas must be quoted with double quotes. 
+  The CSV must be properly formatted and parseable by standard CSV readers.
 
   2. Summary Report
 
@@ -137,13 +145,14 @@ instruction: |-
   Bar chart: total completed transaction amount per country (USD)
   Must be valid PNG with proper header (89 50 4E 47 0D 0A 1A 0A)
   Minimum file size: 1000 bytes
-  Minimum dimensions: 100x100 pixels
+  Minimum dimensions: 100x100 pixels (enforced when image analysis libraries are available)
   Visualization complexity: Must have sufficient visual detail (example: multiple distinct colors/bars) 
   to represent a meaningful bar chart with data for different countries.
   
   Note: The visualization should be a valid bar chart showing total completed transaction amount 
   per country. The chart should be visually meaningful with distinguishable bars and sufficient 
-  color variation to represent different countries.
+  color variation to represent different countries. Dimension checks may be conditionally enforced 
+  based on available libraries (e.g., PIL/Pillow).
 
 
 
