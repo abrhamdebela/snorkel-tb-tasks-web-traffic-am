@@ -4,7 +4,7 @@ instruction: |-
   My company's finance team discovered major inconsistencies in the international transaction dataset exported from multiple payment gateways.
   WE need an automated Python pipeline to clean, normalize, and summarize financial data across currencies and regions before quarterly reporting.
 
-  Input date:
+  Input data:
   File: /app/data/transactions_raw.csv
   Size: ~1000 records
   Format: CSV (comma-delimited, double quotes for fields containing commas)
@@ -24,19 +24,19 @@ instruction: |-
   Important: duplicates are only counted among valid (non-empty) transaction IDs.
   
   Duplicates removed calculation:
-  - First, collect all valid (non-empty) transaction_ids from the input into a set (unique IDs)
-  - After processing (keeping last occurrence of each transaction_id), count unique transaction_ids in output
-  - Duplicates removed = (count of unique valid transaction_ids in input) - (count of unique transaction_ids in output)
+  * First, collect all valid (non-empty) transaction_ids from the input into a set (unique IDs)
+  * After processing (keeping last occurrence of each transaction_id), count unique transaction_ids in output
+  * Duplicates removed = (count of unique valid transaction_ids in input) - (count of unique transaction_ids in output)
   
   Note: This counts how many unique transaction_ids were consolidated/removed (not how many duplicate rows were removed).
   If all unique transaction_ids from input are preserved in output, duplicates_removed = 0.
   If some unique transaction_ids are lost during processing, that difference is counted.
   
   Example calculation:
-  - Input rows: [x1, x2, x2, x3, x3, x3] (all valid transaction_ids)
-  - Unique valid transaction_ids in input: {x1, x2, x3} = 3
-  - After keeping last occurrence: output has [x1, x2, x3] with unique IDs: {x1, x2, x3} = 3
-  - Duplicates removed: 3 - 3 = 0 (no unique IDs were lost, duplicates were consolidated)
+  * Input rows: [x1, x2, x2, x3, x3, x3] (all valid transaction_ids)
+  * Unique valid transaction_ids in input: {x1, x2, x3} = 3
+  * After keeping last occurrence: output has [x1, x2, x3] with unique IDs: {x1, x2, x3} = 3
+  * Duplicates removed: 3 - 3 = 0 (no unique IDs were lost, duplicates were consolidated)
 
   2- Amount Normalization
   Remove all currency symbols (example: $, €, £, ¥, ₹).
@@ -102,9 +102,9 @@ instruction: |-
   Any empty, missing, or invalid country names should be mapped to "UNKNOWN".
   
   Examples of invalid country names that must become "UNKNOWN":
-  - Empty string or whitespace-only
-  - Invalid country names like "UnknownCountry", "Invalid", "TestCountry", "NA", etc.
-  - Any value that is not a recognized ISO country name
+  * Empty string or whitespace-only
+  * Invalid country names like "UnknownCountry", "Invalid", "TestCountry", "NA", etc.
+  * Any value that is not a recognized ISO country name
   
   Validation: Check if the country name is a valid ISO country name. If not, map it to "UNKNOWN".
   This includes both empty/missing values and non-empty invalid country names.
@@ -119,10 +119,10 @@ instruction: |-
   Sorted by country (alphabetically, case-insensitive).
   
   Critical: When writing CSV files in Python, you MUST explicitly control line endings:
-  - Use `open(file, 'w', newline='', encoding='utf-8')` for CSV files
-  - Use `csv.writer(..., lineterminator='\n')` to ensure LF-only line endings
-  - On Windows, Python defaults to CRLF unless explicitly controlled
-  - The output file must contain only LF (\n) characters, no CR (\r) characters
+  * Use `open(file, 'w', newline='', encoding='utf-8')` for CSV files
+  * Use `csv.writer(..., lineterminator='\n')` to ensure LF-only line endings
+  * On Windows, Python defaults to CRLF unless explicitly controlled
+  * The output file must contain only LF (\n) characters, no CR (\r) characters
   
   Efficiency requirement: Output file size should be reasonable (approximately < 300 bytes per record).
   
@@ -134,9 +134,9 @@ instruction: |-
   Save to /app/output/summary_report.txt (UTF-8 encoding with LF line endings)
   
   Critical: When writing the report file, explicitly control line endings:
-  - Use `open(file, 'w', encoding='utf-8', newline='\n')` to ensure LF-only line endings
-  - On Windows, Python defaults to CRLF unless explicitly controlled
-  - The output file must contain only LF (\n) characters, no CR (\r) characters
+  * Use `open(file, 'w', encoding='utf-8', newline='\n')` to ensure LF-only line endings
+  * On Windows, Python defaults to CRLF unless explicitly controlled
+  * The output file must contain only LF (\n) characters, no CR (\r) characters
   
   Must include:
   Total input records
@@ -188,7 +188,7 @@ instruction: |-
   Currency conversion, duplicate removal, and rounding all validated.
   Sorted by country.
   All requirements met without external API calls.
-  
+
 author_name: Haneen
 author_email: mena1027@menadevs.io
 difficulty: medium
