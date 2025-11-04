@@ -35,7 +35,7 @@ ENV PYTHONUNBUFFERED=1 \
 
 WORKDIR /app
 
-# Runtime dependencies only; test dependencies installed by run-tests.sh
+# Runtime dependencies only
 RUN apt-get update && apt-get install -y --no-install-recommends \
     tmux \
     asciinema \
