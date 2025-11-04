@@ -1238,9 +1238,6 @@ def test_half_up_rounding_specific_cases():
         for row in reader:
             output_data[row["transaction_id"]] = row
     
-    # Test HALF_UP rounding by simulating conversions that produce .005 values
-    exchange_rates = {'EUR': 1.08, 'GBP': 1.24, 'JPY': 0.0068, 'INR': 0.012, 'USD': 1.00}
-    
     # Create test cases that should produce .005 values when converted
     test_cases = [
         # Amount that when multiplied by exchange rate produces .005
@@ -1508,7 +1505,6 @@ def test_visualization_content_correctness():
     assert max(sorted_amounts) > 0, "All amounts are zero - no meaningful bars to display"
     
     # Verify there's variation in the data (not all the same amount)
-    unique_amounts = set(sorted_amounts)
     if len(sorted_countries) > 1:
         # If we have multiple countries, we should ideally have some variation
         # (though this isn't strictly required, it makes for a better chart)
