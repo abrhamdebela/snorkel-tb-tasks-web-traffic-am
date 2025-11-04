@@ -92,27 +92,10 @@ jobs:
           # Cat the tests.log file
           cat $log_file
 
-      - name: Debug an agent run if failure
-        run: |
-          # Note that this step runs only for agent failure because non-agent failure comes with required=true and steps will be skipped unless if: always().
-          result=$(cat /tmp/agent_test_result.txt)
-          echo "Test result: $result"
-          if [ "$result" = "failure" ]; then
-            uv run tb tasks debug --run-id github-action-${{ inputs.key }}_${{ inputs.task }}_${{ inputs.run }} ${{ inputs.task }}
-          fi
-
-      - name: Upload test results
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-result-${{ inputs.key }}_${{ inputs.task }}_${{ inputs.run }}
-          path: runs/github-action-${{ inputs.key }}_${{ inputs.task }}_${{ inputs.run }}/results.json
-          retention-days: 1
-
       - name: Upload session recordings
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: recordings-${{ inputs.key }}_${{ inputs.task }}_${{ inputs.run }}
-          path: runs/**/sessions/*
+          name: github-action-${{ inputs.key }}_${{ inputs.task }}_${{ inputs.run }}
+          path: runs/github-action-${{ inputs.key }}_${{ inputs.task }}_${{ inputs.run }}
           retention-days: 1

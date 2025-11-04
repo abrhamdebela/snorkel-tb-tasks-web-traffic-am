@@ -1,0 +1,11 @@
+Oct 25 10:25:00 server01 sshd[1234]: WARNING: Failed password attempt from 192.168.1.100
+Oct 25 10:15:30 server01 app[1]: INFO: tie marker syslog
+Oct 25 10:26:15 server01 kernel[5678]: INFO: Network interface eth0 up
+Oct 25 10:27:30 server01 postgres[9012]: ERROR: Connection timeout from 10.0.0.5
+Oct 25 10:28:45 server01 cron[3456]: INFO: Daily backup completed successfully
+Oct 25 10:29:00 server01 nginx[7890]: WARNING: High request rate detected from 172.16.0.10
+Oct 25 10:30:15 server01 systemd[1]: INFO: Service apache2 started
+Oct 25 10:31:30 server01 sshd[1234]: ERROR: Authentication failed for user admin from 192.168.1.1
+Oct 25 10:32:00 server01 auth[9999]: INFO: User login successful
+Oct 25 10:25:00 server01 sshd[1234]: WARNING: Failed password attempt from 192.168.1.100
+Oct 25 10:36:00 server01 sshd[1234]: ERROR: SSH connection from 2001:db8::1

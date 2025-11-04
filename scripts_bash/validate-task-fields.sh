@@ -84,8 +84,8 @@ for file in $FILES_TO_CHECK; do
     # Validate difficulty field has valid value
     if grep -q "^difficulty:" "$file"; then
         difficulty=$(grep "^difficulty:" "$file" | sed 's/^difficulty: *//' | tr -d ' ')
-        if [[ ! "$difficulty" =~ ^(easy|medium|hard)$ ]]; then
-            echo "❌ Error: $file has invalid difficulty: $difficulty (must be easy, medium, or hard)"
+        if [[ ! "$difficulty" =~ ^(easy|medium|hard|unknown)$ ]]; then
+            echo "❌ Error: $file has invalid difficulty: $difficulty (must be easy, medium, hard, or unknown)"
             FAILED=1
         fi
     fi
@@ -95,7 +95,7 @@ if [ $FAILED -eq 1 ]; then
     echo ""
     echo "Some task.yaml files are missing required fields or have invalid values"
     echo "Required fields: ${REQUIRED_FIELDS[*]}"
-    echo "- difficulty must be one of: easy, medium, hard"
+    echo "- difficulty must be one of: easy, medium, hard, or unknown"
     echo "- expert_time_estimate_min and junior_time_estimate_min must be present (can be empty/null or positive numbers)"
     exit 1
 fi
