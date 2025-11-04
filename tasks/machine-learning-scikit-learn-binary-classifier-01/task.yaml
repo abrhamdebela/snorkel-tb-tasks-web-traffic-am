@@ -16,7 +16,32 @@ instruction: |-
   - It's got about 1,000 rows with a "converted" column (0 = didn't convert, 1 = converted) plus 8 feature columns
   - Standard CSV format: comma-separated, UTF-8, header row, LF line endings
   - Don't download anything extra from the internet
+
+  ========================================
+  CRITICAL NAMING REQUIREMENTS
+  ========================================
+  You MUST use these names, not variations:
   
+  Main Pipeline steps:
+    - "pre" (for the ColumnTransformer)
+    - "clf" (for the CalibratedClassifierCV)
+  
+  ColumnTransformer pipelines:
+    - "num" (for numeric preprocessing)
+    - "cat" (for categorical preprocessing)
+  
+  Numeric pipeline steps (in order):
+    - "imputer" (SimpleImputer)
+    - "clip" (your custom clipper)
+    - "scale" (StandardScaler)
+  
+  Categorical pipeline steps (in order):
+    - "imputer" (SimpleImputer)
+    - "ohe" (OneHotEncoder)
+  
+  These are EXACT REQUIRED NAMES.
+  ========================================
+    
   TASK:
   
   1. Setup
@@ -37,39 +62,33 @@ instruction: |-
   - Build one single scikit-learn Pipeline that includes both preprocessing and the model
   - Don't manually fit or transform data outside the Pipeline—let the Pipeline handle everything
   
-  - **REQUIRED PIPELINE STRUCTURE** (exact names must match):
-    ```
+  - REQUIRED PIPELINE STRUCTURE (use these EXACT names):
+    
     Pipeline([
-        ("pre", ColumnTransformer([...])),  # Must be named "pre"
-        ("clf", CalibratedClassifierCV(...)) # Must be named "clf"
-    ]))
-    ```
+        ("pre", ColumnTransformer([  # EXACT name "pre" required
+            ("num", Pipeline([  # EXACT name "num" required
+                ("imputer", SimpleImputer(strategy="median")),  # EXACT name "imputer" required
+                ("clip", YourCustomClipper(lower=0.01, upper=0.99)),  # EXACT name "clip" required
+                ("scale", StandardScaler())  # EXACT name "scale" required
+            ]), numeric_columns),
+            ("cat", Pipeline([  # EXACT name "cat" required
+                ("imputer", SimpleImputer(strategy="most_frequent")),  # EXACT name "imputer" required
+                ("ohe", OneHotEncoder(handle_unknown="ignore", sparse_output=False))  # EXACT name "ohe" required
+            ]), categorical_columns)
+        ])),
+        ("clf", CalibratedClassifierCV(...))  # EXACT name "clf" required
+    ])
   
-  - Use a ColumnTransformer (named "pre") to handle different column types:
-    
-    **Numeric Pipeline** (must be named "num" in ColumnTransformer):
-    ```
-    ("num", Pipeline([
-        ("imputer", SimpleImputer(strategy="median")),
-        ("clip", YourCustomClipper(lower=0.01, upper=0.99)),  # Must be named "clip"
-        ("scale", StandardScaler())                            # Must be named "scale"
-    ]), numeric_columns)
-    ```
-    - Fill missing values with median
-    - Clip outliers to 1st-99th percentile using your custom transformer
-    - Standardize to zero mean, unit variance
-    
-    **Categorical Pipeline** (must be named "cat" in ColumnTransformer):
-    ```
-    ("cat", Pipeline([
-        ("imputer", SimpleImputer(strategy="most_frequent")),
-        ("ohe", OneHotEncoder(handle_unknown="ignore", sparse_output=False))  # Must be named "ohe"
-    ]), categorical_columns)
-    ```
-    - Fill missing values with most frequent value
-    - One-hot encode with handle_unknown="ignore", sparse_output=False
+  - Numeric Pipeline Details:
+    * Fill missing values with median
+    * Clip outliers to 1st-99th percentile (lower=0.01, upper=0.99) using your custom transformer
+    * Standardize to zero mean, unit variance
   
-  - Write a custom transformer class for the percentile clipping step (the "clip" step above)
+  - Categorical Pipeline Details:
+    * Fill missing values with most frequent value
+    * One-hot encode with handle_unknown="ignore", sparse_output=False
+  
+  - Write a custom transformer class for the percentile clipping step
     so the whole Pipeline can be saved and reloaded properly
   
   3. The Model
@@ -85,14 +104,13 @@ instruction: |-
 
   4. Train/Test Split and Cross-Validation
   - Split your data: 80% train, 20% test
-    * Use: train_test_split(test_size=0.2, stratify=y, random_state=42)
+    * MUST Use: train_test_split(test_size=0.2, stratify=y, random_state=42)
   - Run 5-fold stratified cross-validation on the training data only:
-    * Use: StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+    * MUST Use: StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
     * Get out-of-fold predicted probabilities (don't train and predict on same data)
     * Calculate ROC-AUC and PR-AUC from those out-of-fold predictions
     * Report the mean (you can report std as 0.0 for simplicity)
 
-  
   5. Test Set Evaluation
   After training on the full training set, evaluate on the held-out test set.
   Calculate these metrics:
@@ -109,7 +127,7 @@ instruction: |-
   
   a) /app/output/model.joblib
      - Your entire Pipeline (preprocessing + trained model)
-     - Use: joblib.dump(pipeline, path, compress=3)
+     - MUST Use: joblib.dump(pipeline, path, compress=3)
   
   b) /app/output/report.json
      - A structured JSON file with all your metrics
@@ -153,6 +171,15 @@ instruction: |-
      - A short text file with key results for quick reference
      - Must include the text "ML Lead Scoring Summary" and "Model path:"
      - Use UTF-8 encoding with LF (Unix) line endings, not CRLF (Windows)
+  
+  ========================================
+  IMPORTANT VALIDATION NOTES
+  ========================================
+  Your solution will be validated to ensure:
+  - Model predictions vary across samples (not constant fake outputs)
+  - CV and test metrics differ slightly unless both are near-perfect (>0.98)
+  - These checks prevent test data leakage and fake placeholder models
+  ========================================
   
   SUCCESS CHECKLIST:
   - model.joblib loads and has predict_proba method
