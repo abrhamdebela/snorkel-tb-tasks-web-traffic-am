@@ -53,8 +53,9 @@ RUN pip install \
 # Create directories
 RUN mkdir -p /app /output 
 
-# Copy application files
-COPY company_data.json /app/
+# Copy input dataset as read-only
+COPY --chmod=444 company_data.json /app/company_data.json
+
 
 
 CMD ["/bin/bash"]
