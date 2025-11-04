@@ -1,0 +1,14 @@
+192.168.4.10 2025-10-09T10:00:00+0000 test3@example.com subject:   viagra   special offer
+192.168.4.10 2025-10-09T10:01:00+0000 test3@example.com subject:Prince inheritance
+192.168.4.10 2025-10-09T10:02:00+0000 test3@example.com subject:  Urgent password reset  
+2001:db8::2 2025-10-09T11:00:00-09:00 ipv6b@example.com subject:Verify your account
+2001:db8::2 2025-10-09T11:01:00-09:00 ipv6b@example.com subject: attachment.exe file
+2001:db8::2 2025-10-09T11:02:00-09:00 ipv6b@example.com subject: Malware .vbs script
+fe80::2%wlan0 2025-10-09T12:00:00+0000 invalid2@example.com subject: Invalid IPv6 zone
+192.168.4.20 2025-10-09T13:00:00+0000 test4@example.com subject:attachment.EXE
+192.168.4.20 2025-10-09T13:01:00+0000 test4@example.com subject:  .vbs attachment  
+192.168.4.20 2025-10-09T13:02:00+0000 test4@example.com subject: Normal communication
+192.168.4.20 2025-10-09T13:03:00+0000 test4@example.com subject: Multiple: urgent viagra attachment.exe
+192.168.4.20 2025-10-09T13:04:00+0000 test4@example.com subject:	Tab	separated	here
+192.168.4.20 2025-10-09T13:05:00+0000 test4@example.com subject: 
+

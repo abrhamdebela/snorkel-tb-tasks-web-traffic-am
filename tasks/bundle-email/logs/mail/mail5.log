@@ -1,0 +1,9 @@
+203.0.113.5 2025-10-04T08:00:00+0000 attacker@example.com subject: Urgent password change needed
+203.0.113.5 2025-10-04T09:00:00+0000 attacker@example.com subject: Click here to verify your account
+198.51.100.2 2025-10-04T10:00:00+0000 victim@example.com subject: Regular newsletter
+198.51.100.2 2025-10-04T11:00:00+0000 victim@example.com subject: Dangerous attachment.exe
+198.51.100.2 2025-10-04T12:00:00+0000 victim@example.com subject: Another .vbs script
+192.168.0.1 2025-10-04T13:00:00+0000 safe@example.com subject: Legitimate business email
+172.16.0.5 2025-10-04T14:00:00-0300 mixed@example.com subject: Urgent verify your account password reset
+172.16.0.5 2025-10-04T15:00:00-0300 mixed@example.com subject: Free viagra and prince inheritance
+
