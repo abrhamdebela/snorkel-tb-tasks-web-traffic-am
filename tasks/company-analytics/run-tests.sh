@@ -20,10 +20,10 @@ if [ "$PWD" = "/" ]; then
     exit 1
 fi
 
-uv init
-uv add pytest==8.4.1 pandas numpy pyarrow 
+uv venv --python 3.10
+source .venv/bin/activate
+
+uv pip install pytest==8.4.1 pandas==2.0.3 numpy==1.24.3
 
 
-uv run pytest $TEST_DIR/test_outputs.py -rA -vv --maxfail=3
-
-
+pytest $TEST_DIR/test_outputs.py -rA -v
