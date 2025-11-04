@@ -208,3 +208,18 @@ def test_official_files_match():
         "End file does not match official challenge file. "
         "This prevents cheating with arbitrary end files."
     )
+
+
+def test_challenge_file_content():
+    """Test that challenge.txt contains exactly the expected challenge ID"""
+    challenge_path = Path("/app/challenge.txt")
+
+    assert challenge_path.exists(), f"File {challenge_path} does not exist"
+
+    with open(challenge_path, "r") as f:
+        challenge_content = f.read().strip()
+
+    expected_content = "9v00680e54330000000006c0"
+    assert challenge_content == expected_content, (
+        f"Challenge file content mismatch. Expected '{expected_content}', got '{challenge_content}'"
+    )
