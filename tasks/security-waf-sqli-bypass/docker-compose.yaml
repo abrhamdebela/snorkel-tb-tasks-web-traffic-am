@@ -1,0 +1,49 @@
+# Multi-container setup for WAF SQL injection bypass task
+
+services:
+  # The attacker container (where the agent runs)
+  client:
+    build:
+      dockerfile: Dockerfile
+    image: ${T_BENCH_TASK_DOCKER_CLIENT_IMAGE_NAME}
+    container_name: ${T_BENCH_TASK_DOCKER_CLIENT_CONTAINER_NAME}
+    command: [ "sh", "-c", "sleep infinity" ]
+    environment:
+      - TEST_DIR=${T_BENCH_TEST_DIR}
+    volumes:
+      - ${T_BENCH_TASK_LOGS_PATH}:${T_BENCH_CONTAINER_LOGS_PATH}:ro
+      - ${T_BENCH_TASK_AGENT_LOGS_PATH}:${T_BENCH_CONTAINER_AGENT_LOGS_PATH}
+    depends_on:
+      - waf
+    networks:
+      - frontend-network
+
+  # Web Application Firewall (WAF)
+  waf:
+    build:
+      context: ./waf
+      dockerfile: Dockerfile
+    container_name: security-waf-sqli-waf
+    networks:
+      - frontend-network
+      - backend-network
+    depends_on:
+      - webapp
+
+  # Vulnerable web application (hidden behind WAF)
+  webapp:
+    build:
+      context: ./webapp
+      dockerfile: Dockerfile
+    container_name: security-waf-sqli-webapp
+    volumes:
+      - ${T_BENCH_TASK_LOGS_PATH}:${T_BENCH_CONTAINER_LOGS_PATH}
+    networks:
+      - backend-network
+
+networks:
+  frontend-network:
+    driver: bridge
+  backend-network:
+    driver: bridge
+    internal: true
