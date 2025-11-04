@@ -1,0 +1,39 @@
+date,time,amount,reference,description
+2025-10-01,09:15:23,2500.00,REF100234,Payment from Acme Corp
+2025-10-01,14:30:45,875.50,REF100235,Customer Payment - INV-4521
+2025-10-02,10:22:18,6200.00,REF100236,Wire Transfer - TechStart Ltd
+2025-10-02,16:45:33,1250.00,REF100237,Online Payment - Order 8821
+2025-10-03,11:05:47,450.75,REF100238,Payment Received
+2025-10-03,15:20:12,3100.00,REF100239,Corporate Payment - Q4 Services
+2025-10-05,08:45:29,1875.00,REF100240,Subscription Payment - Annual
+2025-10-05,13:10:55,920.25,REF100241,Invoice Payment - INV-4589
+2025-10-07,10:35:42,5500.00,REF100242,Enterprise License Fee
+2025-10-08,09:20:16,750.00,REF100243,Monthly Retainer - Oct 2025
+2025-10-08,14:55:38,2200.00,REF100244,Project Milestone Payment
+2025-10-10,11:40:22,1650.00,REF100245,Consulting Services
+2025-10-12,10:15:47,890.50,REF100246,Product Purchase - Batch 442
+2025-10-12,15:25:33,4300.00,REF100247,Contract Payment - Phase 2
+2025-10-14,09:50:18,1125.00,REF100248,Service Fee - October
+2025-10-15,13:30:25,3750.00,REF100249,Quarterly Payment
+2025-10-15,16:42:11,-450.00,REF100250,Refund - Order 7823
+2025-10-17,10:05:38,2800.00,REF100251,Partnership Revenue
+2025-10-18,14:20:52,1560.00,REF100252,License Renewal
+2025-10-19,11:35:27,950.75,REF100253,Commission Payment
+2025-10-21,09:45:13,6800.00,REF100254,Major Client Payment
+2025-10-22,15:10:45,1200.00,REF100255,Training Services
+2025-10-23,10:25:31,2950.00,REF100256,Integration Services
+2025-10-24,13:50:19,825.50,REF100257,Maintenance Fee
+2025-10-25,11:15:44,4100.00,REF100258,Development Sprint Payment
+2025-10-26,14:30:28,1750.00,REF100259,Consulting Hours - Week 42
+2025-10-28,10:40:15,3200.00,REF100260,Platform Subscription
+2025-10-29,15:05:37,1425.00,REF100261,Support Package - Premium
+2025-10-30,09:25:51,5200.00,REF100262,Year-End Bonus Payment
+2025-10-31,13:45:22,2100.00,REF100263,Final October Invoice
+2025-10-31,17:05:10,INVALID_AMOUNT,REF-FAULTY,Corrupted row to be ignored
+2025-10-06,10:10:10,900.00,REFMIS900,Payment without reference match
+2025-10-09,12:00:00,1500.00,REFTIME1500,Potential timing issue
+2025-10-06,10:20:00,2000.00,REFMISM123,Amount mismatch bank sample
+2025-10-11,14:44:30,3200.00,REF100265MM,Amount mismatch ledger pairing
+2025-10-27,15:59:00,2600.00,REF100266MM,Amount mismatch ledger 266 pairing
+2025-10-04,10:29:00,1400.00,REF100264MM,Amount mismatch ledger 264 pairing
+2025-10-09,12:04:30,1400.00,REFTIME1500MM,Timing mismatch ledger pairing
