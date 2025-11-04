@@ -7,127 +7,78 @@
 # (e.g., logs or JSON summaries) that indicate task completion status.
 # It must be deterministic, portable, and callable directly from the project root.
 
-# Strict error handling: exit immediately if any command fails
-set -euo pipefail
+set -e
 
 # ============================================
-# STEP 0: Sanity check - make sure we're in the right directory
+# STEP 1: Install uv if not present
 # ============================================
+
+# Install curl if missing
+if ! command -v curl >/dev/null 2>&1; then
+    apt-get update
+    apt-get install -y curl
+fi
+
+# Install uv
+if ! command -v uv >/dev/null 2>&1; then
+    curl -LsSf https://astral.sh/uv/0.7.13/install.sh | sh
+fi
+
+# Ensure uv is on PATH (installer adds binaries to ~/.local/bin)
+export PATH="$HOME/.local/bin:$PATH"
+
+# ============================================
+# STEP 2: Check working directory
+# ============================================
+
 if [ "$PWD" = "/" ]; then
-  echo "Error: No working directory set. Please set WORKDIR /app in Dockerfile."
-  exit 1
+    echo "Error: No working directory set. Please set a WORKDIR in your Dockerfile before running this script."
+    exit 1
 fi
 
-# ============================================
-# STEP 1: Run the solution to produce outputs
-# ============================================
-# This section figures out HOW to produce the required artifacts:
-# - Option 1: Run a Python training script if it exists
-# - Option 2: Run a shell solution script if it exists  
-# - Option 3: Wait for an AI agent to produce artifacts
-
-# Make sure we're using the system Python, not any virtual environment
-unset VIRTUAL_ENV || true
-hash -r # Clear bash's command cache
-
-# Create output directory
-mkdir -p /app/output
-
-# Try to find and run the solution
-if [ -f "/app/train_and_evaluate.py" ]; then
-  # Option 1: Python script exists, run it directly
-  /usr/local/bin/python3 /app/train_and_evaluate.py
-
-elif [ -f "/app/solution.sh" ]; then
-  # Option 2: Shell solution exists, run it
-  bash /app/solution.sh
-
-else
-  # Option 3: No local solution - we're probably testing an AI agent
-  echo "No local solution found; waiting briefly for agent-produced artifacts..."
-  mkdir -p /app/output
-
-  # Wait up to 15 seconds for the agent to produce the required files
-  timeout=15
-  while [ $timeout -gt 0 ]; do
-    # Check if the critical artifacts exist and are non-empty
-    if [ -s /app/output/model.joblib ] && [ -s /app/output/report.json ]; then
-      echo "Agent artifacts detected in /app/output."
-      break
-    fi
-    sleep 3 # Wait 3 seconds before checking again
-    timeout=$((timeout-3))
-  done
-
-  # If artifacts still don't exist, warn but continue to tests
-  # (tests will fail and report exactly what's missing)
-  if [ ! -s /app/output/model.joblib ] || [ ! -s /app/output/report.json ]; then
-    echo "Warning: agent did not produce required artifacts within timeout."
-    echo "Continuing to tests so failures are reported via pytest."
-  fi
-fi
-
-# Show what files were created (helpful for debugging)
-ls -l /app/output || true
 
 # ============================================
-# STEP 2: Pre run check for required files
+# STEP 3: Create isolated test environment with uv
 # ============================================
-# Check that all expected output files exist before running tests
-# This gives clearer error messages if something is missing
-for p in /app/output/model.joblib /app/output/report.json /app/output/roc_curve.png /app/output/pr_curve.png /app/output/summary.txt; do
-  if [ ! -s "$p" ]; then
-    echo "Note: artifact missing or empty before tests: $p"
-  fi
-done
+
+# Create a fresh virtual environment for testing
+uv venv .tbench-testing
+
+# Activate it
+source .tbench-testing/bin/activate
+
+# Ensure pip is up to date
+python -m ensurepip --upgrade
+python -m pip install --upgrade pip
+
+# Install test dependencies (exact versions)
+python -m pip install \
+    pytest==8.2.0 \
+    pillow==10.4.0 \
+    joblib==1.4.2 \
+    numpy==1.26.4 \
+    pandas==2.2.2 \
+    scikit-learn==1.5.2
 
 
 # ============================================
-# STEP 3: Run the pytest test suite
+# STEP 4: Add /app to PYTHONPATH for custom modules
 # ============================================
-
-# Figure out where the test file is
-# The harness usually sets TESTDIR; if not, fall back to local tests/ directory
-if [ -z "${TESTDIR:-}" ]; then
-  echo "TESTDIR not set by harness; falling back to bundled tests/ for local debugging"
-  TESTDIR="tests"
-fi
-
-# Make sure the test file actually exists
-test_file="$TESTDIR/test_outputs.py"
-[ -f "$test_file" ] || { echo "Expected test file not found at $test_file"; exit 3; }
-
-# Add /app to Python path so imports work correctly
+# The agent creates /app/mlutils.py as part of the solution.
+# When we load the model, Python needs to import this module, so we add /app to PYTHONPATH.
 export PYTHONPATH="/app:${PYTHONPATH:-}"
 
-# Define where pytest should save its reports
-PYTEST_XML="/app/output/pytest_report.xml"
-PYTEST_STDOUT="/app/output/pytest_stdout.txt"
+# ============================================
+# STEP 5: Run pytest
+# ============================================
 
-# Run pytest and capture the exit code
-# -rA shows a short summary of all test results
-# --junitxml creates an XML report for CI systems
-# We use 'tee' to both save and display the output
-set +e  # Temporarily disable exit-on-error so we can capture the exit code
-pytest "$test_file" -rA --junitxml="$PYTEST_XML" | tee "$PYTEST_STDOUT"
-pytest_exit_code=${PIPESTATUS[0]} # Get pytest's exit code (not tee's)
-set -e  # Re-enable exit-on-error
+# The test harness sets TEST_DIR; if not set, default to tests/
+TEST_DIR=${TEST_DIR:-tests}
+
+# Run pytest with detailed output
+pytest $TEST_DIR/test_outputs.py -rA
+
+echo ""
+echo "All tests passed successfully!"
 
 # ============================================
-# STEP 4: Report final status
-# ============================================
-# Print a clear one-line summary so the user knows what happened
-
-if [ $pytest_exit_code -eq 0 ]; then
-  echo "Pytest completed: all tests passed (short summary above)."
-else
-  echo "Pytest completed: some tests failed (short summary above)."
-fi
-
-# Exit with pytest's exit code (0 = success, non-zero = failure)
-exit $pytest_exit_code
-
-
-
-
- 

@@ -27,7 +27,6 @@ FROM ghcr.io/laude-institute/t-bench/ubuntu-24-04:20250624
 
 # (uv run) tb tasks interact --help
 # Don't forget to prefix with 'uv run' if you're using uv.
-
 FROM python:3.11-slim
 
 ENV PYTHONUNBUFFERED=1 \
@@ -36,18 +35,16 @@ ENV PYTHONUNBUFFERED=1 \
 
 WORKDIR /app
 
-# Runtime deps only; test deps installed by run-tests.sh
+# Runtime dependencies only; test dependencies installed by run-tests.sh
 RUN apt-get update && apt-get install -y --no-install-recommends \
     tmux \
     asciinema \
     build-essential gcc g++ && \
     rm -rf /var/lib/apt/lists/*
 
-# Pin Python package versions for determinism
+# Exact Python package versions for determinism
 RUN python -m pip install --upgrade pip && \
     pip install --no-cache-dir \
-      pytest==8.2.0 \
-      pillow==10.4.0 \
       numpy==1.26.4 \
       pandas==2.2.2 \
       scikit-learn==1.5.2 \
@@ -57,26 +54,13 @@ RUN python -m pip install --upgrade pip && \
 # Data directory; dataset will be copied by task scaffold or provided
 RUN mkdir -p /app/data /app/output
 
-# Bundle tests for local debugging (sample-task style); harness will override TESTDIR in CI.
-# Ensure /app/tests exists, then copy the test file from its real path
-# Ensure tests dir exists in image, then copy from task-local path
-RUN mkdir -p /app/tests
-COPY tests/test_outputs.py /app/tests/test_outputs.py
-
-# Copy the solution script (CRITICAL: must be in container)
-COPY solution.sh /app/solution.sh
-
-# Make solution.sh executable
-RUN chmod +x /app/solution.sh
-
 # Copy the dataset CSV into the data directory
 COPY data/signups.csv /app/data/signups.csv
 
-# Verify files were copied successfully (will fail build if missing)
-RUN ls -la /app/solution.sh && \
-    ls -la /app/data/signups.csv && \
+# Verify dataset was copied successfully (will fail build if missing)
+RUN ls -la /app/data/signups.csv && \
     wc -l /app/data/signups.csv && \
-    echo "All required files copied successfully"
+    echo "Dataset copied successfully"
 
 
 

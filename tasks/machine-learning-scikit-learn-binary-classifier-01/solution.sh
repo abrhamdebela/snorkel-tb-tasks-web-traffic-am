@@ -15,39 +15,22 @@ echo "Training a calibrated LogisticRegression with a preprocessing Pipeline..."
 # STEP 1: Make sure we have the training data
 # ============================================
 
-# Create the data folder if it doesn't exist yet
-mkdir -p /app/data
-
-# Try to find and copy the CSV dataset from the bundled task location
-if [ -f "/app/tasks/machine-learning-scikit-learn-binary-classifier-01/data/signups.csv" ]; then
-  cp /app/tasks/machine-learning-scikit-learn-binary-classifier-01/data/signups.csv /app/data/signups.csv
-fi
-
-# If the file is still empty or missing, try the /app directory as a backup
-if [ ! -s "/app/data/signups.csv" ] && [ -f "/app/signups.csv" ]; then
-  cp /app/signups.csv /app/data/signups.csv
-fi
-
-# Final check: make sure the dataset actually exists, otherwise we can't proceed
-if [ ! -s "/app/data/signups.csv" ]; then
+# The Dockerfile copies the data to /app/data/signups.csv
+# Just verify it exists
+if [ ! -f "/app/data/signups.csv" ]; then
   echo "ERROR: Required dataset /app/data/signups.csv not found"
   exit 1
 fi
 
-# Create the output folder where we'll save our model and results
+# Create the output folder
 mkdir -p /app/output
-
-# Option 1: Copy a tracked CSV bundled with the task
-if [ -f "/app/tasks/machine-learning-scikit-learn-binary-classifier-01/data/signups.csv" ]; then
-  cp /app/tasks/machine-learning-scikit-learn-binary-classifier-01/data/signups.csv /app/data/signups.csv
-fi
 
 # ============================================
 # STEP 2: Create the custom transformer module
 # ============================================
-# We need a Python file with our custom clipper class so joblib can unpickle the model later.
+# We need a Python file with our custom clipper class so joblib can load the model later.
 
-cat > /app/ml_utils.py << 'PYUTIL'
+cat > /app/mlutils.py << 'PYUTIL'
 import numpy as np
 from sklearn.base import BaseEstimator, TransformerMixin
 
@@ -126,7 +109,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-from ml_utils import ClipperTransformer
+from mlutils import ClipperTransformer
 
 # Fixed random seed for reproducibility
 RANDOM_STATE = 42

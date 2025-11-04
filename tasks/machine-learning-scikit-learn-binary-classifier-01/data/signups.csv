@@ -821,7 +821,7 @@ converted,age,income,last_login_days,plan_tier,source,country,sessions,avg_sessi
 0,60,38000,400,basic,ads,US,1,2.5
 1,28,52000,3,pro,ads,US,7,12.5
 0,41,39000,45,basic,organic,US,3,5.0
-1,35,88000,1,pro,referral,CA,150000000000000,18.2
+1,35,88000,1,pro,referral,CA,150000000000000,18.
 0,22,31000,120,basic,ads,GB,1,3.1
 1,30,61000,2,pro,organic,US,9,16.0
 0,55,45000,300,basic,ads,US,2,4.5
