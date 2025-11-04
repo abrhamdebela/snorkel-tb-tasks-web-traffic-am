@@ -101,74 +101,86 @@ VALID_ISO_COUNTRIES = {
 }
 
 def normalize_amount(amount_str, currency):
-    """Normalize amount, remove currency symbols, handle formats, convert to USD."""
     if not amount_str or not str(amount_str).strip():
         return Decimal('0.00')
     
-    amount = str(amount_str).strip()
-    
-    # Remove all currency symbols (order matters - longer symbols first)
+    s = str(amount_str).strip()
+    # Remove all known currency symbols (keep order: longer first)
     currency_symbols = ['ARS', 'CAD', 'CHF', 'A$', 'NZ$', 'S$', 'R$', 'CLP', 'S/', 'COP', 'EGP', '€', '£', '¥', '₹', '₽', '₩', '₱', '฿', '₪', 'RM', 'R', 'zł', '$']
-    for symbol in currency_symbols:
-        amount = amount.replace(symbol, '')
-    
-    amount = amount.strip()
-    
-    # Handle empty after removing symbols
-    if not amount or amount in ['.', '-', '-.', ',-', ',']:
+    for sym in currency_symbols:
+        s = s.replace(sym, '')
+    s = s.strip().replace(' ', '')
+    if not s or s in ['.', '-', '-.', ',-', ',']:
         return Decimal('0.00')
-    
-    # Remove spaces
-    amount = amount.replace(' ', '')
-    
-    # Detect format by checking last separator and currency context
-    last_comma_pos = amount.rfind(',')
-    last_dot_pos = amount.rfind('.')
-    
-    # Determine format based on currency and separator positions
-    if currency in ['EUR', 'BRL', 'ARS'] and last_comma_pos > last_dot_pos and last_comma_pos > 0:
-        # European format for EUR: 1.234,56
-        after_comma = amount[last_comma_pos + 1:]
-        if len(after_comma) <= 2 and after_comma.isdigit():
-            # European format: comma is decimal separator
-            amount = amount.replace('.', '')  # Remove thousand separator
-            amount = amount.replace(',', '.')  # Convert decimal separator
+
+    # Count separators
+    commas = s.count(',')
+    dots = s.count('.')
+
+    # Heuristic-based detection
+    if commas == 0 and dots == 0:
+        # Plain number
+        num_str = s
+    elif commas == 1 and dots == 0:
+        # Check digits after comma
+        parts = s.split(',')
+        if len(parts) == 2 and len(parts[1]) == 2:
+            # Likely European decimal: 1234,56
+            num_str = parts[0].replace('.', '') + '.' + parts[1]
         else:
-            # Comma is thousands separator
-            amount = amount.replace(',', '')
-    elif currency in ['SEK'] and last_comma_pos > last_dot_pos and last_comma_pos > 0:
-        # Swedish format: 1 234,56
-        after_comma = amount[last_comma_pos + 1:]
-        if len(after_comma) <= 2 and after_comma.isdigit():
-            # European format: comma is decimal separator
-            amount = amount.replace('.', '')  # Remove thousand separator
-            amount = amount.replace(',', '.')  # Convert decimal separator
+            # Comma as thousands: 1,234 or 1,234,567
+            num_str = s.replace(',', '')
+    elif dots == 1 and commas == 0:
+        # Likely US decimal: 1234.56
+        num_str = s
+    elif commas == 1 and dots >= 1:
+        # Likely European: 1.234,56
+        # Assume comma is decimal if last part has <=2 digits
+        if s.rfind(',') > s.rfind('.'):
+            after_comma = s.split(',')[-1]
+            if len(after_comma) <= 2 and after_comma.isdigit():
+                num_str = s.replace('.', '').replace(',', '.')
+            else:
+                num_str = s.replace(',', '').replace('.', '')
         else:
-            # Comma is thousands separator
-            amount = amount.replace(',', '')
+            num_str = s.replace(',', '')
+    elif dots > 1 and commas == 0:
+        # Likely European integer: 1.234.567
+        num_str = s.replace('.', '')
     else:
-        # Default: US format - dot is decimal separator, comma is thousands separator
-        amount = amount.replace(',', '')  # Remove thousand separator
-    
-    if not amount:
-        return Decimal('0.00')
-    
+        # Fallback: remove all non-digit except one decimal point
+        # Try to extract a valid number
+        num_str = re.sub(r'[^\d.,]', '', s)
+        if ',' in num_str and '.' in num_str:
+            # Prefer comma as decimal if it's last
+            if num_str.rfind(',') > num_str.rfind('.'):
+                num_str = num_str.replace('.', '').replace(',', '.')
+            else:
+                num_str = num_str.replace(',', '')
+        elif ',' in num_str:
+            # Ambiguous: if ends with ,ddd (3 digits), it's thousands
+            if re.search(r',\d{3}$', num_str):
+                num_str = num_str.replace(',', '')
+            else:
+                num_str = num_str.replace(',', '.')
+        # Now remove extra dots
+        parts = num_str.split('.')
+        if len(parts) > 2:
+            num_str = parts[0] + '.' + ''.join(parts[1:])
+        elif len(parts) == 0:
+            num_str = '0'
+
     try:
-        decimal_value = Decimal(amount)
-    except (InvalidOperation, ValueError):
+        decimal_value = Decimal(num_str)
+    except (InvalidOperation, ValueError, IndexError):
         return Decimal('0.00')
-    
-    # Negative amounts become 0.00
+
     if decimal_value < 0:
         decimal_value = Decimal('0.00')
-    
-    # Convert to USD using exchange rate
-    if currency in EXCHANGE_RATES:
-        decimal_value = decimal_value * Decimal(str(EXCHANGE_RATES[currency]))
-    
-    # Round using HALF_UP
-    rounded = decimal_value.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
-    return rounded
+
+    rate = EXCHANGE_RATES.get(currency, 1.00)
+    decimal_value = decimal_value * Decimal(str(rate))
+    return decimal_value.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
 
 def parse_date(date_str):
     """Parse date from various formats and convert to YYYY-MM-DD."""
