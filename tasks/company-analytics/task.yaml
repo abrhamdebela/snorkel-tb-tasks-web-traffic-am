@@ -50,7 +50,7 @@ instruction: |-
 
   4. Output requirements
 
-    - Save all CSV files to the app/output/ directory.
+    - Save all CSV files to the /app/output/ directory.
     - `/app/output/analytics_report.json`: JSON analytics report with the following top-level keys:
       - summary: total counts of departments, employees, projects, skills
       - top_performers: list of top 3 employees (name, performance_score, department_name)

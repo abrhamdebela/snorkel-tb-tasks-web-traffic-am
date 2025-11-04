@@ -347,30 +347,9 @@ def test_summary_counts_exist_in_json():
     """
     data = json.load(open(f"{OUTPUT_DIR}/analytics_report.json"))
     summary = data["summary"]
-    
-    # Check that all required counts are present, but allow flexible key naming
-    required_entities = ["departments", "employees", "projects", "skills"]
-    found_entities = []
-    
-    for entity in required_entities:
-        # Try exact match first
-        if entity in summary:
-            found_entities.append(entity)
-        else:
-            # Try prefixed versions (what agents actually use)
-            for key in summary.keys():
-                if entity in key.lower():  # e.g., "total_departments", "department_count", etc.
-                    found_entities.append(entity)
-                    break
-    
-    # Verify we found all required entities, regardless of exact key names
-    missing = set(required_entities) - set(found_entities)
-    assert len(missing) == 0, f"Missing summary counts for: {missing}"
-    
-    # Verify all counts are integers
-    for key in summary.keys():
-        if any(entity in key.lower() for entity in required_entities):
-            assert isinstance(summary[key], int), f"Summary count for {key} should be integer"
+    for key in ["departments", "employees", "projects", "skills"]:
+        assert key in summary, f"Missing {key} count in summary"
+        assert isinstance(summary[key], int)
 
 
 def test_department_average_scores_within_range():
