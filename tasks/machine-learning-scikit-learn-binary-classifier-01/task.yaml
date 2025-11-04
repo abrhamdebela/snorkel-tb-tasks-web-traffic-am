@@ -25,33 +25,63 @@ instruction: |-
     * /app/mlutils.py — helper code for a custom transformer
   - Make sure everything runs from /app when the agent executes it
   - Only use these libraries: numpy, pandas, scikit-learn, matplotlib, joblib (they're already installed)
-  - Set random_state=42 everywhere you generate random numbers (train/test split, model training, cross-validation)
-  - Set n_jobs=1 in the calibration step
+  - Set random_state=42 in ALL of these places:
+    * train_test_split(..., random_state=42)
+    * LogisticRegression(..., random_state=42)
+    * StratifiedKFold(..., random_state=42)
+  - Set n_jobs=1 in CalibratedClassifierCV (required for reproducibility)
   - Exit with a non-zero code if anything goes wrong
-  
+  - Do not download files from the internet (all data/libraries are provided)
+
   2. Data Preprocessing
   - Build one single scikit-learn Pipeline that includes both preprocessing and the model
   - Don't manually fit or transform data outside the Pipeline—let the Pipeline handle everything
-  - Use a ColumnTransformer to handle different column types:
-    * Name the ColumnTransformer step "pre" in your main Pipeline
-    * Name the numeric preprocessing pipeline "num" 
-    * Name the categorical preprocessing pipeline "cat"
-    * Numeric columns: fill missing values → clip outliers (1st to 99th percentile) → standardize (zero mean, unit variance)
-    * Categorical columns: fill missing values → one-hot encode (handle_unknown="ignore", sparse_output=False)
-  - Name your final classifier step "clf" in the Pipeline
-  - Write a custom transformer class for the percentile clipping step so the whole Pipeline can be saved and reloaded
-
+  
+  - **REQUIRED PIPELINE STRUCTURE** (exact names must match):
+    ```
+    Pipeline([
+        ("pre", ColumnTransformer([...])),  # Must be named "pre"
+        ("clf", CalibratedClassifierCV(...)) # Must be named "clf"
+    ]))
+    ```
+  
+  - Use a ColumnTransformer (named "pre") to handle different column types:
+    
+    **Numeric Pipeline** (must be named "num" in ColumnTransformer):
+    ```
+    ("num", Pipeline([
+        ("imputer", SimpleImputer(strategy="median")),
+        ("clip", YourCustomClipper(lower=0.01, upper=0.99)),  # Must be named "clip"
+        ("scale", StandardScaler())                            # Must be named "scale"
+    ]), numeric_columns)
+    ```
+    - Fill missing values with median
+    - Clip outliers to 1st-99th percentile using your custom transformer
+    - Standardize to zero mean, unit variance
+    
+    **Categorical Pipeline** (must be named "cat" in ColumnTransformer):
+    ```
+    ("cat", Pipeline([
+        ("imputer", SimpleImputer(strategy="most_frequent")),
+        ("ohe", OneHotEncoder(handle_unknown="ignore", sparse_output=False))  # Must be named "ohe"
+    ]), categorical_columns)
+    ```
+    - Fill missing values with most frequent value
+    - One-hot encode with handle_unknown="ignore", sparse_output=False
+  
+  - Write a custom transformer class for the percentile clipping step (the "clip" step above)
+    so the whole Pipeline can be saved and reloaded properly
   
   3. The Model
-  - Use LogisticRegression as your base classifier with these exact settings:
+  - Use LogisticRegression as your base classifier with these **exact** settings:
     * solver="lbfgs"
     * max_iter=1000
     * class_weight="balanced"
-    * random_state=42
+    * random_state=42  # ← Must be set
   - Wrap it with CalibratedClassifierCV to get better probability estimates:
     * method="isotonic"
     * cv=3
-    * n_jobs=1 (important for reproducibility)
+    * n_jobs=1  # Required for reproducibility (see Setup section)
 
   4. Train/Test Split and Cross-Validation
   - Split your data: 80% train, 20% test
