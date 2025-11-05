@@ -27,26 +27,26 @@ instruction: |-
   
   ```
 
-def get_train_test_set(*args):
+  def get_train_test_set(*args):
+      pass
+  
+  def create_ranker(*args):
+      pass
+  
+  def score_ranker(*args):
+      pass
+  
+  def create_ranker_score_graph(*args):
+      pass
+  
+  def create_feature_importances_graph(**kwargs):
+      pass
+  
+  def main():
     pass
-
-def create_ranker(*args):
+  
+  if __name__ == "__main__":
     pass
-
-def score_ranker(*args):
-    pass
-
-def create_ranker_score_graph(*args):
-    pass
-
-def create_feature_importances_graph(**kwargs):
-    pass
-
-def main():
-  pass
-
-if __name__ == "__main__":
-  pass
   
   ```
 author_name: alexander lambrou
