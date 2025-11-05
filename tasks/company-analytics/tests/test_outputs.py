@@ -23,7 +23,7 @@ def run_solution():
     assert result.returncode == 0, f"solution.py failed: {result.stderr}"
     out = result.stdout
     assert "=== PROCESSING SUMMARY ===" in out, "Missing summary printout"
-    assert "Output location: /app/output/" in out, "Output location line missing"
+    assert "Output location: /app/output" in out, "Output location line missing"
     return out
 
 

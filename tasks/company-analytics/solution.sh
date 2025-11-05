@@ -209,7 +209,7 @@ class CompanyDataProcessor:
         print(f"Total departments processed: {len(depts)}")
         print(f"Total employees processed: {len(emps)}")
         print(f"Total projects processed: {len(projs)}")
-        print(f"Output location: /app/{self.output_dir}/")
+        print(f"Output location: /app/{self.output_dir}")
 
 def main():
     processor = CompanyDataProcessor("company_data.json")
