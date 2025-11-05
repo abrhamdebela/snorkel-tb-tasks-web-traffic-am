@@ -9,7 +9,7 @@ from pathlib import Path
 def test_input_file_integrity():
     """Verify the input file has not been modified."""
     # Expected SHA256 hash of the original input file
-    expected_hash = "dc1f59523f7c033008a32faa04b52a0d7be3e52443f51448a2c24a2d45ef3c46"
+    expected_hash = "18d994bcfd3b4b0ada28d6c307236b06aebb33567384dfcf6ea2c5bcf47de267"
 
     # Calculate actual hash
     with open("/app/data/formulas.txt", "rb") as f:
