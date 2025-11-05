@@ -23,12 +23,14 @@ instruction: |-
     Pre installed python libraries: xgboost scikit-learn pandas matplotlib seaborn
     These libraries should be enough to accomplish the goal.
   
-  Modify the code below to satisfy the requirements.
+  Modify the code below to satisfy the requirements, keeping the function and return signatures intact.
   
   ```
 
   def get_train_test_set(df):
       return X_train, X_test, y_train, y_test, g_train, q_test # return these fields in this order
+      # g_train - list grouped by qid
+      # q_test - test data qid column
   
   def create_ranker(X_train, y_train, g_train):
       return ranker
@@ -51,7 +53,7 @@ instruction: |-
   ```
 author_name: alexander lambrou
 author_email: alexanderlambrou0602@gmail.com
-difficulty: medium
+difficulty: hard
 category: machine-learning
 tags: ['drugs', 'diagnoses', 'learning-to-rank', 'bigquery']
 parser_name: pytest
