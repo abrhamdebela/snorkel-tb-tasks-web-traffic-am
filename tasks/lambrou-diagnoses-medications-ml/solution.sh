@@ -73,22 +73,42 @@ def create_ranker(X_train, y_train, g_train):
 
 def score_ranker(y_true, y_pred, qids, k=5):
     ndcgs, maps, recalls = [], [], []
+
     for q in np.unique(qids):
         m = (qids == q)
         yt = y_true[m]
         yp = y_pred[m]
-
         if yt.sum() == 0:
             continue
-
-        ndcgs.append(ndcg_score([yt], [yp], k=k))
+        if yt.sum() == len(yt):
+            continue
+        try:
+            ndcg = ndcg_score([yt], [yp], k=k)
+            ndcgs.append(ndcg)
+        except ValueError:
+            # Skip if NDCG can't be calculated
+            continue
         order = np.argsort(-yp)
-        topk_mask = np.zeros_like(yt, dtype=bool)
-        topk_mask[order[:k]] = True
-        maps.append(average_precision_score(yt[topk_mask], yp[topk_mask]) if topk_mask.any() else 0.0)
-        topk_labels = yt[order[:k]]
-        recalls.append(topk_labels.sum() / yt.sum())
-    return float(np.mean(ndcgs)) if ndcgs else 0.0, float(np.mean(maps)) if maps else 0.0, float(np.mean(recalls)) if recalls else 0.0
+        topk_indices = order[:k]
+        topk_labels = yt[topk_indices]
+        topk_scores = yp[topk_indices]
+        if topk_labels.sum() > 0:
+            try:
+                map_k = average_precision_score(topk_labels, topk_scores)
+                maps.append(map_k)
+            except (ValueError, Warning):
+                maps.append(0.0)
+        else:
+            maps.append(0.0)
+
+        topk_relevant = topk_labels.sum()
+        total_relevant = yt.sum()
+        recall_k = topk_relevant / total_relevant if total_relevant > 0 else 0.0
+        recalls.append(recall_k)
+    avg_ndcg = float(np.mean(ndcgs)) if ndcgs else 0.0
+    avg_map = float(np.mean(maps)) if maps else 0.0
+    avg_recall = float(np.mean(recalls)) if recalls else 0.0
+    return avg_ndcg, avg_map, avg_recall
 
 def create_ranker_score_graph(ndcg5, map5, rec5):
     metrics = ['NDCG@5', 'MAP@5', 'Recall@5']
