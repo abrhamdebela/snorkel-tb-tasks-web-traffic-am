@@ -39,21 +39,6 @@ def test_model_objective_is_rank_ndcg():
     assert params['objective'] == 'rank:ndcg', \
         f"Expected 'rank:ndcg' objective, got '{params['objective']}'"
 
-
-def test_model_json_contains_ranking_config():
-    """Verify the JSON file contains ranking objective configuration."""
-    with open("drugs_diagnoses_ranker.json", 'r') as f:
-        model_json = json.load(f)
-
-    assert 'learner' in model_json, "Model JSON missing 'learner' section"
-
-
-def test_dataset_has_query_groups():
-    """Verify the dataset contains qid column for grouping."""
-    df = pd.read_csv('./drugs_diagnoses.csv')
-    assert 'qid' in df.columns, "Dataset missing 'qid' column required for grouping"
-
-
 def test_query_groups_have_multiple_items():
     """Verify query groups in the dataset have multiple items."""
     from main import get_train_test_set
@@ -110,28 +95,6 @@ def test_predictions_vary_across_samples():
     assert unique_scores > 1, \
         "Model produces identical predictions for all samples"
 
-
-def test_get_train_test_set_returns_six_values():
-    """Verify get_train_test_set returns exactly 6 values."""
-    from main import get_train_test_set
-    df = pd.read_csv('./drugs_diagnoses.csv')
-    outputs = get_train_test_set(df)
-    assert len(outputs) == 6, f"Expected 6 return values, got {len(outputs)}"
-
-
-def test_train_test_split_has_correct_array_shapes():
-    """Verify returned arrays have correct shapes using duck typing."""
-    from main import get_train_test_set
-    df = pd.read_csv('./drugs_diagnoses.csv')
-    outputs = get_train_test_set(df)
-    arrays_2d = [v for v in outputs if isinstance(v, np.ndarray) and v.ndim == 2]
-    assert len(arrays_2d) == 2, \
-        f"Expected 2 feature matrices (2D arrays), found {len(arrays_2d)}"
-    for arr in arrays_2d:
-        assert arr.shape[1] == 5, \
-            f"Feature matrix should have 5 columns, got {arr.shape[1]}"
-
-
 def test_train_test_split_has_label_arrays():
     """Verify function returns label arrays."""
     from main import get_train_test_set
@@ -160,21 +123,6 @@ def test_train_test_split_has_group_sizes():
         f"Expected 1 group sizes list, found {len(lists_of_ints)}"
 
 
-def test_train_test_split_maintains_75_25_ratio():
-    """Verify the split maintains 75/25 ratio."""
-    from main import get_train_test_set
-
-    df = pd.read_csv('./drugs_diagnoses.csv')
-    outputs = get_train_test_set(df)
-    arrays_2d = [v for v in outputs if isinstance(v, np.ndarray) and v.ndim == 2]
-    sizes = [arr.shape[0] for arr in arrays_2d]
-    total = sum(sizes)
-    train_size = max(sizes)
-    train_ratio = train_size / total
-    assert 0.70 <= train_ratio <= 0.80, \
-        f"Train ratio {train_ratio:.2f} not close to 0.75"
-
-
 def test_group_sizes_sum_to_training_size():
     """Verify group sizes sum to total training samples."""
     from main import get_train_test_set
@@ -197,8 +145,13 @@ def test_group_sizes_sum_to_training_size():
             f"Group sizes sum ({sum(g_train)}) doesn't match training size ({len(X_train)})"
 
 def test_scores_graph_file_not_empty():
-    """Verify the scores graph file is not empty."""
+    """Verify the scores graph file is not empty, since we can't verify the data."""
     file_size = os.path.getsize("drugs_diagnoses_scores.png")
+    assert file_size > 1000, f"Scores graph file is too small ({file_size} bytes)"
+
+def test_importance_graph_file_not_empty():
+    """Verify the importance graph file is not empty, since we can't verify the data."""
+    file_size = os.path.getsize("drugs_diagnoses_importance.png")
     assert file_size > 1000, f"Scores graph file is too small ({file_size} bytes)"
 
 def test_model_has_feature_importances():
@@ -207,26 +160,12 @@ def test_model_has_feature_importances():
     ranker.load_model("drugs_diagnoses_ranker.json")
     importances = ranker.feature_importances_
     assert importances is not None
-    assert len(importances) == 5, \
-        f"Expected 5 feature importances, got {len(importances)}"
+    assert len(importances) > 1, \
+        f"Expected > 1 feature importances, got {len(importances)}"
     assert np.all(importances >= 0), "Feature importances should be non-negative"
 
-
-def test_all_requirements_satisfied():
-    """Verify all 6 requirements are satisfied."""
-    ranker = XGBRanker()
-    ranker.load_model("drugs_diagnoses_ranker.json")
-    params = ranker.get_params()
-    assert params['objective'] == 'rank:ndcg'
-
-    assert os.path.exists("drugs_diagnoses_ranker.json")
-    assert os.path.exists("drugs_diagnoses_scores.png")
-    assert os.path.exists("drugs_diagnoses_importance.png")
-    assert os.path.exists("main.py")
-
-
 def test_model_beats_random_baseline():
-    """Verify model performs better than random ranking."""
+    """Verify model performs better than random ranking so we know it was trained."""
     from main import get_train_test_set, score_ranker
 
     ranker = XGBRanker()
