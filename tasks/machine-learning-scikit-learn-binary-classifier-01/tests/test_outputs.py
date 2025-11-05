@@ -639,8 +639,8 @@ def test_train_test_split_uses_stratify():
     Test 20: Verify train/test split used stratification.
     
     While we cannot directly check if stratify=y was used,
-    we can verify that class proportions are preserved between
-    train and test sets, which is the purpose of stratification.
+    we can verify that the test set size matches what would
+    be produced by a stratified split with random_state=42.
     """
     rpt = json.loads(REPORT_PATH.read_text(encoding="utf-8"))
     df = pd.read_csv(DATA_PATH)
@@ -655,31 +655,11 @@ def test_train_test_split_uses_stratify():
         X, y, test_size=0.2, stratify=y, random_state=42
     )
     
-    # Create split WITHOUT stratification (for comparison)
-    _, _, _, y_test_no_stratify = train_test_split(
-        X, y, test_size=0.2, random_state=42
-    )
-    
-    # Calculate class proportions
-    original_proportion = y.mean()
-    stratified_proportion = y_test_stratified.mean()
-    no_stratify_proportion = y_test_no_stratify.mean()
-    
     # The reported test set size should match stratified split
-    # And class proportion should be closer to stratified than non-stratified
     n_test_reported = rpt["dataset"]["n_test"]
     
     # Verify size matches stratified split (strong evidence of stratification)
-    assert n_test_reported == len(y_test_stratified), \
-        f"Test size {n_test_reported} doesn't match stratified split {len(y_test_stratified)}"
-    
-    # Additional check: stratified split preserves proportions better
-    # (This is circumstantial but helps verify stratification was used)
-    strat_diff = abs(original_proportion - stratified_proportion)
-    no_strat_diff = abs(original_proportion - no_stratify_proportion)
-    
-    # Stratified should be closer to original (usually, but not guaranteed)
-    # We use this as additional evidence but don't fail on it alone
-    # since the test set is small and random variations can occur
+    assert n_test_reported == len(y_test_stratified), f"Test size {n_test_reported} doesn't match stratified split {len(y_test_stratified)}"
+
 
 
