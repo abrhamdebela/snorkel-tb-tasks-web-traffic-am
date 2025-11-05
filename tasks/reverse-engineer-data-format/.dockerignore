@@ -1,0 +1,4 @@
+generate_data.py
+__pycache__
+*.pyc
+.git

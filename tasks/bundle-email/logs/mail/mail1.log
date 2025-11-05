@@ -1,0 +1,3 @@
+192.168.0.1 2025-10-01T10:00:00+0000 alice@example.com subject: Hello there
+198.51.100.2 2025-10-01T11:00:00+0000 bob@example.com subject: Urgent - verify your account now
+203.0.113.5 2025-10-01T12:00:00+0000 charlie@example.com subject: You won inheritance from a prince

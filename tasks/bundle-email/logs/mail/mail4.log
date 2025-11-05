@@ -1,0 +1,11 @@
+10.0.0.1 2025-10-03T14:00:00+0500 admin@example.com subject: Password reset required urgently
+172.16.0.5 2025-10-03T15:00:00-0300 user@example.com subject: Meeting invitation
+10.0.0.1 2025-10-03T16:00:00+0500 admin@example.com subject: Verify your account immediately
+172.16.0.5 2025-10-03T17:00:00-0300 user@example.com subject: Download attachment.vbs
+192.168.1.10 2025-10-03T18:00:00+0000 spam@example.com subject: Amazing prince offers
+192.168.1.10 2025-10-03T19:00:00+0000 spam@example.com subject: Viagra special deal
+192.168.1.10 2025-10-03T20:00:00+0000 spam@example.com subject: Large inheritance waiting
+172.16.0.5 2025-10-03T21:00:00-0300 user@example.com subject: Malicious file.exe attached
+invalid-ip 2025-10-03T22:00:00+0000 bad@example.com subject: Should be skipped
+10.0.0.1 2025-10-03T23:00:00+0500 admin@example.com subject: Normal email content
+

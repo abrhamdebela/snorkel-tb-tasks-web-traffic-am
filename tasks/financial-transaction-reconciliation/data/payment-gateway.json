@@ -1,0 +1,254 @@
+[
+  {
+    "timestamp": "2025-10-01T09:16:45Z",
+    "amount": 2500.0,
+    "transaction_id": "TXN-GW-10001",
+    "customer_id": "CUST-001",
+    "status": "completed"
+  },
+  {
+    "timestamp": "2025-10-01T14:31:20Z",
+    "amount": 875.5,
+    "transaction_id": "TXN-GW-10002",
+    "customer_id": "CUST-002",
+    "status": "completed"
+  },
+  {
+    "timestamp": "2025-10-02T10:23:55Z",
+    "amount": 6200.0,
+    "transaction_id": "TXN-GW-10003",
+    "customer_id": "CUST-003",
+    "status": "completed"
+  },
+  {
+    "timestamp": "2025-10-02T16:44:18Z",
+    "amount": 750.0,
+    "transaction_id": "TXN-GW-10004",
+    "customer_id": "CUST-004",
+    "status": "completed"
+  },
+  {
+    "timestamp": "2025-10-02T16:46:05Z",
+    "amount": 500.0,
+    "transaction_id": "TXN-GW-10005",
+    "customer_id": "CUST-004",
+    "status": "completed"
+  },
+  {
+    "timestamp": "2025-10-03T11:06:22Z",
+    "amount": 450.75,
+    "transaction_id": "TXN-GW-10006",
+    "customer_id": "CUST-005",
+    "status": "completed"
+  },
+  {
+    "timestamp": "2025-10-03T15:21:48Z",
+    "amount": 3100.0,
+    "transaction_id": "TXN-GW-10007",
+    "customer_id": "CUST-006",
+    "status": "completed"
+  },
+  {
+    "timestamp": "2025-10-05T09:47:12+01:00",
+    "amount": 1875.0,
+    "transaction_id": "TXN-GW-10008",
+    "customer_id": "CUST-007",
+    "status": "completed"
+  },
+  {
+    "timestamp": "2025-10-05T13:11:33Z",
+    "amount": 920.25,
+    "transaction_id": "TXN-GW-10009",
+    "customer_id": "CUST-008",
+    "status": "completed"
+  },
+  {
+    "timestamp": "2025-10-07T10:37:15Z",
+    "amount": 5500.0,
+    "transaction_id": "TXN-GW-10010",
+    "customer_id": "CUST-009",
+    "status": "completed"
+  },
+  {
+    "timestamp": "2025-10-08T09:21:44Z",
+    "amount": 750.0,
+    "transaction_id": "TXN-GW-10011",
+    "customer_id": "CUST-010",
+    "status": "completed"
+  },
+  {
+    "timestamp": "2025-10-08T14:56:52Z",
+    "amount": 2200.0,
+    "transaction_id": "TXN-GW-10012",
+    "customer_id": "CUST-011",
+    "status": "completed"
+  },
+  {
+    "timestamp": "2025-10-10T11:41:38Z",
+    "amount": 1650.0,
+    "transaction_id": "TXN-GW-10013",
+    "customer_id": "CUST-012",
+    "status": "completed"
+  },
+  {
+    "timestamp": "2025-10-12T10:17:05Z",
+    "amount": 890.5,
+    "transaction_id": "TXN-GW-10014",
+    "customer_id": "CUST-013",
+    "status": "completed"
+  },
+  {
+    "timestamp": "2025-10-12T15:26:48Z",
+    "amount": 4300.0,
+    "transaction_id": "TXN-GW-10015",
+    "customer_id": "CUST-014",
+    "status": "completed"
+  },
+  {
+    "timestamp": "2025-10-14T09:51:25Z",
+    "amount": 1125.0,
+    "transaction_id": "TXN-GW-10016",
+    "customer_id": "CUST-015",
+    "status": "completed"
+  },
+  {
+    "timestamp": "2025-10-15T13:31:42Z",
+    "amount": 3750.0,
+    "transaction_id": "TXN-GW-10017",
+    "customer_id": "CUST-016",
+    "status": "completed"
+  },
+  {
+    "timestamp": "2025-10-15T16:43:35Z",
+    "amount": -450.0,
+    "transaction_id": "TXN-GW-10018",
+    "customer_id": "CUST-017",
+    "status": "refunded"
+  },
+  {
+    "timestamp": "2025-10-17T10:06:55Z",
+    "amount": 2800.0,
+    "transaction_id": "TXN-GW-10019",
+    "customer_id": "CUST-018",
+    "status": "completed"
+  },
+  {
+    "timestamp": "2025-10-18T14:22:18Z",
+    "amount": 1560.0,
+    "transaction_id": "TXN-GW-10020",
+    "customer_id": "CUST-019",
+    "status": "completed"
+  },
+  {
+    "timestamp": "2025-10-19T11:36:44Z",
+    "amount": 950.75,
+    "transaction_id": "TXN-GW-10021",
+    "customer_id": "CUST-020",
+    "status": "completed"
+  },
+  {
+    "timestamp": "2025-10-21T09:48:22Z",
+    "amount": 6800.0,
+    "transaction_id": "TXN-GW-10022",
+    "customer_id": "CUST-021",
+    "status": "completed"
+  },
+  {
+    "timestamp": "2025-10-22T15:11:58Z",
+    "amount": 1200.0,
+    "transaction_id": "TXN-GW-10023",
+    "customer_id": "CUST-022",
+    "status": "completed"
+  },
+  {
+    "timestamp": "2025-10-23T10:26:47Z",
+    "amount": 2950.0,
+    "transaction_id": "TXN-GW-10024",
+    "customer_id": "CUST-023",
+    "status": "completed"
+  },
+  {
+    "timestamp": "2025-10-24T13:51:33Z",
+    "amount": 825.5,
+    "transaction_id": "TXN-GW-10025",
+    "customer_id": "CUST-024",
+    "status": "completed"
+  },
+  {
+    "timestamp": "2025-10-25T11:16:59Z",
+    "amount": 4100.0,
+    "transaction_id": "TXN-GW-10026",
+    "customer_id": "CUST-025",
+    "status": "completed"
+  },
+  {
+    "timestamp": "2025-10-26T14:31:45Z",
+    "amount": 1750.0,
+    "transaction_id": "TXN-GW-10027",
+    "customer_id": "CUST-026",
+    "status": "completed"
+  },
+  {
+    "timestamp": "2025-10-28T10:41:28Z",
+    "amount": 3200.0,
+    "transaction_id": "TXN-GW-10028",
+    "customer_id": "CUST-027",
+    "status": "completed"
+  },
+  {
+    "timestamp": "2025-10-29T15:06:52Z",
+    "amount": 1425.0,
+    "transaction_id": "TXN-GW-10029",
+    "customer_id": "CUST-028",
+    "status": "completed"
+  },
+  {
+    "timestamp": "2025-10-30T09:27:15Z",
+    "amount": 5200.0,
+    "transaction_id": "TXN-GW-10030",
+    "customer_id": "CUST-029",
+    "status": "completed"
+  },
+  {
+    "timestamp": "2025-10-31T13:46:38Z",
+    "amount": 2100.0,
+    "transaction_id": "TXN-GW-10031",
+    "customer_id": "CUST-030",
+    "status": "completed"
+  },
+  {
+    "timestamp": "2025-10-16T10:30:00Z",
+    "amount": 1800.0,
+    "transaction_id": "TXN-GW-10032",
+    "customer_id": "CUST-031",
+    "status": "completed"
+  },
+  {
+    "timestamp": "2025-10-20T14:15:30Z",
+    "amount": 2400.0,
+    "transaction_id": "TXN-GW-10033",
+    "customer_id": "CUST-032",
+    "status": "completed"
+  },
+  {
+    "timestamp": "2025-10-27T11:20:45Z",
+    "amount": 3500.0,
+    "transaction_id": "TXN-GW-10034",
+    "customer_id": "CUST-033",
+    "status": "completed"
+  },
+  {
+    "timestamp": "corrupted-timestamp",
+    "amount": "not-a-number",
+    "transaction_id": "TXN-GW-FAULTY",
+    "customer_id": "CUST-CORRUPT",
+    "status": "error"
+  }  ,
+  {
+    "timestamp": "2025-10-06T10:11:00Z",
+    "amount": 900.0,
+    "transaction_id": "TXN-GW-NOREF",
+    "customer_id": "CUST-NOREF",
+    "status": "completed"
+  }
+]

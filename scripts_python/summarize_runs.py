@@ -69,16 +69,21 @@ def main():
         for agent, task_results in results_by_agent.items():
             print(f"Task results for task {task} with agent {agent}: {task_results}")
             is_resolveds = []
+            n_agent_timeouts = 0
+            n_other_failures = 0
             for result in task_results:
                 # Treat None as False (unresolved)
                 is_resolved = result["is_resolved"]
                 is_resolveds.append(is_resolved if is_resolved is not None else False)
+                if not is_resolved:
+                    if result["failure_mode"] == "agent_timeout":
+                        n_agent_timeouts += 1
+                    else:
+                        n_other_failures += 1
             agents_summary[agent]["accuracy"] = sum(is_resolveds) / len(is_resolveds)
-            if len(is_resolveds) >= 5:
-                agents_summary[agent]["pass_at_5"] = pass_at_k_estimator(len(is_resolveds), sum(is_resolveds), 5)
-            else:
-                agents_summary[agent]["pass_at_5"] = "N/A"
             agents_summary[agent]["n_runs"] = len(task_results)
+            agents_summary[agent]["n_agent_timeouts"] = n_agent_timeouts
+            agents_summary[agent]["n_other_failures"] = n_other_failures
         summary[task]["agents"] = agents_summary
         summary[task]["difficulty"] = get_difficulty(agents_summary)
     with open("summary-of-runs-comment.md", "w") as f:
@@ -88,10 +93,10 @@ def main():
                 f.write("This task is not tested with any agents as the Oracle solution failed. Please fix the Oracle solution and re-run the tests.\n")
             else:
                 f.write(f"### Difficulty: {task_summary['difficulty']}\n")
-                f.write("| Agent/Model | # of runs | Accuracy | Pass@5 |\n")
-                f.write("|-------------|------------|----------|--------|\n")
+                f.write("| Agent/Model | # of total runs | # of failures<br>(agent timeout) | # of failures<br>(other reasons) | Accuracy |\n")
+                f.write("|-------------|-----------------|------------------------------------|---------------|----------|\n")
                 for agent, data in task_summary["agents"].items():
-                    f.write(f"| {agent} | {data['n_runs']} | {data['accuracy']} | {data['pass_at_5']} |\n")
+                    f.write(f"| {agent} | {data['n_runs']} | {data['n_agent_timeouts']} | {data['n_other_failures']} | {data['accuracy']} |\n")
             debug = safe_read_json(Path(f"debug-output-{task}.json"))
             # Replace "pass" with "✅" and "fail" with "❌"
             debug["outcome"] = debug["outcome"].replace("PASS", "✅ PASS").replace("FAIL", "❌ FAIL").replace("NOT_APPLICABLE", "➖ NOT_APPLICABLE")
