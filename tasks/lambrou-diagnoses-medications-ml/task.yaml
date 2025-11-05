@@ -9,7 +9,7 @@ instruction: |-
   Your task is to use the provided CSV dataset to create a learning-to-rank model using XGBoost and ndcg. The goal is
   to see if we can get accurate results for prescriptions depending on diagnoses and other features included in the CSV. 
   Create a python file that when ran:
-    1. Group the data by qid and be sure to use group sizes > 1 in your training and test sets
+    1. Group the data by qid and be sure to use group sizes > 1 for all queries in your training and test sets
     2. Creates and trains a ranker model using LambdaMART
     3. Saves the ranker you trained to a file called drugs_diagnoses_ranker.json
     4. Run predictions on the test set (NDCG@k score, MAP@k score and Recall@k score) and save a graph of all 3 scores as drugs_diagnoses_scores.png
@@ -27,19 +27,19 @@ instruction: |-
   
   ```
 
-  def get_train_test_set(*args):
+  def get_train_test_set(df):
+      return X_train, X_test, y_train, y_test, g_train, q_test # return these fields in this order
+  
+  def create_ranker(X_train, y_train, g_train):
+      return ranker
+  
+  def score_ranker(y_true, y_pred, qids, k=5):
+      return avg_ndcg, avg_map, avg_recall
+  
+  def create_ranker_score_graph():
       pass
   
-  def create_ranker(*args):
-      pass
-  
-  def score_ranker(*args):
-      pass
-  
-  def create_ranker_score_graph(*args):
-      pass
-  
-  def create_feature_importances_graph(**kwargs):
+  def create_feature_importances_graph():
       pass
   
   def main():
