@@ -14,13 +14,12 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 from sklearn.metrics import ndcg_score, average_precision_score
-
-feat_cols = ['age', 'drug_popularity', 'condition_concept_id', 'drug_concept_id', 'gender_concept_id']
-
 import pandas as pd
 import numpy as np
 from xgboost import XGBRanker
 from sklearn.model_selection import train_test_split
+
+feat_cols = ['age', 'drug_popularity', 'condition_concept_id', 'drug_concept_id', 'gender_concept_id']
 
 
 def get_train_test_set(df):
