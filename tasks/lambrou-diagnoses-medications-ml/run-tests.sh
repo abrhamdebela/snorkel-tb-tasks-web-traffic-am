@@ -24,9 +24,10 @@ fi
 
 uv venv .tbench-testing
 source .tbench-testing/bin/activate
-uv pip install pytest==8.4.1
+uv pip install pytest==8.4.1 xgboost-cpu==3.1.1 scikit-learn==1.7.2 pandas==2.3.3 matplotlib==3.10.7 seaborn==0.13.2
 
 # Install other dependencies if needed (remember, by default this is a different venv
 # than your agent's)
 
+cp main.py $TEST_DIR/main.py
 uv run pytest $TEST_DIR/test_outputs.py -rA
