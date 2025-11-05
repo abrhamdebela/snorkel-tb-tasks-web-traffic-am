@@ -252,8 +252,17 @@ def main():
     cv_truth = np.concatenate(cv_truth)
 
     # Calculate cross-validation metrics
-    cv_roc_auc = roc_auc_score(cv_truth, cv_probs)
-    cv_pr_auc = average_precision_score(cv_truth, cv_probs)
+    # Calculate cross-validation metrics
+    cv_preds = (cv_probs >= 0.5).astype(int)
+    cv_metrics = {
+        "roc_auc": round4(roc_auc_score(cv_truth, cv_probs)),
+        "pr_auc": round4(average_precision_score(cv_truth, cv_probs)),
+        "accuracy": round4(accuracy_score(cv_truth, cv_preds)),
+        "precision": round4(precision_score(cv_truth, cv_preds, zero_division=0)),
+        "recall": round4(recall_score(cv_truth, cv_preds, zero_division=0)),
+        "f1": round4(f1_score(cv_truth, cv_preds, zero_division=0)),
+    }
+
 
     # ============================================
     # STEP F: Train final model on full training set
@@ -276,28 +285,16 @@ def main():
         "precision": round4(precision_score(y_test, pred_test, zero_division=0)),
         "recall": round4(recall_score(y_test, pred_test, zero_division=0)),
         "f1": round4(f1_score(y_test, pred_test, zero_division=0)),
-        "confusion_matrix": confusion_matrix(y_test, pred_test, labels=[0,1]).tolist(),
     }
+    test_cm = confusion_matrix(y_test, pred_test, labels=[0,1]).tolist()
 
     # ============================================
     # STEP H: Build the JSON report
     # ============================================
     report = {
-        "dataset": {
-            "n_rows": int(df.shape[0]),
-            "n_features": int(df.shape[1]-1),
-            "n_train": int(len(X_train)),
-            "n_test": int(len(X_test)),
-        },
-        "cv": {
-            "roc_auc_mean": round4(cv_roc_auc),
-            "roc_auc_std": round4(0.0),  # single deterministic aggregate; std reported as 0.0 for simplicity
-            "pr_auc_mean": round4(cv_pr_auc),
-            "pr_auc_std": round4(0.0),
-            "n_folds": 5,
-        },
-        "test": test_metrics,
-        "model": {"type": "LogisticRegression+Calibrated", "class_weight": "balanced"},
+        "cv_metrics": cv_metrics,
+        "test_metrics": test_metrics,
+        "test_confusion_matrix": test_cm,
     }
 
     # ============================================
@@ -323,12 +320,15 @@ def main():
     lines = [
         "ML Lead Scoring Summary",
         "========================",
-        f"Rows: {report['dataset']['n_rows']} | Train: {report['dataset']['n_train']} | Test: {report['dataset']['n_test']}",
-        f"CV ROC-AUC: {report['cv']['roc_auc_mean']}, CV PR-AUC: {report['cv']['pr_auc_mean']}",
-        f"Test ROC-AUC: {test_metrics['roc_auc']}, PR-AUC: {test_metrics['pr_auc']}",
-        f"Acc: {test_metrics['accuracy']} Prec: {test_metrics['precision']} Rec: {test_metrics['recall']} F1: {test_metrics['f1']}",
-        f"Confusion: {test_metrics['confusion_matrix']}",
-        f"Model path: {os.path.join(out_dir, 'model.joblib')}",
+        f"CV ROC-AUC: {cv_metrics['roc_auc']:.4f}, CV PR-AUC: {cv_metrics['pr_auc']:.4f}",
+        f"CV Acc: {cv_metrics['accuracy']:.4f}, Prec: {cv_metrics['precision']:.4f}, Rec: {cv_metrics['recall']:.4f}, F1: {cv_metrics['f1']:.4f}",
+        "",
+        f"Test ROC-AUC: {test_metrics['roc_auc']:.4f}, PR-AUC: {test_metrics['pr_auc']:.4f}",
+        f"Test Acc: {test_metrics['accuracy']:.4f}, Prec: {test_metrics['precision']:.4f}, Rec: {test_metrics['recall']:.4f}, F1: {test_metrics['f1']:.4f}",
+        "",
+        f"Confusion Matrix: {test_cm}",
+        "",
+        f"Model saved to: {os.path.join(out_dir, 'model.joblib')}",
     ]
     with open(os.path.join(out_dir, "summary.txt"), "w", encoding="utf-8", newline="\n") as f:
         f.write("\n".join(lines))
