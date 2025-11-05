@@ -1,0 +1,18 @@
+{
+  "port_scan_threshold": 5,
+  "port_scan_window_seconds": 60,
+  "brute_force_threshold": 6,
+  "brute_force_window_seconds": 120,
+  "brute_force_ports": [22, 23, 3389, 21],
+  "ddos_threshold": 8,
+  "ddos_window_seconds": 30,
+  "exfiltration_bytes_threshold": 2000000,
+  "exfiltration_duration_threshold_ms": 10000,
+  "high_risk_ports": [22, 23, 3389, 445, 3306, 5432],
+  "severity_weights": {
+    "port_scan": 3,
+    "brute_force": 4,
+    "ddos": 5,
+    "data_exfiltration": 5
+  }
+}
