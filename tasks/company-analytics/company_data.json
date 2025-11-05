@@ -1,0 +1,267 @@
+{
+  "company": {
+    "name": "TechCorp International",
+    "founded": "2010-03-15",
+    "headquarters": {
+      "city": "San Francisco",
+      "country": "USA",
+      "timezone": "PST"
+    },
+    "departments": [
+      {
+        "department_id": "D001",
+        "name": "Engineering",
+        "manager": {
+          "employee_id": "E001",
+          "name": "Sarah Johnson",
+          "email": "sarah.johnson@techcorp.com"
+        },
+        "budget": 2500000,
+        "employees": [
+          {
+            "employee_id": "E001",
+            "personal_info": {
+              "name": "Sarah Johnson",
+              "email": "sarah.johnson@techcorp.com",
+              "phone": "+1-555-0101",
+              "hire_date": "2018-06-10",
+              "salary": 145000
+            },
+            "position": "Engineering Manager",
+            "skills": ["Python", "Java", "System Design", "Team Leadership"],
+            "performance": {
+              "rating": 4.8,
+              "last_review": "2024-01-15",
+              "goals_achieved": 0.95
+            },
+            "projects": [
+              {
+                "project_id": "P001",
+                "name": "Cloud Migration",
+                "role": "Project Lead",
+                "hours_logged": 320,
+                "completion_rate": 1.0,
+                "status": "completed",
+                "impact_score": 9.2
+              },
+              {
+                "project_id": "P003", 
+                "name": "AI Platform",
+                "role": "Technical Advisor",
+                "hours_logged": 80,
+                "completion_rate": 0.6,
+                "status": "in_progress",
+                "impact_score": 8.5
+              }
+            ]
+          },
+          {
+            "employee_id": "E002",
+            "personal_info": {
+              "name": "Mike Chen",
+              "email": "mike.chen@techcorp.com", 
+              "phone": "+1-555-0102",
+              "hire_date": "2020-09-15",
+              "salary": 115000
+            },
+            "position": "Senior Software Engineer",
+            "skills": ["Python", "AWS", "Docker", "Machine Learning"],
+            "performance": {
+              "rating": 4.6,
+              "last_review": "2024-02-20", 
+              "goals_achieved": 0.88
+            },
+            "projects": [
+              {
+                "project_id": "P001",
+                "name": "Cloud Migration",
+                "role": "Backend Developer",
+                "hours_logged": 280,
+                "completion_rate": 1.0,
+                "status": "completed",
+                "impact_score": 8.8
+              },
+              {
+                "project_id": "P003",
+                "name": "AI Platform", 
+                "role": "Lead Developer",
+                "hours_logged": 200,
+                "completion_rate": 0.6,
+                "status": "in_progress",
+                "impact_score": 9.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "department_id": "D002", 
+        "name": "Data Science",
+        "manager": {
+          "employee_id": "E003",
+          "name": "Dr. Emily Rodriguez",
+          "email": "emily.rodriguez@techcorp.com"
+        },
+        "budget": 1800000,
+        "employees": [
+          {
+            "employee_id": "E003",
+            "personal_info": {
+              "name": "Dr. Emily Rodriguez",
+              "email": "emily.rodriguez@techcorp.com",
+              "phone": "+1-555-0103",
+              "hire_date": "2019-03-22",
+              "salary": 155000
+            },
+            "position": "Data Science Director",
+            "skills": ["Python", "R", "TensorFlow", "Statistical Modeling", "Team Management"],
+            "performance": {
+              "rating": 4.9,
+              "last_review": "2024-01-10",
+              "goals_achieved": 0.98
+            },
+            "projects": [
+              {
+                "project_id": "P002",
+                "name": "Customer Analytics",
+                "role": "Project Lead", 
+                "hours_logged": 400,
+                "completion_rate": 1.0,
+                "status": "completed",
+                "impact_score": 9.5
+              }
+            ]
+          },
+          {
+            "employee_id": "E004",
+            "personal_info": {
+              "name": "Alex Kim",
+              "email": "alex.kim@techcorp.com",
+              "phone": "+1-555-0104",
+              "hire_date": "2021-11-05", 
+              "salary": 95000
+            },
+            "position": "Data Scientist",
+            "skills": ["Python", "SQL", "Tableau", "Machine Learning"],
+            "performance": {
+              "rating": 4.3,
+              "last_review": "2024-03-01",
+              "goals_achieved": 0.82
+            },
+            "projects": [
+              {
+                "project_id": "P002",
+                "name": "Customer Analytics",
+                "role": "Data Analyst",
+                "hours_logged": 350,
+                "completion_rate": 1.0,
+                "status": "completed",
+                "impact_score": 8.2
+              },
+              {
+                "project_id": "P003",
+                "name": "AI Platform",
+                "role": "ML Engineer", 
+                "hours_logged": 150,
+                "completion_rate": 0.6,
+                "status": "in_progress",
+                "impact_score": 8.7
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "department_id": "D003",
+        "name": "Product Management", 
+        "manager": {
+          "employee_id": "E005",
+          "name": "David Thompson",
+          "email": "david.thompson@techcorp.com"
+        },
+        "budget": 1200000,
+        "employees": [
+          {
+            "employee_id": "E005",
+            "personal_info": {
+              "name": "David Thompson",
+              "email": "david.thompson@techcorp.com",
+              "phone": "+1-555-0105",
+              "hire_date": "2017-08-12",
+              "salary": 135000
+            },
+            "position": "Head of Product",
+            "skills": ["Product Strategy", "Market Research", "Roadmapping", "Stakeholder Management"],
+            "performance": {
+              "rating": 4.7,
+              "last_review": "2024-02-28",
+              "goals_achieved": 0.92
+            },
+            "projects": [
+              {
+                "project_id": "P001", 
+                "name": "Cloud Migration",
+                "role": "Product Owner",
+                "hours_logged": 180,
+                "completion_rate": 1.0,
+                "status": "completed",
+                "impact_score": 8.9
+              },
+              {
+                "project_id": "P003",
+                "name": "AI Platform",
+                "role": "Product Manager",
+                "hours_logged": 220,
+                "completion_rate": 0.6, 
+                "status": "in_progress",
+                "impact_score": 9.1
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "projects": [
+      {
+        "project_id": "P001",
+        "name": "Cloud Migration",
+        "description": "Migration of on-premise infrastructure to cloud platform",
+        "start_date": "2023-01-15",
+        "end_date": "2023-12-20",
+        "budget": 500000,
+        "status": "completed",
+        "department_contributions": {
+          "Engineering": 0.7,
+          "Product Management": 0.3
+        }
+      },
+      {
+        "project_id": "P002",
+        "name": "Customer Analytics", 
+        "description": "Development of advanced customer behavior analytics platform",
+        "start_date": "2023-03-01",
+        "end_date": "2024-02-29",
+        "budget": 350000,
+        "status": "completed",
+        "department_contributions": {
+          "Data Science": 0.8,
+          "Engineering": 0.2
+        }
+      },
+      {
+        "project_id": "P003",
+        "name": "AI Platform",
+        "description": "Building enterprise AI platform for internal use",
+        "start_date": "2023-09-01", 
+        "end_date": "2024-08-31",
+        "budget": 750000,
+        "status": "in_progress",
+        "department_contributions": {
+          "Engineering": 0.5,
+          "Data Science": 0.4,
+          "Product Management": 0.1
+        }
+      }
+    ]
+  }
+}
