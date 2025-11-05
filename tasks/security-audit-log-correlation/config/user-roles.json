@@ -1,0 +1,15 @@
+{
+  "alice": "admin",
+  "bob": "analyst",
+  "carol": "analyst",
+  "david": "engineer",
+  "eve": "executive",
+  "jenkins": "service",
+  "postgres": "service",
+  "support": "contractor",
+  "admin": "admin",
+  "backup": "service",
+  "root": "admin",
+  "mysql": "service",
+  "webadmin": "service"
+}
