@@ -7,189 +7,110 @@
 # This will also contain task metadata that is not available to the agent at runtime.
 instruction: |-
   You're a data scientist at a fintech company.
-  Your job is to build a machine learning model that predicts which new signups will become paying customers.
-  Train a binary classifier, evaluate how good it is, calibrate the probabilities so they're trustworthy, 
-  and package everything up in a way that anyone can reproduce your results.
-  
+  Your job is to build a machine learning model, a calibrated binary classifier, that predicts which new signups will will convert to paying customers.
+
   INPUT DATA:
-  - You'll find the data at /app/data/signups.csv
-  - It's got about 1,000 rows with a "converted" column (0 = didn't convert, 1 = converted) plus 8 feature columns
+  - Dataset: /app/data/signups.csv
+  - ~1,000 rows with "converted" target (0 or 1) and 8 feature columns
   - Standard CSV format: comma-separated, UTF-8, header row, LF line endings
-  - Don't download anything extra from the internet
+  - Use only the provided data — no external downloads
+  
+  YOUR MISSION:
+  
+  Build an end-to-end ML pipeline that:
+  - Preprocesses numeric and categorical features appropriately
+  - Trains a calibrated classifier for reliable probability estimates
+  - Evaluates performance rigorously without data leakage
+  - Packages everything for production use
+  
+  REQUIREMENTS:
+  
+  1. Data Splitting & Cross-Validation
+     - Create training and test sets using stratified sampling to maintain class balance
+     - Reserve a held-out test set that is NEVER used during model development or tuning
+     - Perform stratified K-fold cross-validation on your training data (use 5 folds)
+     - Report out-of-fold (OOF) predictions from CV to get unbiased training performance
+     - Use random_state=42 for reproducibility
+  
+  2. Feature Preprocessing
+     - Handle missing values in both numeric and categorical features
+     - For numeric features: apply outlier handling using learned percentile-based clipping
+       (e.g., clip to 1st-99th percentile range learned from training data)
+     - Scale numeric features to have zero mean and unit variance
+     - Encode categorical features for model compatibility
+     - Build preprocessing into a unified scikit-learn Pipeline so it's applied consistently
+  
+  3. Model Training & Calibration
+     - Train a linear classifier suitable for binary classification
+     - Apply probability calibration to ensure predicted probabilities are well-calibrated
+       (calibrated probabilities better reflect true likelihood of conversion)
+     - Train only on the training set — test set must remain unseen
+  
+  4. Evaluation Metrics
+     Compute these metrics for both CV (out-of-fold) and test set:
+     - ROC-AUC: area under ROC curve
+     - PR-AUC: area under precision-recall curve
+     - Accuracy: fraction of correct predictions
+     - Precision: positive predictive value
+     - Recall: sensitivity / true positive rate
+     - F1 Score: harmonic mean of precision and recall
+     
+     Also generate confusion matrices for test set evaluation.
+  
+  5. Outputs (save to /app/output/)
+     
+     a) model.joblib
+        - Your trained scikit-learn Pipeline (must support predict_proba)
+        - Save with joblib, compression level 3
+        - Pipeline must be reloadable and executable on new data
+     
+     b) report.json (exact schema required)
+        {
+          "cv_metrics": {
+            "roc_auc": <float>,
+            "pr_auc": <float>,
+            "accuracy": <float>,
+            "precision": <float>,
+            "recall": <float>,
+            "f1": <float>
+          },
+          "test_metrics": { <same 6 metrics> },
+          "test_confusion_matrix": [[TN, FP], [FN, TP]]
+        }
+        Round all metric values to 4 decimal places.
+     
+     c) roc_curve.png
+        - ROC curve visualization comparing CV (OOF) and test performance
+        - Image size: 640x480 pixels, PNG format
+        - Include legend showing AUC values (rounded to 2 decimals)
+     
+     d) pr_curve.png  
+        - Precision-Recall curve (same format as ROC curve)
+        - Image size: 640x480 pixels, PNG format
+        - Include legend showing PR-AUC values (rounded to 2 decimals)
+     
+     e) summary.txt
+        - Human-readable performance summary
+        - Include all metrics for CV and test
+        - Include test confusion matrix
+        - Use LF line endings
+  
+  6. Quality Requirements
+     - Set random_state=42 wherever randomness is involved (splits, CV, model)
+     - Use n_jobs=1 to ensure deterministic execution
+     - All text files must use LF (Unix) line endings, not CRLF
+     - Ensure no data leakage: test data must never influence training, preprocessing fitting, or CV
+     - Model predictions must be deterministic when re-run
+  
+  SUCCESS CRITERIA:
+  - Pipeline successfully loads and produces valid probability predictions
+  - Predictions vary reasonably (not all constant or clustered)
+  - Test ROC-AUC is in realistic range for this problem (0.65-0.95)
+  - CV and test performance are comparable (difference < 0.10 in AUC)
+  - All output files exist with correct formats and schemas
+  - Confusion matrix sums match expected test set size
+  - Results are reproducible with the same random seed
 
-  ========================================
-  CRITICAL NAMING REQUIREMENTS
-  ========================================
-  You MUST use these names, not variations:
-  
-  Main Pipeline steps:
-    - "pre" (for the ColumnTransformer)
-    - "clf" (for the CalibratedClassifierCV)
-  
-  ColumnTransformer pipelines:
-    - "num" (for numeric preprocessing)
-    - "cat" (for categorical preprocessing)
-  
-  Numeric pipeline steps (in order):
-    - "imputer" (SimpleImputer)
-    - "clip" (your custom clipper)
-    - "scale" (StandardScaler)
-  
-  Categorical pipeline steps (in order):
-    - "imputer" (SimpleImputer)
-    - "ohe" (OneHotEncoder)
-  
-  These are EXACT REQUIRED NAMES.
-  ========================================
-    
-  TASK:
-  
-  1. Setup
-  - Write two Python files in /app:
-    * /app/train_and_evaluate.py — your main training script
-    * /app/mlutils.py — helper code for a custom transformer
-  - Make sure everything runs from /app when the agent executes it
-  - Only use these libraries: numpy, pandas, scikit-learn, matplotlib, joblib (they're already installed)
-  - Set random_state=42 in ALL of these places:
-    * train_test_split(..., random_state=42)
-    * LogisticRegression(..., random_state=42)
-    * StratifiedKFold(..., random_state=42)
-  - Set n_jobs=1 in CalibratedClassifierCV (required for reproducibility)
-  - Exit with a non-zero code if anything goes wrong
-  - Do not download files from the internet (all data/libraries are provided)
-
-  2. Data Preprocessing
-  - Build one single scikit-learn Pipeline that includes both preprocessing and the model
-  - Don't manually fit or transform data outside the Pipeline—let the Pipeline handle everything
-  
-  - REQUIRED PIPELINE STRUCTURE (use these EXACT names):
-    
-    Pipeline([
-        ("pre", ColumnTransformer([  # EXACT name "pre" required
-            ("num", Pipeline([  # EXACT name "num" required
-                ("imputer", SimpleImputer(strategy="median")),  # EXACT name "imputer" required
-                ("clip", YourCustomClipper(lower=0.01, upper=0.99)),  # EXACT name "clip" required
-                ("scale", StandardScaler())  # EXACT name "scale" required
-            ]), numeric_columns),
-            ("cat", Pipeline([  # EXACT name "cat" required
-                ("imputer", SimpleImputer(strategy="most_frequent")),  # EXACT name "imputer" required
-                ("ohe", OneHotEncoder(handle_unknown="ignore", sparse_output=False))  # EXACT name "ohe" required
-            ]), categorical_columns)
-        ])),
-        ("clf", CalibratedClassifierCV(...))  # EXACT name "clf" required
-    ])
-  
-  - Numeric Pipeline Details:
-    * Fill missing values with median
-    * Clip outliers to 1st-99th percentile (lower=0.01, upper=0.99) using your custom transformer
-    * Standardize to zero mean, unit variance
-  
-  - Categorical Pipeline Details:
-    * Fill missing values with most frequent value
-    * One-hot encode with handle_unknown="ignore", sparse_output=False
-  
-  - Write a custom transformer class for the percentile clipping step
-    so the whole Pipeline can be saved and reloaded properly
-  
-  3. The Model
-  - Use LogisticRegression as your base classifier with these **exact** settings:
-    * solver="lbfgs"
-    * max_iter=1000
-    * class_weight="balanced"
-    * random_state=42  # ← Must be set
-  - Wrap it with CalibratedClassifierCV to get better probability estimates:
-    * method="isotonic"
-    * cv=3
-    * n_jobs=1  # Required for reproducibility (see Setup section)
-
-  4. Train/Test Split and Cross-Validation
-  - Split your data: 80% train, 20% test
-    * MUST Use: train_test_split(test_size=0.2, stratify=y, random_state=42)
-  - Run 5-fold stratified cross-validation on the training data only:
-    * MUST Use: StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
-    * Get out-of-fold predicted probabilities (don't train and predict on same data)
-    * Calculate ROC-AUC and PR-AUC from those out-of-fold predictions
-    * Report the mean (you can report std as 0.0 for simplicity)
-
-  5. Test Set Evaluation
-  After training on the full training set, evaluate on the held-out test set.
-  Calculate these metrics:
-  - ROC-AUC: area under the ROC curve (0 to 1, higher is better)
-  - PR-AUC (Average Precision): area under the precision-recall curve (0 to 1, higher is better)
-  - Accuracy: fraction of predictions that were correct
-  - Precision: of the signups you predicted would convert, what fraction actually did
-  - Recall: of the signups that actually converted, what fraction did you catch
-  - F1: harmonic mean of precision and recall
-  - Confusion Matrix: 2x2 table showing [[TN, FP], [FN, TP]] where rows = actual, columns = predicted
-  
-  6. Save Your Work
-  Everything goes in /app/output. You need to create:
-  
-  a) /app/output/model.joblib
-     - Your entire Pipeline (preprocessing + trained model)
-     - MUST Use: joblib.dump(pipeline, path, compress=3)
-  
-  b) /app/output/report.json
-     - A structured JSON file with all your metrics
-     - Round all floats to exactly 4 decimal places
-     - Use this exact schema:
-       {
-         "dataset": {
-           "n_rows": int,        // total rows in original data
-           "n_features": int,    // number of feature columns (not counting target)
-           "n_train": int,       // rows in training set
-           "n_test": int         // rows in test set
-         },
-         "cv": {
-           "roc_auc_mean": float,  // CV ROC-AUC (4 decimals)
-           "roc_auc_std": float,   // CV ROC-AUC standard deviation (4 decimals)
-           "pr_auc_mean": float,   // CV PR-AUC (4 decimals)
-           "pr_auc_std": float,    // CV PR-AUC standard deviation (4 decimals)
-           "n_folds": 5            // must be 5
-         },
-         "test": {
-           "roc_auc": float,              // test ROC-AUC (4 decimals)
-           "pr_auc": float,               // test PR-AUC (4 decimals)
-           "accuracy": float,             // test accuracy (4 decimals)
-           "precision": float,            // test precision (4 decimals)
-           "recall": float,               // test recall (4 decimals)
-           "f1": float,                   // test F1 score (4 decimals)
-           "confusion_matrix": [[int, int], [int, int]]  // [[TN, FP], [FN, TP]]
-         },
-         "model": {
-           "type": "LogisticRegression+Calibrated",
-           "class_weight": "balanced"
-         }
-       }
-  
-  c) /app/output/roc_curve.png and /app/output/pr_curve.png
-     - ROC curve and Precision-Recall curve for your test set predictions
-     - Each plot must be exactly 640 x 480 pixels
-     - To get exact dimensions: set figure size to 4x3 inches at 160 DPI
-  
-  d) /app/output/summary.txt
-     - A short text file with key results for quick reference
-     - Must include the text "ML Lead Scoring Summary" and "Model path:"
-     - Use UTF-8 encoding with LF (Unix) line endings, not CRLF (Windows)
-  
-  ========================================
-  IMPORTANT VALIDATION NOTES
-  ========================================
-  Your solution will be validated to ensure:
-  - Model predictions vary across samples (not constant fake outputs)
-  - CV and test metrics differ slightly unless both are near-perfect (>0.98)
-  - These checks prevent test data leakage and fake placeholder models
-  ========================================
-  
-  SUCCESS CHECKLIST:
-  - model.joblib loads and has predict_proba method
-  - report.json matches schema, all floats rounded to 4 decimals, values in [0,1]
-  - Both PNG plots exist and are exactly 640x480 pixels
-  - summary.txt exists with key metrics and LF endings
-  - Pipeline is a single object with ColumnTransformer as first step
-  - Custom transformer used for percentile clipping (not built-in sklearn)
-  - All parameters correct: random_state=42, LogisticRegression settings, CalibratedClassifierCV(method="isotonic", cv=3, n_jobs=1)
-  
 author_name: Gabriel Plata Stapper
 author_email: 103123848+gapstapper@users.noreply.github.com
 difficulty: hard
