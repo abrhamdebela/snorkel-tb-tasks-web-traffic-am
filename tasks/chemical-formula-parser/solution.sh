@@ -18,19 +18,6 @@ def parse_formula(formula):
         formula = parts[0]
         hydrate_part = "·" + "·".join(parts[1:])
 
-    # Remove charges for parsing (will add back later)
-    charge = ""
-    if formula.endswith("+") or formula.endswith("-"):
-        # Simple charge
-        charge = formula[-1]
-        formula = formula[:-1]
-    elif re.search(r'[\+\-]\d*$', formula):
-        # Charge with number
-        match = re.search(r'([\+\-]\d*)$', formula)
-        if match:
-            charge = match.group(1)
-            formula = formula[:match.start()]
-
     # Parse the formula
     composition = defaultdict(int)
 
@@ -143,10 +130,6 @@ def parse_formula(formula):
 
     # Add hydrate part back
     canonical += hydrate_part
-
-    # Add charge back if present
-    if charge:
-        canonical += charge
 
     return {
         "original": original,
