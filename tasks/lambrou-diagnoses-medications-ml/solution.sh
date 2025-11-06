@@ -7,19 +7,18 @@
 
 cat > main.py << 'EOF'
 
-import pandas as pd
 from xgboost import XGBRanker
-from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
-from sklearn.metrics import ndcg_score, average_precision_score
 import pandas as pd
-import numpy as np
-from xgboost import XGBRanker
 from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
+from sklearn.metrics import ndcg_score, average_precision_score
+import joblib
+import json
 
-feat_cols = ['age', 'drug_popularity', 'condition_concept_id', 'drug_concept_id', 'gender_concept_id']
+feat_cols = ['age', 'condition_concept_id', 'drug_concept_id', 'gender_concept_id']
 
 
 def get_train_test_set(df):
@@ -42,33 +41,36 @@ def get_train_test_set(df):
     )
     train_df = df_filtered[df_filtered['qid'].isin(train_qids)].sort_values('qid').reset_index(drop=True)
     test_df = df_filtered[df_filtered['qid'].isin(test_qids)].sort_values('qid').reset_index(drop=True)
-    feat_cols = ['age', 'drug_popularity', 'condition_concept_id',
+    feat_cols = ['age', 'condition_concept_id',
                  'drug_concept_id', 'gender_concept_id']
 
     X_train = train_df[feat_cols].fillna(0).astype(float).values
-    y_train = train_df['label'].astype(int).values
     X_test = test_df[feat_cols].fillna(0).astype(float).values
+    y_train = train_df['label'].astype(int).values
     y_test = test_df['label'].astype(int).values
     g_train = train_df.groupby('qid').size().tolist()
     q_test = test_df['qid'].values
-
     return X_train, X_test, y_train, y_test, g_train, q_test
 
 
 def create_ranker(X_train, y_train, g_train):
     ranker = XGBRanker(
         objective="rank:ndcg",
-        n_estimators=300,
+        n_estimators=400,
         learning_rate=0.1,
-        max_depth=4,
+        max_depth=6,
         subsample=0.8,
-        colsample_bytree=0.8,
-        tree_method="hist",
+        colsample_bytree=0.4,
+        tree_method="approx",
         random_state=42
     )
+
     ranker.fit(X_train, y_train, group=g_train)
     ranker.save_model("drugs_diagnoses_ranker.json")
     return ranker
+
+
+
 
 def score_ranker(y_true, y_pred, qids, k=5):
     ndcgs, maps, recalls = [], [], []
@@ -157,13 +159,15 @@ import json
 import pandas as pd
 from xgboost import XGBRanker
 app = Flask(__name__)
+import joblib
 
-app.secret_key = 'sdfsdfsdf'
+app.secret_key = 'secret-key'
+
 df = pd.read_csv('drugs_diagnoses.csv')
 df = df[:200]
 ranker = XGBRanker()
 ranker.load_model("drugs_diagnoses_ranker.json")
-feat_cols = ['age', 'drug_popularity', 'condition_concept_id',
+feat_cols = ['age', 'condition_concept_id',
              'drug_concept_id', 'gender_concept_id']
 
 @app.route('/')
@@ -177,15 +181,17 @@ def predict():
     age = float(request.form.get('age', 45))
     gender = int(request.form.get('gender', 1))
     condition_data = df[df['condition_concept_id'] == condition_id].copy()
+
     if len(condition_data) == 0:
         return jsonify({'error': 'No drugs found for this condition'})
+
     X_predict = condition_data[feat_cols].fillna(0).astype(float).values
-    X_predict[:, 0] = age  # Update age
-    X_predict[:, 4] = gender  # Update gender
+    X_predict[:, 0] = age
+    X_predict[:, 3] = gender
     scores = ranker.predict(X_predict)
     condition_data['score'] = scores
     condition_data = condition_data.sort_values('score', ascending=False)
-    recommendations = condition_data.head(5)[['drug_concept_id', 'score']].to_dict('records')
+    recommendations = condition_data.head(5)[['drug_concept_id', 'drug_popularity', 'score']].to_dict('records')
     return jsonify({'recommendations': recommendations})
 
 if __name__ == '__main__':

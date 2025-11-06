@@ -9,10 +9,10 @@ instruction: |-
   Your task is to use the provided CSV dataset to create a learning-to-rank model using XGBoost and ndcg. The goal is
   to see if we can get accurate results for prescriptions depending on diagnoses and other features included in the CSV. 
   Create a python file that when ran:
-    1. Group the data by qid and be sure to use group sizes > 1 for all queries in your training and test sets
+    1. Groups the data by qid and be sure to use group sizes > 1 for all queries in your training and test sets
     2. Creates and trains a XGBRanker model using LambdaMART
     3. Saves the ranker you trained to a file called drugs_diagnoses_ranker.json
-    4. Run predictions on the test set (NDCG@k score, MAP@k score and Recall@k score) and save a graph of all 3 scores as drugs_diagnoses_scores.png
+    4. Runs predictions on the test set (NDCG@k score, MAP@k score and Recall@k score) and saves a graph of all 3 scores as drugs_diagnoses_scores.png
     5. Save a feature importance graph as drugs_diagnoses_importance.png
     6. Save the python code to main.py and run it, creating the model and files we need
     7. Create a Flask API that holds the model in memory and can be used to run predictions
@@ -35,6 +35,9 @@ instruction: |-
     The CSV dataset is in the working directory and is named drugs_diagnoses.csv
     Pre installed python libraries: xgboost scikit-learn pandas matplotlib seaborn flask
     These libraries should be enough to accomplish the goal.
+  Constraints:
+    You may not use the 'drug_popularity' as a feature
+    The model must achieve a MAP@5 score of >.8, a Recall@5 score of >.8 and a NDCG score of >.8
   
   Modify the code below to satisfy the requirements, keeping the function and return signatures intact.
   
