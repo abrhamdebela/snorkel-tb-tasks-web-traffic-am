@@ -6,11 +6,11 @@
 # The instructions will include references to the relevant resources necessary for task completion, rules and additional constraints, and a description of the success criteria.
 # This will also contain task metadata that is not available to the agent at runtime.
 instruction: |-
-  Your task is to use the provided CSV dataset to create a learning-to-rank model using XGBoost and ndcg. The goal is
+  Your task is to use the provided CSV dataset to create a learning-to-rank model using XGBoost. The goal is
   to see if we can get accurate results for prescriptions depending on diagnoses and other features included in the CSV. 
   Create a python file that when ran:
     1. Groups the data by qid and be sure to use group sizes > 1 for all queries in your training and test sets
-    2. Creates and trains a XGBRanker model using LambdaMART
+    2. Creates and trains a XGBRanker model using LambdaMART with ndcg as the objective
     3. Saves the ranker you trained to a file called drugs_diagnoses_ranker.json
     4. Runs predictions on the test set (NDCG@k score, MAP@k score and Recall@k score) and saves a graph of all 3 scores as drugs_diagnoses_scores.png
     5. Save a feature importance graph as drugs_diagnoses_importance.png
@@ -20,7 +20,7 @@ instruction: |-
       a. The frontend should load condition IDs from the dataset, does not have to be entire dataset
       b. There should be a select input for condition_id, age and gender
       c. The frontend should have the ability to run a prediction on the above inputs and display the results (top 5 items)
-      d. The frontend should display the score and feature importance graphs, make a /app/static folder and move them there
+      d. The frontend should display the score and feature importance graphs, make a /app/static/ folder and move the 2 graphs into that folder
       e. The Flask app should be named app and the filename should be app.py. Create /app/templates/index.html and use that as a template.
     9. The Flask API should have a /predict POST endpoint, which returns a JSON response in the following format:
         {'recommendations': [{"drug_concept_id": int, "score": float}]} # 5 items
@@ -37,6 +37,7 @@ instruction: |-
     These libraries should be enough to accomplish the goal.
   Constraints:
     You may not use the 'drug_popularity' as a feature
+    You may only use 4 features
     The model must achieve a MAP@5 score of >.8, a Recall@5 score of >.8 and a NDCG score of >.8
     Hint: You may need to implement hyperparameter tuning if you are having trouble achieving this.
   
@@ -49,9 +50,9 @@ instruction: |-
 
   def get_train_test_set(df: pd.DataFrame):
       # g_train - list of int of group sizes
-      # q_test - test data qid column, 1D np array
-      # X_train, X_test - training/testing samples, 2D np array
-      # y_train, y_test - train/test labels, 1D int array
+      # q_test - test data qid column, 1D np arrays
+      # X_train, X_test - training/testing samples, 2D np arrays
+      # y_train, y_test - train/test labels, 1D int arrays
       return X_train, X_test, y_train, y_test, g_train, q_test # return these fields in this order
 
   
