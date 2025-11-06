@@ -185,7 +185,7 @@ def predict():
     scores = ranker.predict(X_predict)
     condition_data['score'] = scores
     condition_data = condition_data.sort_values('score', ascending=False)
-    recommendations = condition_data.head(5)[['drug_concept_id', 'drug_popularity', 'score']].to_dict('records')
+    recommendations = condition_data.head(5)[['drug_concept_id', 'score']].to_dict('records')
     return jsonify({'recommendations': recommendations})
 
 if __name__ == '__main__':

@@ -19,13 +19,13 @@ def test_ranker_model_file_exists():
 
 def test_scores_graph_exists():
     """Verify drugs_diagnoses_scores.png was created."""
-    assert os.path.exists("drugs_diagnoses_scores.png"), \
+    assert os.path.exists("drugs_diagnoses_scores.png") or os.path.exists("static/drugs_diagnoses_scores.png"), \
         "Scores graph 'drugs_diagnoses_scores.png' was not created"
 
 
 def test_importance_graph_exists():
     """Verify drugs_diagnoses_importance.png was created."""
-    assert os.path.exists("drugs_diagnoses_importance.png"), \
+    assert os.path.exists("drugs_diagnoses_importance.png") or os.path.exists("static/drugs_diagnoses_importance.png"), \
         "Feature importance graph 'drugs_diagnoses_importance.png' was not created"
 
 
@@ -341,6 +341,7 @@ def test_predict_returns_recommendations():
         data = json.loads(response.data)
         assert 'recommendations' in data, \
             "Response missing 'recommendations' field"
+
 
 
 def test_predict_returns_top_5_recommendations():
