@@ -5,7 +5,6 @@
 # Clear and self-contained description of the task to be accomplished by the agent.
 # The instructions will include references to the relevant resources necessary for task completion, rules and additional constraints, and a description of the success criteria.
 # This will also contain task metadata that is not available to the agent at runtime.
-
 instruction: |-
   You're a data scientist at a fintech company.
   Your job is to build a machine learning model, a calibrated binary classifier, that predicts which new signups will convert to paying customers.
@@ -43,16 +42,13 @@ instruction: |-
      - For categorical features:
        * Handle missing values
        * Transform them into a format your model can digest
-     - Examine all features and decide which to include in your model (some may add noise rather than signal)
      - Package all preprocessing steps into a single scikit-learn Pipeline that can be saved and reused
-     - Any custom preprocessing components must be importable when the model is reloaded (e.g., placed in a module)
   
   3. Model Training & Calibration
      - Train a binary classifier that works well for this problem
      - Here's the key requirement: your final model must produce calibrated probabilities
        (Calibrated probabilities mean if you predict 70% conversion, roughly 70% of those cases actually convert)
-     - The final saved artifact must be a scikit-learn Pipeline object at the top level that supports predict_proba()
-     - The Pipeline must be the top-level saved object, not wrapped in another wrapper type
+     - The final saved artifact must be a scikit-learn Pipeline object that supports predict_proba()
      - Train only on the training data — keep the test set completely separate
   
   4. Evaluation Metrics
@@ -103,7 +99,6 @@ instruction: |-
         - Human-readable summary of your results
         - Include all metrics for both CV and test
         - Show the test confusion matrix
-        - Include which version/compression of joblib was used (e.g., "model.joblib compression: 3")
         - Use LF (Unix-style) line endings, not CRLF
   
   6. Quality & Reproducibility Requirements
@@ -115,10 +110,9 @@ instruction: |-
   
   SUCCESS CRITERIA:
   - Model successfully loads and generates probability predictions (not just 0/1 classifications)
-  - When reloaded via joblib.load, the model must work end-to-end on raw input data
+  - When reloaded via joblib.load, the model must work end-to-end on raw input data 
   - Predictions show reasonable variation — not all the same or clustered at extremes
   - Test set ROC-AUC is at least 0.58 (reasonable performance despite challenges)
-  - Test set accuracy is at least 0.50 (models must exceed baseline)
   - CV and test performance are similar (AUC difference less than 0.15, meaning no major overfitting)
   - All required output files exist with correct formats
   - Confusion matrix totals match the expected test set size (10-40% of ~1000 rows)
