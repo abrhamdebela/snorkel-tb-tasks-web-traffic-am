@@ -193,7 +193,7 @@ if __name__ == '__main__':
 EOF
 
 mkdir templates
-cat > templates/index.html << 'EOF'
+cat > /app/templates/index.html << 'EOF'
 <!DOCTYPE html>
 <html lang="en">
 <head>

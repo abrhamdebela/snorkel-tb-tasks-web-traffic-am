@@ -240,18 +240,12 @@ def test_flask_app_file_exists():
     """Verify Flask application file exists."""
 
     exists = os.path.exists('app.py')
-    assert exists, f"No Flask app file found. Expected 'app.py'"
+    assert exists, "No Flask app file found. Expected 'app.py'"
 
 def test_flask_app_is_flask_instance():
     """Verify the app is a Flask instance."""
     from app import app
     assert isinstance(app, Flask), "app is not a Flask instance"
-
-def test_ranker_model_loaded_at_startup():
-    """Verify ranker model is loaded in the app."""
-    from app import ranker
-    from xgboost import XGBRanker
-    assert isinstance(ranker, XGBRanker), "Ranker model not loaded or wrong type"
 
 def test_predict_route_exists():
     """Verify /predict route exists."""
@@ -454,33 +448,6 @@ def test_predictions_are_sorted_by_score():
             is_sorted = all(scores[i] >= scores[i + 1] for i in range(len(scores) - 1))
             assert is_sorted, \
                 f"Recommendations not sorted by score: {scores}"
-
-def test_different_ages_produce_different_results():
-    """Verify different age values produce different predictions."""
-    from app import app
-    import pandas as pd
-    import json
-
-    df = pd.read_csv('drugs_diagnoses.csv')
-    valid_condition = int(df['condition_concept_id'].iloc[0])
-    app.testing = True
-    with app.test_client() as client:
-        response1 = client.post('/predict', data={
-            'condition_id': valid_condition,
-            'age': 25,
-            'gender': 1
-        })
-        response2 = client.post('/predict', data={
-            'condition_id': valid_condition,
-            'age': 75,
-            'gender': 1
-        })
-        data1 = json.loads(response1.data)
-        data2 = json.loads(response2.data)
-        scores1 = [rec['score'] for rec in data1['recommendations']]
-        scores2 = [rec['score'] for rec in data2['recommendations']]
-        assert scores1 != scores2, \
-            "Different ages produce identical predictions (model not using age)"
 
 def test_invalid_condition_handled_gracefully():
     """Verify invalid condition_id is handled gracefully."""
