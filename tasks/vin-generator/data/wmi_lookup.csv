@@ -1,0 +1,329 @@
+wmi,manufacturer,country,region,vehicle_type
+1C3,Chrysler,United States,North America,Passenger Car
+1C4,Chrysler,United States,North America,Multipurpose Vehicle
+1C6,Chrysler,United States,North America,Truck
+1FA,Ford,United States,North America,Passenger Car
+1FB,Ford,United States,North America,Truck
+1FC,Ford,United States,North America,Truck
+1FD,Ford,United States,North America,Truck
+1FM,Ford,United States,North America,Multipurpose Vehicle
+1FT,Ford,United States,North America,Truck
+1G1,General Motors,United States,North America,Passenger Car
+1G2,General Motors,United States,North America,Passenger Car
+1G3,General Motors,United States,North America,Passenger Car
+1G4,General Motors,United States,North America,Passenger Car
+1G6,General Motors,United States,North America,Passenger Car
+1G8,General Motors,United States,North America,Passenger Car
+1GB,General Motors,United States,North America,Truck
+1GC,General Motors,United States,North America,Truck
+1GD,General Motors,United States,North America,Incomplete Vehicle
+1GE,General Motors,United States,North America,Truck
+1GK,General Motors,United States,North America,Multipurpose Vehicle
+1GM,General Motors,United States,North America,Multipurpose Vehicle
+1GN,General Motors,United States,North America,Multipurpose Vehicle
+1GT,General Motors,United States,North America,Truck
+1GY,General Motors,United States,North America,Truck
+1HG,Honda,United States,North America,Passenger Car
+1J4,Jeep,United States,North America,Multipurpose Vehicle
+1L1,Lincoln,United States,North America,Passenger Car
+1LN,Lincoln,United States,North America,Passenger Car
+1ME,Mercury,United States,North America,Passenger Car
+1N4,Nissan,United States,North America,Passenger Car
+1N6,Nissan,United States,North America,Truck
+1VW,Volkswagen,United States,North America,Passenger Car
+1YV,Mazda,United States,North America,Passenger Car
+1ZV,Ford,United States,North America,Incomplete Vehicle
+2C3,Chrysler,Canada,North America,Passenger Car
+2C4,Chrysler,Canada,North America,Multipurpose Vehicle
+2FA,Ford,Canada,North America,Passenger Car
+2FB,Ford,Canada,North America,Truck
+2FC,Ford,Canada,North America,Truck
+2FM,Ford,Canada,North America,Multipurpose Vehicle
+2FT,Ford,Canada,North America,Truck
+2G1,General Motors,Canada,North America,Passenger Car
+2G2,General Motors,Canada,North America,Passenger Car
+2G3,General Motors,Canada,North America,Passenger Car
+2G4,General Motors,Canada,North America,Passenger Car
+2HG,Honda,Canada,North America,Passenger Car
+2HK,Honda,Canada,North America,Multipurpose Vehicle
+2HM,Honda,Canada,North America,Multipurpose Vehicle
+2M1,Mercury,Canada,North America,Passenger Car
+2T1,Toyota,Canada,North America,Passenger Car
+2T2,Toyota,Canada,North America,Multipurpose Vehicle
+3C3,Chrysler,Mexico,North America,Passenger Car
+3C4,Chrysler,Mexico,North America,Multipurpose Vehicle
+3C6,Chrysler,Mexico,North America,Truck
+3D3,Dodge,Mexico,North America,Passenger Car
+3FA,Ford,Mexico,North America,Passenger Car
+3FE,Ford,Mexico,North America,Incomplete Vehicle
+3FM,Ford,Mexico,North America,Multipurpose Vehicle
+3G1,General Motors,Mexico,North America,Passenger Car
+3G2,General Motors,Mexico,North America,Passenger Car
+3G3,General Motors,Mexico,North America,Passenger Car
+3G4,General Motors,Mexico,North America,Passenger Car
+3G5,General Motors,Mexico,North America,Passenger Car
+3G7,General Motors,Mexico,North America,Passenger Car
+3GC,General Motors,Mexico,North America,Truck
+3GN,General Motors,Mexico,North America,Multipurpose Vehicle
+3GT,General Motors,Mexico,North America,Truck
+3HG,Honda,Mexico,North America,Passenger Car
+3HM,Honda,Mexico,North America,Multipurpose Vehicle
+3N1,Nissan,Mexico,North America,Passenger Car
+3N6,Nissan,Mexico,North America,Truck
+3N8,Nissan,Mexico,North America,Multipurpose Vehicle
+3VW,Volkswagen,Mexico,North America,Passenger Car
+4F2,Mazda,United States,North America,Multipurpose Vehicle
+4F4,Mazda,United States,North America,Truck
+4M2,Mercury,United States,North America,Multipurpose Vehicle
+4S3,Subaru,United States,North America,Passenger Car
+4S4,Subaru,United States,North America,Multipurpose Vehicle
+4S6,Subaru,United States,North America,Multipurpose Vehicle
+4T1,Toyota,United States,North America,Passenger Car
+4T3,Toyota,United States,North America,Multipurpose Vehicle
+5F2,Honda,United States,North America,Multipurpose Vehicle
+5FN,Honda,United States,North America,Truck
+5J6,Honda,United States,North America,Truck
+5J8,Honda,United States,North America,Truck
+5L1,Lincoln,United States,North America,Passenger Car
+5LM,Lincoln,United States,North America,Multipurpose Vehicle
+5N1,Nissan,United States,North America,Passenger Car
+5NM,Nissan,United States,North America,Multipurpose Vehicle
+5NP,Nissan,United States,North America,Multipurpose Vehicle
+5T1,Toyota,United States,North America,Passenger Car
+5TE,Toyota,United States,North America,Truck
+5TF,Toyota,United States,North America,Truck
+5YJ,Tesla,United States,North America,Passenger Car
+6F2,Ford,Australia,Oceania,Passenger Car
+6F4,Ford,Australia,Oceania,Truck
+6F5,Ford,Australia,Oceania,Truck
+6FP,Ford,Australia,Oceania,Passenger Car
+6G1,General Motors,Australia,Oceania,Passenger Car
+6G2,General Motors,Australia,Oceania,Passenger Car
+6H8,General Motors,Australia,Oceania,Passenger Car
+6MM,Mitsubishi,Australia,Oceania,Passenger Car
+6T1,Toyota,Australia,Oceania,Passenger Car
+8AF,Audi,Argentina,South America,Passenger Car
+8AG,Audi,Argentina,South America,Multipurpose Vehicle
+8AP,Volkswagen,Argentina,South America,Passenger Car
+8AW,Volkswagen,Argentina,South America,Multipurpose Vehicle
+8C3,Honda,Argentina,South America,Passenger Car
+8GD,Peugeot,Argentina,South America,Passenger Car
+9BD,Fiat,Brazil,South America,Passenger Car
+9BF,Ford,Brazil,South America,Passenger Car
+9BG,General Motors,Brazil,South America,Passenger Car
+9BH,Hyundai,Brazil,South America,Passenger Car
+9BM,Mercedes-Benz,Brazil,South America,Passenger Car
+9BR,Toyota,Brazil,South America,Passenger Car
+9BS,Scania,Brazil,South America,Truck
+9BW,Volkswagen,Brazil,South America,Passenger Car
+JAA,Isuzu,Japan,Asia,Passenger Car
+JA4,Mitsubishi,Japan,Asia,Passenger Car
+JF1,Subaru,Japan,Asia,Passenger Car
+JF2,Subaru,Japan,Asia,Passenger Car
+JF3,Subaru,Japan,Asia,Multipurpose Vehicle
+JHM,Honda,Japan,Asia,Passenger Car
+JHL,Honda,Japan,Asia,Passenger Car
+JM1,Mazda,Japan,Asia,Passenger Car
+JM3,Mazda,Japan,Asia,Multipurpose Vehicle
+JM7,Mazda,Japan,Asia,Multipurpose Vehicle
+JMZ,Mazda,Japan,Asia,Truck
+JN1,Nissan,Japan,Asia,Passenger Car
+JN3,Nissan,Japan,Asia,Multipurpose Vehicle
+JN6,Nissan,Japan,Asia,Truck
+JN8,Nissan,Japan,Asia,Multipurpose Vehicle
+JT1,Toyota,Japan,Asia,Incomplete Vehicle
+JT2,Toyota,Japan,Asia,Passenger Car
+JT3,Toyota,Japan,Asia,Multipurpose Vehicle
+JT4,Toyota,Japan,Asia,Truck
+JT5,Toyota,Japan,Asia,Incomplete Vehicle
+JT6,Lexus,Japan,Asia,Multipurpose Vehicle
+JT7,Lexus,Japan,Asia,Multipurpose Vehicle
+JT8,Lexus,Japan,Asia,Passenger Car
+JTE,Lexus,Japan,Asia,Multipurpose Vehicle
+JTG,Lexus,Japan,Asia,Passenger Car
+JTH,Lexus,Japan,Asia,Passenger Car
+JTJ,Lexus,Japan,Asia,Passenger Car
+JTK,Lexus,Japan,Asia,Passenger Car
+JTN,Nissan,Japan,Asia,Multipurpose Vehicle
+JY3,Yamaha,Japan,Asia,Motorcycle
+KL1,Daewoo,South Korea,Asia,Passenger Car
+KM8,Hyundai,South Korea,Asia,Passenger Car
+KMH,Hyundai,South Korea,Asia,Passenger Car
+KMJ,Hyundai,South Korea,Asia,Multipurpose Vehicle
+KNA,Kia,South Korea,Asia,Passenger Car
+KNB,Kia,South Korea,Asia,Multipurpose Vehicle
+KNC,Kia,South Korea,Asia,Multipurpose Vehicle
+KND,Kia,South Korea,Asia,Multipurpose Vehicle
+KNE,Kia,South Korea,Asia,Passenger Car
+KNM,Renault,South Korea,Asia,Passenger Car
+L56,Renault,China,Asia,Multipurpose Vehicle
+LBE,BAIC,China,Asia,Multipurpose Vehicle
+LDC,Dongfeng,China,Asia,Passenger Car
+LFM,FAW,China,Asia,Passenger Car
+LFP,FAW,China,Asia,Passenger Car
+LFV,FAW,China,Asia,Passenger Car
+LGB,Dongfeng,China,Asia,Passenger Car
+LGW,Great Wall,China,Asia,Multipurpose Vehicle
+LGX,BYD,China,Asia,Passenger Car
+LHG,Honda,China,Asia,Passenger Car
+LHM,Honda,China,Asia,Multipurpose Vehicle
+LJ1,JAC,China,Asia,Passenger Car
+LKL,Suzhou King Long,China,Asia,Bus
+LLV,Lifan,China,Asia,Passenger Car
+LMG,GAC,China,Asia,Passenger Car
+LMU,Maxus,China,Asia,Multipurpose Vehicle
+LNA,Changan,China,Asia,Passenger Car
+LNB,BAIC,China,Asia,Passenger Car
+LPA,Changan,China,Asia,Passenger Car
+LPE,Chery,China,Asia,Passenger Car
+LS5,Changan,China,Asia,Passenger Car
+LSG,SAIC,China,Asia,Passenger Car
+LSJ,SAIC,China,Asia,Passenger Car
+LSV,SAIC,China,Asia,Passenger Car
+LSY,SAIC,China,Asia,Passenger Car
+LTV,Toyota,China,Asia,Passenger Car
+LVG,GAC,China,Asia,Passenger Car
+LVH,Dongfeng,China,Asia,Passenger Car
+LVR,Changan,China,Asia,Multipurpose Vehicle
+LVS,Changan,China,Asia,Passenger Car
+LVV,Chery,China,Asia,Multipurpose Vehicle
+LVY,Chery,China,Asia,Multipurpose Vehicle
+LWV,GAC,China,Asia,Passenger Car
+LYV,Volvo,China,Asia,Passenger Car
+LZE,Isuzu,China,Asia,Truck
+LZG,SAIC,China,Asia,Multipurpose Vehicle
+LZM,MAN,China,Asia,Truck
+LZW,SAIC,China,Asia,Multipurpose Vehicle
+LZY,Yutong,China,Asia,Bus
+LZZ,Geely,China,Asia,Passenger Car
+MA1,Mahindra,India,Asia,Multipurpose Vehicle
+MA3,Maruti Suzuki,India,Asia,Passenger Car
+MAJ,Ford,India,Asia,Passenger Car
+MAL,Hyundai,India,Asia,Passenger Car
+MAT,Tata,India,Asia,Passenger Car
+MBH,Honda,India,Asia,Passenger Car
+MBJ,Toyota,India,Asia,Passenger Car
+MC2,Renault,India,Asia,Passenger Car
+MCB,Fiat,India,Asia,Passenger Car
+ME4,Nissan,India,Asia,Passenger Car
+MHF,Honda,India,Asia,Multipurpose Vehicle
+MHR,Honda,India,Asia,Passenger Car
+ML0,Mahindra,India,Asia,Multipurpose Vehicle
+MLA,Mahindra,India,Asia,Multipurpose Vehicle
+MMB,Mitsubishi,India,Asia,Passenger Car
+MMC,Mazda,India,Asia,Passenger Car
+MMM,Chevrolet,India,Asia,Passenger Car
+MMT,Mitsubishi,India,Asia,Passenger Car
+MNB,Ford,India,Asia,Passenger Car
+MNT,Nissan,India,Asia,Multipurpose Vehicle
+MPA,Isuzu,India,Asia,Truck
+NLE,Mercedes-Benz,Turkey,Europe,Multipurpose Vehicle
+NM0,Ford,Turkey,Europe,Passenger Car
+NM4,Fiat,Turkey,Europe,Multipurpose Vehicle
+NMT,Toyota,Turkey,Europe,Multipurpose Vehicle
+PE1,Mazda,Philippines,Asia,Passenger Car
+PE3,Mazda,Philippines,Asia,Multipurpose Vehicle
+PL1,Proton,Malaysia,Asia,Passenger Car
+SAJ,Jaguar,United Kingdom,Europe,Passenger Car
+SAL,Land Rover,United Kingdom,Europe,Multipurpose Vehicle
+SAR,Rover,United Kingdom,Europe,Passenger Car
+SAX,Jaguar,United Kingdom,Europe,Multipurpose Vehicle
+SB1,Toyota,United Kingdom,Europe,Passenger Car
+SCC,Lotus,United Kingdom,Europe,Passenger Car
+SCE,DeLorean,United Kingdom,Europe,Passenger Car
+SCF,Aston Martin,United Kingdom,Europe,Passenger Car
+SDB,Peugeot,United Kingdom,Europe,Multipurpose Vehicle
+SFD,Alexander Dennis,United Kingdom,Europe,Bus
+SHH,Honda,United Kingdom,Europe,Passenger Car
+SHS,Honda,United Kingdom,Europe,Multipurpose Vehicle
+SJN,Nissan,United Kingdom,Europe,Passenger Car
+TMB,Skoda,Czech Republic,Europe,Passenger Car
+TMK,Skoda,Czech Republic,Europe,Multipurpose Vehicle
+TMP,Skoda,Czech Republic,Europe,Passenger Car
+TMT,Skoda,Czech Republic,Europe,Multipurpose Vehicle
+TN9,Tatra,Czech Republic,Europe,Truck
+TRA,Ikarus,Hungary,Europe,Bus
+TRU,Audi,Hungary,Europe,Multipurpose Vehicle
+TSE,Ikarus,Hungary,Europe,Bus
+TSM,Suzuki,Hungary,Europe,Passenger Car
+U5Y,Kia,Slovakia,Europe,Passenger Car
+UU1,Renault,Romania,Europe,Passenger Car
+UU3,Dacia,Romania,Romania,Multipurpose Vehicle
+UU6,Dacia,Romania,Romania,Passenger Car
+VA0,AvtoVAZ,Russia,Europe,Passenger Car
+VF1,Renault,France,Europe,Passenger Car
+VF2,Renault,France,Europe,Passenger Car
+VF3,Peugeot,France,Europe,Passenger Car
+VF4,Talbot,France,Europe,Passenger Car
+VF6,Renault,France,Europe,Multipurpose Vehicle
+VF7,Citroën,France,Europe,Passenger Car
+VF8,Matra,France,Europe,Passenger Car
+VF9,Bugatti,France,Europe,Passenger Car
+VFA,Alpine,France,Europe,Passenger Car
+VFE,Iveco,France,Europe,Bus
+VNK,Toyota,France,Europe,Passenger Car
+VSE,Suzuki,Spain,Europe,Passenger Car
+VSK,Nissan,Spain,Europe,Multipurpose Vehicle
+VSS,SEAT,Spain,Europe,Passenger Car
+VSX,Opel,Spain,Europe,Multipurpose Vehicle
+VV9,SEAT,Spain,Europe,Passenger Car
+VWV,Volkswagen,Spain,Europe,Multipurpose Vehicle
+VX1,Zastava,Serbia,Europe,Passenger Car
+W0L,Opel,Germany,Europe,Passenger Car
+W0S,Opel,Germany,Europe,Multipurpose Vehicle
+W0V,Opel,Germany,Europe,Multipurpose Vehicle
+WAG,Audi,Germany,Europe,Multipurpose Vehicle
+WAU,Audi,Germany,Europe,Passenger Car
+WBA,BMW,Germany,Europe,Passenger Car
+WBS,BMW,Germany,Europe,Passenger Car
+WBX,BMW,Germany,Europe,Multipurpose Vehicle
+WDB,Mercedes-Benz,Germany,Europe,Passenger Car
+WDC,DaimlerChrysler,Germany,Europe,Passenger Car
+WDD,Mercedes-Benz,Germany,Europe,Passenger Car
+WDF,Mercedes-Benz,Germany,Europe,Truck
+WEB,Evobus,Germany,Europe,Bus
+WF0,Ford,Germany,Europe,Passenger Car
+WJM,Iveco,Germany,Europe,Truck
+WJR,Irmscher,Germany,Europe,Passenger Car
+WMA,MAN,Germany,Europe,Truck
+WME,Smart,Germany,Europe,Passenger Car
+WMW,Mini,Germany,Europe,Passenger Car
+WMX,Mercedes-AMG,Germany,Europe,Passenger Car
+WP0,Porsche,Germany,Europe,Passenger Car
+WP1,Porsche,Germany,Europe,Passenger Car
+WUA,Audi,Germany,Europe,Multipurpose Vehicle
+WVG,Volkswagen,Germany,Europe,Multipurpose Vehicle
+WVW,Volkswagen,Germany,Europe,Passenger Car
+WV1,Volkswagen,Germany,Europe,Truck
+WV2,Volkswagen,Germany,Europe,Bus
+WV3,Volkswagen,Germany,Europe,Multipurpose Vehicle
+XLR,DAF,Netherlands,Europe,Truck
+XMC,Mitsubishi,Netherlands,Europe,Passenger Car
+XTA,Lada,Russia,Europe,Passenger Car
+XTC,KamAZ,Russia,Europe,Truck
+XTT,Lada,Russia,Europe,Passenger Car
+XUF,GAZ,Russia,Europe,Truck
+XUU,UAZ,Russia,Europe,Multipurpose Vehicle
+XW8,Lada,Russia,Europe,Passenger Car
+XXX,Lada,Russia,Europe,Passenger Car
+YK1,Saab,Finland,Europe,Passenger Car
+YS2,Scania,Sweden,Europe,Truck
+YS3,Saab,Sweden,Europe,Passenger Car
+YS4,Scania,Sweden,Europe,Bus
+YT9,Koenigsegg,Sweden,Europe,Passenger Car
+YV1,Volvo,Sweden,Europe,Passenger Car
+YV2,Volvo,Sweden,Europe,Truck
+YV3,Volvo,Sweden,Europe,Bus
+YV4,Volvo,Sweden,Europe,Multipurpose Vehicle
+ZA9,Lamborghini,Italy,Europe,Passenger Car
+ZAM,Maserati,Italy,Europe,Passenger Car
+ZAP,Piaggio,Italy,Europe,Multipurpose Vehicle
+ZAR,Alfa Romeo,Italy,Europe,Passenger Car
+ZCF,Ferrari,Italy,Europe,Passenger Car
+ZDF,Ferrari,Italy,Europe,Passenger Car
+ZFA,Fiat,Italy,Europe,Passenger Car
+ZFC,Fiat,Italy,Europe,Passenger Car
+ZFF,Ferrari,Italy,Europe,Passenger Car
+ZGA,Iveco,Italy,Europe,Truck
+ZHW,Lamborghini,Italy,Europe,Passenger Car
+ZLA,Lancia,Italy,Europe,Passenger Car
