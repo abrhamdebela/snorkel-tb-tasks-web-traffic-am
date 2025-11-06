@@ -8,7 +8,7 @@
 instruction: |-
   Your task is to use the provided CSV dataset to create a learning-to-rank model using XGBoost. The goal is
   to see if we can get accurate results for prescriptions depending on diagnoses and other features included in the CSV. 
-  Create a python file that when ran:
+  Create a python file that when run:
     1. Groups the data by qid and be sure to use group sizes > 1 for all queries in your training and test sets
     2. Creates and trains a XGBRanker model using LambdaMART with ndcg as the objective
     3. Saves the ranker you trained to a file called /app/drugs_diagnoses_ranker.json
@@ -20,7 +20,7 @@ instruction: |-
       a. The frontend should load condition IDs from the dataset, does not have to be entire dataset
       b. There should be a select input for condition_id, age and gender
       c. The frontend should have the ability to run a prediction on the above inputs and display the results (top 5 items)
-      d. The frontend should display the score and feature importance graphs, make a /app/static/ folder for the images them into that folder
+      d. The frontend should display the score and feature importance graphs, make a /app/static/ folder for the images and copy them into that folder
       e. The Flask app should be named app and the filename should be /app/app.py. Create /app/templates/index.html and use that as a template.
     9. The Flask API should have a /predict POST endpoint, which returns a JSON response in the following format:
         {'recommendations': [{"drug_concept_id": int, "score": float}]} # 5 items
