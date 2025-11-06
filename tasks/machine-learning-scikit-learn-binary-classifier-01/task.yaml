@@ -43,6 +43,7 @@ instruction: |-
      - For categorical features:
        * Handle missing values
        * Transform them into a format your model can digest
+     - Avoid high-cardinality categorical features that inflate dimensionality without signal; include only features that generalize on the test set.
      - Examine all features and decide which to include in your model (some may add noise rather than signal)
      - Package all preprocessing steps into a single scikit-learn Pipeline that can be saved and reused
      - Any custom preprocessing components must be importable when the model is reloaded (e.g., placed in a module)
@@ -54,6 +55,8 @@ instruction: |-
      - The final saved artifact must be a scikit-learn Pipeline object at the top level that supports predict_proba()
      - The Pipeline must be the top-level saved object, not wrapped in another wrapper type
      - Train only on the training data — keep the test set completely separate
+     - Predicted probabilities must be calibrated as evidenced by reasonable aggregate alignment with observed outcomes on the held-out test set.
+     - Cross-validation metrics must be computed from out-of-fold predictions on the training portion only.
   
   4. Evaluation Metrics
      Calculate these metrics for both cross-validation (OOF) and test set:
@@ -63,6 +66,7 @@ instruction: |-
      - Precision: when you predict conversion, how often are you right?
      - Recall: what fraction of actual conversions do you catch?
      - F1 Score: harmonic mean of precision and recall
+     - PR-AUC: should exceed a reasonable baseline implied by class distribution on the held-out test set.
      
      Also generate a confusion matrix for the test set.
   
@@ -112,6 +116,7 @@ instruction: |-
      - All text files must use LF line endings (Unix-style), not Windows CRLF
      - Absolutely no data leakage: the test set cannot influence any training decisions, preprocessing fitting, or hyperparameter choices
      - Your preprocessing must be learned only from training data, then applied to test data
+     
   
   SUCCESS CRITERIA:
   - Model successfully loads and generates probability predictions (not just 0/1 classifications)
