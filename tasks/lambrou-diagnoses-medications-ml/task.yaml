@@ -30,6 +30,8 @@ instruction: |-
   def get_train_test_set(df: pd.DataFrame):
       # g_train - list of int of group sizes
       # q_test - test data qid column, 1D np array
+      # X_train, X_test - training/testing samples, 2D np array
+      # y_train, y_test - train/test labels, 1D int array
       return X_train, X_test, y_train, y_test, g_train, q_test # return these fields in this order
 
   

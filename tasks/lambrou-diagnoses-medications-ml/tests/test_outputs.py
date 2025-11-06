@@ -159,11 +159,9 @@ def test_group_sizes_match_qid_structure():
     X_train = arrays_2d[0]
     g_train = lists[0]
 
-    # Group sizes should sum to total training samples
     assert sum(g_train) == len(X_train), \
         f"Group sizes sum ({sum(g_train)}) != training samples ({len(X_train)})"
 
-    # Number of groups should be reasonable (not 1 giant group or all size-1)
     assert len(g_train) > 1, "Only 1 training group (groups not properly used)"
     assert len(g_train) < len(X_train), "Each sample in own group (groups not used)"
 
