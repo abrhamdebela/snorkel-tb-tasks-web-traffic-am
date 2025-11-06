@@ -7,20 +7,14 @@
 # This will also contain task metadata that is not available to the agent at runtime.
 instruction: |-
   You're a data scientist at a fintech company.
-  Your job is to build a machine learning model, a calibrated binary classifier, that predicts which new signups will convert to paying customers.
+  Your job is to build a machine learning model, a calibrated binary classifier, that predicts which new signups will will convert to paying customers.
 
   INPUT DATA:
   - Dataset: /app/data/signups.csv
-  - 1,000 rows with "converted" target (0 or 1) and 8 feature columns
+  - ~1,000 rows with "converted" target (0 or 1) and 8 feature columns
   - Standard CSV format: comma-separated, UTF-8, header row, LF line endings
   - Use only the provided data — no external downloads
-
-  DATA SPECIFICATIONS:
-  - Exact dimensions: 1,000 rows x 9 columns
-  - Column names: converted (target), age, income, last_login_days, plan_tier, source, country, sessions, avg_session_minutes
-  - All values are clean; no preprocessing required on the raw file
-  - Data is clean and balanced: 500 conversions (50% positive class), 500 non-conversions (no further preprocessing required)
-
+  
   YOUR MISSION:
   
   Build an end-to-end ML pipeline that:
@@ -66,15 +60,9 @@ instruction: |-
   5. Outputs (save to /app/output/)
      
      a) model.joblib
-        - The TOP-LEVEL saved object must be a scikit-learn Pipeline
-        - The Pipeline must contain all preprocessing steps (imputation, scaling, encoding) 
-          and the final classifier with calibration
-        - The final step of the Pipeline must support .predict_proba() for calibrated probabilities
-        - Acceptable approach: Pipeline(..., steps=[..., ('classifier', CalibratedClassifierCV(...))])
-        - Do NOT save only a CalibratedClassifierCV wrapping an external Pipeline; the Pipeline 
-          itself must be the serialized top-level object
-        - Save with: joblib.dump(pipeline, '/app/output/model.joblib', compress=3)
-        - Verify immediately: joblib.load('/app/output/model.joblib').predict_proba(X) must work
+        - Your trained scikit-learn Pipeline (must support predict_proba)
+        - Save with joblib, compression level 3
+        - Pipeline must be reloadable and executable on new data
      
      b) report.json (exact schema required)
         {
@@ -113,39 +101,16 @@ instruction: |-
      - All text files must use LF (Unix) line endings, not CRLF
      - Ensure no data leakage: test data must never influence training, preprocessing fitting, or CV
      - Model predictions must be deterministic when re-run
-
-  7. Model Serialization & Portability
-     Your trained model will be loaded in a separate test environment where it did not originate. To ensure compatibility:
-     
-     a) Pipeline components must be import-resolvable in the test environment
-        - The top-level saved object MUST be a scikit-learn Pipeline whose steps reference only classes and functions available in standard packages (scikit-learn, numpy, pandas, joblib, matplotlib).
-        - Avoid inline definitions not importable by module path: no lambdas, local class definitions inside functions, or notebook-scoped variables.
-        - Percentile-based outlier handling may be implemented using scikit-learn's built-in transformers (e.g., QuantileTransformer) or a custom estimator; in either case it MUST be part of the Pipeline and learn parameters only from the training data split.
-        - Before saving, verify serialization round-trip succeeds without errors:
-          - pickle.dumps(pipeline) must not raise errors
-          - joblib.dump(pipeline, path); loaded = joblib.load(path); loaded.predict_proba(X_test) must succeed
-
-     b) Module dependencies
-        - All imports in your training script must come from standard libraries: numpy, pandas, 
-          scikit-learn, matplotlib, joblib
-        - Do NOT reference external custom modules that won't exist in the test environment
-     
-     c) Model serialization verification
-        - Save with: joblib.dump(pipeline, '/app/output/model.joblib', compress=3)
-        - Immediately load and test: joblib.load('/app/output/model.joblib').predict_proba(X_test)
-        - If loading fails, verify all classes referenced in the Pipeline are importable via standard library paths
   
   SUCCESS CRITERIA:
   - Pipeline successfully loads and produces valid probability predictions
   - Predictions vary reasonably (not all constant or clustered)
-  - Test ROC-AUC is in realistic range for this problem (0.60-1.0)
+  - Test ROC-AUC is in realistic range for this problem (0.65-0.95)
   - CV and test performance are comparable (difference < 0.10 in AUC)
   - All output files exist with correct formats and schemas
   - Confusion matrix sums match expected test set size
   - Results are reproducible with the same random seed
-  - A held-out test set representing approximately 10-40% of total data is kept strictly separate during training and cross-validation
-  - summary.txt should be a meaningful human-readable summary (≥100 characters) describing test set performance and results
- 
+
 author_name: Gabriel Plata Stapper
 author_email: 103123848+gapstapper@users.noreply.github.com
 difficulty: hard
