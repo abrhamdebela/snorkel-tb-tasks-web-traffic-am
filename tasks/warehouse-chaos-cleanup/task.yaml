@@ -7,94 +7,56 @@
 # This will also contain task metadata that is not available to the agent at runtime.
 
 instruction: |-
-  Warehouse inventory merge failed badly. Three regional databases got mixed up and now we have ~1500 records with conflicts and data quality issues.
+  A warehouse inventory merge operation failed, corrupting approximately 1500 inventory records. The data contains formatting errors, conflicts, and quality issues.
 
-  Fix the data. You have historical records and supplier info to cross-check against.
+  Clean and validate the data, identify anomalies, resolve duplicates, and produce analysis reports.
 
   Input files in /app/data/:
-  - inventory_raw.csv (the corrupted data)
-  - inventory_history.json (last 90 days of records)
-  - warehouse_rules.yaml (capacity limits and operational status)
-  - supplier_catalog.csv (valid SKUs with typical price ranges)
+  - inventory_raw.csv: Corrupted inventory data
+  - inventory_history.json: Historical records for validation
+  - warehouse_rules.yaml: Warehouse configuration and capacity limits
+  - supplier_catalog.csv: Valid SKUs with price ranges
 
-  What you need to do:
+  Data cleaning requirements:
+  - Normalize SKU format: correct OCR errors by ensuring letter parts contain only letters and digit parts contain only digits. SKUs must match pattern: ^[A-Z]{2,3}-[0-9]{4,6}-[A-Z]{1,2}$ (2-3 uppercase letters, hyphen, 4-6 digits, hyphen, 1-2 uppercase letters).
+  - Validate against reference data: check SKUs against catalog, warehouses against rules, prices against catalog ranges. Flag records that don't match reference data appropriately.
+  - Identify anomalies: detect statistical outliers, capacity violations, price inconsistencies, temporal violations, and other data quality issues. Use descriptive flag names to categorize issues.
+  - Resolve duplicates: for same SKU and warehouse, keep the most reliable record based on data quality. Log all discarded duplicates in conflict_log.json with explanation.
+  - Calculate confidence scores: assign scores from 0.00 to 1.00 based on number and severity of issues found. Records with no issues (CLEAN flag) must have confidence 1.00. All confidence scores must be formatted with exactly 2 decimal places.
 
-  SKU format is supposed to be like AB-1234-R (2-3 letters, hyphen, 4-6 digits, hyphen, 1-2 letter variant code). There are OCR errors that may have mixed up letters and numbers. Clean these up so letter parts contain only letters and number parts contain only digits. If a SKU still doesn't match anything in the supplier catalog, try fuzzy matching with edit distance up to 2 (maximum 2 character differences). If you get exactly one match, use SKU_FUZZY_MATCHED flag. If you get multiple matches, use SKU_AMBIGUOUS flag. If no matches, use UNKNOWN_PRODUCT flag. Invalid format gets INVALID_SKU_FORMAT flag.
+  Algorithm requirements:
+  - Implement fuzzy matching from scratch (no external libraries): use string similarity to match SKUs not found in catalog. Flag matched SKUs to indicate they were matched.
+  - Implement k-means clustering from scratch (no external libraries): group records into 3 clusters by data quality characteristics. Clusters should represent meaningful groupings of similar data quality levels. No single cluster should contain ≥95% of records (clusters must be reasonably distributed).
 
-  Quantities need validation. Missing/non-numeric quantities get QUANTITY_MISSING or QUANTITY_NOT_NUMERIC flags. Non-positive values get QUANTITY_NON_POSITIVE flag. Some are way off from historical averages. Check the history file and calculate moving averages. If current quantity is more than 200% different from the 90-day average, use QUANTITY_ANOMALY flag. Also check against warehouse capacity limits from the rules file. If quantity exceeds warehouse max_capacity, use CAPACITY_VIOLATION flag. Calculate z-scores and flag outliers above 3.0 with STATISTICAL_OUTLIER flag. Keep records even if flagged.
+  Output files in /app/output/:
+  
+  - inventory_cleaned.csv: CSV with columns: sku, warehouse, quantity, unit_cost, last_restocked, anomaly_flags, confidence_score
+    - sku: Normalized SKU format
+    - warehouse: Warehouse code or INVALID if unrecoverable
+    - quantity: Positive integer as string or INVALID
+    - unit_cost: Decimal value with 2 decimal places
+    - last_restocked: Date in YYYY-MM-DD format or INVALID for unrecoverable dates
+    - anomaly_flags: Comma-separated flag names or CLEAN for records with no issues
+    - confidence_score: Numeric value from 0.00 to 1.00 with exactly 2 decimal places
+  
+  - conflict_log.json: JSON array with entries containing: sku, warehouse, kept_record, discarded_record, reason
+  
+  - anomaly_report.txt: Text report with data quality summary
+  
+  - transfer_recommendations.csv: CSV with columns: sku, from_warehouse, to_warehouse, recommended_quantity, priority, estimated_cost
+    - All (sku, from_warehouse) and (sku, to_warehouse) pairs must exist in cleaned inventory
+    - priority: HIGH or MEDIUM based on urgency
+    - estimated_cost: Decimal value with exactly 2 decimal places
+  
+  - anomaly_clusters.json: JSON object with clusters array containing exactly 3 clusters
+    - Each cluster has: id (0, 1, or 2), severity (low, medium, or high), record_count, description
+    - All records must be assigned to exactly one cluster
+    - Clusters should represent distinct data quality groups
+    - No single cluster should contain ≥95% of records (clusters must be reasonably distributed)
+  
+  - executive_summary.txt: Text summary with key findings, data quality metrics, and actionable recommendations.
 
-  Prices should be within supplier min/max ranges. Allow some flexibility like 80-130% of catalog range. Missing/invalid prices get PRICE_MISSING or PRICE_INVALID flags. Negative prices get PRICE_NEGATIVE flag. Prices outside 80-130% of catalog range get PRICE_ANOMALY flag. For PRICE_INCONSISTENCY, collect all prices for the same SKU across different warehouses in the current data, calculate their mean, and flag any warehouse where abs(price - mean_price) / mean_price > 0.05. For PRICE_DRIFT, get the last 30 records from inventory_history.json for each SKU (or fewer if not available), calculate the average, and flag if abs(current_price - avg_historical) / avg_historical > 0.25. Use HALF_UP rounding to 2 decimals.
-
-  Warehouse codes format is WH-XX-NN where XX is region and NN is number. Missing warehouses get WAREHOUSE_MISSING flag. Invalid format gets WAREHOUSE_INVALID_FORMAT flag. Check these exist in the rules file - if not found, use WAREHOUSE_NOT_FOUND flag. If marked closed or under maintenance, use INACTIVE_WAREHOUSE flag.
-
-  Dates need to make sense chronologically. Missing dates get DATE_MISSING flag. Invalid format gets DATE_INVALID_FORMAT flag. Dates before 2023-01-01 or after 2025-10-27 get DATE_OUT_OF_RANGE flag. If a restock date is before the previous restock for same SKU and warehouse, use TEMPORAL_VIOLATION flag. Also check if restock intervals are way off from typical patterns and use RESTOCK_ANOMALY flag.
-
-  Duplicates are same SKU in same warehouse after cleaning. Generally keep the one with the more recent date. But if one record looks clean (anomaly_flags=CLEAN) and the other has anomalies, keep the clean one. If both have issues, prefer higher confidence or more recent date, mark as unresolved conflict and log it. After deduplication, the output record count must be strictly less than or equal to the input record count (duplicates are removed). Every input record must be either included in the output CSV or logged as a discarded duplicate in the conflict log (at minimum, 98% of input records must be accounted for to allow for extremely malformed edge cases).
-
-  Calculate a confidence score for each record based on how many issues it has and how severe. Critical flags (UNKNOWN_PRODUCT, TEMPORAL_VIOLATION, CAPACITY_VIOLATION) should reduce score by 0.3 each. Major flags (PRICE_ANOMALY, QUANTITY_ANOMALY, INACTIVE_WAREHOUSE) should reduce by 0.15 each. Minor flags (PRICE_DRIFT, SKU_FUZZY_MATCHED, STATISTICAL_OUTLIER, PRICE_INCONSISTENCY) should reduce by 0.05 each. Start at 1.0 and cap between 0.0 and 1.0. Score from 0 to 1.
-
-  For anomaly detection, implement k-means clustering from scratch with k=3 to group records by severity. The clustering should distribute records reasonably across the 3 clusters (no single cluster should contain more than 95% of all records).
-
-  Also analyze stock distribution and warehouse capacity utilization to suggest transfers between warehouses. For each warehouse, calculate the capacity utilization ratio as: warehouse_quantity / warehouse_max_capacity (from warehouse_rules.yaml). A warehouse is overstocked if its ratio > 3.0 (using more than 300% of capacity). A warehouse is understocked if its ratio < 0.5 (using less than 50% of capacity). Recommend transfers when a source warehouse is overstocked OR a destination warehouse is understocked. Distance constraints from the rules file can be considered if available.
-
-  Important: Include all input records in the output even if they have invalid/flagged data. Records with UNKNOWN_PRODUCT should still appear in output. Do not filter out any input records.
-
-  Output files to /app/output/:
-
-  1. inventory_cleaned.csv - CSV with columns: sku,warehouse,quantity,unit_cost,last_restocked,anomaly_flags,confidence_score
-     - sku: format AB-1234-R (2-3 letters, hyphen, 4-6 digits, hyphen, 1-2 letters, all uppercase)
-     - warehouse: format WH-XX-NN or INVALID
-     - quantity: positive integer as string or INVALID
-     - unit_cost: decimal with exactly 2 decimal places (e.g., 12.50)
-     - last_restocked: YYYY-MM-DD format or INVALID
-     - anomaly_flags: comma-separated flag names or CLEAN
-     - confidence_score: 0.00 to 1.00 with 2 decimal places
-     - Sort by confidence score ascending, then by sku, then by warehouse
-     - Include all records even flagged ones
-
-  2. conflict_log.json - JSON array where each entry has:
-     - sku: the SKU that had duplicates
-     - warehouse: the warehouse that had duplicates  
-     - kept_record: object with sku, warehouse, quantity, unit_cost, last_restocked, anomaly_flags, confidence_score
-     - discarded_record: object with sku, warehouse, quantity, unit_cost, last_restocked, anomaly_flags, confidence_score
-     - reason: string explaining why (e.g., "higher_confidence_or_more_recent")
-
-  3. anomaly_report.txt - Text file starting with "Total records processed: N" and containing:
-     - Confidence tier breakdown (high/medium/low counts)
-     - Number of duplicates resolved
-     - Breakdown by anomaly type with counts
-     - Top 10 problematic SKUs with issue counts
-     - Warehouse health scores (0-100)
-
-  4. transfer_recommendations.csv - CSV with columns: sku,from_warehouse,to_warehouse,recommended_quantity,priority,estimated_cost
-     - Analyze warehouse capacity utilization by calculating for each warehouse: ratio = warehouse_quantity / warehouse_max_capacity
-     - Overstock: ratio > 3.0 (warehouse using more than 300% of capacity)
-     - Understock: ratio < 0.5 (warehouse using less than 50% of capacity)
-     - Recommend transfers when source warehouse is overstocked OR destination warehouse is understocked
-     - Only recommend transfers between warehouses that both have the SKU in cleaned inventory
-     - recommended_quantity: integer
-     - priority: HIGH or MEDIUM
-     - estimated_cost: decimal with 2 decimal places
-
-  5. anomaly_clusters.json - JSON object with:
-     - clusters: array of exactly 3 cluster objects, each containing:
-       - id: cluster identifier (must be 0, 1, or 2)
-       - severity: "low", "medium", or "high"
-       - record_count: number of records in cluster
-       - description: text description of the cluster
-     - Sum of all record_count values must equal total output records (every record assigned to exactly one cluster)
-
-  6. executive_summary.txt - Text report with sections including:
-     - Total records processed and records requiring review
-     - Duplicate conflicts resolved
-     - Total inventory value
-     - Confidence distribution (high/medium/low percentages)
-     - Top issues found with counts
-     - Recommended actions list
-     - Data quality score
-     - Next steps
-
-  Requirements: implement Levenshtein distance yourself (for fuzzy matching with edit distance up to 2), implement k-means yourself (no external fuzzy matching or ML libraries). Include all input records in output even if flagged or invalid. Should complete in under 2 minutes. Handle missing or malformed data gracefully. UTF-8 encoding with LF line endings.
+  Include all or nearly all input records in the output. Records can appear in either inventory_cleaned.csv or conflict_log.json (as discarded duplicates). Handle missing and malformed data gracefully by flagging issues and using INVALID markers where data cannot be recovered. Some extremely malformed records may need to be excluded if they cannot be processed at all.
 
 author_name: Tasnim Makableh
 author_email: tasnim.makableh@menadevs.io
@@ -111,7 +73,7 @@ tags:
   - csv-processing
   - algorithm-implementation
 parser_name: pytest
-max_agent_timeout_sec: 600.0
+max_agent_timeout_sec: 700.0
 max_test_timeout_sec: 300.0
 run_tests_in_same_shell: false
 disable_asciinema: false
