@@ -187,6 +187,9 @@ def test_anomaly_clusters_structure():
     for cluster in data['clusters']:
         assert cluster['severity'] in ['low', 'medium', 'high'], f"Invalid severity: {cluster['severity']}"
         assert isinstance(cluster['record_count'], int), "record_count must be integer"
+        assert 'description' in cluster, "Each cluster must have a description field"
+        assert isinstance(cluster['description'], str), "Cluster description must be a string"
+        assert len(cluster['description']) > 0, "Cluster description must not be empty"
 
 
 def test_transfer_recommendations_structure():
@@ -509,7 +512,7 @@ def test_anomaly_categories():
     for w in rules.get('warehouses', []):
         warehouse_capacities[w['code']] = w.get('max_capacity', 0)
     
-    # Build historical quantities by (sku, warehouse)
+    # Build historical quantities by (sku, warehouse) for statistical analysis
     historical_quantities = {}
     for record in history:
         key = (record.get('sku', ''), record.get('warehouse', ''))
@@ -517,6 +520,20 @@ def test_anomaly_categories():
             if key not in historical_quantities:
                 historical_quantities[key] = []
             historical_quantities[key].append(record['quantity'])
+    
+    # Build historical dates by (sku, warehouse) for restock anomaly detection
+    historical_dates = {}
+    for record in history:
+        key = (record.get('sku', ''), record.get('warehouse', ''))
+        date_str = record.get('last_restocked', '')
+        if key[0] and key[1] and date_str:
+            try:
+                date_obj = datetime.fromisoformat(date_str.replace('Z', '+00:00').split('T')[0])
+                if key not in historical_dates:
+                    historical_dates[key] = []
+                historical_dates[key].append(date_obj)
+            except (ValueError, TypeError):
+                pass
     
     # Check for capacity violations
     for row in rows:
@@ -542,6 +559,49 @@ def test_anomaly_categories():
                     flags = set(row['anomaly_flags'].split(','))
                     assert 'TEMPORAL_VIOLATION' in flags or 'DATE_OUT_OF_RANGE' in flags, \
                         f"Temporal violation not flagged: {date_str} out of range"
+            except (ValueError, TypeError):
+                pass
+    
+    # Check for statistical outliers (quantities significantly different from historical)
+    for row in rows:
+        key = (row['sku'], row['warehouse'])
+        if key in historical_quantities and row['quantity'] not in ['INVALID', '']:
+            try:
+                quantity = int(row['quantity'])
+                historical = historical_quantities[key]
+                if len(historical) >= 3:  # Need enough data for statistical analysis
+                    mean = sum(historical) / len(historical)
+                    variance = sum((x - mean) ** 2 for x in historical) / len(historical)
+                    std_dev = variance ** 0.5 if variance > 0 else 0
+                    if std_dev > 0:
+                        z_score = abs(quantity - mean) / std_dev
+                        # If quantity is more than 3 standard deviations from mean, should be flagged
+                        if z_score > 3.0:
+                            flags = set(row['anomaly_flags'].split(','))
+                            assert 'STATISTICAL_OUTLIER' in flags or 'QUANTITY_ANOMALY' in flags, \
+                                f"Statistical outlier not flagged: quantity {quantity} (z-score {z_score:.2f}) for {key}"
+            except (ValueError, TypeError, ZeroDivisionError):
+                pass
+    
+    # Check for restock anomalies (dates inconsistent with historical patterns)
+    for row in rows:
+        key = (row['sku'], row['warehouse'])
+        date_str = row['last_restocked']
+        if key in historical_dates and date_str not in ['INVALID', ''] and _validate_format(date_str, PATTERNS['date']):
+            try:
+                date_obj = datetime.strptime(date_str, '%Y-%m-%d')
+                historical = sorted(historical_dates[key])
+                if len(historical) >= 2:
+                    # Check if date is significantly before earliest or after latest historical date
+                    earliest = historical[0]
+                    latest = historical[-1]
+                    days_before = (earliest - date_obj).days
+                    days_after = (date_obj - latest).days
+                    # If restock date is more than 90 days before earliest or after latest, flag as anomaly
+                    if days_before > 90 or days_after > 90:
+                        flags = set(row['anomaly_flags'].split(','))
+                        assert 'RESTOCK_ANOMALY' in flags or 'TEMPORAL_VIOLATION' in flags, \
+                            f"Restock anomaly not flagged: {date_str} inconsistent with historical dates for {key}"
             except (ValueError, TypeError):
                 pass
 
