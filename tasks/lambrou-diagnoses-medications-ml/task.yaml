@@ -39,6 +39,9 @@ instruction: |-
   Modify the code below to satisfy the requirements, keeping the function and return signatures intact.
   
   ```
+  # Use these features
+  FEAT_COLS = ['age', 'drug_popularity', 'condition_concept_id', 
+             'drug_concept_id', 'gender_concept_id']
 
   def get_train_test_set(df: pd.DataFrame):
       # g_train - list of int of group sizes
