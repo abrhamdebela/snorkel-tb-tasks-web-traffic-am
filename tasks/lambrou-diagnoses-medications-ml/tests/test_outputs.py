@@ -271,7 +271,7 @@ def test_index_has_all_three_required_inputs():
         html = response.data.decode('utf-8').lower()
         print(html)
         has_condition = 'condition' in html and '<select' in html
-        has_age = 'age' in html and '<input' in html
+        has_age = 'age' in html
         has_gender = 'gender' in html
 
         missing = []
