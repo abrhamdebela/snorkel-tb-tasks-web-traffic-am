@@ -25,7 +25,7 @@ instruction: |-
   - Calculate confidence scores: assign scores from 0.00 to 1.00 based on number and severity of issues found. Records with no issues (CLEAN flag) must have confidence 1.00. All confidence scores must be formatted with exactly 2 decimal places.
 
   Algorithm requirements:
-  - Implement fuzzy matching from scratch (no external libraries): use string similarity to match SKUs not found in catalog. Flag matched SKUs to indicate they were matched.
+  - Implement fuzzy matching from scratch (no external libraries): use string similarity to match SKUs not found in catalog to valid catalog SKUs. Replace the unmatched SKU with the matched catalog SKU and flag it as SKU_FUZZY_MATCHED. The cleaned SKU should be in the catalog after matching.
   - Implement k-means clustering from scratch (no external libraries): group records into 3 clusters by data quality characteristics. Clusters should represent meaningful groupings of similar data quality levels. No single cluster should contain ≥95% of records (clusters must be reasonably distributed).
 
   Output files in /app/output/:
@@ -46,7 +46,7 @@ instruction: |-
   - transfer_recommendations.csv: CSV with columns: sku, from_warehouse, to_warehouse, recommended_quantity, priority, estimated_cost
     - All (sku, from_warehouse) and (sku, to_warehouse) pairs must exist in cleaned inventory
     - priority: HIGH or MEDIUM based on urgency
-    - estimated_cost: Decimal value with exactly 2 decimal places
+    - estimated_cost: Decimal value with exactly 2 decimal places, should be calculated based on quantity and unit cost
   
   - anomaly_clusters.json: JSON object with clusters array containing exactly 3 clusters
     - Each cluster has: id (0, 1, or 2), severity (low, medium, or high), record_count, description
