@@ -5,13 +5,15 @@ instruction: |-
   Convert formulas from /app/data/formulas.txt to canonical notation.
 
   Output JSON to /app/output/canonical.json with formulas array.
-  Each entry: original, canonical, composition. Expand groups.
-  Hydrates trailing. Composition excludes hydrate atoms.
+  Each entry: original, canonical, composition. Expand groups
+  Hydrates preserved with · at end. Composition excludes hydrate atoms.
 
-  Apply standard chemical ordering:
-  NaCl → ClNa
-  Ca(OH)2 → CaH2O2
-  CH3COOH → C2H4O2
+  Identify and apply the element ordering pattern from these examples:
+  - NaCl → ClNa (inorganic: alphabetical)
+  - Ca(OH)2 → CaH2O2 (inorganic: alphabetical)
+  - CH3COOH → C2H4O2 (organic: C, then H, then alphabetical)
+  - [Co(NH3)6]Cl3 → Cl3CoH18N6 (coordination: alphabetical)
+
 author_name: Nischal Paudyal
 author_email: npaudyal01@gmail.com
 difficulty: medium
