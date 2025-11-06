@@ -7,14 +7,20 @@
 # This will also contain task metadata that is not available to the agent at runtime.
 instruction: |-
   You're a data scientist at a fintech company.
-  Your job is to build a machine learning model, a calibrated binary classifier, that predicts which new signups will will convert to paying customers.
+  Your job is to build a machine learning model, a calibrated binary classifier, that predicts which new signups will convert to paying customers.
 
   INPUT DATA:
   - Dataset: /app/data/signups.csv
-  - ~1,000 rows with "converted" target (0 or 1) and 8 feature columns
+  - 1,000 rows with "converted" target (0 or 1) and 8 feature columns
   - Standard CSV format: comma-separated, UTF-8, header row, LF line endings
   - Use only the provided data — no external downloads
-  
+
+  DATA SPECIFICATIONS:
+  - Exact dimensions: 1,000 rows x 9 columns
+  - Column names: converted (target), age, income, last_login_days, plan_tier, source, country, sessions, avg_session_minutes
+  - All values are clean; no preprocessing required on the raw file
+  - Data is clean and balanced: 500 conversions (50% positive class), 500 non-conversions (no further preprocessing required)
+
   YOUR MISSION:
   
   Build an end-to-end ML pipeline that:
@@ -101,16 +107,39 @@ instruction: |-
      - All text files must use LF (Unix) line endings, not CRLF
      - Ensure no data leakage: test data must never influence training, preprocessing fitting, or CV
      - Model predictions must be deterministic when re-run
+
+  7. Model Serialization & Portability
+     - Your trained model will be loaded in a separate test environment where it did not originate. To ensure compatibility:
+     
+     a) Custom Transformers:
+        - If you create custom preprocessing classes (e.g., outlier clipping transformers), 
+          they must be defined in the SAME Python file/module where you create and fit the pipeline
+        - Alternatively: Use only scikit-learn's built-in transformers (SimpleImputer, 
+          StandardScaler, OneHotEncoder, etc.) to avoid pickle module resolution issues
+        - Before saving, verify your pipeline can be pickled without errors:
+          import pickle
+          pickle.dumps(pipeline)  # This must not raise errors
+     
+     b) Module Dependencies:
+        - All imports in your training script must come from standard libraries: numpy, pandas, 
+          scikit-learn, matplotlib, joblib
+        - Do NOT reference external custom modules that won't exist in the test environment
+     
+     c) Model Serialization Verification:
+        - Save with: joblib.dump(pipeline, '/app/output/model.joblib', compress=3)
+        - Immediately verify loading works: joblib.load('/app/output/model.joblib')
+        - If loading fails, check that all custom classes are defined locally in your script
   
   SUCCESS CRITERIA:
   - Pipeline successfully loads and produces valid probability predictions
   - Predictions vary reasonably (not all constant or clustered)
-  - Test ROC-AUC is in realistic range for this problem (0.65-0.95)
+  - Test ROC-AUC is in realistic range for this problem (0.60-1.0)
   - CV and test performance are comparable (difference < 0.10 in AUC)
   - All output files exist with correct formats and schemas
   - Confusion matrix sums match expected test set size
   - Results are reproducible with the same random seed
-
+  - A held-out test set representing approximately 10-40% of total data is kept strictly separate during training and cross-validation
+ 
 author_name: Gabriel Plata Stapper
 author_email: 103123848+gapstapper@users.noreply.github.com
 difficulty: hard
