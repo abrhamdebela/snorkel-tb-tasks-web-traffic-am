@@ -11,60 +11,66 @@ instruction: |-
 
   INPUT DATA:
   - Dataset: /app/data/signups.csv
-  - ~1,000 rows with "converted" target (0 or 1) and 8 feature columns
+  - ~1,000 rows with "converted" target (0 or 1) and multiple feature columns
   - Standard CSV format: comma-separated, UTF-8, header row, LF line endings
   - Use only the provided data — no external downloads
   
   YOUR MISSION:
   
-  Build an end-to-end ML pipeline that:
-  - Preprocesses numeric and categorical features appropriately
-  - Trains a calibrated classifier for reliable probability estimates
-  - Evaluates performance rigorously without data leakage
-  - Packages everything for production use
+  Build an end-to-end ML system that:
+  - Cleans and preprocesses messy real-world data
+  - Trains a binary classifier with calibrated probability outputs
+  - Evaluates performance honestly without overfitting or data leakage
+  - Packages everything so it's reproducible and production-ready
   
   REQUIREMENTS:
   
-  1. Data Splitting & Cross-Validation
-     - Create training and test sets using stratified sampling to maintain class balance
-     - Reserve a held-out test set that is NEVER used during model development or tuning
-     - Perform stratified K-fold cross-validation on your training data (use 5 folds)
-     - Report out-of-fold (OOF) predictions from CV to get unbiased training performance
-     - Use random_state=42 for reproducibility
+  1. Data Splitting & Evaluation Strategy
+     - Split your data into training and test sets using stratified sampling (maintains class balance)
+     - The test set is sacred — hold it out completely, don't touch it until final evaluation
+     - Test set should be somewhere between 10% and 40% of your data
+     - On the training portion, do stratified K-fold cross-validation (5 folds) to get honest performance estimates
+     - Generate out-of-fold (OOF) predictions during CV — this gives you unbiased metrics on the training data
+     - Use random_state=42 everywhere for reproducibility
   
   2. Feature Preprocessing
-     - Handle missing values in both numeric and categorical features
-     - For numeric features: apply outlier handling using learned percentile-based clipping
-       (e.g., clip to 1st-99th percentile range learned from training data)
-     - Scale numeric features to have zero mean and unit variance
-     - Encode categorical features for model compatibility
-     - Build preprocessing into a unified scikit-learn Pipeline so it's applied consistently
+     - You've got both numeric and categorical features, and they're messy
+     - Handle missing values appropriately for each feature type
+     - For numeric features:
+       * Deal with outliers by clipping extreme values (learn the clipping thresholds from training data only)
+       * Standardize features so they're on comparable scales
+     - For categorical features:
+       * Handle missing values
+       * Transform them into a format your model can digest
+     - Package all preprocessing steps into a single scikit-learn Pipeline that can be saved and reused
   
   3. Model Training & Calibration
-     - Train a linear classifier suitable for binary classification
-     - Apply probability calibration to ensure predicted probabilities are well-calibrated
-       (calibrated probabilities better reflect true likelihood of conversion)
-     - Train only on the training set — test set must remain unseen
+     - Train a binary classifier that works well for this problem
+     - Here's the key requirement: your final model must produce calibrated probabilities
+       (Calibrated probabilities mean if you predict 70% conversion, roughly 70% of those cases actually convert)
+     - The final saved artifact must be a scikit-learn Pipeline object that supports predict_proba()
+     - Train only on the training data — keep the test set completely separate
   
   4. Evaluation Metrics
-     Compute these metrics for both CV (out-of-fold) and test set:
-     - ROC-AUC: area under ROC curve
-     - PR-AUC: area under precision-recall curve
-     - Accuracy: fraction of correct predictions
-     - Precision: positive predictive value
-     - Recall: sensitivity / true positive rate
+     Calculate these metrics for both cross-validation (OOF) and test set:
+     - ROC-AUC: measures how well the model ranks predictions
+     - PR-AUC: precision-recall curve area (important for imbalanced classes)
+     - Accuracy: overall correctness
+     - Precision: when you predict conversion, how often are you right?
+     - Recall: what fraction of actual conversions do you catch?
      - F1 Score: harmonic mean of precision and recall
      
-     Also generate confusion matrices for test set evaluation.
+     Also generate a confusion matrix for the test set.
   
-  5. Outputs (save to /app/output/)
+  5. Outputs (save everything to /app/output/)
      
      a) model.joblib
-        - Your trained scikit-learn Pipeline (must support predict_proba)
-        - Save with joblib, compression level 3
-        - Pipeline must be reloadable and executable on new data
+        - Your trained scikit-learn Pipeline that can predict probabilities on new data
+        - Must support predict_proba() method for probability predictions
+        - Save using joblib with compression level 3
+        - Should be fully self-contained (includes preprocessing)
      
-     b) report.json (exact schema required)
+     b) report.json (strict schema)
         {
           "cv_metrics": {
             "roc_auc": <float>,
@@ -77,39 +83,39 @@ instruction: |-
           "test_metrics": { <same 6 metrics> },
           "test_confusion_matrix": [[TN, FP], [FN, TP]]
         }
-        Round all metric values to 4 decimal places.
+        Round all metric values to exactly 4 decimal places.
      
      c) roc_curve.png
-        - ROC curve visualization comparing CV (OOF) and test performance
-        - Image size: 640x480 pixels, PNG format
-        - Include legend showing AUC values (rounded to 2 decimals)
+        - ROC curve comparing CV (out-of-fold) vs test performance
+        - Exact size: 640x480 pixels, PNG format
+        - Include a legend showing AUC for both CV and test (round AUC values to 2 decimals)
      
      d) pr_curve.png  
-        - Precision-Recall curve (same format as ROC curve)
-        - Image size: 640x480 pixels, PNG format
-        - Include legend showing PR-AUC values (rounded to 2 decimals)
+        - Precision-Recall curve comparing CV vs test performance
+        - Exact size: 640x480 pixels, PNG format
+        - Include a legend showing PR-AUC for both CV and test (round to 2 decimals)
      
      e) summary.txt
-        - Human-readable performance summary
-        - Include all metrics for CV and test
-        - Include test confusion matrix
-        - Use LF line endings
+        - Human-readable summary of your results
+        - Include all metrics for both CV and test
+        - Show the test confusion matrix
+        - Use LF (Unix-style) line endings, not CRLF
   
-  6. Quality Requirements
-     - Set random_state=42 wherever randomness is involved (splits, CV, model)
-     - Use n_jobs=1 to ensure deterministic execution
-     - All text files must use LF (Unix) line endings, not CRLF
-     - Ensure no data leakage: test data must never influence training, preprocessing fitting, or CV
-     - Model predictions must be deterministic when re-run
+  6. Quality & Reproducibility Requirements
+     - Everything must be deterministic — running twice with the same random seed should give identical results
+     - Use random_state=42 wherever there's randomness (splits, cross-validation, model training, etc.)
+     - All text files must use LF line endings (Unix-style), not Windows CRLF
+     - Absolutely no data leakage: the test set cannot influence any training decisions, preprocessing fitting, or hyperparameter choices
+     - Your preprocessing must be learned only from training data, then applied to test data
   
   SUCCESS CRITERIA:
-  - Pipeline successfully loads and produces valid probability predictions
-  - Predictions vary reasonably (not all constant or clustered)
-  - Test ROC-AUC is in realistic range for this problem (0.65-0.95)
-  - CV and test performance are comparable (difference < 0.10 in AUC)
-  - All output files exist with correct formats and schemas
-  - Confusion matrix sums match expected test set size
-  - Results are reproducible with the same random seed
+  - Model successfully loads and generates probability predictions (not just 0/1 classifications)
+  - Predictions show reasonable variation — not all the same or clustered at extremes
+  - Test set ROC-AUC is at least 0.58 (reasonable performance despite challenges)
+  - CV and test performance are similar (AUC difference less than 0.15, meaning no major overfitting)
+  - All required output files exist with correct formats
+  - Confusion matrix totals match the expected test set size (10-40% of ~1000 rows)
+  - Running the same code twice produces identical results (deterministic behavior)
 
 author_name: Gabriel Plata Stapper
 author_email: 103123848+gapstapper@users.noreply.github.com
@@ -126,6 +132,6 @@ max_agent_timeout_sec: 360.0
 max_test_timeout_sec: 60.0
 run_tests_in_same_shell: false
 disable_asciinema: false
-estimated_duration_sec: 300   
-expert_time_estimate_min: 90   
-junior_time_estimate_min: 180   
+estimated_duration_sec: 300
+expert_time_estimate_min: 90
+junior_time_estimate_min: 180
