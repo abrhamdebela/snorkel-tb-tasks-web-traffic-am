@@ -11,17 +11,17 @@ instruction: |-
   Create a python file that when ran:
     1. Groups the data by qid and be sure to use group sizes > 1 for all queries in your training and test sets
     2. Creates and trains a XGBRanker model using LambdaMART with ndcg as the objective
-    3. Saves the ranker you trained to a file called drugs_diagnoses_ranker.json
-    4. Runs predictions on the test set (NDCG@k score, MAP@k score and Recall@k score) and saves a graph of all 3 scores as drugs_diagnoses_scores.png
-    5. Save a feature importance graph as drugs_diagnoses_importance.png
+    3. Saves the ranker you trained to a file called /app/drugs_diagnoses_ranker.json
+    4. Runs predictions on the test set (NDCG@k score, MAP@k score and Recall@k score) and saves a graph of all 3 scores as /app/drugs_diagnoses_scores.png
+    5. Save a feature importance graph as /app/drugs_diagnoses_importance.png
     6. Save the python code to main.py and run it, creating the model and files we need
     7. Create a Flask API that holds the model in memory and can be used to run predictions
     8. Create a minimal frontend accessible from '/' for the Flask API using a template
       a. The frontend should load condition IDs from the dataset, does not have to be entire dataset
       b. There should be a select input for condition_id, age and gender
       c. The frontend should have the ability to run a prediction on the above inputs and display the results (top 5 items)
-      d. The frontend should display the score and feature importance graphs, make a /app/static/ folder and move the 2 graphs into that folder
-      e. The Flask app should be named app and the filename should be app.py. Create /app/templates/index.html and use that as a template.
+      d. The frontend should display the score and feature importance graphs, make a /app/static/ folder for the images them into that folder
+      e. The Flask app should be named app and the filename should be /app/app.py. Create /app/templates/index.html and use that as a template.
     9. The Flask API should have a /predict POST endpoint, which returns a JSON response in the following format:
         {'recommendations': [{"drug_concept_id": int, "score": float}]} # 5 items
         Input signature (Form Data):
@@ -39,7 +39,6 @@ instruction: |-
     You may not use the 'drug_popularity' as a feature
     You may only use 4 features
     The model must achieve a MAP@5 score of >.8, a Recall@5 score of >.8 and a NDCG score of >.8
-    Hint: You may need to implement hyperparameter tuning if you are having trouble achieving this.
   
   Modify the code below to satisfy the requirements, keeping the function and return signatures intact.
   
@@ -82,10 +81,10 @@ difficulty: hard
 category: machine-learning
 tags: ['drugs', 'diagnoses', 'learning-to-rank', 'bigquery']
 parser_name: pytest
-max_agent_timeout_sec: 360.0
+max_agent_timeout_sec: 740.0
 max_test_timeout_sec: 60.0
 run_tests_in_same_shell: false
 disable_asciinema: false
-estimated_duration_sec:
+estimated_duration_sec: 500.0
 expert_time_estimate_min: 60
 junior_time_estimate_min: 120
