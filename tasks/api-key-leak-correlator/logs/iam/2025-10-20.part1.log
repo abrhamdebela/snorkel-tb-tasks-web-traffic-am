@@ -1,0 +1,5 @@
+2025-10-20T12:01:30+00:00 iam: CreateApiKey user=dave key=KD4V src=10.0.0.77
+2025-10-20T12:03:00+00:00 iam: CreateApiKey user=eve key=KE11 src=10.0.0.88
+2025-10-20T12:03:30+00:00 iam: CreateApiKey user=frank key=KF22 src=10.0.0.22
+2025-10-20T12:04:30+00:00 iam: CreateApiKey user=grace key=KG33 src=10.0.0.33
+2025-10-20T12:05:30+00:00 iam: DeleteApiKey user=grace key=KG33 src=10.0.0.33
