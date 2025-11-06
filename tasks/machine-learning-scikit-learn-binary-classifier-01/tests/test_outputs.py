@@ -308,7 +308,7 @@ def test_feature_cardinality_not_exploded():
     
     try:
         # Ensure pipeline runs end-to-end
-        probs = model.predict_proba(X)
+        _ = model.predict_proba(X)
         
         # If preprocessor is accessible, check transformed dimensionality
         if hasattr(model, 'named_steps') and 'preprocessor' in model.named_steps:
