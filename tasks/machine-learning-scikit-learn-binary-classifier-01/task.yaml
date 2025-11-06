@@ -7,7 +7,7 @@
 # This will also contain task metadata that is not available to the agent at runtime.
 instruction: |-
   You're a data scientist at a fintech company.
-  Your job is to build a machine learning model, a calibrated binary classifier, that predicts which new signups will will convert to paying customers.
+  Your job is to build a machine learning model, a calibrated binary classifier, that predicts which new signups will convert to paying customers.
 
   INPUT DATA:
   - Dataset: /app/data/signups.csv
