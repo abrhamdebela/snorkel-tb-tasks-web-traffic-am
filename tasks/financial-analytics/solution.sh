@@ -106,7 +106,11 @@ def normalize_amount(amount_str, currency):
     
     s = str(amount_str).strip()
     # Remove all known currency symbols (keep order: longer first)
-    currency_symbols = ['ARS', 'CAD', 'CHF', 'A$', 'NZ$', 'S$', 'R$', 'CLP', 'S/', 'COP', 'EGP', '€', '£', '¥', '₹', '₽', '₩', '₱', '฿', '₪', 'RM', 'R', 'zł', '$']
+    currency_symbols = [
+        'ARS', 'CAD', 'CHF', 'A$', 'NZ$', 'S$', 'R$', 'CLP', 'S/', 'COP',
+        'EGP', '€', '£', 'pounds', '¥', '₹', '₽', '₩', '₱', '฿', '₪',
+        'RM', 'R', 'zł', '$'
+    ]
     for sym in currency_symbols:
         s = s.replace(sym, '')
     s = s.strip().replace(' ', '')
@@ -119,33 +123,22 @@ def normalize_amount(amount_str, currency):
 
     # Heuristic-based detection
     if commas == 0 and dots == 0:
-        # Plain number
         num_str = s
     elif commas == 1 and dots == 0:
-        # Check digits after comma
+        # 1234,56 → 1234.56
         parts = s.split(',')
-        if len(parts) == 2 and len(parts[1]) == 2:
-            # Likely European decimal: 1234,56
-            num_str = parts[0].replace('.', '') + '.' + parts[1]
+        if len(parts[1]) == 2:
+            num_str = parts[0] + '.' + parts[1]
         else:
-            # Comma as thousands: 1,234 or 1,234,567
             num_str = s.replace(',', '')
     elif dots == 1 and commas == 0:
-        # Likely US decimal: 1234.56
-        num_str = s
-    elif commas == 1 and dots >= 1:
-        # Likely European: 1.234,56
-        # Assume comma is decimal if last part has <=2 digits
-        if s.rfind(',') > s.rfind('.'):
-            after_comma = s.split(',')[-1]
-            if len(after_comma) <= 2 and after_comma.isdigit():
-                num_str = s.replace('.', '').replace(',', '.')
-            else:
-                num_str = s.replace(',', '').replace('.', '')
+        # Could be US decimal (1234.56) OR European integer (1.000 → 1000)
+        if len(s.split('.')[-1]) == 3:  # 3 digits after dot → thousands
+            num_str = s.replace('.', '')
         else:
-            num_str = s.replace(',', '')
+            num_str = s
     elif dots > 1 and commas == 0:
-        # Likely European integer: 1.234.567
+        # Multiple dots → European thousands → remove dots
         num_str = s.replace('.', '')
     else:
         # Fallback: remove all non-digit except one decimal point
