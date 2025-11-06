@@ -66,9 +66,15 @@ instruction: |-
   5. Outputs (save to /app/output/)
      
      a) model.joblib
-        - Your trained scikit-learn Pipeline (must support predict_proba)
-        - Save with joblib, compression level 3
-        - Pipeline must be reloadable and executable on new data
+        - The TOP-LEVEL saved object must be a scikit-learn Pipeline
+        - The Pipeline must contain all preprocessing steps (imputation, scaling, encoding) 
+          and the final classifier with calibration
+        - The final step of the Pipeline must support .predict_proba() for calibrated probabilities
+        - Acceptable approach: Pipeline(..., steps=[..., ('classifier', CalibratedClassifierCV(...))])
+        - Do NOT save only a CalibratedClassifierCV wrapping an external Pipeline; the Pipeline 
+          itself must be the serialized top-level object
+        - Save with: joblib.dump(pipeline, '/app/output/model.joblib', compress=3)
+        - Verify immediately: joblib.load('/app/output/model.joblib').predict_proba(X) must work
      
      b) report.json (exact schema required)
         {
@@ -111,15 +117,34 @@ instruction: |-
   7. Model Serialization & Portability
      - Your trained model will be loaded in a separate test environment where it did not originate. To ensure compatibility:
      
-     a) Custom Transformers:
-        - If you create custom preprocessing classes (e.g., outlier clipping transformers), 
-          they must be defined in the SAME Python file/module where you create and fit the pipeline
-        - Alternatively: Use only scikit-learn's built-in transformers (SimpleImputer, 
-          StandardScaler, OneHotEncoder, etc.) to avoid pickle module resolution issues
-        - Before saving, verify your pipeline can be pickled without errors:
+     a) Custom Preprocessing Transformers (if used):
+        - Define custom transformer classes at the MODULE LEVEL in the SAME Python file 
+          as your Pipeline (not inside functions, classes, or notebooks)
+        - Ensure custom classes follow the scikit-learn Transformer API:
+          Implement fit(self, X, y=None) and transform(self, X) methods
+        - Keep transformer state picklable: avoid lambdas, open file handles, or closures
+        - Before saving, verify picklability:
           import pickle
           pickle.dumps(pipeline)  # This must not raise errors
-     
+        - Example of correct structure:
+          class PercentileClipper(BaseEstimator, TransformerMixin):
+              def fit(self, X, y=None):
+                  self.lower_ = X.quantile(0.01)
+                  self.upper_ = X.quantile(0.99)
+                  return self
+              def transform(self, X):
+                  return X.clip(self.lower_, self.upper_)
+          
+          pipe = Pipeline([('clipper', PercentileClipper()), ...])
+        
+        Recommended Alternative:
+        - Use only scikit-learn's built-in transformers, which serialize robustly:
+          SimpleImputer (missing values)
+          RobustScaler or QuantileTransformer (robust scaling / outlier handling)
+          StandardScaler (normalization)
+          OneHotEncoder or OrdinalEncoder (categorical encoding)
+        - Built-in transformers avoid pickle module resolution issues entirely
+        
      b) Module Dependencies:
         - All imports in your training script must come from standard libraries: numpy, pandas, 
           scikit-learn, matplotlib, joblib
