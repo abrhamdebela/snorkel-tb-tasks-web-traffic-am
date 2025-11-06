@@ -196,7 +196,12 @@ jobs:
           for task in $(jq -r '.[]' <<< '${{ needs.find-modified-tasks.outputs.tasks }}'); do
             # Consolidate parallel runs into a single run
             ./scripts_bash/consolidate-parallel-runs.sh --new-run-id consolidated-$task --task-id $task
-            uv run tb tasks debug --run-id consolidated-$task -o debug-output-${task}.json $task
+            for N_TRIALS in {10..1}; do
+              echo "Debugging $task with $N_TRIALS trials"
+              if uv run tb tasks debug --run-id consolidated-$task -o debug-output-${task}.json --n-trials $N_TRIALS $task; then
+                break
+              fi
+            done
           done
       - name: Upload all session recordings
         uses: actions/upload-artifact@v4
