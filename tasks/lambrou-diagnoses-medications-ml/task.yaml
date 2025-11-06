@@ -15,6 +15,13 @@ instruction: |-
     4. Run predictions on the test set (NDCG@k score, MAP@k score and Recall@k score) and save a graph of all 3 scores as drugs_diagnoses_scores.png
     5. Save a feature importance graph as drugs_diagnoses_importance.png
     6. Save the python code to main.py and run it, creating the model and files we need
+    7. Create a Flask API that holds the model in memory and can be used to run predictions
+    8. Create a minimal frontend for the Flask API using templates
+      a. The frontend should load some condition IDs from the dataset, not the entire dataset
+      b. There should be a select input for condition ID, age and gender
+      c. The frontend should have the ability to run a prediction on the above inputs and display the results
+      d. The frontend should display the score and feature importance graphs, make a static folder and move them there
+      e. The Flask app should consist of an app.py file, templates/index.html file and the two graph images in the static folder
   Useful Info:
     The CSV contains 20000 rows. The columns are as follows: 
       qid, age, condition_concept_id, gender_concept_id, drug_concept_id, label, drug_popularity

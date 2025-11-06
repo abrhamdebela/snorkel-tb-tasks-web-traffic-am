@@ -8,7 +8,7 @@
 # FROM ghcr.io/laude-institute/t-bench/ubuntu-24-04:20250624
 FROM ghcr.io/laude-institute/t-bench/python-3-13:20250620
 
-RUN pip install xgboost-cpu==3.1.1 scikit-learn==1.7.2 pandas==2.3.3 matplotlib==3.10.7 seaborn==0.13.2
+RUN pip install xgboost-cpu==3.1.1 scikit-learn==1.7.2 pandas==2.3.3 matplotlib==3.10.7 seaborn==0.13.2 flask==3.1.2
 
 # View the list of available base images here:
 # https://github.com/laude-institute/terminal-bench/packages
