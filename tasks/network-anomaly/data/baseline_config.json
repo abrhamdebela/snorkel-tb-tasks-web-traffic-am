@@ -1,0 +1,55 @@
+{
+  "baseline_profiles": {
+    "internal_network": {
+      "subnet": "192.168.1.0/24",
+      "typical_ports": [80, 443, 22, 3306],
+      "avg_bytes_per_connection": 2000,
+      "avg_packets_per_connection": 12,
+      "avg_duration_seconds": 3.5,
+      "max_connections_per_minute": 50
+    },
+    "web_traffic": {
+      "ports": [80, 443],
+      "max_bytes_threshold": 10000,
+      "max_duration_seconds": 10
+    },
+    "ssh_traffic": {
+      "ports": [22],
+      "max_bytes_threshold": 5000,
+      "max_duration_seconds": 30
+    },
+    "database_traffic": {
+      "ports": [3306, 5432],
+      "max_bytes_threshold": 50000,
+      "max_duration_seconds": 15
+    }
+  },
+  "anomaly_thresholds": {
+    "port_scan": {
+      "unique_ports_per_source": 5,
+      "time_window_seconds": 10,
+      "description": "Detect port scanning activity"
+    },
+    "data_exfiltration": {
+      "bytes_threshold": 100000,
+      "single_connection": true,
+      "description": "Detect large data uploads"
+    },
+    "c2_beaconing": {
+      "interval_tolerance_seconds": 30,
+      "min_occurrences": 4,
+      "description": "Detect command-and-control beaconing patterns"
+    },
+    "brute_force": {
+      "failed_attempts_threshold": 10,
+      "time_window_seconds": 60,
+      "description": "Detect brute force attacks"
+    }
+  },
+  "known_malicious_ips": [
+    "203.0.113.45"
+  ],
+  "suspicious_external_ips": [
+    "185.220.101.20"
+  ]
+}
