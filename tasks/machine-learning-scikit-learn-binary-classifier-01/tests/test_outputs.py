@@ -314,7 +314,6 @@ def test_test_train_separation():
 def test_cv_stratified_fivefold_like_behavior():
     """Heuristic enforcement that 5-fold stratified CV ran and cv_metrics are honest."""
     import json
-    import numpy as np
     import pandas as pd
     import joblib
     from sklearn.model_selection import StratifiedKFold, train_test_split, cross_val_predict
