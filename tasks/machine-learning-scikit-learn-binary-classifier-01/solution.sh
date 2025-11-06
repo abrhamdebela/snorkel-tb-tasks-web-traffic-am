@@ -266,6 +266,9 @@ def main():
         "",
         "Test Confusion Matrix:",
         f"  [[TN, FP], [FN, TP]] = {test_cm}",
+        "",
+        "Model Configuration:",
+        "  model.joblib compression: 3",
     ]
     with open(os.path.join(out_dir, "summary.txt"), "w", newline="\n") as f:
         f.write("\n".join(lines))
