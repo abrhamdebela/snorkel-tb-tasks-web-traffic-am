@@ -16,12 +16,12 @@ instruction: |-
     5. Save a feature importance graph as drugs_diagnoses_importance.png
     6. Save the python code to main.py and run it, creating the model and files we need
     7. Create a Flask API that holds the model in memory and can be used to run predictions
-    8. Create a minimal frontend for the Flask API using templates
+    8. Create a minimal frontend accessible from '/' for the Flask API using a template
       a. The frontend should load condition IDs from the dataset, does not have to be entire dataset
       b. There should be a select input for condition_id, age and gender
       c. The frontend should have the ability to run a prediction on the above inputs and display the results (top 5 items)
-      d. The frontend should display the score and feature importance graphs, make a static folder and move them there
-      e. The Flask app should be named app and consist of an app.py file, templates/index.html file and the two graph images in the static folder
+      d. The frontend should display the score and feature importance graphs, make a /app/static folder and move them there
+      e. The Flask app should be named app and the filename should be app.py. Create /app/templates/index.html and use that as a template.
     9. The Flask API should have a /predict POST endpoint, which returns a JSON response in the following format:
         {'recommendations': [{"drug_concept_id": int, "score": float}]} # 5 items
         Input signature (Form Data):
@@ -33,7 +33,7 @@ instruction: |-
       qid, age, condition_concept_id, gender_concept_id, drug_concept_id, label, drug_popularity
     The qid is the drug diagnoses grouping and the concept IDs are the numerical representations of the drug or diagnoses. 
     The CSV dataset is in the working directory and is named drugs_diagnoses.csv
-    Pre installed python libraries: xgboost scikit-learn pandas matplotlib seaborn
+    Pre installed python libraries: xgboost scikit-learn pandas matplotlib seaborn flask
     These libraries should be enough to accomplish the goal.
   
   Modify the code below to satisfy the requirements, keeping the function and return signatures intact.
