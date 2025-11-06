@@ -21,6 +21,7 @@ instruction: |-
   - Normalize SKU format: correct OCR errors by ensuring letter parts contain only letters and digit parts contain only digits. SKUs must match pattern: ^[A-Z]{2,3}-[0-9]{4,6}-[A-Z]{1,2}$ (2-3 uppercase letters, hyphen, 4-6 digits, hyphen, 1-2 uppercase letters).
   - Validate against reference data: check SKUs against catalog, warehouses against rules, prices against catalog ranges. Flag records that don't match reference data appropriately.
   - Identify anomalies: detect statistical outliers, capacity violations, price inconsistencies, temporal violations, and other data quality issues. Use descriptive flag names to categorize issues.
+  - Validate dates: dates must be in YYYY-MM-DD format and within valid range (2023-01-01 to 2025-10-27). Flag dates outside this range as temporal violations.
   - Resolve duplicates: for same SKU and warehouse, keep the most reliable record based on data quality. Log all discarded duplicates in conflict_log.json with explanation.
   - Calculate confidence scores: assign scores from 0.00 to 1.00 based on number and severity of issues found. Records with no issues (CLEAN flag) must have confidence 1.00. All confidence scores must be formatted with exactly 2 decimal places.
 
