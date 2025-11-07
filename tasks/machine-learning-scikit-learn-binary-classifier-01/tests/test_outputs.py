@@ -14,6 +14,9 @@ from PIL import Image
 from sklearn.pipeline import Pipeline
 from sklearn.calibration import CalibratedClassifierCV
 from sklearn.metrics import roc_auc_score, average_precision_score
+from sklearn.model_selection import StratifiedKFold
+from sklearn.base import clone
+from scipy.stats import spearmanr
 
 # ============================================
 # Setup: Define where to find output files
@@ -214,3 +217,78 @@ def test_model_joblib_compression_acknowledged():
     # Verification via summary metadata
     content = (OUT_DIR / "summary.txt").read_text(encoding="utf-8")
     assert re.search(r"compression:\s*3\b", content, flags=re.IGNORECASE), "summary.txt should state model.joblib compression: 3"
+
+
+def test_cv_oof_behavior_probe_one_fold():
+    """
+    Behavioral OOF probe: refit the Pipeline on K-1 folds of training data and predict the held-out fold,
+    then compare AUC to reported CV AUC. This guards against using test data for CV metrics or computing
+    in-fold scores.
+    """
+    df = pd.read_csv(DATA_PATH)
+    with open(SPLITS_PATH, "r") as f:
+        splits = json.load(f)
+    train_idx = splits["train_indices"]
+    X_tr = df.iloc[train_idx].drop(columns=["converted"])
+    y_tr = df.iloc[train_idx]["converted"].to_numpy()
+
+    model_full = joblib.load(MODEL_PATH)
+    assert isinstance(model_full, Pipeline), "Model must be a top-level Pipeline"
+
+    skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+    # Take the first split only as a probe
+    (fit_idx, hold_idx) = next(iter(skf.split(X_tr, y_tr)))
+    X_fit, y_fit = X_tr.iloc[fit_idx], y_tr[fit_idx]
+    X_hold, y_hold = X_tr.iloc[hold_idx], y_tr[hold_idx]
+
+    # Refit a fresh clone on K-1 folds
+    probe_model = clone(model_full)
+    probe_model.fit(X_fit, y_fit)
+    hold_probs = probe_model.predict_proba(X_hold)[:, 1]
+    probe_auc = roc_auc_score(y_hold, hold_probs)
+
+    with open(REPORT_PATH, "r") as f:
+        report = json.load(f)
+    cv_auc_reported = report["cv_metrics"]["roc_auc"]
+
+    # Allow tolerance because single-fold probe is noisy
+    assert abs(probe_auc - cv_auc_reported) < 0.12, f"OOF probe AUC {probe_auc:.3f} deviates too much from reported CV AUC {cv_auc_reported:.3f}; CV metrics may not be OOF"
+
+
+def test_basic_calibration_monotonicity_on_cv():
+    """
+    Behavioral calibration check: on training OOF-style predictions approximated by a single-fold probe,
+    the correlation between predicted probabilities and empirical positive rates across bins should be positive.
+    This guards against degenerate calibrated wrappers.
+    """
+    df = pd.read_csv(DATA_PATH)
+    with open(SPLITS_PATH, "r") as f:
+        splits = json.load(f)
+    train_idx = splits["train_indices"]
+    X_tr = df.iloc[train_idx].drop(columns=["converted"])
+    y_tr = df.iloc[train_idx]["converted"].to_numpy()
+
+    model_full = joblib.load(MODEL_PATH)
+    skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+    (fit_idx, hold_idx) = next(iter(skf.split(X_tr, y_tr)))
+    X_fit, y_fit = X_tr.iloc[fit_idx], y_tr[fit_idx]
+    X_hold, y_hold = X_tr.iloc[hold_idx], y_tr[hold_idx]
+
+    probe = clone(model_full)
+    probe.fit(X_fit, y_fit)
+    p = probe.predict_proba(X_hold)[:, 1]
+
+    # Bin into deciles
+    bins = np.linspace(0, 1, 11)
+    idx = np.digitize(p, bins, right=True)
+    bin_centers, bin_rates = [], []
+    for b in range(1, 11):
+        mask = idx == b
+        if mask.any():
+            bin_centers.append(p[mask].mean())
+            bin_rates.append(y_hold[mask].mean())
+
+    if len(bin_centers) >= 3:
+        rho, _ = spearmanr(bin_centers, bin_rates)
+        assert rho > 0.6, f"Weak monotonicity between predicted probability and observed rate (Spearman {rho:.2f}); calibration may be ineffective"
+

@@ -7,7 +7,7 @@
 # This will also contain task metadata that is not available to the agent at runtime.
 instruction: |-
   You're a data scientist at a fintech company.
-  Your job is to build a machine learning model, a calibrated binary classifier, that predicts which new signups will convert to paying customers.
+  Your job is to build a machine learning model, a calibrated binary classifier within a pipeline, that predicts which new signups will convert to paying customers.
 
   INPUT DATA:
   - Dataset: /app/data/signups.csv
@@ -49,8 +49,9 @@ instruction: |-
      - Here's the key requirement: your final model must produce calibrated probabilities
        (Calibrated probabilities mean if you predict 70% conversion, roughly 70% of those cases actually convert)
      - The final saved artifact must be a scikit-learn Pipeline whose final step provides calibrated probabilities (e.g., using a calibration wrapper around your base classifier)
+     - The Pipeline itself must be the top-level saved object; do not wrap the Pipeline in another object when saving.
      - Use 5-fold calibration so it matches your evaluation scheme
-     - Important: save the Pipeline object itself via joblib.dump(); do not wrap the Pipeline in another object when saving.
+     - Save the Pipeline object itself via joblib.dump()
      - The Pipeline must support predict_proba() and be serializable via joblib
      - Train only on the training data — keep the test set completely separate
      - If you use custom transformers or estimators, they must be defined in importable Python modules (not inline in __main__) so joblib can reload the Pipeline without errors
