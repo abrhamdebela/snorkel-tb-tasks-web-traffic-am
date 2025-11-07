@@ -124,18 +124,6 @@ instruction: |-
   Line 9: 
 
   # Evaluation Criteria
-  Your solution will be evaluated on:
-  - Correct parsing of the CSV input file with pipe-delimited shapes
-  - Proper implementation of the deterministic zigzag placement pattern starting from bottom-left
-  - Correct rotation selection that maximizes score at each step
-  - Proper tie-breaking when rotations have equal scores (0° > 90° > 180° > 270°)
-  - Proper placement of tetrominoes without overlap
-  - Using the shape letter for marking grid cells
-  - Correct output format matching the specification
-  - Ensuring all tetromino pieces are used in the order they are provided in the input file
-  - Handling all 10 games in the dataset
-
-  # Evaluation Notes
   - The algorithm is deterministic and will produce the same output for the same input; therefore, the evaluation criteria are met by the output file matching the correct solution file exactly.
 
 author_name: Charles M. Russo
