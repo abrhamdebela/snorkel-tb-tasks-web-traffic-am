@@ -73,26 +73,32 @@ instruction: |-
   4. Write the results to /app/results/out.txt in the format specified below
 
   # Output Format
-  For each game, write to the output file with a new line separated format:
+  For each game, append the following, including spacing and punctuation to /app/results/out.txt:
 
-  Game {game_id}:
-  Grid: {n}x{m}
-  Shapes: {shape_1}, {shape_2}, ...
-  Result:
-  [row1 values]
-  [row2 values]
-  ...
+  Line 1: Game {game_id}:
+  Line 2: Grid: {n}x{m}
+  Line 3: Shapes: {shape_1}, {shape_2}, ...
+  Line 4: Result:
+  Line 5+: One line per grid row using Python list syntax with single quotes and commas followed by a space (eg: ['O', 'O', '.', '.']). Do not add extra spaces.
+  After the final row, write one completely empty line to separate this game from the next block.
+
+  Additional formatting requirements:
+
+  - Every line in the file must end with a single \n newline character.
+  - The final game block must also be followed by exactly one blank line (the file ends with a newline on the empty line).
+  - Do not include any other text, whitespace, or trailing spaces.
 
   # Example Game Result
-  For game X with a 3x4 grid and shapes O|O|L:
+  If the game_id is 63 with a 3x4 grid and shapes O|O|L the file must contain:
 
-  Game X:
-  Grid: 3x4
-  Shapes: O, O, L
-  Result:
-  ['O', 'O', 'O', 'O']
-  ['O', 'O', 'O', 'O']
-  ['L', 'L', 'L', 'L']
+  Line 1: Game 63:
+  Line 2: Grid: 3x4
+  Line 3: Shapes: O, O, L
+  Line 4: Result:
+  Line 5: ['O', 'O', 'O', 'O']
+  Line 6: ['O', 'O', 'O', 'O']
+  Line 7: ['L', 'L', 'L', 'L']
+  Line 8: 
 
   # Evaluation Criteria
   Your solution will be evaluated on:
