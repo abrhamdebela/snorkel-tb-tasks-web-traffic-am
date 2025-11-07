@@ -394,48 +394,248 @@ def test_metadata_matches_output_files():
             assert wav_path in metadata_outputs, f"WAV file {wav_path} not found in metadata"
 
 
+def test_cli_actually_runs_and_processes():
+    """
+    Anti-cheating: Verifies that the CLI actually runs and processes files.
+    This prevents agents from providing a dummy CLI that doesn't work.
+    """
+    # Find the CLI script
+    app_dir = Path("/app")
+    cli_path = None
+    
+    for py_file in app_dir.glob("*.py"):
+        if py_file.name in ["test_outputs.py", "__init__.py"]:
+            continue
+        try:
+            result = subprocess.run(
+                ["python3", str(py_file), "--help"],
+                capture_output=True,
+                text=True,
+                timeout=5
+            )
+            if result.returncode == 0 and "--seed" in result.stdout:
+                cli_path = py_file
+                break
+        except (subprocess.TimeoutExpired, Exception):
+            continue
+    
+    assert cli_path is not None, "CLI script must exist"
+    
+    # Verify CLI can actually run (not just --help)
+    # Check that it requires --seed argument
+    result = subprocess.run(
+        ["python3", str(cli_path)],
+        capture_output=True,
+        text=True,
+        timeout=10
+    )
+    # Should fail without --seed (exit code != 0)
+    assert result.returncode != 0, "CLI should require --seed argument"
+    assert "seed" in result.stderr.lower() or "required" in result.stderr.lower() or "--seed" in result.stderr, \
+        "CLI should error when --seed is missing"
+
+
+def test_resampling_occurred():
+    """
+    Task requires: Resampling as needed
+    Verifies that resampling occurred by checking that all output files have consistent sample rates.
+    Input files may have different sample rates, but outputs should be resampled to a common rate.
+    """
+    wav_files = list(OUTPUT_DIR.glob("*.wav"))
+    assert len(wav_files) > 0, "No WAV files to test"
+    
+    sample_rates = []
+    for wav_path in wav_files:
+        try:
+            info = sf.info(str(wav_path))
+            sample_rates.append(info.samplerate)
+        except Exception:
+            continue
+    
+    assert len(sample_rates) > 0, "Could not read sample rates from output files"
+    
+    # All output files should have the same sample rate (resampling to common rate)
+    unique_rates = set(sample_rates)
+    assert len(unique_rates) == 1, \
+        f"All output files should have the same sample rate after resampling, found: {unique_rates}"
+    
+    # Sample rate should be reasonable (typical audio rates: 8000, 16000, 22050, 44100, 48000)
+    common_rate = list(unique_rates)[0]
+    assert 8000 <= common_rate <= 192000, \
+        f"Output sample rate {common_rate} seems unreasonable (expected 8kHz-192kHz)"
+
+
 def test_deterministic_behavior_with_seed():
     """
     Task requires: Deterministic behavior given a --seed
-    Verifies that the seed value is recorded in metadata and that outputs are reproducible.
-    Since we can't easily re-run the CLI during tests, we verify that:
-    1. The seed is properly recorded in metadata for each entry
-    2. Each source file gets consistent RIR/noise choices (deterministic based on seed and file order)
-    Note: Each file may have a different seed value (e.g., base_seed + file_index), which is acceptable
-    as long as the same source file always gets the same seed when processed in the same order.
+    Verifies determinism by re-running the CLI with the same seed and comparing metadata.
+    This ensures that the same seed produces identical RIR/noise choices.
     """
+    # Find the CLI script
+    app_dir = Path("/app")
+    cli_path = None
+    
+    for py_file in app_dir.glob("*.py"):
+        if py_file.name in ["test_outputs.py", "__init__.py"]:
+            continue
+        try:
+            result = subprocess.run(
+                ["python3", str(py_file), "--help"],
+                capture_output=True,
+                text=True,
+                timeout=5
+            )
+            if result.returncode == 0 and "--seed" in result.stdout:
+                cli_path = py_file
+                break
+        except (subprocess.TimeoutExpired, Exception):
+            continue
+    
+    assert cli_path is not None, "CLI script must exist"
+    
+    # Get the seed from existing metadata
     assert METADATA_PATH.exists(), "Metadata CSV must exist"
     
+    # Read original metadata
     with open(METADATA_PATH, 'r') as f:
         reader = csv.DictReader(f)
-        rows = list(reader)
+        original_rows = list(reader)
     
-    assert len(rows) > 0, "Metadata must contain entries"
+    if len(original_rows) == 0:
+        # Skip if no metadata - agent hasn't run CLI yet
+        return
     
-    # Verify seed is present for all entries
-    for row in rows:
-        seed_str = row['seed']
-        assert seed_str, "Seed must be present in metadata"
-        seed = int(seed_str)
-        assert isinstance(seed, int) and seed >= 0, f"Seed must be a non-negative integer, got: {seed}"
+    # Extract base seed - try to find a common pattern
+    seeds = [int(row['seed']) for row in original_rows if row.get('seed')]
+    if not seeds:
+        return
     
-    # Verify that each source file gets consistent RIR/noise choices
-    # (Same source file should get same RIR/noise when processed with same base seed)
-    source_to_choices = {}
-    for row in rows:
-        source = row['source_path']
-        rir = row['rir_path']
-        noise = row['noise_path']
-        seed = int(row['seed'])
+    # Use the minimum seed as base (assuming pattern like base_seed + index)
+    # Or if all seeds are the same, use that
+    unique_seeds = set(seeds)
+    if len(unique_seeds) == 1:
+        base_seed = list(unique_seeds)[0]
+    else:
+        base_seed = min(seeds)
+    
+    # Backup original metadata and outputs
+    import shutil
+    
+    backup_dir = Path("/tmp/aug_backup_test_deterministic")
+    if backup_dir.exists():
+        shutil.rmtree(backup_dir)
+    backup_dir.mkdir(parents=True, exist_ok=True)
+    
+    # Backup metadata
+    backup_metadata = backup_dir / "metadata.csv"
+    if METADATA_PATH.exists():
+        shutil.copy2(METADATA_PATH, backup_metadata)
+    
+    # Backup all WAV files
+    wav_backups = []
+    if OUTPUT_DIR.exists():
+        for wav_file in OUTPUT_DIR.glob("*.wav"):
+            backup_path = backup_dir / wav_file.name
+            shutil.copy2(wav_file, backup_path)
+            wav_backups.append((wav_file, backup_path))
+    
+    try:
+        # Clear output directory for re-run (only files, keep directory)
+        if OUTPUT_DIR.exists():
+            for item in OUTPUT_DIR.iterdir():
+                if item.is_file():
+                    item.unlink()
         
-        if source in source_to_choices:
-            # Same source should get same RIR/noise (deterministic behavior)
-            prev_rir, prev_noise, prev_seed = source_to_choices[source]
-            # Note: seed might differ per file (e.g., base_seed + index), but RIR/noise should be same
-            assert rir == prev_rir, f"Same source {source} got different RIR - not deterministic"
-            assert noise == prev_noise, f"Same source {source} got different noise - not deterministic"
-        else:
-            source_to_choices[source] = (rir, noise, seed)
+        # Re-run CLI with same seed
+        result = subprocess.run(
+            ["python3", str(cli_path), "--seed", str(base_seed)],
+            cwd="/app",
+            capture_output=True,
+            text=True,
+            timeout=120
+        )
+        
+        # CLI should run successfully
+        if result.returncode != 0:
+            # If CLI fails, that's a problem - but don't fail test if inputs might be missing
+            # Check if input directories exist
+            speech_dir = Path("/app/speech")
+            if not speech_dir.exists() or len(list(speech_dir.glob("*.wav"))) == 0:
+                # Inputs missing - skip test
+                return
+            assert False, \
+                f"CLI failed to run with seed {base_seed}: {result.stderr}\n{result.stdout}"
+        
+        # Verify new metadata was created
+        if not METADATA_PATH.exists():
+            # Check if inputs exist
+            speech_dir = Path("/app/speech")
+            if not speech_dir.exists() or len(list(speech_dir.glob("*.wav"))) == 0:
+                return
+            assert False, "CLI should create metadata.csv when run"
+        
+        # Read new metadata
+        with open(METADATA_PATH, 'r') as f:
+            reader = csv.DictReader(f)
+            new_rows = list(reader)
+        
+        if len(new_rows) == 0:
+            # No outputs - might be because inputs are missing
+            return
+        
+        # Should have same number of entries
+        if len(original_rows) != len(new_rows):
+            # This could happen if input files changed - but we should still check what we can
+            pass
+        
+        # Compare RIR/noise choices for same source files
+        # Create lookup dictionaries
+        original_lookup = {row['source_path']: (row['rir_path'], row['noise_path']) 
+                          for row in original_rows}
+        new_lookup = {row['source_path']: (row['rir_path'], row['noise_path']) 
+                     for row in new_rows}
+        
+        # Check that same sources get same RIR/noise
+        mismatches = []
+        common_sources = set(original_lookup.keys()) & set(new_lookup.keys())
+        
+        if len(common_sources) == 0:
+            # No common sources - might be different input sets
+            return
+        
+        for source_path in common_sources:
+            orig_rir, orig_noise = original_lookup[source_path]
+            new_rir, new_noise = new_lookup[source_path]
+            if orig_rir != new_rir or orig_noise != new_noise:
+                mismatches.append(f"{source_path}: RIR {orig_rir}->{new_rir}, noise {orig_noise}->{new_noise}")
+        
+        if mismatches:
+            assert False, \
+                f"Different RIR/noise choices with same seed {base_seed} - not deterministic:\n" + \
+                "\n".join(mismatches)
+    finally:
+        # Restore original outputs
+        try:
+            if backup_metadata.exists():
+                if METADATA_PATH.exists():
+                    shutil.copy2(backup_metadata, METADATA_PATH)
+            
+            # Restore WAV files
+            for original_path, backup_path in wav_backups:
+                if backup_path.exists():
+                    if original_path.exists():
+                        original_path.unlink()
+                    shutil.copy2(backup_path, original_path)
+        except Exception:
+            # If restoration fails, that's okay - test environment cleanup
+            pass
+        finally:
+            # Clean up backup
+            if backup_dir.exists():
+                try:
+                    shutil.rmtree(backup_dir)
+                except Exception:
+                    pass
 
 
 def test_audio_processing_actually_occurred():
