@@ -484,9 +484,6 @@ def test_all_speech_files_processed():
     
     # Verify each speech file appears in metadata
     # Normalize paths for comparison (handle absolute vs relative, different separators)
-    speech_paths = {str(f.resolve()) for f in speech_files}
-    speech_basenames = {f.name for f in speech_files}
-    
     metadata_speech_paths = set()
     for row in rows:
         source_path = row['source_path']
