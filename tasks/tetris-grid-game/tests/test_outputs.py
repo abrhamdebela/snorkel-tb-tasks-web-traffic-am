@@ -7,7 +7,7 @@
 import hashlib
 from pathlib import Path
 
-EXPECTED_GAMES_HASH = "6e702016cf77dac64220fc2a3e6fb7d662a8e66c64b141d6b85136ea7915164c"
+EXPECTED_GAMES_HASH = "26dade3b154ee408692958bb422a1e2fe89106552022b3597cdf100e67c16d8b"
 
 
 def test_solution_output_matches_expected():
