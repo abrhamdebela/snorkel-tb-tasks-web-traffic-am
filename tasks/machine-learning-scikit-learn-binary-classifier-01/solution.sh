@@ -156,6 +156,12 @@ def main():
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=0.2, stratify=y, random_state=RANDOM_STATE
     )
+    
+    # Save split indices for verification
+    train_indices = X_train.index.tolist()
+    test_indices = X_test.index.tolist()
+    with open(os.path.join(out_dir, "splits.json"), "w") as f:
+        json.dump({"train_indices": train_indices, "test_indices": test_indices}, f)
 
     # Cross-validation with OOF predictions
     skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=RANDOM_STATE)

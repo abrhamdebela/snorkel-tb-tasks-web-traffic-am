@@ -49,6 +49,7 @@ instruction: |-
      - Here's the key requirement: your final model must produce calibrated probabilities
        (Calibrated probabilities mean if you predict 70% conversion, roughly 70% of those cases actually convert)
      - The final saved artifact must be a scikit-learn Pipeline whose final step provides calibrated probabilities (e.g., using a calibration wrapper around your base classifier)
+     - Important: save the Pipeline object itself via joblib.dump(); do not wrap the Pipeline in another object when saving.
      - The Pipeline must support predict_proba() and be serializable via joblib
      - Train only on the training data — keep the test set completely separate
      - If you use custom transformers or estimators, they must be defined in importable Python modules (not inline in __main__) so joblib can reload the Pipeline without errors
@@ -88,24 +89,30 @@ instruction: |-
         }
         Round all metric values to exactly 4 decimal places.
      
-     c) roc_curve.png
+     c) splits.json
+        {
+          "train_indices": [list of int],
+          "test_indices": [list of int]
+        }
+        Save the exact row indices used for your train/test split so evaluation can be verified.
+        
+     d) roc_curve.png
         - ROC curve comparing CV (out-of-fold) vs test performance
         - Exact size: 640x480 pixels, PNG format
         - Include a legend that clearly distinguishes CV and Test performance with AUC values (format: "CV AUC: 0.XX" or similar, round to 2 decimals)
      
-     d) pr_curve.png  
+     e) pr_curve.png  
         - Precision-Recall curve comparing CV vs test performance
         - Exact size: 640x480 pixels, PNG format
         - Include a legend that clearly distinguishes CV and Test PR-AUC values (format: "CV PR-AUC: 0.XX" or similar, round to 2 decimals)
      
-     e) summary.txt
+     f) summary.txt
        - Human-readable summary of your results
        - Include all metrics for both CV and test
        - Show the test confusion matrix
        - Mention the CV and Test AUC/PR-AUC values (matching your plot legends, with two-decimal precision)
        - Use LF (Unix-style) line endings, not CRLF
 
-  
   6. Quality & Reproducibility Requirements
      - Everything must be deterministic — running twice with the same random seed should give identical results
      - Use random_state=42 wherever there's randomness (splits, cross-validation, model training, etc.)
@@ -114,7 +121,6 @@ instruction: |-
      - Your preprocessing must be learned only from training data, then applied to test data
      - The saved Pipeline must reload with joblib.load(...) without redefining any classes in the test harness
      - Custom transformers/estimators must be importable (defined in separate module files, not only in __main__) so joblib can resolve them
-
   
   SUCCESS CRITERIA:
   - Model successfully loads, is a Pipeline with a calibrated final step, and supports predict_proba
