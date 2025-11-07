@@ -124,6 +124,12 @@ instruction: |-
   Line 9: 
 
   # Evaluation Criteria
+  Your solution will be evaluated on:
+  - Correct output format matching the specification
+  - Handling all 10 games in the dataset
+  - The resulting game grids must match the correct solution file exactly.
+
+  # Evaluation Notes
   - The algorithm is deterministic and will produce the same output for the same input; therefore, the evaluation criteria are met by the output file matching the correct solution file exactly.
 
 author_name: Charles M. Russo
