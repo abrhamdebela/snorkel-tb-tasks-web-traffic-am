@@ -26,3 +26,7 @@ RUN pip install --no-cache-dir \
 
 # Create input and output directories
 RUN mkdir -p /app/speech /app/rir /app/noise /app/aug
+
+# Copy and run script to generate sample input WAV files
+COPY generate_input_data.py /app/generate_input_data.py
+RUN python3 /app/generate_input_data.py && rm /app/generate_input_data.py
