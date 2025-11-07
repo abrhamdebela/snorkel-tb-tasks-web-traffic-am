@@ -12,12 +12,12 @@ EXPECTED_GAMES_HASH = "6e702016cf77dac64220fc2a3e6fb7d662a8e66c64b141d6b85136ea7
 
 def test_solution_output_matches_expected():
     """Ensure the generated solution output matches the expected reference file."""
-    expected_path = Path("/app/tests/solution.txt")
+    expected_path = Path("/tests/solution.txt")
     actual_path = Path("/app/results/out.txt")
 
     assert (
         expected_path.exists()
-    ), "Expected output file missing: /app/tests/solution.txt"
+    ), "Expected output file missing: /tests/solution.txt"
     assert actual_path.exists(), "Solution output file missing: /app/results/out.txt"
 
     expected_contents = expected_path.read_text()
