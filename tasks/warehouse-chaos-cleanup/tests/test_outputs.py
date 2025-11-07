@@ -568,8 +568,7 @@ def test_duplicate_resolution_rationale():
     if len(conflicts) > 0:
         for conflict in conflicts:
             reason = conflict.get('reason', '')
-            kept_record = conflict.get('kept_record', {})
-            discarded_record = conflict.get('discarded_record', {})
+
             
             # Reason should be detailed (length > 10)
             assert len(reason) > 10, f"Conflict resolution reason should be detailed, got: {reason}"
