@@ -115,7 +115,7 @@ instruction: |-
        - Show the test confusion matrix
        - Mention the CV and Test AUC/PR-AUC values (matching your plot legends, with two-decimal precision)
        - Use LF (Unix-style) line endings, not CRLF
-       - Document compression level
+       - Document compression level with format compression: N, where N is compression level used
        - parse:
             CV AUC: XX.XX
             Test AUC: XX.XX
