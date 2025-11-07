@@ -478,7 +478,6 @@ def test_handles_malformed_data():
 def test_invalid_marker_usage():
     """Verify INVALID is used (and only INVALID) for unrecoverable values, not other fallbacks."""
     rows = _load_output('cleaned')
-    raw_data, _, _, _ = _load_input_data()
     
     # Check that unrecoverable values use INVALID, not other fallback values
     invalid_markers = ['N/A', 'NULL', 'None', 'null', 'n/a', 'na', 'NA', 'missing', 'MISSING', 'error', 'ERROR', 'NONE']

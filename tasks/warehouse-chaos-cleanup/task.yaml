@@ -15,11 +15,11 @@ instruction: |-
 
   First, normalize the SKU format. They should follow the pattern of 2-3 uppercase letters, a hyphen, 4-6 digits, another hyphen, and 1-2 uppercase letters. Fix any OCR errors where letters and digits got mixed up - ensure letter parts contain only letters and digit parts contain only digits.
 
-  Validate everything against the reference data. Check SKUs against the catalog, warehouses against the rules, and prices against the catalog ranges. Flag anything that doesn't match.
+  Validate everything against the reference data. Check SKUs against the catalog, warehouses against the rules, and prices against the catalog ranges. Use the following anomaly flag names verbatim whenever you choose to flag these types of issues: WAREHOUSE_NOT_FOUND, WAREHOUSE_INVALID_FORMAT, INACTIVE_WAREHOUSE (required whenever warehouse_rules.yaml marks a warehouse status as "closed" or "maintenance"), UNKNOWN_PRODUCT, SKU_AMBIGUOUS, SKU_FUZZY_MATCHED, PRICE_ANOMALY, PRICE_DRIFT, PRICE_INCONSISTENCY, CAPACITY_VIOLATION, DATE_OUT_OF_RANGE, TEMPORAL_VIOLATION, STATISTICAL_OUTLIER, QUANTITY_ANOMALY, RESTOCK_ANOMALY, plus CLEAN for records without issues. You may add additional descriptive flags as needed, and consistent use of these canonical names will help your solution be evaluated correctly.
 
-  Look for anomalies like statistical outliers, capacity violations, price inconsistencies, and dates that are out of range. Dates should be in YYYY-MM-DD format and between 2023-01-01 and 2025-10-27. Flag anything outside this range.
+  Look for anomalies like statistical outliers, capacity violations, price inconsistencies, and dates that are out of range. Dates must be formatted as YYYY-MM-DD and must fall between 2023-01-01 and 2025-10-27 inclusive. Any date outside that range must be treated as a temporal anomaly and at least flagged with DATE_OUT_OF_RANGE or TEMPORAL_VIOLATION (and any other relevant flags). You may either correct obviously fixable dates into the valid range or mark them as INVALID if they cannot be reliably recovered.
 
-  When you find duplicates (same SKU and warehouse), keep the best record and log the discarded ones in conflict_log.json with a detailed explanation of why they were removed (including which record was kept and why it was preferred).
+  When you find duplicates (same SKU and warehouse), keep the best record and log the discarded ones in conflict_log.json with a short, human-readable explanation of which record was kept and at least one reason why it was preferred (for example, “kept the cleaner record with fewer anomaly flags and higher confidence score”).
 
   Calculate confidence scores from 0.00 to 1.00 based on how many issues each record has. Records with no issues should be flagged as CLEAN and get a confidence of 1.00. Format all scores with exactly 2 decimal places.
 
@@ -31,7 +31,7 @@ instruction: |-
 
   Create conflict_log.json as a JSON array with entries for each discarded duplicate, including the sku, warehouse, kept_record, discarded_record, and reason.
 
-  Generate anomaly_report.txt with a summary of the data quality issues found.
+  Generate anomaly_report.txt with a summary of the data quality issues found. The report must explicitly mention the total number of records (include the word "records") and describe data-quality or confidence metrics using the word "confidence" or "quality" so the audience can quickly locate those sections.
 
   Create transfer_recommendations.csv with columns: sku, from_warehouse, to_warehouse, recommended_quantity, priority (either HIGH or MEDIUM), and estimated_cost (2 decimal places). Make sure all the (sku, warehouse) pairs actually exist in your cleaned inventory.
 
