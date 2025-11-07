@@ -1,0 +1,15 @@
+solution.sh
+solution.yaml
+lp_solver.py
+tests/
+Dockerfile
+docker-compose.yaml
+task.yaml
+run-tests.sh
+lp.npz
+output.json
+runs/
+*.pyc
+__pycache__/
+.pytest_cache/
+.venv/
