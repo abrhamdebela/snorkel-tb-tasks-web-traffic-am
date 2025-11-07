@@ -23,6 +23,12 @@ PR_PATH = OUT_DIR / "pr_curve.png"
 SUMMARY_PATH = OUT_DIR / "summary.txt"
 DATA_PATH = Path("/app/data/signups.csv")
 
+def test_model_loads_without_custom_class_errors():
+    try:
+        _ = joblib.load(MODEL_PATH)
+    except Exception as e:
+        raise AssertionError(f"Model failed to reload cleanly; ensure custom transformers are in importable modules: {e}")
+
 def _is_lf(path: Path) -> bool:
     """Check if file uses LF line endings (Unix style)."""
     data = path.read_bytes()
