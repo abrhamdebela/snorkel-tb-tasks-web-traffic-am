@@ -135,9 +135,8 @@ instruction: |-
   - Ensuring all tetromino pieces are used in the order they are provided in the input file
   - Handling all 10 games in the dataset
 
-  # Constraints
-  - Use only the Python standard library.
-  - You MUST NOT modify /app/data/games.csv
+  # Evaluation Notes
+  - The algorithm is deterministic and will produce the same output for the same input; therefore, the evaluation criteria are met by the output file matching the correct solution file exactly.
 
 author_name: Charles M. Russo
 author_email: charlesmrusso@outlook.com
