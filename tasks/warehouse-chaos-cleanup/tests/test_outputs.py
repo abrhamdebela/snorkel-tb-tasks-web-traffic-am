@@ -473,7 +473,6 @@ def test_fuzzy_matching_implementation():
 def test_kmeans_implementation():
     """Verify k-means clustering works correctly (indirect test that it's implemented from scratch)."""
     data = _load_output('clusters', 'json')
-    rows = _load_output('cleaned')
     
     clusters = data['clusters']
     
