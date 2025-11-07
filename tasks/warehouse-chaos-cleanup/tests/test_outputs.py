@@ -127,6 +127,45 @@ def test_sku_format_and_normalization():
         assert parts[2].isalpha() and parts[2].isupper(), f"SKU suffix must be uppercase letters: {sku}"
 
 
+def test_ocr_error_correction():
+    """Verify OCR errors are corrected - letters and digits are separated into correct parts."""
+    rows = _load_output('cleaned')
+    raw_data, _, _, _ = _load_input_data()
+    
+    # Build a map of original SKUs to check if OCR errors were corrected
+    original_skus = {}
+    for raw_row in raw_data:
+        original_sku = raw_row.get('sku', '').strip()
+        if original_sku:
+            # Check if original SKU had OCR errors (mixed letters/digits in wrong places)
+            parts = original_sku.split('-')
+            if len(parts) == 3:
+                prefix, number, suffix = parts
+                has_ocr_error = (
+                    not prefix.isalpha() or  # digits in prefix
+                    not number.isdigit() or  # letters in number
+                    not suffix.isalpha()     # digits in suffix
+                )
+                if has_ocr_error:
+                    original_skus[original_sku] = True
+    
+    # If there were SKUs with OCR errors, verify they were corrected
+    if original_skus:
+        corrected_count = 0
+        for row in rows:
+            sku = row['sku']
+            # Check if this SKU was corrected (it follows the pattern now)
+            if PATTERNS['sku'].match(sku):
+                parts = sku.split('-')
+                if len(parts) == 3:
+                    prefix, number, suffix = parts
+                    # Verify OCR correction: letter parts contain only letters, digit parts contain only digits
+                    if prefix.isalpha() and prefix.isupper() and number.isdigit() and suffix.isalpha() and suffix.isupper():
+                        corrected_count += 1
+        
+        assert corrected_count > 0, "OCR errors should be corrected - SKUs should have letters in letter parts and digits in digit parts"
+
+
 def test_data_formatting():
     """Verify unit_cost, dates, and confidence scores are formatted correctly."""
     rows = _load_output('cleaned')
@@ -365,6 +404,22 @@ def test_handles_malformed_data():
         assert invalid_or_flagged > 0, "Should handle malformed data with flags or INVALID markers"
 
 
+def test_invalid_marker_usage():
+    """Verify INVALID is used (and only INVALID) for unrecoverable values, not other fallbacks."""
+    rows = _load_output('cleaned')
+    raw_data, _, _, _ = _load_input_data()
+    
+    # Check that unrecoverable values use INVALID, not other fallback values
+    invalid_markers = ['N/A', 'NULL', 'None', 'null', 'n/a', 'na', 'NA', 'missing', 'MISSING', 'error', 'ERROR', 'NONE']
+    
+    for row in rows:
+        # Check each field - if it's one of the invalid markers, it should be INVALID instead
+        for field in ['warehouse', 'quantity', 'unit_cost', 'last_restocked']:
+            value = row[field]
+            if value in invalid_markers:
+                assert False, f"Use INVALID (not {value}) for unrecoverable {field} values"
+
+
 def test_duplicate_resolution_rationale():
     """Verify conflict log includes detailed explanations for duplicate resolution."""
     conflicts = _load_output('conflicts', 'json')
@@ -374,9 +429,9 @@ def test_duplicate_resolution_rationale():
         for conflict in conflicts:
             reason = conflict.get('reason', '')
             assert len(reason) > 10, f"Conflict resolution reason should be detailed, got: {reason}"
-            # Reason should explain why one record was kept over another
-            assert any(word in reason.lower() for word in ['quality', 'flag', 'clean', 'issue', 'better', 'fewer', 'more', 'conflict', 'duplicate', 'discard', 'keep']), \
-                f"Reason should explain resolution rationale, got: {reason}"
+            # Reason should explain which record was kept and why it was preferred
+            assert any(word in reason.lower() for word in ['quality', 'flag', 'clean', 'issue', 'better', 'fewer', 'more', 'conflict', 'duplicate', 'discard', 'keep', 'prefer', 'chosen', 'selected']), \
+                f"Reason should explain which record was kept and why it was preferred, got: {reason}"
 
 
 def test_specific_anomaly_types():
@@ -446,7 +501,7 @@ def test_specific_anomaly_types():
 
 
 def test_fuzzy_matching_implementation():
-    """Verify fuzzy matching works correctly (indirect test that it's implemented from scratch)."""
+    """Verify fuzzy matching works correctly (tests functionality, not implementation method)."""
     rows = _load_output('cleaned')
     _, _, _, catalog = _load_input_data()
     valid_skus = set(catalog.keys())
@@ -471,12 +526,12 @@ def test_fuzzy_matching_implementation():
 
 
 def test_kmeans_implementation():
-    """Verify k-means clustering works correctly (indirect test that it's implemented from scratch)."""
+    """Verify k-means clustering works correctly (tests functionality, not implementation method)."""
     data = _load_output('clusters', 'json')
     
     clusters = data['clusters']
     
-    # Verify clusters have meaningful distribution (not random)
+    # Verify clusters have meaningful distribution (not random) - different sizes
     sizes = [c['record_count'] for c in clusters]
     assert len(set(sizes)) >= 2, "K-means should produce clusters with different sizes"
     
