@@ -96,10 +96,12 @@ instruction: |-
         - Include a legend showing PR-AUC for both CV and test (round to 2 decimals)
      
      e) summary.txt
-        - Human-readable summary of your results
-        - Include all metrics for both CV and test
-        - Show the test confusion matrix
-        - Use LF (Unix-style) line endings, not CRLF
+       - Human-readable summary of your results
+       - Include all metrics for both CV and test
+       - Show the test confusion matrix
+       - Include the model serialization details used for the saved artifacts (e.g., joblib compression setting)
+       - Use LF (Unix-style) line endings, not CRLF
+
   
   6. Quality & Reproducibility Requirements
      - Everything must be deterministic — running twice with the same random seed should give identical results
