@@ -7,61 +7,43 @@
 # This will also contain task metadata that is not available to the agent at runtime.
 
 instruction: |-
-  A warehouse inventory merge operation failed, corrupting approximately 1500 inventory records. The data contains formatting errors, conflicts, and quality issues.
+  We had a warehouse inventory merge that went wrong and corrupted about 1500 records. The data has formatting errors, conflicts, and quality issues that need to be fixed.
 
-  Clean and validate the data, identify anomalies, resolve duplicates, and produce analysis reports.
+  You'll find the input files in /app/data/: inventory_raw.csv (the corrupted data), inventory_history.json (for validation), warehouse_rules.yaml (capacity limits and config), and supplier_catalog.csv (valid SKUs with price ranges).
 
-  Input files in /app/data/:
-  - inventory_raw.csv: Corrupted inventory data
-  - inventory_history.json: Historical records for validation
-  - warehouse_rules.yaml: Warehouse configuration and capacity limits
-  - supplier_catalog.csv: Valid SKUs with price ranges
+  Here's what needs to be done:
 
-  Data cleaning requirements:
-  - Normalize SKU format: correct OCR errors by ensuring letter parts contain only letters and digit parts contain only digits. SKUs must match pattern: ^[A-Z]{2,3}-[0-9]{4,6}-[A-Z]{1,2}$ (2-3 uppercase letters, hyphen, 4-6 digits, hyphen, 1-2 uppercase letters).
-  - Validate against reference data: check SKUs against catalog, warehouses against rules, prices against catalog ranges. Flag records that don't match reference data appropriately.
-  - Identify anomalies: detect statistical outliers, capacity violations, price inconsistencies, temporal violations, and other data quality issues. Use descriptive flag names to categorize issues.
-  - Validate dates: dates must be in YYYY-MM-DD format and within valid range (2023-01-01 to 2025-10-27). Flag dates outside this range as temporal violations.
-  - Resolve duplicates: for same SKU and warehouse, keep the most reliable record based on data quality. Log all discarded duplicates in conflict_log.json with explanation.
-  - Calculate confidence scores: assign scores from 0.00 to 1.00 based on number and severity of issues found. Records with no issues (CLEAN flag) must have confidence 1.00. All confidence scores must be formatted with exactly 2 decimal places.
+  First, normalize the SKU format. They should follow the pattern of 2-3 uppercase letters, a hyphen, 4-6 digits, another hyphen, and 1-2 uppercase letters. Fix any OCR errors where letters and digits got mixed up.
 
-  Algorithm requirements:
-  - Implement fuzzy matching from scratch (no external libraries): use string similarity to match SKUs not found in catalog to valid catalog SKUs. Replace the unmatched SKU with the matched catalog SKU and flag it as SKU_FUZZY_MATCHED. The cleaned SKU should be in the catalog after matching.
-  - Implement k-means clustering from scratch (no external libraries): group records into 3 clusters by data quality characteristics. Clusters should represent meaningful groupings of similar data quality levels. No single cluster should contain ≥95% of records (clusters must be reasonably distributed).
+  Validate everything against the reference data. Check SKUs against the catalog, warehouses against the rules, and prices against the catalog ranges. Flag anything that doesn't match.
 
-  Output files in /app/output/:
-  
-  - inventory_cleaned.csv: CSV with columns: sku, warehouse, quantity, unit_cost, last_restocked, anomaly_flags, confidence_score
-    - sku: Normalized SKU format
-    - warehouse: Warehouse code or INVALID if unrecoverable
-    - quantity: Positive integer as string or INVALID
-    - unit_cost: Decimal value with 2 decimal places
-    - last_restocked: Date in YYYY-MM-DD format or INVALID for unrecoverable dates
-    - anomaly_flags: Comma-separated flag names or CLEAN for records with no issues
-    - confidence_score: Numeric value from 0.00 to 1.00 with exactly 2 decimal places
-  
-  - conflict_log.json: JSON array with entries containing: sku, warehouse, kept_record, discarded_record, reason
-  
-  - anomaly_report.txt: Text report with data quality summary
-  
-  - transfer_recommendations.csv: CSV with columns: sku, from_warehouse, to_warehouse, recommended_quantity, priority, estimated_cost
-    - All (sku, from_warehouse) and (sku, to_warehouse) pairs must exist in cleaned inventory
-    - priority: HIGH or MEDIUM based on urgency
-    - estimated_cost: Decimal value with exactly 2 decimal places, should be calculated based on quantity and unit cost
-  
-  - anomaly_clusters.json: JSON object with clusters array containing exactly 3 clusters
-    - Each cluster has: id (0, 1, or 2), severity (low, medium, or high), record_count, description
-    - All records must be assigned to exactly one cluster
-    - Clusters should represent distinct data quality groups
-    - No single cluster should contain ≥95% of records (clusters must be reasonably distributed)
-  
-  - executive_summary.txt: Text summary with key findings, data quality metrics, and actionable recommendations.
+  Look for anomalies like statistical outliers, capacity violations, price inconsistencies, and dates that are out of range. Dates should be in YYYY-MM-DD format and between 2023-01-01 and 2025-10-27. Flag anything outside this range.
 
-  Include all or nearly all input records in the output. Records can appear in either inventory_cleaned.csv or conflict_log.json (as discarded duplicates). Handle missing and malformed data gracefully by flagging issues and using INVALID markers where data cannot be recovered. Some extremely malformed records may need to be excluded if they cannot be processed at all.
+  When you find duplicates (same SKU and warehouse), keep the best record and log the discarded ones in conflict_log.json with an explanation of why they were removed.
+
+  Calculate confidence scores from 0.00 to 1.00 based on how many issues each record has. Records with no issues should be flagged as CLEAN and get a confidence of 1.00. Format all scores with exactly 2 decimal places.
+
+  For SKUs that don't match the catalog, implement fuzzy matching from scratch (no external libraries) to find the closest match. Replace the unmatched SKU with the matched one and flag it as SKU_FUZZY_MATCHED.
+
+  Also implement k-means clustering from scratch (no external libraries) to group records into 3 clusters based on data quality. Make sure no single cluster has more than 95% of the records - they should be reasonably distributed.
+
+  Save the cleaned data to /app/output/inventory_cleaned.csv with columns: sku, warehouse, quantity, unit_cost, last_restocked, anomaly_flags, and confidence_score. Use INVALID for any values that can't be recovered. The unit_cost should be formatted with exactly 2 decimal places. The anomaly_flags should be comma-separated flag names, or CLEAN if there are no issues.
+
+  Create conflict_log.json as a JSON array with entries for each discarded duplicate, including the sku, warehouse, kept_record, discarded_record, and reason.
+
+  Generate anomaly_report.txt with a summary of the data quality issues found.
+
+  Create transfer_recommendations.csv with columns: sku, from_warehouse, to_warehouse, recommended_quantity, priority (either HIGH or MEDIUM), and estimated_cost (2 decimal places). Make sure all the (sku, warehouse) pairs actually exist in your cleaned inventory.
+
+  Save the clustering results to anomaly_clusters.json as a JSON object with a clusters array containing exactly 3 clusters. Each cluster should have an id (0, 1, or 2), severity (low, medium, or high), record_count, and description. Every record must be assigned to exactly one cluster.
+
+  Finally, write executive_summary.txt with the key findings, data quality metrics, and actionable recommendations.
+
+  Try to include all or nearly all input records in your output. Records can appear in either inventory_cleaned.csv or conflict_log.json if they were discarded as duplicates. Handle missing and malformed data by flagging the issues and using INVALID markers where data can't be recovered.
 
 author_name: Tasnim Makableh
 author_email: tasnim.makableh@menadevs.io
-difficulty: hard
+difficulty: medium
 category: data-processing
 tags:
   - data-cleaning
