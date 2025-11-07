@@ -49,6 +49,7 @@ instruction: |-
      - Here's the key requirement: your final model must produce calibrated probabilities
        (Calibrated probabilities mean if you predict 70% conversion, roughly 70% of those cases actually convert)
      - The final saved artifact must be a scikit-learn Pipeline whose final step provides calibrated probabilities (e.g., using a calibration wrapper around your base classifier)
+     - Use 5-fold calibration so it matches your evaluation scheme
      - Important: save the Pipeline object itself via joblib.dump(); do not wrap the Pipeline in another object when saving.
      - The Pipeline must support predict_proba() and be serializable via joblib
      - Train only on the training data — keep the test set completely separate
@@ -114,6 +115,7 @@ instruction: |-
        - Show the test confusion matrix
        - Mention the CV and Test AUC/PR-AUC values (matching your plot legends, with two-decimal precision)
        - Use LF (Unix-style) line endings, not CRLF
+       - Document compression level
        - parse:
             CV AUC: XX.XX
             Test AUC: XX.XX
