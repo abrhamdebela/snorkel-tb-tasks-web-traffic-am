@@ -60,7 +60,13 @@ python -m pip install \
     joblib==1.4.2 \
     numpy==1.26.4 \
     pandas==2.2.2 \
-    scikit-learn==1.5.2
+    scikit-learn==1.5.2\
+    scipy==1.16.3 \
+    threadpoolctl==3.6.0 \
+    kiwisolver==1.4.5 \
+    cycler==0.12.1 \
+    fonttools==4.53.1 \
+    contourpy==1.2.1
 
 
 # ============================================

@@ -105,13 +105,21 @@ instruction: |-
         - Precision-Recall curve comparing CV vs test performance
         - Exact size: 640x480 pixels, PNG format
         - Include a legend that clearly distinguishes CV and Test PR-AUC values (format: "CV PR-AUC: 0.XX" or similar, round to 2 decimals)
+
+     f) The plot should visibly include its legend; placeholder or nearly-empty images are not acceptable.
      
-     f) summary.txt
+     g) summary.txt
        - Human-readable summary of your results
        - Include all metrics for both CV and test
        - Show the test confusion matrix
        - Mention the CV and Test AUC/PR-AUC values (matching your plot legends, with two-decimal precision)
        - Use LF (Unix-style) line endings, not CRLF
+       - parse:
+            CV AUC: XX.XX
+            Test AUC: XX.XX
+            CV PR-AUC: XX.XX
+            Test PR-AUC: XX.XX
+            Use two-decimal precision for each XX.XX, matching the values shown in the plot legends.
 
   6. Quality & Reproducibility Requirements
      - Everything must be deterministic — running twice with the same random seed should give identical results
