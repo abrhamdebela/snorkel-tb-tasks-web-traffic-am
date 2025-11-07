@@ -1,0 +1,4 @@
+{
+  "operations": ["TransactionLedger", "addAccount", "distributeBonus", "addAccount", "applyInterest", "getBalance", "distributeBonus", "addAccount", "applyInterest", "getBalance", "getBalance", "getBalance"],
+  "arguments": [[], [1000], [500], [2000], [2], [0], [300], [5000], [2], [0], [1], [2]]
+}
