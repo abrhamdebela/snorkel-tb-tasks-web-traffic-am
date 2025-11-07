@@ -29,7 +29,7 @@ instruction: |-
      - Split your data into training and test sets using stratified sampling (maintains class balance)
      - The test set is sacred — hold it out completely, don't touch it until final evaluation
      - Test set should be somewhere between 10% and 40% of your data
-     - On the training portion, do stratified K-fold cross-validation (5 folds) to get honest performance estimates
+     - On the training portion, do exactly 5-fold stratified cross-validation with shuffle=True and random_state=42 to get honest performance estimates
      - Generate out-of-fold (OOF) predictions during CV — this gives you unbiased metrics on the training data
      - Use random_state=42 everywhere for reproducibility
   
@@ -48,8 +48,10 @@ instruction: |-
      - Train a binary classifier that works well for this problem
      - Here's the key requirement: your final model must produce calibrated probabilities
        (Calibrated probabilities mean if you predict 70% conversion, roughly 70% of those cases actually convert)
-     - The final saved artifact must be a scikit-learn Pipeline object that supports predict_proba()
+     - The final saved artifact must be a scikit-learn Pipeline whose final step provides calibrated probabilities (e.g., using a calibration wrapper around your base classifier)
+     - The Pipeline must support predict_proba() and be serializable via joblib
      - Train only on the training data — keep the test set completely separate
+     - If you use custom transformers or estimators, they must be defined in importable Python modules (not inline in __main__) so joblib can reload the Pipeline without errors
   
   4. Evaluation Metrics
      Calculate these metrics for both cross-validation (OOF) and test set:
@@ -66,6 +68,7 @@ instruction: |-
      
      a) model.joblib
         - Your trained scikit-learn Pipeline that can predict probabilities on new data
+        - Must have a final step that provides calibrated probabilities
         - Must support predict_proba() method for probability predictions
         - Save using joblib with compression level 3
         - Should be fully self-contained (includes preprocessing)
@@ -88,18 +91,18 @@ instruction: |-
      c) roc_curve.png
         - ROC curve comparing CV (out-of-fold) vs test performance
         - Exact size: 640x480 pixels, PNG format
-        - Include a legend showing AUC for both CV and test (round AUC values to 2 decimals)
+        - Include a legend that clearly distinguishes CV and Test performance with AUC values (format: "CV AUC: 0.XX" or similar, round to 2 decimals)
      
      d) pr_curve.png  
         - Precision-Recall curve comparing CV vs test performance
         - Exact size: 640x480 pixels, PNG format
-        - Include a legend showing PR-AUC for both CV and test (round to 2 decimals)
+        - Include a legend that clearly distinguishes CV and Test PR-AUC values (format: "CV PR-AUC: 0.XX" or similar, round to 2 decimals)
      
      e) summary.txt
        - Human-readable summary of your results
        - Include all metrics for both CV and test
        - Show the test confusion matrix
-       - Include the model serialization details used for the saved artifacts (e.g., joblib compression setting)
+       - Mention the CV and Test AUC/PR-AUC values (matching your plot legends, with two-decimal precision)
        - Use LF (Unix-style) line endings, not CRLF
 
   
@@ -109,15 +112,19 @@ instruction: |-
      - All text files must use LF line endings (Unix-style), not Windows CRLF
      - Absolutely no data leakage: the test set cannot influence any training decisions, preprocessing fitting, or hyperparameter choices
      - Your preprocessing must be learned only from training data, then applied to test data
+     - The saved Pipeline must reload with joblib.load(...) without redefining any classes in the test harness
+     - Custom transformers/estimators must be importable (defined in separate module files, not only in __main__) so joblib can resolve them
+
   
   SUCCESS CRITERIA:
-  - Model successfully loads and generates probability predictions (not just 0/1 classifications)
-  - When reloaded via joblib.load, the model must work end-to-end on raw input data 
-  - Predictions show reasonable variation — not all the same or clustered at extremes
+  - Model successfully loads, is a Pipeline with a calibrated final step, and supports predict_proba
+  - Model generates probability predictions (not just 0/1 classifications) with reasonable variation
+  - When reloaded via joblib.load, the model must work end-to-end on raw input data
   - Test set ROC-AUC is at least 0.58 (reasonable performance despite challenges)
   - CV and test performance are similar (AUC difference less than 0.15, meaning no major overfitting)
   - All required output files exist with correct formats
   - Confusion matrix totals match the expected test set size (10-40% of ~1000 rows)
+  - Plot legends clearly show CV and Test AUC values with two-decimal precision
   - Running the same code twice produces identical results (deterministic behavior)
 
 author_name: Gabriel Plata Stapper
