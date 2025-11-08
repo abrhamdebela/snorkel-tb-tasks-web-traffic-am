@@ -9,6 +9,8 @@ from pathlib import Path
 from datetime import datetime
 from functools import lru_cache
 import os
+import hashlib
+
 
 OUTPUT_FILES = {
     'cleaned': Path("/app/output/inventory_cleaned.csv"),
@@ -33,6 +35,28 @@ PATTERNS = {
 
 MIN_DATE = datetime(2023, 1, 1)
 MAX_DATE = datetime(2025, 10, 27)
+
+# Reference (read-only) copies of the input data for anti-cheating checks
+HERE = Path(__file__).resolve().parent
+TASK_ROOT = HERE.parent
+REFERENCE_DATA_DIR = TASK_ROOT / "data"
+
+REFERENCE_INPUT_FILES = {
+    'raw': REFERENCE_DATA_DIR / "inventory_raw.csv",
+    'history': REFERENCE_DATA_DIR / "inventory_history.json",
+    'rules': REFERENCE_DATA_DIR / "warehouse_rules.yaml",
+    'catalog': REFERENCE_DATA_DIR / "supplier_catalog.csv",
+}
+
+
+def _sha256_file(path: Path) -> str:
+    """Compute SHA256 hash of a file (used for input integrity checks)."""
+    h = hashlib.sha256()
+    with open(path, "rb") as f:
+        for chunk in iter(lambda: f.read(8192), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
 
 
 @lru_cache(maxsize=1)
@@ -99,6 +123,19 @@ def test_all_output_files_exist():
     """Verify all required output files are present."""
     for file_path in OUTPUT_FILES.values():
         assert file_path.exists(), f"Missing required file: {file_path}"
+
+def test_input_files_integrity():
+    """Anti-cheating: ensure /app/data input files match the original task data."""
+    for key, app_path in INPUT_FILES.items():
+        ref_path = REFERENCE_INPUT_FILES[key]
+        assert ref_path.exists(), f"Reference input file missing: {ref_path}"
+        assert app_path.exists(), f"Runtime input file missing: {app_path}"
+        ref_hash = _sha256_file(ref_path)
+        app_hash = _sha256_file(app_path)
+        assert app_hash == ref_hash, (
+            f"Input file {app_path} appears to have been modified. "
+            f"Expected it to match the original task data."
+        )
 
 
 def test_inventory_cleaned_structure():

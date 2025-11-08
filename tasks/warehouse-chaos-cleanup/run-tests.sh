@@ -17,8 +17,8 @@ if [ "$PWD" = "/" ]; then
     exit 1
 fi
 
+
 uv venv .tbench-testing
 source .tbench-testing/bin/activate
-uv pip install pytest==8.4.1 pyyaml==6.0.1
-
-uv run pytest $TEST_DIR/test_outputs.py -rA
+pip install pytest==8.4.1 pyyaml==6.0.1
+pytest $TEST_DIR/test_outputs.py -rA
