@@ -1,0 +1,10 @@
+student_id,full_name,program,gpa,credits,status
+S901,Valid Student,CS,3.8,44,active
+S902,Unclosed Quote,Math,"3,7,43,active
+S903,Inconsistent Columns,Physics,3.6,42
+S904,Extra Column,Chemistry,3.5,41,active,extra_field
+S905,Missing Column,Biology,3.4
+S906,Another Valid,Engineering,3.3,40,active
+S907,"Unclosed at end,CS,3.2,39,active
+S908,Valid After Error,Math,3.1,38,active
+

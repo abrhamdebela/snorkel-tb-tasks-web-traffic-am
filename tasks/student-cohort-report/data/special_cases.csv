@@ -1,0 +1,110 @@
+student_id,full_name,program,gpa,credits,status
+S045,Test Student,CS,"",45,active
+S046,Another Test,Math,3.8,,
+S047,Space Test ,CS, 3.9 , 42 , active
+S048,Tab	Name,Math,3.7,40,active
+S002,Bilal King,CS,2.9,32,active
+S049,Very Long Name That Might Cause Issues,Physics,3.5,40,active
+S050,Special,Chars!@#,$%^&*,Biology,"3,5",40,active
+S111,Empty Fields,,,,
+S112,Just ID,,
+S701,No Student ID,CS,3.5,40,active
+S702,Missing Program,Math,,45,active
+S703,Empty GPA,Physics,"",40,active
+S704,No Credits,Chemistry,3.5,,active
+S705,No Status,Biology,3.8,44,
+S706,Space Around Name ,CS, 3.6 , 42 , active
+S707,Tab Character	Name,Math,3.7,40,active
+S708,Multiple Spaces   Name,Physics,3.5,40,active
+S709,Special Chars!@# Name,Chemistry,"3,5",40,active
+S710,Very Long Name That Might Cause Issues With Parsing,Biology,3.8,44,active
+S711,Regular Student,CS,3.8,44,active
+S712,Comma Decimal,Math,"3,7",43,active
+S713,Space Around,Physics, 3.6 , 42 , active
+S714,No Status,Chemistry,3.5,41,
+S715,Empty GPA,Biology,,40,active
+S716,High GPA,Engineering,4.0,48,active
+S717,Low GPA,CS,1.5,15,active
+S718,Medium GPA,Math,2.5,25,active
+S719,Perfect GPA,Physics,4.0,50,active
+S720,Just Passing,Chemistry,2.0,30,active
+S721,Zhang Wei,CS,"3,8",44,active
+S722,Anna Müller,Math,3.7,41,active
+S723,Jean Dupont,Physics,"3,6",40,active
+S724,Maria Garcia,Biology,3.9,46,active
+S725,Hiroshi Tanaka,Chemistry,"3,5",39,active
+S726,Olga Ivanova,Engineering,3.2,36,active
+S727,Mohammed Ali,CS,3.4,38,active
+S728,Sofia Andersson,Math,3.6,40,active
+S729,Giovanni Rossi,Physics,2.8,28,active
+S730,Yuki Nakamura,Biology,3.8,42,active
+S731,Ahmed Hassan,Chemistry,3.1,35,active
+S732,Elena Petrov,Engineering,3.3,37,active
+S733,Lucas Silva,CS,3.5,39,active
+S734,Emma Johansson,Math,3.7,41,active
+S735,Marco Bianchi,Physics,3.0,34,active
+S736,Isabella Costa,Biology,3.8,44,active
+S737,David Kim,Chemistry,3.2,36,active
+S738,Sophia Lee,Engineering,3.1,35,active
+S739,James Wilson,CS,3.4,38,active
+S740,Emily Chen,Math,3.6,40,active
+S741,Michael Brown,Physics,2.9,29,active
+S742,Olivia Davis,Biology,3.7,41,active
+S743,William Taylor,Chemistry,3.3,37,active
+S744,Charlotte Martinez,Engineering,3.0,34,active
+S745,Benjamin Anderson,CS,3.5,39,active
+S746,Amelia Thomas,Math,3.8,42,active
+S747,Henry Jackson,Physics,2.7,27,active
+S748,Harper White,Biology,3.9,45,active
+S749,Alexander Harris,Chemistry,3.4,38,active
+S750,Mia Martin,Engineering,3.2,36,active
+S751,Daniel Thompson,CS,3.6,40,active
+S752,Abigail Garcia,Math,3.7,41,active
+S753,Matthew Martinez,Physics,2.8,28,active
+S754,Elizabeth Robinson,Biology,3.8,44,active
+S755,Joseph Clark,Chemistry,3.1,35,active
+S756,Victoria Rodriguez,Engineering,3.0,34,active
+S757,Andrew Lewis,CS,3.4,38,active
+S758,Samantha Walker,Math,3.6,40,active
+S759,Christopher Hall,Physics,2.9,29,active
+S760,Grace Allen,Biology,3.7,41,active
+S761,Joshua Young,Chemistry,3.3,37,active
+S762,Lily King,Engineering,3.1,35,active
+S763,Anthony Wright,CS,3.5,39,active
+S764,Chloe Lopez,Math,3.8,42,active
+S765,Jonathan Hill,Physics,2.6,26,active
+S766,Zoey Scott,Biology,3.9,45,active
+S767,Nicholas Green,Chemistry,3.4,38,active
+S768,Ava Adams,Engineering,3.2,36,active
+S769,Tyler Baker,CS,3.6,40,active
+S770,Natalie Nelson,Math,3.7,41,active
+S771,Extra Special Case,Physics,"3,9",45,active
+S772,Another Edge Case,Chemistry,3.8,44,active
+S773,More Special Cases,Biology,3.7,43,active
+S774,Edge Case Test,Engineering,3.6,42,active
+S775,Final Special Case,CS,3.5,41,active
+S776,Comma Test,Math,"3,4",40,active
+S777,Space Test,Physics, 3.3 , 39 , active
+S778,Empty Test,Chemistry,,38,active
+S779,No Status Test,Biology,3.2,37,
+S780,Complete Test,Engineering,3.1,36,active
+S781,Final Edge Case,CS,3.0,35,active
+S782,Last Special Case,Math,2.9,34,active
+S783,Edge Case Final,Physics,2.8,33,active
+S784,Special Case Last,Chemistry,2.7,32,active
+S785,Final Edge Case Test,Biology,2.6,31,active
+S786,Last Special Test,Engineering,2.5,30,active
+S787,Final Test Case,CS,2.4,29,active
+S788,Last Edge Case,Math,2.3,28,active
+S789,Special Final Case,Physics,2.2,27,active
+S790,Edge Final Test,Chemistry,2.1,26,active
+S791,Final Special Edge,Biology,2.0,25,active
+S792,Last Edge Test,Engineering,1.9,24,active
+S793,Special Last Case,CS,1.8,23,active
+S794,Edge Last Test,Math,1.7,22,active
+S795,Final Last Case,Physics,1.6,21,active
+S796,Special Edge Last,Chemistry,1.5,20,active
+S797,Edge Special Last,Biology,1.4,19,active
+S798,Last Special Edge,Engineering,1.3,18,active
+S799,Final Edge Special,CS,1.2,17,active
+S800,Last Final Case,Math,1.1,16,active

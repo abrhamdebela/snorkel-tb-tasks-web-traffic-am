@@ -1,0 +1,6 @@
+student_id,full_name,program,gpa,credits,status
+I001,Rachel Romeo,Biology,3.9,45,active
+I002,Sam Sierra,CS,3.8,44,active
+H001,Paul Papa Updated,Chemistry,3.94,46,active
+I001,Rachel Romeo Duplicate,Biology,3.91,45,active
+

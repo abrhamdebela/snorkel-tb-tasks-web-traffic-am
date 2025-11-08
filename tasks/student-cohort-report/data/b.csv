@@ -1,0 +1,5 @@
+student_id,full_name,program,gpa,credits,status
+B001,David Delta,Chemistry,3.9,45,active
+B002,Eve Epsilon,Engineering,3.8,44,active
+A002,Bob Beta Updated,Math,3.85,45,active
+
