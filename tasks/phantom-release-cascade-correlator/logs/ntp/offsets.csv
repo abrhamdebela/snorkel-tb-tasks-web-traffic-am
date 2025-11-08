@@ -1,0 +1,10 @@
+source,offset_seconds
+git-server,-2
+ci-runner,3
+sso-idp,1
+proxy,-1
+cdn-edge,0
+tls-logger,2
+ocsp-resp,-3
+crl-resp,0
+# noise: ignore me

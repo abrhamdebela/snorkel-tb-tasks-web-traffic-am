@@ -1,0 +1,5 @@
+# session_id,parent_id,user,ts,event,reauth
+sess-100,,bob,2025-10-20T11:50:00+00:00,create,false
+sess-200,sess-100,bob,2025-10-20T12:02:30+00:00,terminate,false
+sess-300,sess-100,bob,2025-10-20T12:04:00+00:00,rotate,true
+sess-replay,sess-100,bob,2025-10-20T12:06:10+00:00,use,false

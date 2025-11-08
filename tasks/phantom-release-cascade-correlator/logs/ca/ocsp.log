@@ -1,0 +1,2 @@
+2025-10-20T12:05:59+00:00 ocsp: cert=INT-0001 thisUpdate=2025-10-20T12:00:00+00:00 nextUpdate=2025-10-20T16:00:00+00:00 status=good responder=ocsp-resp
+2025-10-20T12:01:00+00:00 ocsp: cert=INT-0002 thisUpdate=2025-10-20T12:00:00+00:00 nextUpdate=2025-10-20T16:00:00+00:00 status=good responder=ocsp-resp

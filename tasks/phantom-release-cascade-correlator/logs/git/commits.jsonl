@@ -1,0 +1,3 @@
+{"ts": "2025-10-20T11:59:50+00:00", "repo": "repo-core", "commit": "c1", "author": "alice", "msg": "feat: release v1.2.3", "artifact_id": "art-123"}
+{"ts": "2025-10-20T12:00:05+00:00", "repo": "repo-core", "commit": "c2", "author": "alicе", "msg": "chore: bump", "artifact_id": "art-124"}
+{"ts": "2025-10-20T12:01:55+00:00", "repo": "repo-core", "commit": "c3", "author": "bob", "msg": "fix: ci", "artifact_id": "art-999"}

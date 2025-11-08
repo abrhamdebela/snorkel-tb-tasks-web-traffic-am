@@ -1,0 +1,5 @@
+# gzip-comment after decompress
+2025-10-20T12:06:12+00:00 cdn: edge=ams1 host=front.example.com path=/YZ7IQU525E6DSJO2?q=1 backend=prod-backend.example.com client_ip=198.51.100.2
+2025-10-20T12:06:14+00:00 cdn: edge=ams1 host=front.example.com path=/UTV6X2B2FWRIFG4O backend=prod-backend.example.com client_ip=198.51.100.2
+2025-10-20T12:06:08+00:00 cdn: edge=ams1 host=front.example.com path=/A89Z9A89Z9 backend=prod-backend.example.com client_ip=198.51.100.2
+2025-10-20T12:06:17+00:00 cdn: edge=ams1 host=front.example.com path=/YZ7IQU525E6DSJO2 backend=prod-backend.example.com client_ip=198.51.100.2

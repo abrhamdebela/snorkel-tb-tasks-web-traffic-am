@@ -1,0 +1,6 @@
+# trusted_proxies: 198.51.100.1, 203.0.113.5
+2025-10-20T12:06:09+00:00 proxy: method=POST path=/promote host=staging.example.com xff="198.51.100.1, 10.0.0.55" alpn=h2 sni=prod-backend.example.com client_ip=198.51.100.1
+2025-10-20T12:06:11+00:00 proxy: method=POST path=/promote host=staging.example.com xff="203.0.113.5, 2001:0db8::ffff:10.0.0.77" alpn=h2 sni=prod-backend.example.com client_ip=203.0.113.5
+2025-10-20T12:06:13+00:00 proxy: method=POST path=/promote host=staging.example.com xff="198.51.100.1, 10.0.0.88" alpn=h2 sni=prod-backend.example.com client_ip=198.51.100.1
+2025-10-20T12:06:08+00:00 proxy: method=POST path=/promote host=staging.example.com xff="203.0.113.5, 10.0.0.77" alpn=h2 sni=prod-backend.example.com client_ip=203.0.113.5
+2025-10-20T12:06:16+00:00 proxy: method=POST path=/promote host=staging.example.com xff="203.0.113.5, ::ffff:10.0.0.66" alpn=h2 sni=prod-backend.example.com client_ip=203.0.113.5
