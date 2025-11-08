@@ -21,9 +21,11 @@ instruction: |-
 
     z = abs(current_quantity - mean) / std_dev
 
-  If z > 3.0, treat this as a statistical anomaly and add a STATISTICAL_OUTLIER and/or QUANTITY_ANOMALY flag for that record. Tests will check behavior consistent with this threshold. Dates must be formatted as YYYY-MM-DD and must fall between 2023-01-01 and 2025-10-27 inclusive in the cleaned output. If an input date is outside that range, you should either correct it into the valid range when it is clearly recoverable, or mark it as INVALID if uncertain. The evaluation only accepts final dates that are either within the valid range or INVALID.
+  If z > 3.0, treat this as a statistical anomaly and add a STATISTICAL_OUTLIER and/or QUANTITY_ANOMALY flag for that record. Also compare each record's last_restocked date to the historical dates for the same (sku, warehouse); if it is more than about 90 days earlier than the earliest historical date or more than about 90 days later than the latest historical date, treat it as a restock timing anomaly and add RESTOCK_ANOMALY and/or TEMPORAL_VIOLATION.
 
-  When you find duplicates (same SKU and warehouse), keep the best record and log the discarded ones in conflict_log.json with a short, human-readable explanation about why one record was preferred (for example, “kept the cleaner record with fewer anomaly flags and higher confidence score”). The reason should be a short but meaningful sentence: longer than just a couple of words (typically more than 10 characters) and clearly indicating which record was kept and why, ideally using words like “kept” or “selected” and mentioning data quality, flags, or confidence (for example “kept the record with fewer flags because it has higher confidence”).
+  Dates must be formatted as YYYY-MM-DD and must fall between 2023-01-01 and 2025-10-27 inclusive in the cleaned output. If an input date is outside that range, you should either correct it into the valid range when it is clearly recoverable, or mark it as INVALID if uncertain. The evaluation only accepts final dates that are either within the valid range or INVALID.
+
+  When you find duplicates (same SKU and warehouse), keep the best record and log the discarded ones in conflict_log.json with a short, human-readable explanation about why one record was preferred (for example, “kept the cleaner record with fewer anomaly flags and higher confidence score”). At minimum, the reason should be a non-trivial string (more than a single word or token). You are encouraged (but not strictly required by evaluation) to mention aspects like data quality, anomaly flags, or confidence scores in these explanations.
 
   When resolving duplicates, always prefer records flagged as CLEAN over any that contain anomaly flags. If both records have anomaly flags, keep the one with fewer flags (higher confidence) and document this reasoning in conflict_log.json.
 
@@ -47,7 +49,9 @@ instruction: |-
 
   Finally, write executive_summary.txt with the key findings, data quality metrics, and actionable recommendations. The executive summary must contain the word "records" so that readers can quickly see that record-level context is addressed. You are encouraged (but not strictly required by evaluation) to mention how many records were processed, but the tests only require the presence of the word "records" along with meaningful findings and recommendations.
 
-  Try to include all or nearly all input records in your output. Records can appear in either inventory_cleaned.csv or conflict_log.json if they were discarded as duplicates. Handle missing and malformed data by flagging the issues and using INVALID markers where data can't be recovered.
+  Try to include all or nearly all input records in your output. In practice, every input row except at most one problematic record should appear either in inventory_cleaned.csv or in conflict_log.json.
+
+  Handle missing and malformed data by flagging the issues and using INVALID markers where data can't be recovered.
 
   For fuzzy matching and clustering, do not use external algorithm libraries such as sklearn, scikit-learn, scipy, fuzzywuzzy, rapidfuzz, or similar; the evaluation explicitly scans for these. Other basic libraries already available in the environment (such as yaml for reading configuration files) may be used as needed.
 
