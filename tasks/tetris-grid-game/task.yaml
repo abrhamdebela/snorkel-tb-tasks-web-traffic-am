@@ -106,7 +106,7 @@ instruction: |-
 
   Additional formatting requirements:
 
-  - Every line in the file must end with a single \n newline character.
+  - Every line in the file must end with a single newline character.
   - The final game block must also be followed by exactly one blank line (the file ends with a newline on the empty line).
   - Do not include any other text, whitespace, or trailing spaces.
 
