@@ -1,0 +1,2102 @@
+[
+  {
+    "sku": "EF-893697-T",
+    "warehouse": "WH-AS-03",
+    "quantity": 54,
+    "unit_cost": 545.12,
+    "last_restocked": "2025-10-15T00:00:00"
+  },
+  {
+    "sku": "CD-114668-A",
+    "warehouse": "WH-US-02",
+    "quantity": 387,
+    "unit_cost": 167.37,
+    "last_restocked": "2025-08-03T00:00:00"
+  },
+  {
+    "sku": "QR-530959-Y",
+    "warehouse": "WH-EU-03",
+    "quantity": 447,
+    "unit_cost": 542.52,
+    "last_restocked": "2025-09-02T00:00:00"
+  },
+  {
+    "sku": "ABC-372507-X",
+    "warehouse": "WH-AS-01",
+    "quantity": 503,
+    "unit_cost": 417.09,
+    "last_restocked": "2025-09-22T00:00:00"
+  },
+  {
+    "sku": "OP-172339-Y",
+    "warehouse": "WH-AS-01",
+    "quantity": 212,
+    "unit_cost": 530.92,
+    "last_restocked": "2025-09-16T00:00:00"
+  },
+  {
+    "sku": "MN-451770-RS",
+    "warehouse": "WH-AS-01",
+    "quantity": 216,
+    "unit_cost": 242.91,
+    "last_restocked": "2025-10-02T00:00:00"
+  },
+  {
+    "sku": "IJ-135628-B",
+    "warehouse": "WH-AS-01",
+    "quantity": 679,
+    "unit_cost": 542.44,
+    "last_restocked": "2025-08-20T00:00:00"
+  },
+  {
+    "sku": "WX-171555-W",
+    "warehouse": "WH-AS-03",
+    "quantity": 227,
+    "unit_cost": 133.43,
+    "last_restocked": "2025-09-19T00:00:00"
+  },
+  {
+    "sku": "DEF-127882-U",
+    "warehouse": "WH-US-01",
+    "quantity": 741,
+    "unit_cost": 229.0,
+    "last_restocked": "2025-08-19T00:00:00"
+  },
+  {
+    "sku": "GH-098251-X",
+    "warehouse": "WH-EU-03",
+    "quantity": 315,
+    "unit_cost": 269.5,
+    "last_restocked": "2025-07-29T00:00:00"
+  },
+  {
+    "sku": "KL-646414-A",
+    "warehouse": "WH-EU-01",
+    "quantity": 178,
+    "unit_cost": 300.46,
+    "last_restocked": "2025-10-25T00:00:00"
+  },
+  {
+    "sku": "UV-251280-V",
+    "warehouse": "WH-EU-01",
+    "quantity": 354,
+    "unit_cost": 359.14,
+    "last_restocked": "2025-10-03T00:00:00"
+  },
+  {
+    "sku": "UV-251280-V",
+    "warehouse": "WH-US-01",
+    "quantity": 892,
+    "unit_cost": 361.54,
+    "last_restocked": "2025-10-18T00:00:00"
+  },
+  {
+    "sku": "KL-778236-Y",
+    "warehouse": "WH-AS-01",
+    "quantity": 721,
+    "unit_cost": 177.93,
+    "last_restocked": "2025-10-20T00:00:00"
+  },
+  {
+    "sku": "ABC-870634-V",
+    "warehouse": "WH-US-03",
+    "quantity": 102,
+    "unit_cost": 480.11,
+    "last_restocked": "2025-09-25T00:00:00"
+  },
+  {
+    "sku": "YZ-279085-UV",
+    "warehouse": "WH-EU-03",
+    "quantity": 638,
+    "unit_cost": 509.94,
+    "last_restocked": "2025-08-08T00:00:00"
+  },
+  {
+    "sku": "IJ-443374-T",
+    "warehouse": "WH-EU-01",
+    "quantity": 968,
+    "unit_cost": 388.7,
+    "last_restocked": "2025-08-31T00:00:00"
+  },
+  {
+    "sku": "ST-229275-R",
+    "warehouse": "WH-US-03",
+    "quantity": 589,
+    "unit_cost": 250.15,
+    "last_restocked": "2025-08-08T00:00:00"
+  },
+  {
+    "sku": "ST-582343-T",
+    "warehouse": "WH-US-01",
+    "quantity": 861,
+    "unit_cost": 344.54,
+    "last_restocked": "2025-09-30T00:00:00"
+  },
+  {
+    "sku": "OP-234752-R",
+    "warehouse": "WH-US-01",
+    "quantity": 182,
+    "unit_cost": 530.22,
+    "last_restocked": "2025-09-26T00:00:00"
+  },
+  {
+    "sku": "IJ-259607-C",
+    "warehouse": "WH-US-01",
+    "quantity": 506,
+    "unit_cost": 515.09,
+    "last_restocked": "2025-08-30T00:00:00"
+  },
+  {
+    "sku": "MN-748581-V",
+    "warehouse": "WH-US-01",
+    "quantity": 327,
+    "unit_cost": 278.11,
+    "last_restocked": "2025-09-20T00:00:00"
+  },
+  {
+    "sku": "OP-424389-S",
+    "warehouse": "WH-US-01",
+    "quantity": 736,
+    "unit_cost": 53.04,
+    "last_restocked": "2025-09-27T00:00:00"
+  },
+  {
+    "sku": "KL-925231-X",
+    "warehouse": "WH-EU-03",
+    "quantity": 731,
+    "unit_cost": 251.94,
+    "last_restocked": "2025-10-01T00:00:00"
+  },
+  {
+    "sku": "QR-525902-RS",
+    "warehouse": "WH-AS-01",
+    "quantity": 170,
+    "unit_cost": 510.43,
+    "last_restocked": "2025-09-22T00:00:00"
+  },
+  {
+    "sku": "ABC-942435-A",
+    "warehouse": "WH-AS-03",
+    "quantity": 409,
+    "unit_cost": 525.76,
+    "last_restocked": "2025-08-11T00:00:00"
+  },
+  {
+    "sku": "ABC-223086-UV",
+    "warehouse": "WH-EU-01",
+    "quantity": 215,
+    "unit_cost": 333.94,
+    "last_restocked": "2025-08-28T00:00:00"
+  },
+  {
+    "sku": "GHI-505740-U",
+    "warehouse": "WH-US-03",
+    "quantity": 575,
+    "unit_cost": 195.34,
+    "last_restocked": "2025-08-18T00:00:00"
+  },
+  {
+    "sku": "CD-324232-W",
+    "warehouse": "WH-US-01",
+    "quantity": 1004,
+    "unit_cost": 309.93,
+    "last_restocked": "2025-09-01T00:00:00"
+  },
+  {
+    "sku": "GHI-021422-S",
+    "warehouse": "WH-US-01",
+    "quantity": 179,
+    "unit_cost": 201.31,
+    "last_restocked": "2025-09-27T00:00:00"
+  },
+  {
+    "sku": "KL-778236-Y",
+    "warehouse": "WH-EU-03",
+    "quantity": 55,
+    "unit_cost": 182.2,
+    "last_restocked": "2025-08-01T00:00:00"
+  },
+  {
+    "sku": "MN-451770-RS",
+    "warehouse": "WH-AS-03",
+    "quantity": 245,
+    "unit_cost": 242.04,
+    "last_restocked": "2025-08-27T00:00:00"
+  },
+  {
+    "sku": "GHI-993842-Z",
+    "warehouse": "WH-US-02",
+    "quantity": 680,
+    "unit_cost": 25.65,
+    "last_restocked": "2025-09-01T00:00:00"
+  },
+  {
+    "sku": "GH-399591-V",
+    "warehouse": "WH-EU-01",
+    "quantity": 398,
+    "unit_cost": 508.67,
+    "last_restocked": "2025-09-04T00:00:00"
+  },
+  {
+    "sku": "WX-220684-B",
+    "warehouse": "WH-AS-03",
+    "quantity": 216,
+    "unit_cost": 466.55,
+    "last_restocked": "2025-09-14T00:00:00"
+  },
+  {
+    "sku": "ABC-223086-UV",
+    "warehouse": "WH-AS-01",
+    "quantity": 414,
+    "unit_cost": 335.45,
+    "last_restocked": "2025-08-17T00:00:00"
+  },
+  {
+    "sku": "OP-618024-U",
+    "warehouse": "WH-US-03",
+    "quantity": 429,
+    "unit_cost": 313.83,
+    "last_restocked": "2025-10-12T00:00:00"
+  },
+  {
+    "sku": "DEF-875244-Z",
+    "warehouse": "WH-AS-03",
+    "quantity": 70,
+    "unit_cost": 554.18,
+    "last_restocked": "2025-08-03T00:00:00"
+  },
+  {
+    "sku": "GH-098251-X",
+    "warehouse": "WH-US-02",
+    "quantity": 609,
+    "unit_cost": 270.69,
+    "last_restocked": "2025-09-10T00:00:00"
+  },
+  {
+    "sku": "KL-925231-X",
+    "warehouse": "WH-EU-01",
+    "quantity": 804,
+    "unit_cost": 253.46,
+    "last_restocked": "2025-10-20T00:00:00"
+  },
+  {
+    "sku": "CD-241174-ST",
+    "warehouse": "WH-US-03",
+    "quantity": 510,
+    "unit_cost": 269.54,
+    "last_restocked": "2025-07-29T00:00:00"
+  },
+  {
+    "sku": "AB-189073-C",
+    "warehouse": "WH-EU-03",
+    "quantity": 908,
+    "unit_cost": 212.18,
+    "last_restocked": "2025-09-26T00:00:00"
+  },
+  {
+    "sku": "QR-530959-Y",
+    "warehouse": "WH-US-01",
+    "quantity": 576,
+    "unit_cost": 539.27,
+    "last_restocked": "2025-09-04T00:00:00"
+  },
+  {
+    "sku": "KL-561086-C",
+    "warehouse": "WH-EU-01",
+    "quantity": 139,
+    "unit_cost": 325.58,
+    "last_restocked": "2025-08-05T00:00:00"
+  },
+  {
+    "sku": "MN-382913-X",
+    "warehouse": "WH-US-03",
+    "quantity": 574,
+    "unit_cost": 293.39,
+    "last_restocked": "2025-09-22T00:00:00"
+  },
+  {
+    "sku": "UV-981110-V",
+    "warehouse": "WH-US-02",
+    "quantity": 485,
+    "unit_cost": 149.68,
+    "last_restocked": "2025-08-17T00:00:00"
+  },
+  {
+    "sku": "CD-324232-W",
+    "warehouse": "WH-EU-03",
+    "quantity": 772,
+    "unit_cost": 309.47,
+    "last_restocked": "2025-10-09T00:00:00"
+  },
+  {
+    "sku": "YZ-279085-UV",
+    "warehouse": "WH-US-03",
+    "quantity": 840,
+    "unit_cost": 510.39,
+    "last_restocked": "2025-08-23T00:00:00"
+  },
+  {
+    "sku": "KL-278932-Z",
+    "warehouse": "WH-AS-01",
+    "quantity": 379,
+    "unit_cost": 512.74,
+    "last_restocked": "2025-08-12T00:00:00"
+  },
+  {
+    "sku": "EF-010767-Y",
+    "warehouse": "WH-AS-03",
+    "quantity": 220,
+    "unit_cost": 75.8,
+    "last_restocked": "2025-08-30T00:00:00"
+  },
+  {
+    "sku": "QR-702474-Y",
+    "warehouse": "WH-EU-03",
+    "quantity": 829,
+    "unit_cost": 164.85,
+    "last_restocked": "2025-08-18T00:00:00"
+  },
+  {
+    "sku": "CD-241062-S",
+    "warehouse": "WH-AS-03",
+    "quantity": 223,
+    "unit_cost": 462.94,
+    "last_restocked": "2025-07-29T00:00:00"
+  },
+  {
+    "sku": "GH-913804-B",
+    "warehouse": "WH-AS-03",
+    "quantity": 799,
+    "unit_cost": 94.68,
+    "last_restocked": "2025-09-04T00:00:00"
+  },
+  {
+    "sku": "MN-703258-C",
+    "warehouse": "WH-AS-01",
+    "quantity": 984,
+    "unit_cost": 489.29,
+    "last_restocked": "2025-09-08T00:00:00"
+  },
+  {
+    "sku": "CD-901300-Y",
+    "warehouse": "WH-US-02",
+    "quantity": 523,
+    "unit_cost": 305.52,
+    "last_restocked": "2025-10-22T00:00:00"
+  },
+  {
+    "sku": "WX-611805-Z",
+    "warehouse": "WH-US-03",
+    "quantity": 946,
+    "unit_cost": 326.4,
+    "last_restocked": "2025-10-14T00:00:00"
+  },
+  {
+    "sku": "OP-424389-S",
+    "warehouse": "WH-US-01",
+    "quantity": 791,
+    "unit_cost": 53.87,
+    "last_restocked": "2025-10-08T00:00:00"
+  },
+  {
+    "sku": "DEF-150811-V",
+    "warehouse": "WH-US-01",
+    "quantity": 523,
+    "unit_cost": 471.99,
+    "last_restocked": "2025-09-23T00:00:00"
+  },
+  {
+    "sku": "AB-098793-UV",
+    "warehouse": "WH-AS-01",
+    "quantity": 168,
+    "unit_cost": 117.5,
+    "last_restocked": "2025-09-14T00:00:00"
+  },
+  {
+    "sku": "IJ-443374-T",
+    "warehouse": "WH-US-03",
+    "quantity": 710,
+    "unit_cost": 380.46,
+    "last_restocked": "2025-08-25T00:00:00"
+  },
+  {
+    "sku": "GH-968096-X",
+    "warehouse": "WH-US-02",
+    "quantity": 682,
+    "unit_cost": 232.84,
+    "last_restocked": "2025-07-31T00:00:00"
+  },
+  {
+    "sku": "YZ-711219-C",
+    "warehouse": "WH-US-01",
+    "quantity": 541,
+    "unit_cost": 326.03,
+    "last_restocked": "2025-10-14T00:00:00"
+  },
+  {
+    "sku": "WX-171555-W",
+    "warehouse": "WH-EU-01",
+    "quantity": 208,
+    "unit_cost": 138.85,
+    "last_restocked": "2025-07-30T00:00:00"
+  },
+  {
+    "sku": "UV-292369-T",
+    "warehouse": "WH-US-03",
+    "quantity": 852,
+    "unit_cost": 354.54,
+    "last_restocked": "2025-10-19T00:00:00"
+  },
+  {
+    "sku": "CD-785309-W",
+    "warehouse": "WH-US-02",
+    "quantity": 302,
+    "unit_cost": 482.63,
+    "last_restocked": "2025-08-20T00:00:00"
+  },
+  {
+    "sku": "GH-161265-B",
+    "warehouse": "WH-US-02",
+    "quantity": 257,
+    "unit_cost": 268.82,
+    "last_restocked": "2025-10-16T00:00:00"
+  },
+  {
+    "sku": "IJ-971733-UV",
+    "warehouse": "WH-AS-01",
+    "quantity": 320,
+    "unit_cost": 244.63,
+    "last_restocked": "2025-08-24T00:00:00"
+  },
+  {
+    "sku": "CD-650468-S",
+    "warehouse": "WH-AS-01",
+    "quantity": 292,
+    "unit_cost": 35.85,
+    "last_restocked": "2025-08-29T00:00:00"
+  },
+  {
+    "sku": "ABC-690305-A",
+    "warehouse": "WH-US-03",
+    "quantity": 713,
+    "unit_cost": 24.72,
+    "last_restocked": "2025-08-18T00:00:00"
+  },
+  {
+    "sku": "GHI-847721-X",
+    "warehouse": "WH-EU-03",
+    "quantity": 360,
+    "unit_cost": 390.31,
+    "last_restocked": "2025-08-06T00:00:00"
+  },
+  {
+    "sku": "OP-424389-S",
+    "warehouse": "WH-AS-03",
+    "quantity": 358,
+    "unit_cost": 53.7,
+    "last_restocked": "2025-10-01T00:00:00"
+  },
+  {
+    "sku": "QR-736911-UV",
+    "warehouse": "WH-US-02",
+    "quantity": 435,
+    "unit_cost": 404.4,
+    "last_restocked": "2025-08-14T00:00:00"
+  },
+  {
+    "sku": "UV-458592-A",
+    "warehouse": "WH-US-03",
+    "quantity": 72,
+    "unit_cost": 432.14,
+    "last_restocked": "2025-08-03T00:00:00"
+  },
+  {
+    "sku": "ABC-870634-V",
+    "warehouse": "WH-AS-03",
+    "quantity": 779,
+    "unit_cost": 481.98,
+    "last_restocked": "2025-10-20T00:00:00"
+  },
+  {
+    "sku": "ABC-223086-UV",
+    "warehouse": "WH-AS-03",
+    "quantity": 895,
+    "unit_cost": 338.92,
+    "last_restocked": "2025-09-27T00:00:00"
+  },
+  {
+    "sku": "AB-758168-UV",
+    "warehouse": "WH-AS-01",
+    "quantity": 226,
+    "unit_cost": 202.53,
+    "last_restocked": "2025-08-08T00:00:00"
+  },
+  {
+    "sku": "EF-995967-B",
+    "warehouse": "WH-AS-03",
+    "quantity": 692,
+    "unit_cost": 195.93,
+    "last_restocked": "2025-07-31T00:00:00"
+  },
+  {
+    "sku": "KL-925231-X",
+    "warehouse": "WH-AS-01",
+    "quantity": 140,
+    "unit_cost": 255.2,
+    "last_restocked": "2025-09-17T00:00:00"
+  },
+  {
+    "sku": "ABC-589153-R",
+    "warehouse": "WH-US-03",
+    "quantity": 760,
+    "unit_cost": 401.18,
+    "last_restocked": "2025-10-10T00:00:00"
+  },
+  {
+    "sku": "CD-902393-W",
+    "warehouse": "WH-AS-01",
+    "quantity": 450,
+    "unit_cost": 513.74,
+    "last_restocked": "2025-10-04T00:00:00"
+  },
+  {
+    "sku": "IJ-286577-V",
+    "warehouse": "WH-US-03",
+    "quantity": 577,
+    "unit_cost": 339.26,
+    "last_restocked": "2025-08-23T00:00:00"
+  },
+  {
+    "sku": "WX-922406-ST",
+    "warehouse": "WH-AS-03",
+    "quantity": 588,
+    "unit_cost": 277.75,
+    "last_restocked": "2025-09-19T00:00:00"
+  },
+  {
+    "sku": "KL-561086-C",
+    "warehouse": "WH-EU-01",
+    "quantity": 173,
+    "unit_cost": 330.26,
+    "last_restocked": "2025-10-08T00:00:00"
+  },
+  {
+    "sku": "YZ-713526-ST",
+    "warehouse": "WH-AS-01",
+    "quantity": 761,
+    "unit_cost": 344.02,
+    "last_restocked": "2025-09-06T00:00:00"
+  },
+  {
+    "sku": "AB-098793-UV",
+    "warehouse": "WH-US-01",
+    "quantity": 285,
+    "unit_cost": 113.45,
+    "last_restocked": "2025-08-19T00:00:00"
+  },
+  {
+    "sku": "QR-369203-B",
+    "warehouse": "WH-AS-01",
+    "quantity": 762,
+    "unit_cost": 475.61,
+    "last_restocked": "2025-09-23T00:00:00"
+  },
+  {
+    "sku": "ABC-842204-B",
+    "warehouse": "WH-US-03",
+    "quantity": 139,
+    "unit_cost": 270.28,
+    "last_restocked": "2025-08-01T00:00:00"
+  },
+  {
+    "sku": "IJ-971733-UV",
+    "warehouse": "WH-EU-03",
+    "quantity": 363,
+    "unit_cost": 249.68,
+    "last_restocked": "2025-08-09T00:00:00"
+  },
+  {
+    "sku": "UV-821391-UV",
+    "warehouse": "WH-AS-03",
+    "quantity": 513,
+    "unit_cost": 515.4,
+    "last_restocked": "2025-07-29T00:00:00"
+  },
+  {
+    "sku": "KL-561086-C",
+    "warehouse": "WH-US-02",
+    "quantity": 84,
+    "unit_cost": 330.55,
+    "last_restocked": "2025-10-22T00:00:00"
+  },
+  {
+    "sku": "KL-561086-C",
+    "warehouse": "WH-US-01",
+    "quantity": 257,
+    "unit_cost": 324.48,
+    "last_restocked": "2025-08-19T00:00:00"
+  },
+  {
+    "sku": "UV-840482-ST",
+    "warehouse": "WH-AS-01",
+    "quantity": 829,
+    "unit_cost": 311.67,
+    "last_restocked": "2025-07-29T00:00:00"
+  },
+  {
+    "sku": "MN-441869-B",
+    "warehouse": "WH-AS-01",
+    "quantity": 241,
+    "unit_cost": 503.43,
+    "last_restocked": "2025-09-03T00:00:00"
+  },
+  {
+    "sku": "EF-010767-Y",
+    "warehouse": "WH-EU-03",
+    "quantity": 421,
+    "unit_cost": 77.86,
+    "last_restocked": "2025-09-21T00:00:00"
+  },
+  {
+    "sku": "ABC-166840-Y",
+    "warehouse": "WH-EU-01",
+    "quantity": 501,
+    "unit_cost": 139.63,
+    "last_restocked": "2025-09-26T00:00:00"
+  },
+  {
+    "sku": "GH-920641-V",
+    "warehouse": "WH-US-03",
+    "quantity": 602,
+    "unit_cost": 145.44,
+    "last_restocked": "2025-08-05T00:00:00"
+  },
+  {
+    "sku": "IJ-135628-B",
+    "warehouse": "WH-US-02",
+    "quantity": 136,
+    "unit_cost": 546.24,
+    "last_restocked": "2025-08-29T00:00:00"
+  },
+  {
+    "sku": "OP-280766-T",
+    "warehouse": "WH-AS-01",
+    "quantity": 617,
+    "unit_cost": 100.58,
+    "last_restocked": "2025-10-24T00:00:00"
+  },
+  {
+    "sku": "KL-566579-RS",
+    "warehouse": "WH-US-02",
+    "quantity": 831,
+    "unit_cost": 127.75,
+    "last_restocked": "2025-08-15T00:00:00"
+  },
+  {
+    "sku": "MN-451770-RS",
+    "warehouse": "WH-EU-03",
+    "quantity": 239,
+    "unit_cost": 243.65,
+    "last_restocked": "2025-08-12T00:00:00"
+  },
+  {
+    "sku": "GH-913804-B",
+    "warehouse": "WH-US-03",
+    "quantity": 892,
+    "unit_cost": 100.5,
+    "last_restocked": "2025-10-08T00:00:00"
+  },
+  {
+    "sku": "GH-027225-C",
+    "warehouse": "WH-US-03",
+    "quantity": 895,
+    "unit_cost": 171.81,
+    "last_restocked": "2025-10-08T00:00:00"
+  },
+  {
+    "sku": "IJ-535277-Y",
+    "warehouse": "WH-US-01",
+    "quantity": 692,
+    "unit_cost": 96.33,
+    "last_restocked": "2025-10-23T00:00:00"
+  },
+  {
+    "sku": "ST-883554-B",
+    "warehouse": "WH-EU-03",
+    "quantity": 353,
+    "unit_cost": 224.99,
+    "last_restocked": "2025-10-24T00:00:00"
+  },
+  {
+    "sku": "OP-718870-W",
+    "warehouse": "WH-AS-01",
+    "quantity": 445,
+    "unit_cost": 89.09,
+    "last_restocked": "2025-08-20T00:00:00"
+  },
+  {
+    "sku": "MN-703258-C",
+    "warehouse": "WH-EU-01",
+    "quantity": 861,
+    "unit_cost": 485.34,
+    "last_restocked": "2025-09-10T00:00:00"
+  },
+  {
+    "sku": "EF-624939-S",
+    "warehouse": "WH-EU-03",
+    "quantity": 231,
+    "unit_cost": 140.12,
+    "last_restocked": "2025-08-09T00:00:00"
+  },
+  {
+    "sku": "DEF-367643-V",
+    "warehouse": "WH-EU-03",
+    "quantity": 390,
+    "unit_cost": 363.21,
+    "last_restocked": "2025-08-29T00:00:00"
+  },
+  {
+    "sku": "WX-634052-V",
+    "warehouse": "WH-EU-01",
+    "quantity": 921,
+    "unit_cost": 337.75,
+    "last_restocked": "2025-09-05T00:00:00"
+  },
+  {
+    "sku": "EF-010767-Y",
+    "warehouse": "WH-AS-01",
+    "quantity": 940,
+    "unit_cost": 79.95,
+    "last_restocked": "2025-08-31T00:00:00"
+  },
+  {
+    "sku": "CD-241062-S",
+    "warehouse": "WH-EU-03",
+    "quantity": 167,
+    "unit_cost": 459.98,
+    "last_restocked": "2025-10-18T00:00:00"
+  },
+  {
+    "sku": "UV-821391-UV",
+    "warehouse": "WH-EU-03",
+    "quantity": 609,
+    "unit_cost": 518.85,
+    "last_restocked": "2025-09-15T00:00:00"
+  },
+  {
+    "sku": "GH-985539-UV",
+    "warehouse": "WH-US-03",
+    "quantity": 541,
+    "unit_cost": 186.07,
+    "last_restocked": "2025-08-23T00:00:00"
+  },
+  {
+    "sku": "UV-458592-A",
+    "warehouse": "WH-US-01",
+    "quantity": 956,
+    "unit_cost": 438.17,
+    "last_restocked": "2025-08-04T00:00:00"
+  },
+  {
+    "sku": "QR-530959-Y",
+    "warehouse": "WH-AS-01",
+    "quantity": 941,
+    "unit_cost": 541.54,
+    "last_restocked": "2025-09-29T00:00:00"
+  },
+  {
+    "sku": "KL-533342-UV",
+    "warehouse": "WH-EU-01",
+    "quantity": 398,
+    "unit_cost": 56.06,
+    "last_restocked": "2025-08-29T00:00:00"
+  },
+  {
+    "sku": "DEF-667563-ST",
+    "warehouse": "WH-US-03",
+    "quantity": 522,
+    "unit_cost": 447.69,
+    "last_restocked": "2025-09-16T00:00:00"
+  },
+  {
+    "sku": "DEF-150811-V",
+    "warehouse": "WH-AS-01",
+    "quantity": 953,
+    "unit_cost": 466.67,
+    "last_restocked": "2025-08-27T00:00:00"
+  },
+  {
+    "sku": "OP-811620-V",
+    "warehouse": "WH-US-01",
+    "quantity": 537,
+    "unit_cost": 516.9,
+    "last_restocked": "2025-10-14T00:00:00"
+  },
+  {
+    "sku": "CD-241174-ST",
+    "warehouse": "WH-EU-03",
+    "quantity": 132,
+    "unit_cost": 273.94,
+    "last_restocked": "2025-08-12T00:00:00"
+  },
+  {
+    "sku": "QR-907339-S",
+    "warehouse": "WH-US-01",
+    "quantity": 505,
+    "unit_cost": 277.87,
+    "last_restocked": "2025-09-11T00:00:00"
+  },
+  {
+    "sku": "GHI-163316-U",
+    "warehouse": "WH-AS-03",
+    "quantity": 973,
+    "unit_cost": 548.51,
+    "last_restocked": "2025-10-20T00:00:00"
+  },
+  {
+    "sku": "ABC-372507-X",
+    "warehouse": "WH-US-01",
+    "quantity": 618,
+    "unit_cost": 416.12,
+    "last_restocked": "2025-08-23T00:00:00"
+  },
+  {
+    "sku": "YZ-138235-B",
+    "warehouse": "WH-US-02",
+    "quantity": 911,
+    "unit_cost": 149.37,
+    "last_restocked": "2025-10-13T00:00:00"
+  },
+  {
+    "sku": "UV-840482-ST",
+    "warehouse": "WH-US-01",
+    "quantity": 853,
+    "unit_cost": 309.74,
+    "last_restocked": "2025-09-21T00:00:00"
+  },
+  {
+    "sku": "ST-229275-R",
+    "warehouse": "WH-AS-03",
+    "quantity": 652,
+    "unit_cost": 250.8,
+    "last_restocked": "2025-08-08T00:00:00"
+  },
+  {
+    "sku": "QR-950314-UV",
+    "warehouse": "WH-US-01",
+    "quantity": 711,
+    "unit_cost": 120.93,
+    "last_restocked": "2025-08-03T00:00:00"
+  },
+  {
+    "sku": "GH-161265-B",
+    "warehouse": "WH-US-03",
+    "quantity": 762,
+    "unit_cost": 263.63,
+    "last_restocked": "2025-09-17T00:00:00"
+  },
+  {
+    "sku": "GH-161265-B",
+    "warehouse": "WH-AS-03",
+    "quantity": 230,
+    "unit_cost": 264.12,
+    "last_restocked": "2025-08-15T00:00:00"
+  },
+  {
+    "sku": "MN-958492-A",
+    "warehouse": "WH-AS-01",
+    "quantity": 659,
+    "unit_cost": 192.76,
+    "last_restocked": "2025-10-23T00:00:00"
+  },
+  {
+    "sku": "ABC-166840-Y",
+    "warehouse": "WH-EU-01",
+    "quantity": 472,
+    "unit_cost": 140.21,
+    "last_restocked": "2025-08-29T00:00:00"
+  },
+  {
+    "sku": "AB-617886-Z",
+    "warehouse": "WH-AS-01",
+    "quantity": 408,
+    "unit_cost": 478.28,
+    "last_restocked": "2025-08-15T00:00:00"
+  },
+  {
+    "sku": "GH-098251-X",
+    "warehouse": "WH-US-02",
+    "quantity": 167,
+    "unit_cost": 269.86,
+    "last_restocked": "2025-08-08T00:00:00"
+  },
+  {
+    "sku": "GHI-856662-S",
+    "warehouse": "WH-EU-01",
+    "quantity": 739,
+    "unit_cost": 446.35,
+    "last_restocked": "2025-09-02T00:00:00"
+  },
+  {
+    "sku": "YZ-279085-UV",
+    "warehouse": "WH-US-03",
+    "quantity": 234,
+    "unit_cost": 505.63,
+    "last_restocked": "2025-08-22T00:00:00"
+  },
+  {
+    "sku": "EF-639720-B",
+    "warehouse": "WH-US-03",
+    "quantity": 769,
+    "unit_cost": 273.14,
+    "last_restocked": "2025-08-01T00:00:00"
+  },
+  {
+    "sku": "MN-418821-W",
+    "warehouse": "WH-US-03",
+    "quantity": 96,
+    "unit_cost": 452.85,
+    "last_restocked": "2025-09-28T00:00:00"
+  },
+  {
+    "sku": "GH-377417-ST",
+    "warehouse": "WH-US-01",
+    "quantity": 236,
+    "unit_cost": 513.51,
+    "last_restocked": "2025-09-18T00:00:00"
+  },
+  {
+    "sku": "MN-451770-RS",
+    "warehouse": "WH-US-03",
+    "quantity": 311,
+    "unit_cost": 235.6,
+    "last_restocked": "2025-09-15T00:00:00"
+  },
+  {
+    "sku": "YZ-711219-C",
+    "warehouse": "WH-EU-01",
+    "quantity": 227,
+    "unit_cost": 325.02,
+    "last_restocked": "2025-10-10T00:00:00"
+  },
+  {
+    "sku": "KL-533342-UV",
+    "warehouse": "WH-EU-03",
+    "quantity": 617,
+    "unit_cost": 52.63,
+    "last_restocked": "2025-08-02T00:00:00"
+  },
+  {
+    "sku": "ST-582343-T",
+    "warehouse": "WH-US-01",
+    "quantity": 504,
+    "unit_cost": 351.64,
+    "last_restocked": "2025-10-24T00:00:00"
+  },
+  {
+    "sku": "OP-618024-U",
+    "warehouse": "WH-EU-03",
+    "quantity": 490,
+    "unit_cost": 316.88,
+    "last_restocked": "2025-08-14T00:00:00"
+  },
+  {
+    "sku": "YZ-279085-UV",
+    "warehouse": "WH-US-03",
+    "quantity": 119,
+    "unit_cost": 511.84,
+    "last_restocked": "2025-09-05T00:00:00"
+  },
+  {
+    "sku": "YZ-380580-U",
+    "warehouse": "WH-AS-03",
+    "quantity": 720,
+    "unit_cost": 266.97,
+    "last_restocked": "2025-08-29T00:00:00"
+  },
+  {
+    "sku": "EF-897865-U",
+    "warehouse": "WH-EU-01",
+    "quantity": 895,
+    "unit_cost": 495.71,
+    "last_restocked": "2025-10-13T00:00:00"
+  },
+  {
+    "sku": "OP-175389-X",
+    "warehouse": "WH-EU-03",
+    "quantity": 119,
+    "unit_cost": 160.55,
+    "last_restocked": "2025-09-06T00:00:00"
+  },
+  {
+    "sku": "AB-758168-UV",
+    "warehouse": "WH-US-03",
+    "quantity": 806,
+    "unit_cost": 200.85,
+    "last_restocked": "2025-10-05T00:00:00"
+  },
+  {
+    "sku": "KL-561086-C",
+    "warehouse": "WH-EU-03",
+    "quantity": 621,
+    "unit_cost": 324.09,
+    "last_restocked": "2025-10-02T00:00:00"
+  },
+  {
+    "sku": "GH-755717-UV",
+    "warehouse": "WH-AS-03",
+    "quantity": 690,
+    "unit_cost": 207.47,
+    "last_restocked": "2025-10-08T00:00:00"
+  },
+  {
+    "sku": "WX-922406-ST",
+    "warehouse": "WH-US-02",
+    "quantity": 196,
+    "unit_cost": 276.65,
+    "last_restocked": "2025-08-10T00:00:00"
+  },
+  {
+    "sku": "OP-210267-ST",
+    "warehouse": "WH-US-01",
+    "quantity": 244,
+    "unit_cost": 377.67,
+    "last_restocked": "2025-08-07T00:00:00"
+  },
+  {
+    "sku": "ABC-870634-V",
+    "warehouse": "WH-AS-03",
+    "quantity": 680,
+    "unit_cost": 483.77,
+    "last_restocked": "2025-08-30T00:00:00"
+  },
+  {
+    "sku": "ABC-870634-V",
+    "warehouse": "WH-AS-01",
+    "quantity": 691,
+    "unit_cost": 483.17,
+    "last_restocked": "2025-08-08T00:00:00"
+  },
+  {
+    "sku": "KL-925231-X",
+    "warehouse": "WH-US-03",
+    "quantity": 162,
+    "unit_cost": 255.48,
+    "last_restocked": "2025-08-31T00:00:00"
+  },
+  {
+    "sku": "AB-189073-C",
+    "warehouse": "WH-US-03",
+    "quantity": 890,
+    "unit_cost": 211.16,
+    "last_restocked": "2025-09-21T00:00:00"
+  },
+  {
+    "sku": "EF-922981-U",
+    "warehouse": "WH-US-01",
+    "quantity": 374,
+    "unit_cost": 214.75,
+    "last_restocked": "2025-08-28T00:00:00"
+  },
+  {
+    "sku": "UV-840482-ST",
+    "warehouse": "WH-AS-03",
+    "quantity": 375,
+    "unit_cost": 316.12,
+    "last_restocked": "2025-10-17T00:00:00"
+  },
+  {
+    "sku": "GH-399591-V",
+    "warehouse": "WH-EU-03",
+    "quantity": 657,
+    "unit_cost": 510.09,
+    "last_restocked": "2025-08-23T00:00:00"
+  },
+  {
+    "sku": "QR-530959-Y",
+    "warehouse": "WH-AS-03",
+    "quantity": 813,
+    "unit_cost": 546.11,
+    "last_restocked": "2025-10-21T00:00:00"
+  },
+  {
+    "sku": "IJ-669061-V",
+    "warehouse": "WH-AS-01",
+    "quantity": 269,
+    "unit_cost": 404.13,
+    "last_restocked": "2025-09-15T00:00:00"
+  },
+  {
+    "sku": "GHI-415850-UV",
+    "warehouse": "WH-US-01",
+    "quantity": 504,
+    "unit_cost": 265.71,
+    "last_restocked": "2025-10-13T00:00:00"
+  },
+  {
+    "sku": "OP-811620-V",
+    "warehouse": "WH-EU-03",
+    "quantity": 666,
+    "unit_cost": 511.99,
+    "last_restocked": "2025-10-04T00:00:00"
+  },
+  {
+    "sku": "GHI-528276-UV",
+    "warehouse": "WH-EU-01",
+    "quantity": 614,
+    "unit_cost": 430.16,
+    "last_restocked": "2025-08-21T00:00:00"
+  },
+  {
+    "sku": "GH-261735-U",
+    "warehouse": "WH-US-03",
+    "quantity": 495,
+    "unit_cost": 520.94,
+    "last_restocked": "2025-09-04T00:00:00"
+  },
+  {
+    "sku": "CD-324232-W",
+    "warehouse": "WH-US-01",
+    "quantity": 890,
+    "unit_cost": 310.05,
+    "last_restocked": "2025-08-07T00:00:00"
+  },
+  {
+    "sku": "EF-540131-U",
+    "warehouse": "WH-US-01",
+    "quantity": 620,
+    "unit_cost": 284.46,
+    "last_restocked": "2025-08-01T00:00:00"
+  },
+  {
+    "sku": "UV-654425-W",
+    "warehouse": "WH-AS-03",
+    "quantity": 691,
+    "unit_cost": 284.57,
+    "last_restocked": "2025-08-10T00:00:00"
+  },
+  {
+    "sku": "GH-079898-UV",
+    "warehouse": "WH-AS-01",
+    "quantity": 183,
+    "unit_cost": 470.09,
+    "last_restocked": "2025-09-12T00:00:00"
+  },
+  {
+    "sku": "ABC-363479-C",
+    "warehouse": "WH-AS-01",
+    "quantity": 477,
+    "unit_cost": 267.61,
+    "last_restocked": "2025-10-10T00:00:00"
+  },
+  {
+    "sku": "OP-811620-V",
+    "warehouse": "WH-US-03",
+    "quantity": 654,
+    "unit_cost": 517.43,
+    "last_restocked": "2025-09-08T00:00:00"
+  },
+  {
+    "sku": "OP-718870-W",
+    "warehouse": "WH-AS-01",
+    "quantity": 786,
+    "unit_cost": 82.57,
+    "last_restocked": "2025-07-31T00:00:00"
+  },
+  {
+    "sku": "QR-907339-S",
+    "warehouse": "WH-EU-01",
+    "quantity": 522,
+    "unit_cost": 272.08,
+    "last_restocked": "2025-09-10T00:00:00"
+  },
+  {
+    "sku": "GH-161265-B",
+    "warehouse": "WH-US-02",
+    "quantity": 373,
+    "unit_cost": 262.38,
+    "last_restocked": "2025-08-25T00:00:00"
+  },
+  {
+    "sku": "YZ-281746-S",
+    "warehouse": "WH-US-02",
+    "quantity": 179,
+    "unit_cost": 322.47,
+    "last_restocked": "2025-09-19T00:00:00"
+  },
+  {
+    "sku": "DEF-709446-U",
+    "warehouse": "WH-EU-03",
+    "quantity": 859,
+    "unit_cost": 148.54,
+    "last_restocked": "2025-08-20T00:00:00"
+  },
+  {
+    "sku": "UV-488575-Y",
+    "warehouse": "WH-EU-03",
+    "quantity": 182,
+    "unit_cost": 320.88,
+    "last_restocked": "2025-08-11T00:00:00"
+  },
+  {
+    "sku": "GH-161265-B",
+    "warehouse": "WH-AS-03",
+    "quantity": 730,
+    "unit_cost": 267.33,
+    "last_restocked": "2025-08-08T00:00:00"
+  },
+  {
+    "sku": "UV-292369-T",
+    "warehouse": "WH-EU-01",
+    "quantity": 465,
+    "unit_cost": 353.33,
+    "last_restocked": "2025-08-01T00:00:00"
+  },
+  {
+    "sku": "KL-060642-Z",
+    "warehouse": "WH-EU-03",
+    "quantity": 320,
+    "unit_cost": 41.19,
+    "last_restocked": "2025-08-30T00:00:00"
+  },
+  {
+    "sku": "AB-617886-Z",
+    "warehouse": "WH-AS-03",
+    "quantity": 827,
+    "unit_cost": 481.11,
+    "last_restocked": "2025-08-27T00:00:00"
+  },
+  {
+    "sku": "IJ-669061-V",
+    "warehouse": "WH-EU-01",
+    "quantity": 571,
+    "unit_cost": 403.19,
+    "last_restocked": "2025-09-20T00:00:00"
+  },
+  {
+    "sku": "GH-985539-UV",
+    "warehouse": "WH-EU-01",
+    "quantity": 242,
+    "unit_cost": 183.15,
+    "last_restocked": "2025-10-01T00:00:00"
+  },
+  {
+    "sku": "GHI-021422-S",
+    "warehouse": "WH-US-01",
+    "quantity": 703,
+    "unit_cost": 198.5,
+    "last_restocked": "2025-08-26T00:00:00"
+  },
+  {
+    "sku": "WX-220684-B",
+    "warehouse": "WH-AS-01",
+    "quantity": 881,
+    "unit_cost": 462.47,
+    "last_restocked": "2025-08-21T00:00:00"
+  },
+  {
+    "sku": "MN-451770-RS",
+    "warehouse": "WH-US-02",
+    "quantity": 344,
+    "unit_cost": 236.99,
+    "last_restocked": "2025-08-30T00:00:00"
+  },
+  {
+    "sku": "CD-053578-A",
+    "warehouse": "WH-US-01",
+    "quantity": 989,
+    "unit_cost": 280.37,
+    "last_restocked": "2025-09-28T00:00:00"
+  },
+  {
+    "sku": "AB-589508-U",
+    "warehouse": "WH-EU-01",
+    "quantity": 118,
+    "unit_cost": 185.16,
+    "last_restocked": "2025-09-06T00:00:00"
+  },
+  {
+    "sku": "QR-486100-U",
+    "warehouse": "WH-US-01",
+    "quantity": 386,
+    "unit_cost": 56.99,
+    "last_restocked": "2025-09-28T00:00:00"
+  },
+  {
+    "sku": "WX-171555-W",
+    "warehouse": "WH-AS-03",
+    "quantity": 773,
+    "unit_cost": 137.73,
+    "last_restocked": "2025-08-04T00:00:00"
+  },
+  {
+    "sku": "YZ-281746-S",
+    "warehouse": "WH-US-01",
+    "quantity": 382,
+    "unit_cost": 329.77,
+    "last_restocked": "2025-08-27T00:00:00"
+  },
+  {
+    "sku": "AB-319635-V",
+    "warehouse": "WH-AS-01",
+    "quantity": 558,
+    "unit_cost": 142.56,
+    "last_restocked": "2025-08-30T00:00:00"
+  },
+  {
+    "sku": "EF-049050-B",
+    "warehouse": "WH-US-01",
+    "quantity": 281,
+    "unit_cost": 399.46,
+    "last_restocked": "2025-09-29T00:00:00"
+  },
+  {
+    "sku": "GH-755717-UV",
+    "warehouse": "WH-EU-03",
+    "quantity": 554,
+    "unit_cost": 214.21,
+    "last_restocked": "2025-09-02T00:00:00"
+  },
+  {
+    "sku": "ST-883554-B",
+    "warehouse": "WH-US-03",
+    "quantity": 154,
+    "unit_cost": 226.54,
+    "last_restocked": "2025-10-20T00:00:00"
+  },
+  {
+    "sku": "OP-907604-T",
+    "warehouse": "WH-EU-01",
+    "quantity": 127,
+    "unit_cost": 288.7,
+    "last_restocked": "2025-10-12T00:00:00"
+  },
+  {
+    "sku": "CD-032244-S",
+    "warehouse": "WH-AS-01",
+    "quantity": 557,
+    "unit_cost": 550.14,
+    "last_restocked": "2025-08-14T00:00:00"
+  },
+  {
+    "sku": "MN-748581-V",
+    "warehouse": "WH-EU-01",
+    "quantity": 46,
+    "unit_cost": 277.69,
+    "last_restocked": "2025-08-09T00:00:00"
+  },
+  {
+    "sku": "YZ-279085-UV",
+    "warehouse": "WH-US-02",
+    "quantity": 690,
+    "unit_cost": 507.41,
+    "last_restocked": "2025-08-02T00:00:00"
+  },
+  {
+    "sku": "CD-707073-B",
+    "warehouse": "WH-US-01",
+    "quantity": 602,
+    "unit_cost": 532.52,
+    "last_restocked": "2025-08-18T00:00:00"
+  },
+  {
+    "sku": "EF-922981-U",
+    "warehouse": "WH-EU-03",
+    "quantity": 80,
+    "unit_cost": 214.81,
+    "last_restocked": "2025-09-07T00:00:00"
+  },
+  {
+    "sku": "EF-465656-RS",
+    "warehouse": "WH-US-03",
+    "quantity": 304,
+    "unit_cost": 255.91,
+    "last_restocked": "2025-10-24T00:00:00"
+  },
+  {
+    "sku": "GHI-847721-X",
+    "warehouse": "WH-US-02",
+    "quantity": 830,
+    "unit_cost": 384.45,
+    "last_restocked": "2025-08-03T00:00:00"
+  },
+  {
+    "sku": "ABC-589153-R",
+    "warehouse": "WH-AS-01",
+    "quantity": 791,
+    "unit_cost": 392.52,
+    "last_restocked": "2025-09-14T00:00:00"
+  },
+  {
+    "sku": "MN-753470-W",
+    "warehouse": "WH-US-03",
+    "quantity": 855,
+    "unit_cost": 526.48,
+    "last_restocked": "2025-08-05T00:00:00"
+  },
+  {
+    "sku": "GH-920641-V",
+    "warehouse": "WH-EU-01",
+    "quantity": 792,
+    "unit_cost": 146.66,
+    "last_restocked": "2025-08-26T00:00:00"
+  },
+  {
+    "sku": "CD-845151-W",
+    "warehouse": "WH-US-01",
+    "quantity": 737,
+    "unit_cost": 308.72,
+    "last_restocked": "2025-08-29T00:00:00"
+  },
+  {
+    "sku": "UV-292369-T",
+    "warehouse": "WH-AS-03",
+    "quantity": 244,
+    "unit_cost": 360.29,
+    "last_restocked": "2025-10-21T00:00:00"
+  },
+  {
+    "sku": "DEF-875244-Z",
+    "warehouse": "WH-EU-01",
+    "quantity": 894,
+    "unit_cost": 552.1,
+    "last_restocked": "2025-08-18T00:00:00"
+  },
+  {
+    "sku": "KL-646414-A",
+    "warehouse": "WH-AS-01",
+    "quantity": 240,
+    "unit_cost": 306.24,
+    "last_restocked": "2025-09-20T00:00:00"
+  },
+  {
+    "sku": "MN-801581-W",
+    "warehouse": "WH-AS-03",
+    "quantity": 705,
+    "unit_cost": 440.79,
+    "last_restocked": "2025-09-14T00:00:00"
+  },
+  {
+    "sku": "UV-840482-ST",
+    "warehouse": "WH-EU-01",
+    "quantity": 1005,
+    "unit_cost": 311.88,
+    "last_restocked": "2025-09-05T00:00:00"
+  },
+  {
+    "sku": "QR-486100-U",
+    "warehouse": "WH-US-03",
+    "quantity": 279,
+    "unit_cost": 58.78,
+    "last_restocked": "2025-08-24T00:00:00"
+  },
+  {
+    "sku": "ST-642390-RS",
+    "warehouse": "WH-US-03",
+    "quantity": 913,
+    "unit_cost": 415.54,
+    "last_restocked": "2025-10-16T00:00:00"
+  },
+  {
+    "sku": "CD-785309-W",
+    "warehouse": "WH-EU-03",
+    "quantity": 911,
+    "unit_cost": 479.91,
+    "last_restocked": "2025-10-03T00:00:00"
+  },
+  {
+    "sku": "WX-220684-B",
+    "warehouse": "WH-US-01",
+    "quantity": 372,
+    "unit_cost": 462.68,
+    "last_restocked": "2025-08-03T00:00:00"
+  },
+  {
+    "sku": "CD-943590-W",
+    "warehouse": "WH-AS-01",
+    "quantity": 524,
+    "unit_cost": 383.71,
+    "last_restocked": "2025-10-05T00:00:00"
+  },
+  {
+    "sku": "EF-893697-T",
+    "warehouse": "WH-US-01",
+    "quantity": 822,
+    "unit_cost": 552.89,
+    "last_restocked": "2025-09-11T00:00:00"
+  },
+  {
+    "sku": "IJ-135628-B",
+    "warehouse": "WH-AS-01",
+    "quantity": 819,
+    "unit_cost": 546.32,
+    "last_restocked": "2025-10-19T00:00:00"
+  },
+  {
+    "sku": "GHI-505740-U",
+    "warehouse": "WH-US-03",
+    "quantity": 545,
+    "unit_cost": 200.49,
+    "last_restocked": "2025-08-01T00:00:00"
+  },
+  {
+    "sku": "MN-958492-A",
+    "warehouse": "WH-AS-03",
+    "quantity": 722,
+    "unit_cost": 189.68,
+    "last_restocked": "2025-08-01T00:00:00"
+  },
+  {
+    "sku": "OP-718870-W",
+    "warehouse": "WH-US-01",
+    "quantity": 287,
+    "unit_cost": 85.26,
+    "last_restocked": "2025-08-05T00:00:00"
+  },
+  {
+    "sku": "CD-004717-W",
+    "warehouse": "WH-US-01",
+    "quantity": 705,
+    "unit_cost": 147.84,
+    "last_restocked": "2025-10-07T00:00:00"
+  },
+  {
+    "sku": "UV-840482-ST",
+    "warehouse": "WH-US-03",
+    "quantity": 527,
+    "unit_cost": 308.86,
+    "last_restocked": "2025-10-17T00:00:00"
+  },
+  {
+    "sku": "GH-064556-X",
+    "warehouse": "WH-EU-01",
+    "quantity": 356,
+    "unit_cost": 561.63,
+    "last_restocked": "2025-08-04T00:00:00"
+  },
+  {
+    "sku": "KL-561086-C",
+    "warehouse": "WH-US-01",
+    "quantity": 816,
+    "unit_cost": 325.77,
+    "last_restocked": "2025-10-03T00:00:00"
+  },
+  {
+    "sku": "CD-097781-B",
+    "warehouse": "WH-US-01",
+    "quantity": 358,
+    "unit_cost": 344.61,
+    "last_restocked": "2025-09-23T00:00:00"
+  },
+  {
+    "sku": "GH-371858-RS",
+    "warehouse": "WH-US-03",
+    "quantity": 735,
+    "unit_cost": 372.62,
+    "last_restocked": "2025-08-25T00:00:00"
+  },
+  {
+    "sku": "EF-579856-V",
+    "warehouse": "WH-EU-01",
+    "quantity": 187,
+    "unit_cost": 239.81,
+    "last_restocked": "2025-08-31T00:00:00"
+  },
+  {
+    "sku": "AB-075441-C",
+    "warehouse": "WH-AS-01",
+    "quantity": 425,
+    "unit_cost": 425.89,
+    "last_restocked": "2025-10-18T00:00:00"
+  },
+  {
+    "sku": "WX-460381-UV",
+    "warehouse": "WH-AS-03",
+    "quantity": 242,
+    "unit_cost": 176.51,
+    "last_restocked": "2025-07-29T00:00:00"
+  },
+  {
+    "sku": "CD-707073-B",
+    "warehouse": "WH-EU-03",
+    "quantity": 254,
+    "unit_cost": 532.58,
+    "last_restocked": "2025-10-11T00:00:00"
+  },
+  {
+    "sku": "ST-883554-B",
+    "warehouse": "WH-AS-03",
+    "quantity": 551,
+    "unit_cost": 227.88,
+    "last_restocked": "2025-10-23T00:00:00"
+  },
+  {
+    "sku": "UV-840482-ST",
+    "warehouse": "WH-EU-01",
+    "quantity": 838,
+    "unit_cost": 313.6,
+    "last_restocked": "2025-08-17T00:00:00"
+  },
+  {
+    "sku": "EF-897865-U",
+    "warehouse": "WH-US-01",
+    "quantity": 407,
+    "unit_cost": 498.54,
+    "last_restocked": "2025-09-06T00:00:00"
+  },
+  {
+    "sku": "ST-978017-B",
+    "warehouse": "WH-EU-01",
+    "quantity": 860,
+    "unit_cost": 99.52,
+    "last_restocked": "2025-09-04T00:00:00"
+  },
+  {
+    "sku": "AB-075441-C",
+    "warehouse": "WH-AS-01",
+    "quantity": 134,
+    "unit_cost": 427.27,
+    "last_restocked": "2025-08-30T00:00:00"
+  },
+  {
+    "sku": "GHI-847721-X",
+    "warehouse": "WH-US-02",
+    "quantity": 980,
+    "unit_cost": 389.29,
+    "last_restocked": "2025-08-17T00:00:00"
+  },
+  {
+    "sku": "UV-488575-Y",
+    "warehouse": "WH-US-02",
+    "quantity": 450,
+    "unit_cost": 327.65,
+    "last_restocked": "2025-08-23T00:00:00"
+  },
+  {
+    "sku": "ST-642390-RS",
+    "warehouse": "WH-US-02",
+    "quantity": 331,
+    "unit_cost": 414.52,
+    "last_restocked": "2025-10-05T00:00:00"
+  },
+  {
+    "sku": "MN-268095-R",
+    "warehouse": "WH-US-02",
+    "quantity": 390,
+    "unit_cost": 391.48,
+    "last_restocked": "2025-08-21T00:00:00"
+  },
+  {
+    "sku": "GHI-021422-S",
+    "warehouse": "WH-US-02",
+    "quantity": 685,
+    "unit_cost": 194.21,
+    "last_restocked": "2025-08-17T00:00:00"
+  },
+  {
+    "sku": "DEF-127882-U",
+    "warehouse": "WH-EU-03",
+    "quantity": 610,
+    "unit_cost": 232.66,
+    "last_restocked": "2025-10-15T00:00:00"
+  },
+  {
+    "sku": "WX-611805-Z",
+    "warehouse": "WH-EU-03",
+    "quantity": 241,
+    "unit_cost": 331.65,
+    "last_restocked": "2025-10-05T00:00:00"
+  },
+  {
+    "sku": "CD-943590-W",
+    "warehouse": "WH-US-03",
+    "quantity": 867,
+    "unit_cost": 387.52,
+    "last_restocked": "2025-08-15T00:00:00"
+  },
+  {
+    "sku": "ABC-232148-Y",
+    "warehouse": "WH-US-01",
+    "quantity": 144,
+    "unit_cost": 466.76,
+    "last_restocked": "2025-08-05T00:00:00"
+  },
+  {
+    "sku": "CD-901300-Y",
+    "warehouse": "WH-US-02",
+    "quantity": 838,
+    "unit_cost": 306.68,
+    "last_restocked": "2025-08-14T00:00:00"
+  },
+  {
+    "sku": "ABC-232148-Y",
+    "warehouse": "WH-EU-01",
+    "quantity": 979,
+    "unit_cost": 463.89,
+    "last_restocked": "2025-08-07T00:00:00"
+  },
+  {
+    "sku": "DEF-127882-U",
+    "warehouse": "WH-EU-01",
+    "quantity": 301,
+    "unit_cost": 229.23,
+    "last_restocked": "2025-07-31T00:00:00"
+  },
+  {
+    "sku": "EF-579856-V",
+    "warehouse": "WH-AS-01",
+    "quantity": 117,
+    "unit_cost": 235.86,
+    "last_restocked": "2025-10-06T00:00:00"
+  },
+  {
+    "sku": "CD-650468-S",
+    "warehouse": "WH-US-02",
+    "quantity": 366,
+    "unit_cost": 32.31,
+    "last_restocked": "2025-08-10T00:00:00"
+  },
+  {
+    "sku": "MN-382913-X",
+    "warehouse": "WH-US-03",
+    "quantity": 802,
+    "unit_cost": 286.35,
+    "last_restocked": "2025-09-12T00:00:00"
+  },
+  {
+    "sku": "UV-840482-ST",
+    "warehouse": "WH-EU-03",
+    "quantity": 615,
+    "unit_cost": 309.9,
+    "last_restocked": "2025-10-13T00:00:00"
+  },
+  {
+    "sku": "YZ-284060-UV",
+    "warehouse": "WH-US-03",
+    "quantity": 478,
+    "unit_cost": 75.85,
+    "last_restocked": "2025-09-25T00:00:00"
+  },
+  {
+    "sku": "MN-748581-V",
+    "warehouse": "WH-EU-01",
+    "quantity": 937,
+    "unit_cost": 277.76,
+    "last_restocked": "2025-08-09T00:00:00"
+  },
+  {
+    "sku": "IJ-259607-C",
+    "warehouse": "WH-AS-03",
+    "quantity": 427,
+    "unit_cost": 512.28,
+    "last_restocked": "2025-08-14T00:00:00"
+  },
+  {
+    "sku": "MN-451770-RS",
+    "warehouse": "WH-US-02",
+    "quantity": 569,
+    "unit_cost": 240.51,
+    "last_restocked": "2025-08-22T00:00:00"
+  },
+  {
+    "sku": "OP-068136-W",
+    "warehouse": "WH-EU-01",
+    "quantity": 73,
+    "unit_cost": 513.99,
+    "last_restocked": "2025-10-15T00:00:00"
+  },
+  {
+    "sku": "MN-161263-W",
+    "warehouse": "WH-US-02",
+    "quantity": 603,
+    "unit_cost": 93.11,
+    "last_restocked": "2025-09-11T00:00:00"
+  },
+  {
+    "sku": "GH-077819-Z",
+    "warehouse": "WH-EU-03",
+    "quantity": 989,
+    "unit_cost": 545.27,
+    "last_restocked": "2025-08-04T00:00:00"
+  },
+  {
+    "sku": "GH-779480-Z",
+    "warehouse": "WH-US-01",
+    "quantity": 922,
+    "unit_cost": 531.26,
+    "last_restocked": "2025-10-13T00:00:00"
+  },
+  {
+    "sku": "OP-921659-A",
+    "warehouse": "WH-AS-01",
+    "quantity": 420,
+    "unit_cost": 476.29,
+    "last_restocked": "2025-09-05T00:00:00"
+  },
+  {
+    "sku": "GH-098251-X",
+    "warehouse": "WH-EU-03",
+    "quantity": 621,
+    "unit_cost": 268.66,
+    "last_restocked": "2025-10-02T00:00:00"
+  },
+  {
+    "sku": "EF-579856-V",
+    "warehouse": "WH-EU-01",
+    "quantity": 613,
+    "unit_cost": 237.2,
+    "last_restocked": "2025-08-30T00:00:00"
+  },
+  {
+    "sku": "OP-907604-T",
+    "warehouse": "WH-AS-01",
+    "quantity": 641,
+    "unit_cost": 292.48,
+    "last_restocked": "2025-10-11T00:00:00"
+  },
+  {
+    "sku": "GH-054045-B",
+    "warehouse": "WH-US-03",
+    "quantity": 884,
+    "unit_cost": 504.36,
+    "last_restocked": "2025-09-13T00:00:00"
+  },
+  {
+    "sku": "ST-426800-Z",
+    "warehouse": "WH-US-02",
+    "quantity": 268,
+    "unit_cost": 118.17,
+    "last_restocked": "2025-08-10T00:00:00"
+  },
+  {
+    "sku": "KL-733052-X",
+    "warehouse": "WH-US-01",
+    "quantity": 130,
+    "unit_cost": 564.28,
+    "last_restocked": "2025-10-09T00:00:00"
+  },
+  {
+    "sku": "MN-703258-C",
+    "warehouse": "WH-EU-03",
+    "quantity": 544,
+    "unit_cost": 488.34,
+    "last_restocked": "2025-10-07T00:00:00"
+  },
+  {
+    "sku": "YZ-281746-S",
+    "warehouse": "WH-US-03",
+    "quantity": 647,
+    "unit_cost": 325.38,
+    "last_restocked": "2025-09-16T00:00:00"
+  },
+  {
+    "sku": "ABC-651810-C",
+    "warehouse": "WH-AS-01",
+    "quantity": 937,
+    "unit_cost": 16.99,
+    "last_restocked": "2025-09-18T00:00:00"
+  },
+  {
+    "sku": "WX-299830-T",
+    "warehouse": "WH-EU-03",
+    "quantity": 539,
+    "unit_cost": 352.67,
+    "last_restocked": "2025-08-15T00:00:00"
+  },
+  {
+    "sku": "CD-032244-S",
+    "warehouse": "WH-US-03",
+    "quantity": 353,
+    "unit_cost": 552.75,
+    "last_restocked": "2025-08-01T00:00:00"
+  },
+  {
+    "sku": "GH-079898-UV",
+    "warehouse": "WH-US-03",
+    "quantity": 895,
+    "unit_cost": 460.68,
+    "last_restocked": "2025-07-30T00:00:00"
+  },
+  {
+    "sku": "MN-703258-C",
+    "warehouse": "WH-US-03",
+    "quantity": 744,
+    "unit_cost": 481.68,
+    "last_restocked": "2025-08-13T00:00:00"
+  },
+  {
+    "sku": "GH-098251-X",
+    "warehouse": "WH-EU-03",
+    "quantity": 558,
+    "unit_cost": 269.42,
+    "last_restocked": "2025-10-05T00:00:00"
+  },
+  {
+    "sku": "IJ-971733-UV",
+    "warehouse": "WH-AS-03",
+    "quantity": 879,
+    "unit_cost": 251.42,
+    "last_restocked": "2025-09-08T00:00:00"
+  },
+  {
+    "sku": "KL-566579-RS",
+    "warehouse": "WH-US-01",
+    "quantity": 600,
+    "unit_cost": 128.97,
+    "last_restocked": "2025-07-29T00:00:00"
+  },
+  {
+    "sku": "GHI-528276-UV",
+    "warehouse": "WH-US-03",
+    "quantity": 480,
+    "unit_cost": 435.48,
+    "last_restocked": "2025-10-07T00:00:00"
+  },
+  {
+    "sku": "KL-398382-R",
+    "warehouse": "WH-EU-03",
+    "quantity": 853,
+    "unit_cost": 205.41,
+    "last_restocked": "2025-08-09T00:00:00"
+  },
+  {
+    "sku": "ABC-343027-X",
+    "warehouse": "WH-AS-01",
+    "quantity": 129,
+    "unit_cost": 166.16,
+    "last_restocked": "2025-10-09T00:00:00"
+  },
+  {
+    "sku": "CD-902393-W",
+    "warehouse": "WH-AS-01",
+    "quantity": 537,
+    "unit_cost": 515.55,
+    "last_restocked": "2025-08-20T00:00:00"
+  },
+  {
+    "sku": "IJ-535277-Y",
+    "warehouse": "WH-EU-01",
+    "quantity": 977,
+    "unit_cost": 101.65,
+    "last_restocked": "2025-08-19T00:00:00"
+  },
+  {
+    "sku": "YZ-713526-ST",
+    "warehouse": "WH-AS-03",
+    "quantity": 970,
+    "unit_cost": 348.4,
+    "last_restocked": "2025-07-31T00:00:00"
+  },
+  {
+    "sku": "OP-921659-A",
+    "warehouse": "WH-EU-03",
+    "quantity": 526,
+    "unit_cost": 478.63,
+    "last_restocked": "2025-10-02T00:00:00"
+  },
+  {
+    "sku": "WX-460381-UV",
+    "warehouse": "WH-US-02",
+    "quantity": 394,
+    "unit_cost": 176.84,
+    "last_restocked": "2025-09-20T00:00:00"
+  },
+  {
+    "sku": "GH-404906-UV",
+    "warehouse": "WH-EU-01",
+    "quantity": 368,
+    "unit_cost": 333.21,
+    "last_restocked": "2025-08-26T00:00:00"
+  },
+  {
+    "sku": "EF-995967-B",
+    "warehouse": "WH-US-03",
+    "quantity": 367,
+    "unit_cost": 196.42,
+    "last_restocked": "2025-10-11T00:00:00"
+  },
+  {
+    "sku": "IJ-443374-T",
+    "warehouse": "WH-EU-01",
+    "quantity": 936,
+    "unit_cost": 388.15,
+    "last_restocked": "2025-09-12T00:00:00"
+  },
+  {
+    "sku": "MN-748581-V",
+    "warehouse": "WH-US-01",
+    "quantity": 338,
+    "unit_cost": 284.52,
+    "last_restocked": "2025-10-16T00:00:00"
+  },
+  {
+    "sku": "OP-210267-ST",
+    "warehouse": "WH-US-03",
+    "quantity": 792,
+    "unit_cost": 375.06,
+    "last_restocked": "2025-08-26T00:00:00"
+  },
+  {
+    "sku": "GH-779480-Z",
+    "warehouse": "WH-US-03",
+    "quantity": 609,
+    "unit_cost": 531.3,
+    "last_restocked": "2025-07-29T00:00:00"
+  },
+  {
+    "sku": "ABC-651810-C",
+    "warehouse": "WH-AS-01",
+    "quantity": 631,
+    "unit_cost": 14.14,
+    "last_restocked": "2025-09-26T00:00:00"
+  },
+  {
+    "sku": "GH-985539-UV",
+    "warehouse": "WH-US-02",
+    "quantity": 659,
+    "unit_cost": 182.77,
+    "last_restocked": "2025-09-27T00:00:00"
+  },
+  {
+    "sku": "EF-540131-U",
+    "warehouse": "WH-AS-01",
+    "quantity": 570,
+    "unit_cost": 289.33,
+    "last_restocked": "2025-10-14T00:00:00"
+  },
+  {
+    "sku": "QR-257787-U",
+    "warehouse": "WH-EU-03",
+    "quantity": 244,
+    "unit_cost": 389.93,
+    "last_restocked": "2025-09-04T00:00:00"
+  },
+  {
+    "sku": "MN-703258-C",
+    "warehouse": "WH-EU-01",
+    "quantity": 762,
+    "unit_cost": 489.04,
+    "last_restocked": "2025-10-01T00:00:00"
+  },
+  {
+    "sku": "CD-241062-S",
+    "warehouse": "WH-US-03",
+    "quantity": 759,
+    "unit_cost": 458.12,
+    "last_restocked": "2025-10-19T00:00:00"
+  },
+  {
+    "sku": "IJ-669061-V",
+    "warehouse": "WH-US-02",
+    "quantity": 569,
+    "unit_cost": 403.55,
+    "last_restocked": "2025-10-22T00:00:00"
+  },
+  {
+    "sku": "EF-793495-R",
+    "warehouse": "WH-US-01",
+    "quantity": 956,
+    "unit_cost": 496.91,
+    "last_restocked": "2025-09-06T00:00:00"
+  }
+]
