@@ -47,8 +47,8 @@ def fit_shapes(n: int, m: int, shapes: list[str]) -> list[list[str]]:
         result = coords[:]
         # Apply rotation transformation
         for _ in range(rotations):
-            # 90° clockwise: (row, col) -> (col, -row)
-            result = [(col, -row) for row, col in result]
+            # 90° clockwise: (row, col) -> (-col, row)
+            result = [(-col, row) for row, col in result]
 
         # Normalize to have bottom-left at (0, 0)
         min_row = min(r for r, c in result)
@@ -237,6 +237,5 @@ def main() -> None:
 
 if __name__ == "__main__":  # pragma: no cover
     main()
-
 
 PYTHON_SOLUTION
