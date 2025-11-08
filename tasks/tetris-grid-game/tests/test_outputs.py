@@ -6,19 +6,11 @@
 
 import ast
 import hashlib
+import os
+import stat
 from pathlib import Path
 
 EXPECTED_GAMES_HASH = "26dade3b154ee408692958bb422a1e2fe89106552022b3597cdf100e67c16d8b"
-
-
-def test_solution_file_not_symlink():
-    """Ensure the expected solution reference file is not a symbolic link."""
-    expected_path = Path("/tests/solution.txt")
-
-    assert expected_path.exists(), "Expected output file missing: /tests/solution.txt"
-    assert (
-        not expected_path.is_symlink()
-    ), "Expected output file /tests/solution.txt must not be a symbolic link"
 
 
 def test_games_csv_immutable():
@@ -42,6 +34,23 @@ def test_solution_output_matches_expected():
 
     assert expected_path.exists(), "Expected output file missing: /tests/solution.txt"
     assert actual_path.exists(), "Solution output file missing: /app/results/out.txt"
+    assert (
+        not actual_path.is_symlink()
+    ), "Solution output file /app/results/out.txt must not be a symbolic link"
+
+    resolved_actual = actual_path.resolve()
+    results_root = Path("/app/results")
+    try:
+        resolved_actual.relative_to(results_root)
+    except ValueError as exc:
+        raise AssertionError(
+            f"Solution output must reside within {results_root}, got: {resolved_actual}"
+        ) from exc
+
+    file_stat = os.stat(actual_path)
+    assert stat.S_ISREG(
+        file_stat.st_mode
+    ), "Solution output must be a regular file within /app/results"
 
     expected_contents = expected_path.read_text()
     actual_contents = actual_path.read_text()
