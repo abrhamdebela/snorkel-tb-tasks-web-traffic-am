@@ -20,5 +20,5 @@ fi
 
 uv venv .tbench-testing
 source .tbench-testing/bin/activate
-pip install pytest==8.4.1 pyyaml==6.0.1
-pytest $TEST_DIR/test_outputs.py -rA
+uv pip install pytest==8.4.1 pyyaml==6.0.1
+uv run pytest $TEST_DIR/test_outputs.py -rA

@@ -19,7 +19,7 @@ instruction: |-
 
   Look for anomalies like statistical outliers, capacity violations, price inconsistencies, and dates that are out of range. Dates must be formatted as YYYY-MM-DD and must fall between 2023-01-01 and 2025-10-27 inclusive. If you keep an out-of-range date in the output, you must treat it as a temporal anomaly and at least flag it with DATE_OUT_OF_RANGE or TEMPORAL_VIOLATION (and any other relevant flags). You may either correct obviously fixable dates into the valid range or mark them as INVALID if they cannot be reliably recovered; when you replace a date with INVALID, adding a temporal anomaly flag is recommended but not strictly required for correctness.
 
-  When you find duplicates (same SKU and warehouse), keep the best record and log the discarded ones in conflict_log.json with a short, human-readable explanation that indicates which record was kept and why it was preferred where possible (for example, “kept the cleaner record with fewer anomaly flags and higher confidence score”).
+  When you find duplicates (same SKU and warehouse), keep the best record and log the discarded ones in conflict_log.json with a short, human-readable explanation that indicates which record was kept and why it was preferred where possible (for example, “kept the cleaner record with fewer anomaly flags and higher confidence score”). The explanation should be specific and non-trivial (more than just a generic note), and it should mention at least one concrete reason related to data quality, anomaly flags, or confidence scores.
 
   Calculate confidence scores from 0.00 to 1.00 based on how many issues each record has. Records with no issues should be flagged as CLEAN and get a confidence of 1.00. Format all scores with exactly 2 decimal places.
 
@@ -37,9 +37,11 @@ instruction: |-
 
   Save the clustering results to anomaly_clusters.json as a JSON object with a clusters array containing exactly 3 clusters. Each cluster should have an id (0, 1, or 2), severity (low, medium, or high), record_count, and description. Every record must be assigned to exactly one cluster.
 
-  Finally, write executive_summary.txt with the key findings, data quality metrics, and actionable recommendations.
+  Finally, write executive_summary.txt with the key findings, data quality metrics, and actionable recommendations. The executive summary must also mention the total number of records (include the word "records") so that readers can quickly see the scale of the dataset.
 
   Try to include all or nearly all input records in your output. Records can appear in either inventory_cleaned.csv or conflict_log.json if they were discarded as duplicates. Handle missing and malformed data by flagging the issues and using INVALID markers where data can't be recovered.
+
+  The input files in /app/data (inventory_raw.csv, inventory_history.json, warehouse_rules.yaml, supplier_catalog.csv) should be treated as immutable reference data for this task. Your solution should not modify these input files; they may be validated for integrity by the evaluation harness.
 
 author_name: Tasnim Makableh
 author_email: tasnim.makableh@menadevs.io

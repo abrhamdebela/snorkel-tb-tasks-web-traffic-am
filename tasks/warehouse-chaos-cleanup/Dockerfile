@@ -10,12 +10,15 @@ FROM ghcr.io/laude-institute/t-bench/ubuntu-24-04:20250624
 RUN apt-get update && apt-get install -y \
     python3.12 \
     python3-pip \
+    python3-venv \
+    python3-yaml \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
-RUN mkdir -p /app/data /app/output
+RUN mkdir -p /app/data /app/output /data
 
 COPY data/ /app/data/
+COPY data/ /data/
 
 CMD ["/bin/bash"]

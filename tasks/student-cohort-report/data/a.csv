@@ -1,0 +1,5 @@
+student_id,full_name,program,gpa,credits,status
+A001,Alice Alpha,CS,3.9,45,active
+A002,Bob Beta,Math,"3,9",44,active
+A003,Charlie Gamma,Physics,3.7,43,active
+
