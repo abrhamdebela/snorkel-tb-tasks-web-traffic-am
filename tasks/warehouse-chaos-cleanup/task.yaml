@@ -29,7 +29,7 @@ instruction: |-
 
   Save the cleaned data to /app/output/inventory_cleaned.csv with columns: sku, warehouse, quantity, unit_cost, last_restocked, anomaly_flags, and confidence_score. Use INVALID (and only INVALID) for any values that can't be recovered - do not use other fallback values. The unit_cost should be formatted with exactly 2 decimal places. The anomaly_flags should be comma-separated flag names, or CLEAN if there are no issues.
 
-  Create conflict_log.json as a JSON array with entries for each discarded duplicate, including the sku, warehouse, kept_record, discarded_record, and reason.
+  Create conflict_log.json as a JSON array with entries for each discarded duplicate, including the sku, warehouse, kept_record, discarded_record, and reason. The kept_record and discarded_record objects should mirror the cleaned CSV schema, and their anomaly_flags field must be a single string formatted exactly like in inventory_cleaned.csv (comma-separated flag names, or CLEAN if there are no issues).
 
   Generate anomaly_report.txt with a summary of the data quality issues found. The report must explicitly mention the total number of records (include the word "records") and describe data-quality or confidence metrics using the word "confidence" or "quality" so the audience can quickly locate those sections.
 
