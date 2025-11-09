@@ -211,7 +211,8 @@ def test_probe_monotonicity_bins():
         if len(m) >= 5:
             means.append(m.mean())
             rates.append(t.mean() if len(t) > 0 else np.nan)
-    means = np.array(means); rates = np.array(rates)
+    means = np.array(means)
+    rates = np.array(rates)
     mask = ~np.isnan(rates)
     assert mask.sum() >= 3, "Not enough populated bins for Spearman check"
     rho, _ = spearmanr(means[mask], rates[mask])
