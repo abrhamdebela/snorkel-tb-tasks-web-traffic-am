@@ -37,7 +37,6 @@ ENC_STATS_PATH = OUT_DIR / "encoder_stats.json"
 ROC_PATH = OUT_DIR / "roc_curve.png"
 PR_PATH = OUT_DIR / "pr_curve.png"
 SUMMARY_PATH = OUT_DIR / "summary.txt"
-# ADDED: new provenance artifact for compression verification
 MODEL_META_PATH = OUT_DIR / "model_meta.json"
 
 TOL_METRIC = 0.01
@@ -59,7 +58,6 @@ def test_artifacts_exist():
     assert ROC_PATH.exists()
     assert PR_PATH.exists()
     assert SUMMARY_PATH.exists()
-    # ADDED: Check new model_meta artifact
     assert MODEL_META_PATH.exists()
 
 def test_pngs_and_text_line_endings():
