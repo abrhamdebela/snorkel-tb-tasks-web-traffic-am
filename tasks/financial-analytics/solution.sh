@@ -28,16 +28,8 @@ if [ ! -f /app/data/transactions_raw.csv ]; then
     fi
 fi
 
-APP_DIR="$(python3 - <<'PY'
-import os
-print(os.sep + "app")
-PY
-)"
-
-PROCESS_SCRIPT_PATH="${APP_DIR}/process_transactions.py"
-
 # Create the Python processing script
-cat > "${PROCESS_SCRIPT_PATH}" << 'PYTHON_SCRIPT'
+cat > /app/process_transactions.py << 'PYTHON_SCRIPT'
 #!/usr/bin/env python3
 """
 Financial Analytics Data Processing Script
@@ -484,7 +476,7 @@ PYTHON_SCRIPT
 # Run the processing script
 echo ""
 echo "Running transaction processing script..."
-python3 "${PROCESS_SCRIPT_PATH}"
+python3 /app/process_transactions.py
 
 echo ""
 echo "Financial analytics processing completed successfully"
