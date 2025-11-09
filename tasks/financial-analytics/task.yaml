@@ -149,6 +149,8 @@ instruction: |-
   Number of completed transactions per country (sorted by country)
   Final record count in output file
 
+  Total USD amount equivalent in BTC (using a **hard-coded** exchange rate of 1 BTC = 95,000.00 USD, rounded to 8 decimal places)
+
   3- Visualization
 
   /app/output/visuals/transactions_by_country.png

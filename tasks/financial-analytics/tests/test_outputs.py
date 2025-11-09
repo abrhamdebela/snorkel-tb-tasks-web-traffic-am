@@ -4,7 +4,7 @@
 import csv
 import re
 from collections import defaultdict
-from decimal import Decimal
+from decimal import Decimal, ROUND_HALF_UP
 from pathlib import Path
 
 
@@ -1458,3 +1458,48 @@ def test_visualization_content_correctness():
     # Verify computed totals are reasonable and match expected pattern
     # (Note: We can't extract pixel values from PNG to verify exact bar heights,
     # but we verify the computed totals are correct and file meets minimum requirements)
+
+# BTC conversion in the summary report
+def test_summary_report_btc_conversion():
+    """Verify that the report contains the total USD amount converted to BTC
+    using the hard-coded rate 1 BTC = 95,000.00 USD, rounded to **exactly 8**
+    decimal places with HALF_UP rounding."""
+    report_file = Path("/app/output/summary_report.txt")
+    output_file = Path("/app/output/transactions_cleaned.csv")
+
+    # ---- 1. Compute the exact total USD from the cleaned CSV -----------------
+    total_usd = Decimal('0')
+    with open(output_file, "r", encoding="utf-8", newline="") as f:
+        for row in csv.DictReader(f):
+            total_usd += Decimal(row["amount_usd"])
+
+    # ---- 2. Apply the hard-coded BTC rate with HALF_UP rounding -------------
+    BTC_RATE = Decimal('95000.00')
+    btc_amount = (total_usd / BTC_RATE).quantize(
+        Decimal('0.00000001'), rounding=ROUND_HALF_UP
+    )
+    expected_btc_str = f"{btc_amount:.8f}"          # e.g. "0.00123456"
+
+    # ---- 3. Read the report and locate the line -----------------------------
+    report_text = report_file.read_text(encoding="utf-8")
+    btc_line = None
+    for line in report_text.splitlines():
+        if "equivalent in BTC" in line.lower():
+            btc_line = line.strip()
+            break
+    assert btc_line is not None, (
+        "Summary report is missing the line about BTC conversion "
+        "(should contain 'equivalent in BTC')"
+    )
+
+    # ---- 4. Verify the exact 8-decimal string appears -----------------------
+    assert expected_btc_str in btc_line, (
+        f"BTC amount mismatch - expected '{expected_btc_str}' in report line:\n"
+        f"    {btc_line!r}\n"
+        f"    (computed from total USD {total_usd:,.2f})"
+    )
+
+    # ---- 5. Extra sanity: ensure no scientific notation or wrong decimals ---
+    assert re.search(r"\d\.\d{8}", btc_line), (
+        "BTC amount in report must be formatted with exactly 8 decimal places"
+    )

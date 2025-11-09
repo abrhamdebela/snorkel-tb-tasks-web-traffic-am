@@ -62,6 +62,8 @@ EXCHANGE_RATES = {
     'ARS': 0.0011
 }
 
+BTC_RATE = Decimal('95000.00') 
+
 # Valid ISO country names (comprehensive list)
 VALID_ISO_COUNTRIES = {
     "UNKNOWN",  # Special value for empty countries
@@ -359,7 +361,13 @@ def main():
         )
     else:
         avg_amount = Decimal('0.00')
-    
+
+        # === BTC CONVERSION ===
+        btc_amount = (total_usd / BTC_RATE).quantize(
+            Decimal('0.00000001'), rounding=ROUND_HALF_UP
+        )
+        btc_str = f"{btc_amount:.8f}"
+
     # Write cleaned data
     print(f"Writing {len(final_records)} cleaned records...")
     with open(output_file, 'w', newline='', encoding='utf-8') as f:
@@ -412,6 +420,7 @@ Data Quality Issues:
 Financial Summary:
 - Total USD amount: ${total_usd:,.2f}
 - Average transaction amount: ${avg_amount:.2f}
+- Total USD amount equivalent in BTC: {btc_str} BTC
 
 Completed Transactions by Country:
 """
