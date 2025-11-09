@@ -1,0 +1,18 @@
+# dave/KD4V — qualifies (2 distinct public IPs, one 200)
+2025-10-20T12:06:20+00:00 api: key=KD4V ip=203.0.113.10 status=200
+2025-10-20T12:06:40+00:00 api: key=KD4V ip=198.51.100.8 status=403
+
+# eve/KE11 — near-miss: both IPs are private
+2025-10-20T12:04:10+00:00 api: key=KE11 ip=10.0.0.9 status=200
+2025-10-20T12:04:40+00:00 api: key=KE11 ip=192.168.1.9 status=200
+
+# frank/KF22 — near-miss: two accesses but both from same IP (not distinct)
+2025-10-20T12:05:10+00:00 api: key=KF22 ip=203.0.113.9 status=200
+2025-10-20T12:05:50+00:00 api: key=KF22 ip=203.0.113.9 status=403
+
+# grace/KG33 — near-miss: delete before first qualifying access disqualifies
+2025-10-20T12:06:00+00:00 api: key=KG33 ip=203.0.113.200 status=200
+
+# noise: malformed/IPv6 (should be ignored)
+2025-10-20T12:06:10+00:00 api: key=BADLINE missing_fields
+2025-10-20T12:06:15+00:00 api: key=KD4V ip=2001:db8::1 status=200

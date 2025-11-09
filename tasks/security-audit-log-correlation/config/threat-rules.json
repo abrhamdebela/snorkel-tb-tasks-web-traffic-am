@@ -1,0 +1,6 @@
+{
+  "brute_force_threshold": 5,
+  "time_window_minutes": 10,
+  "suspicious_access_threshold": 10,
+  "large_transfer_bytes": 10000000
+}

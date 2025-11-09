@@ -6,7 +6,7 @@ readme = "README.md"
 authors = [
     { name = "Hiromu Hota", email = "hiromu.hota@snorkel.ai" }
 ]
-requires-python = ">=3.12"
+requires-python = ">=3.12, <3.14"
 dependencies = [
     "terminal-bench==0.2.18",
     "typer>=0.16.0",

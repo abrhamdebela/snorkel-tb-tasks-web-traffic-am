@@ -1,0 +1,109 @@
+student_id,full_name,program,gpa,credits,status
+S141,Regular Student,CS,3.8,44,active
+S142,Comma Decimal,Math,"3,7",43,active
+S143,Space Around,Physics, 3.6 , 42 , active
+S144,No Status,Chemistry,3.5,41,
+S145,Empty GPA,Biology,,40,active
+S146,High GPA,Engineering,4.0,48,active
+S147,Low GPA,CS,1.5,15,active
+S148,Medium GPA,Math,2.5,25,active
+S901,Regular Format,CS,3.8,44,active
+S902,Comma Format,Math,"3,7",43,active
+S903,Space Format,Physics, 3.6 , 42 , active
+S904,No Status Format,Chemistry,3.5,41,
+S905,Empty GPA Format,Biology,,40,active
+S906,High GPA Format,Engineering,4.0,48,active
+S907,Low GPA Format,CS,1.5,15,active
+S908,Medium GPA Format,Math,2.5,25,active
+S909,Perfect GPA Format,Physics,4.0,50,active
+S910,Just Passing Format,Chemistry,2.0,30,active
+S911,Zhang Wei Format,CS,"3,8",44,active
+S912,Anna Müller Format,Math,3.7,41,active
+S913,Jean Dupont Format,Physics,"3,6",40,active
+S914,Maria Garcia Format,Biology,3.9,46,active
+S915,Hiroshi Tanaka Format,Chemistry,"3,5",39,active
+S916,Olga Ivanova Format,Engineering,3.2,36,active
+S917,Mohammed Ali Format,CS,3.4,38,active
+S918,Sofia Andersson Format,Math,3.6,40,active
+S919,Giovanni Rossi Format,Physics,2.8,28,active
+S920,Yuki Nakamura Format,Biology,3.8,42,active
+S921,Ahmed Hassan Format,Chemistry,3.1,35,active
+S922,Elena Petrov Format,Engineering,3.3,37,active
+S923,Lucas Silva Format,CS,3.5,39,active
+S924,Emma Johansson Format,Math,3.7,41,active
+S925,Marco Bianchi Format,Physics,3.0,34,active
+S926,Isabella Costa Format,Biology,3.8,44,active
+S927,David Kim Format,Chemistry,3.2,36,active
+S928,Sophia Lee Format,Engineering,3.1,35,active
+S929,James Wilson Format,CS,3.4,38,active
+S930,Emily Chen Format,Math,3.6,40,active
+S931,Michael Brown Format,Physics,2.9,29,active
+S932,Olivia Davis Format,Biology,3.7,41,active
+S933,William Taylor Format,Chemistry,3.3,37,active
+S934,Charlotte Martinez Format,Engineering,3.0,34,active
+S935,Benjamin Anderson Format,CS,3.5,39,active
+S936,Amelia Thomas Format,Math,3.8,42,active
+S937,Henry Jackson Format,Physics,2.7,27,active
+S938,Harper White Format,Biology,3.9,45,active
+S939,Alexander Harris Format,Chemistry,3.4,38,active
+S940,Mia Martin Format,Engineering,3.2,36,active
+S941,Daniel Thompson Format,CS,3.6,40,active
+S942,Abigail Garcia Format,Math,3.7,41,active
+S943,Matthew Martinez Format,Physics,2.8,28,active
+S944,Elizabeth Robinson Format,Biology,3.8,44,active
+S945,Joseph Clark Format,Chemistry,3.1,35,active
+S946,Victoria Rodriguez Format,Engineering,3.0,34,active
+S947,Andrew Lewis Format,CS,3.4,38,active
+S948,Samantha Walker Format,Math,3.6,40,active
+S949,Christopher Hall Format,Physics,2.9,29,active
+S950,Grace Allen Format,Biology,3.7,41,active
+S951,Joshua Young Format,Chemistry,3.3,37,active
+S952,Lily King Format,Engineering,3.1,35,active
+S953,Anthony Wright Format,CS,3.5,39,active
+S954,Chloe Lopez Format,Math,3.8,42,active
+S955,Jonathan Hill Format,Physics,2.6,26,active
+S956,Zoey Scott Format,Biology,3.9,45,active
+S957,Nicholas Green Format,Chemistry,3.4,38,active
+S958,Ava Adams Format,Engineering,3.2,36,active
+S959,Tyler Baker Format,CS,3.6,40,active
+S960,Natalie Nelson Format,Math,3.7,41,active
+S961,Mixed Regular,CS,3.8,44,active
+S962,Mixed Comma,Math,"3,7",43,active
+S963,Mixed Space,Physics, 3.6 , 42 , active
+S964,Mixed No Status,Chemistry,3.5,41,
+S965,Mixed Empty GPA,Biology,,40,active
+S966,Mixed High GPA,Engineering,4.0,48,active
+S967,Mixed Low GPA,CS,1.5,15,active
+S968,Mixed Medium GPA,Math,2.5,25,active
+S969,Mixed Perfect GPA,Physics,4.0,50,active
+S970,Mixed Just Passing,Chemistry,2.0,30,active
+S971,Mixed Zhang Wei,CS,"3,8",44,active
+S972,Mixed Anna Müller,Math,3.7,41,active
+S973,Mixed Jean Dupont,Physics,"3,6",40,active
+S974,Mixed Maria Garcia,Biology,3.9,46,active
+S975,Mixed Hiroshi Tanaka,Chemistry,"3,5",39,active
+S976,Mixed Olga Ivanova,Engineering,3.2,36,active
+S977,Mixed Mohammed Ali,CS,3.4,38,active
+S978,Mixed Sofia Andersson,Math,3.6,40,active
+S979,Mixed Giovanni Rossi,Physics,2.8,28,active
+S980,Mixed Yuki Nakamura,Biology,3.8,42,active
+S981,Mixed Ahmed Hassan,Chemistry,3.1,35,active
+S982,Mixed Elena Petrov,Engineering,3.3,37,active
+S983,Mixed Lucas Silva,CS,3.5,39,active
+S984,Mixed Emma Johansson,Math,3.7,41,active
+S985,Mixed Marco Bianchi,Physics,3.0,34,active
+S986,Mixed Isabella Costa,Biology,3.8,44,active
+S987,Mixed David Kim,Chemistry,3.2,36,active
+S988,Mixed Sophia Lee,Engineering,3.1,35,active
+S989,Mixed James Wilson,CS,3.4,38,active
+S990,Mixed Emily Chen,Math,3.6,40,active
+S991,Mixed Michael Brown,Physics,2.9,29,active
+S992,Mixed Olivia Davis,Biology,3.7,41,active
+S993,Mixed William Taylor,Chemistry,3.3,37,active
+S994,Mixed Charlotte Martinez,Engineering,3.0,34,active
+S995,Mixed Benjamin Anderson,CS,3.5,39,active
+S996,Mixed Amelia Thomas,Math,3.8,42,active
+S997,Mixed Henry Jackson,Physics,2.7,27,active
+S998,Mixed Harper White,Biology,3.9,45,active
+S999,Mixed Alexander Harris,Chemistry,3.4,38,active
+S1000,Mixed Final Student,Engineering,3.2,36,active

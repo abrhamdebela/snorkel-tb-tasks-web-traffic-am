@@ -1,0 +1,4 @@
+2025-10-20T12:06:12+00:00 dns: query=prod-backend.example.com src=10.0.0.77
+2025-10-20T12:06:14+00:00 dns: query=prod-backend.example.com src=10.0.0.88
+2025-10-20T12:06:08+00:00 dns: query=prod-backend.example.com src=10.0.0.77
+2025-10-20T12:06:17+00:00 dns: query=prod-backend.example.com src=10.0.0.67

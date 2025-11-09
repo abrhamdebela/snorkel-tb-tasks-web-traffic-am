@@ -1,0 +1,2 @@
+{"build_id": "bld-900", "start": "2025-10-20T12:01:00+00:00", "finish": "2025-10-20T12:05:00+00:00", "artifact": "art-123", "sri": "sha256-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}
+{"build_id": "bld-901", "start": "2025-10-20T12:02:00+00:00", "finish": "2025-10-20T12:06:00+00:00", "artifact": "art-999", "sri": "sha256-bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"}

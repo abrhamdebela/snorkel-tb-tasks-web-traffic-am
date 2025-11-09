@@ -1,0 +1,2 @@
+2025-10-20T11:00:00+00:00 sudo: pam_unix(sudo:session): session opened for user root by alice(uid=1001) SRC=10.0.0.23
+2025-10-20T12:22:00+00:00 sudo: pam_unix(sudo:session): session opened for user root by charlie(uid=1003) SRC=10.0.0.99

@@ -1,0 +1,113 @@
+{
+  "thresholds": {
+    "vitals": {
+      "heart_rate": {
+        "critical_low": 50,
+        "warning_low": 60,
+        "warning_high": 100,
+        "critical_high": 120
+      },
+      "systolic_bp": {
+        "critical_low": 90,
+        "warning_low": 100,
+        "warning_high": 140,
+        "critical_high": 160
+      },
+      "diastolic_bp": {
+        "critical_low": 60,
+        "warning_low": 70,
+        "warning_high": 90,
+        "critical_high": 100
+      },
+      "spo2": {
+        "critical_low": 90,
+        "warning_low": 92
+      },
+      "respiratory_rate": {
+        "critical_low": 10,
+        "warning_low": 12,
+        "warning_high": 20,
+        "critical_high": 30
+      },
+      "temperature": {
+        "critical_low": 95.0,
+        "warning_low": 96.0,
+        "warning_high": 100.4,
+        "critical_high": 103.0
+      }
+    },
+    "labs": {
+      "POTASSIUM": {
+        "critical_low": 3.0,
+        "warning_low": 3.5,
+        "warning_high": 5.0,
+        "critical_high": 5.5
+      },
+      "CREATININE": {
+        "warning_high": 1.3,
+        "critical_high": 2.0
+      },
+      "TROPONIN": {
+        "warning_high": 0.04,
+        "critical_high": 0.5
+      },
+      "GLUCOSE": {
+        "critical_low": 60,
+        "warning_low": 70,
+        "warning_high": 140,
+        "critical_high": 200
+      },
+      "WBC": {
+        "critical_low": 3.0,
+        "warning_low": 4.5,
+        "warning_high": 11.0,
+        "critical_high": 15.0
+      },
+      "LACTATE": {
+        "warning_high": 2.2,
+        "critical_high": 4.0
+      },
+      "BNP": {
+        "warning_high": 100,
+        "critical_high": 400
+      },
+      "PH": {
+        "critical_low": 7.30,
+        "warning_low": 7.35,
+        "warning_high": 7.45,
+        "critical_high": 7.50
+      },
+      "PCO2": {
+        "critical_low": 30,
+        "warning_low": 35,
+        "warning_high": 45,
+        "critical_high": 50
+      },
+      "SODIUM": {
+        "critical_low": 130,
+        "warning_low": 136,
+        "warning_high": 145,
+        "critical_high": 150
+      },
+      "BUN": {
+        "warning_high": 20,
+        "critical_high": 40
+      },
+      "HEMOGLOBIN": {
+        "critical_low": 7.0,
+        "warning_low": 10.0
+      }
+    }
+  },
+  "severity_weights": {
+    "CRITICAL": 3,
+    "WARNING": 1
+  },
+  "pattern_rules": {
+    "sustained_abnormality": {
+      "minimum_occurrences": 3,
+      "time_window_hours": 4,
+      "bonus_points": 5
+    }
+  }
+}

@@ -1,0 +1,6 @@
+student_id,full_name,program,gpa,credits,status
+E001,Jack Juliet,Chemistry,3.9,45,active
+E002,Kate Kilo,Engineering,3.8,44,active
+B002,Eve Epsilon Updated,Engineering,3.82,45,active
+C001,Frank Foxtrot Updated,Biology,3.88,46,active
+

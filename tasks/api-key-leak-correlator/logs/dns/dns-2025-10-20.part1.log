@@ -1,0 +1,6 @@
+# For dave/KD4V — last4="KD4V" -> "V4DK". Leftmost label must equal "v4dk" (case-insensitive)
+2025-10-20T12:06:50+00:00 dns: query=V4dK.telemetry.test src=010.000.000.078
+# Near-miss: substring but not a label (should not count for bob)
+2025-10-20T12:06:40+00:00 dns: query=xxb0bkx.data.test src=10.0.0.2
+# Near-miss: correct label but outside 5-minute window after frank's first access
+2025-10-20T12:12:10+00:00 dns: query=f22k.data.test src=10.0.0.3
