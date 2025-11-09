@@ -11,7 +11,7 @@ services:
     environment:
       - TEST_DIR=${T_BENCH_TEST_DIR}
       - CARD_API_URL=http://api:8000
-      - CARD_API_KEY=TBENCH_CARD_API_KEY_2024
+      - CARD_API_KEY=TBENCH_CARD_API_KEY_2025
     volumes:
       - ${T_BENCH_TASK_LOGS_PATH}:${T_BENCH_CONTAINER_LOGS_PATH}
       - ${T_BENCH_TASK_AGENT_LOGS_PATH}:${T_BENCH_CONTAINER_AGENT_LOGS_PATH}
@@ -27,7 +27,7 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - API_KEY=TBENCH_CARD_API_KEY_2024
+      - API_KEY=TBENCH_CARD_API_KEY_2025
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
       interval: 5s
