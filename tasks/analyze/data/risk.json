@@ -1,0 +1,5 @@
+{
+  "volatility_threshold": 0.15,
+  "concentration_limit": 0.25,
+  "drawdown_limit": -0.10
+}
