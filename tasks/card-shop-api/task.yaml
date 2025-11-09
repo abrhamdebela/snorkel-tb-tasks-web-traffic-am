@@ -22,7 +22,7 @@ instruction: |-
       season divided by the price of the card. Find the card with the highest value.
 
   Output:
-    - A JSON object in output/best_deal.json with the following fields:
+    - A JSON object in /app/output/best_deal.json with the following fields:
       - listing_id: The ID of the listing
       - card_id: The ID of the card
       - player_name: The name of the player
