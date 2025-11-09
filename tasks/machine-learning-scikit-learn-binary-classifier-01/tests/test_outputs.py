@@ -12,7 +12,14 @@ import joblib
 import pandas as pd
 from PIL import Image
 from sklearn.pipeline import Pipeline
-from sklearn.metrics import roc_auc_score, average_precision_score
+from sklearn.metrics import (
+    roc_auc_score,
+    average_precision_score,
+    accuracy_score,          
+    precision_score,         
+    recall_score,            
+    f1_score,                
+)
 from sklearn.model_selection import StratifiedKFold
 from sklearn.base import clone
 from scipy.stats import spearmanr
@@ -35,6 +42,7 @@ MODEL_META_PATH = OUT_DIR / "model_meta.json"
 
 TOL_METRIC = 0.01
 PROBE_TOL = 0.16
+BRIER_MARGIN = 0.005  
 
 def read_lf(path: Path) -> str:
     b = path.read_bytes()
@@ -89,6 +97,15 @@ def load_splits():
     assert len(set(train_idx).intersection(set(test_idx))) == 0
     return train_idx, test_idx
 
+def test_test_set_fraction():
+    """Test set must be 10-40% of the total dataset.""" 
+    df = pd.read_csv(DATA_PATH)
+    train_idx, test_idx = load_splits()
+    n_total = len(df)
+    n_test = len(test_idx)
+    frac = n_test / n_total
+    assert 0.10 <= frac <= 0.40, f"Test set fraction {frac:.2%} must be 10-40%"
+
 def test_stratification_behavior():
     """Verify stratified split: class distributions in train/test within 2% of overall."""
     df = pd.read_csv(DATA_PATH)
@@ -129,7 +146,7 @@ def test_model_runs_and_is_deterministic():
     assert np.std(p1) > 0.01
 
 def test_metrics_recompute_match():
-    """Recompute test metrics from saved model; must match report.json within 0.01."""
+    """Recompute all six test metrics from saved model; must match report.json within 0.01."""
     rep = json.loads(read_lf(REPORT_PATH))
     pipe = joblib.load(MODEL_PATH)
     df = pd.read_csv(DATA_PATH)
@@ -137,12 +154,21 @@ def test_metrics_recompute_match():
     X_test = df.drop(columns=["converted"]).iloc[test_idx]
     y_test = df["converted"].iloc[test_idx].to_numpy()
     p = pipe.predict_proba(X_test)[:, 1]
-    roc = roc_auc_score(y_test, p)
-    pr = average_precision_score(y_test, p)
-    assert abs(roc - rep["test_metrics"]["roc_auc"]) <= TOL_METRIC
-    assert abs(pr - rep["test_metrics"]["pr_auc"]) <= TOL_METRIC
-    # sanity check
-    assert roc >= 0.58
+    y_pred = (p >= 0.5).astype(int)
+
+    computed = {
+        "roc_auc": roc_auc_score(y_test, p),
+        "pr_auc": average_precision_score(y_test, p),
+        "accuracy": accuracy_score(y_test, y_pred),
+        "precision": precision_score(y_test, y_pred, zero_division=0),
+        "recall": recall_score(y_test, y_pred, zero_division=0),
+        "f1": f1_score(y_test, y_pred, zero_division=0),
+    }
+    for k in computed:
+        assert (
+            abs(computed[k] - rep["test_metrics"][k]) <= TOL_METRIC
+        ), f"test_metrics[{k}] mismatch"
+    assert computed["roc_auc"] >= 0.58
 
 def load_oof():
     oof = pd.read_csv(OOF_PATH)
@@ -151,24 +177,54 @@ def load_oof():
     return oof
 
 def test_oof_integrity_and_cv_match_and_calibration_quality():
-    """OOF must cover each training row exactly once, metrics match report.json, and calibration improves Brier score."""
+    """OOF covers train exactly once, all six CV metrics match report.json, and Brier improves by ≥0.005 on OOF."""
     rep = json.loads(read_lf(REPORT_PATH))
     train_idx, _ = load_splits()
     oof = load_oof()
-    # cover each training row exactly once
     assert set(oof["index"].astype(int).tolist()) == set(train_idx.tolist())
     assert len(oof) == len(train_idx)
     y = oof["y_true"].astype(int).to_numpy()
     p_cal = oof["y_pred_proba"].astype(float).to_numpy()
     p_unc = oof["y_pred_proba_uncalibrated"].astype(float).to_numpy()
-    # metrics match
-    roc = roc_auc_score(y, p_cal)
-    pr = average_precision_score(y, p_cal)
-    assert abs(roc - rep["cv_metrics"]["roc_auc"]) <= TOL_METRIC
-    assert abs(pr - rep["cv_metrics"]["pr_auc"]) <= TOL_METRIC
+    y_pred_cal = (p_cal >= 0.5).astype(int)
+
+    computed_cv = {
+        "roc_auc": roc_auc_score(y, p_cal),
+        "pr_auc": average_precision_score(y, p_cal),
+        "accuracy": accuracy_score(y, y_pred_cal),
+        "precision": precision_score(y, y_pred_cal, zero_division=0),
+        "recall": recall_score(y, y_pred_cal, zero_division=0),
+        "f1": f1_score(y, y_pred_cal, zero_division=0),
+    }
+    for k in computed_cv:
+        assert (
+            abs(computed_cv[k] - rep["cv_metrics"][k]) <= TOL_METRIC
+        ), f"cv_metrics[{k}] mismatch"
+
     brier_cal = np.mean((y - p_cal) ** 2)
     brier_unc = np.mean((y - p_unc) ** 2)
-    assert brier_cal + 1e-9 < brier_unc - 0.005, "Calibrated Brier must be meaningfully lower than uncalibrated"
+    assert (
+        brier_cal + 1e-9 < brier_unc - BRIER_MARGIN
+    ), f"Calibrated Brier must be at least {BRIER_MARGIN} lower than uncalibrated"
+
+def test_confusion_matrix_values():
+    """Recompute confusion matrix at threshold 0.5 and compare with report.json values."""
+    rep = json.loads(read_lf(REPORT_PATH))
+    pipe = joblib.load(MODEL_PATH)
+    df = pd.read_csv(DATA_PATH)
+    _, test_idx = load_splits()
+    X_test = df.drop(columns=["converted"]).iloc[test_idx]
+    y_test = df["converted"].iloc[test_idx].to_numpy()
+    p = pipe.predict_proba(X_test)[:, 1]
+    y_pred = (p >= 0.5).astype(int)
+    # [[TN, FP], [FN, TP]]
+    tn = int(((y_test == 0) & (y_pred == 0)).sum())
+    fp = int(((y_test == 0) & (y_pred == 1)).sum())
+    fn = int(((y_test == 1) & (y_pred == 0)).sum())
+    tp = int(((y_test == 1) & (y_pred == 1)).sum())
+    cm_computed = [[tn, fp], [fn, tp]]
+    cm_report = rep["test_confusion_matrix"]
+    assert cm_report == cm_computed, f"Confusion matrix mismatch: {cm_report} vs {cm_computed}"
 
 def test_probe_consistency_tolerance():
     """Independent fold probe AUC should be close to reported CV AUC within tolerance."""
