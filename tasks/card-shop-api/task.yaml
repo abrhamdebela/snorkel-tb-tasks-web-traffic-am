@@ -23,12 +23,12 @@ instruction: |-
 
   Output:
     - A JSON object in /app/output/best_deal.json with the following fields:
-      - listing_id: The ID of the listing
-      - card_id: The ID of the card
-      - player_name: The name of the player
-      - season: The season of the player
-      - war: The WAR of the player in the given season
-      - price: The price of the card
+      - listing_id (integer): The ID of the listing
+      - card_id (integer): The ID of the card
+      - player_name (string): The name of the player
+      - season (integer): The season of the player
+      - war (float): The WAR of the player in the given season
+      - price (float): The price of the card
 author_name: Henry Ehrenberg
 author_email: henry@snorkel.ai
 difficulty: unknown
