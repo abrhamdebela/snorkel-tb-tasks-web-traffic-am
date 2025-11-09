@@ -101,7 +101,7 @@ instruction: |-
   Line 3: Shapes: {shape_1}, {shape_2}, ...
   Line 4: Score: {score}
   Line 5: Result:
-  Line 5+: One line per grid row using Python list syntax with single quotes and commas followed by a space (eg: ['O', 'O', '.', '.']). Do not add extra spaces.
+  Line 6+: One line per grid row using Python list syntax with single quotes and commas followed by a space (eg: ['O', 'O', '.', '.']). Do not add extra spaces.
   After the final row, write one completely empty line to separate this game from the next block.
 
   Additional formatting requirements:
@@ -135,7 +135,7 @@ instruction: |-
 
 author_name: Charles M. Russo
 author_email: charlesmrusso@outlook.com
-difficulty: unknown
+difficulty: hard
 category: games
 tags:
   - games
