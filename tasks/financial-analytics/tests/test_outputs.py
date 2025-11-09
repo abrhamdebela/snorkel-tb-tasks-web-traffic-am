@@ -7,6 +7,8 @@ from collections import defaultdict
 from decimal import Decimal
 from pathlib import Path
 
+APP_ROOT = Path("/") / "app"
+PROCESS_SCRIPT = APP_ROOT / "process_transactions.py"
 
 def test_output_file_exists():
     """Check that the cleaned CSV file was created at the correct path."""
@@ -1487,7 +1489,7 @@ def test_no_external_api_calls():
 
 def test_explicit_newline_parameters_used():
     """Verify that code explicitly controls line endings using newline parameter."""
-    solution_file = Path("/app/process_transactions.py")
+    solution_file = PROCESS_SCRIPT
     if solution_file.exists():
         solution_content = solution_file.read_text()
         
@@ -1509,7 +1511,7 @@ def test_explicit_newline_parameters_used():
 
 def test_all_currency_codes_explicitly_supported():
     """Verify that solution explicitly supports all listed currency codes regardless of dataset coverage."""
-    solution_file = Path("/app/process_transactions.py")
+    solution_file = PROCESS_SCRIPT
     if solution_file.exists():
         solution_content = solution_file.read_text()
         
