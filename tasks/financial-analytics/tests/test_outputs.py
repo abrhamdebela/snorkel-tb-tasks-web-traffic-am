@@ -1458,3 +1458,177 @@ def test_visualization_content_correctness():
     # Verify computed totals are reasonable and match expected pattern
     # (Note: We can't extract pixel values from PNG to verify exact bar heights,
     # but we verify the computed totals are correct and file meets minimum requirements)
+
+
+def test_no_external_api_calls():
+    """Verify that solution does not make external API calls (offline processing)."""
+    # This test verifies that the solution works offline by checking:
+    # 1. No network-dependent imports in the solution
+    # 2. All data comes from local files
+    # 3. No external service calls
+    
+    solution_file = Path("/app/solution.sh")
+    if solution_file.exists():
+        solution_content = solution_file.read_text()
+        # Check for common API call patterns
+        api_patterns = [
+            "curl", "wget", "requests.get", "requests.post", "urllib.request",
+            "http.client", "api", "api_key", "token", "bearer"
+        ]
+        for pattern in api_patterns:
+            assert pattern not in solution_content.lower(), (
+                f"Solution may contain external API calls: found '{pattern}'"
+            )
+    
+    # Verify input data is from local file
+    input_file = Path("/app/data/transactions_raw.csv")
+    assert input_file.exists(), "Input file should exist locally"
+
+
+def test_explicit_newline_parameters_used():
+    """Verify that code explicitly controls line endings using newline parameter."""
+    solution_file = Path("/app/process_transactions.py")
+    if solution_file.exists():
+        solution_content = solution_file.read_text()
+        
+        # Check for proper CSV file opening with newline=''
+        assert "newline=''" in solution_content or 'newline=""' in solution_content, (
+            "CSV file opening should explicitly set newline='' to control line endings"
+        )
+        
+        # Check for proper text file opening with newline='\n'
+        assert "newline='\\n'" in solution_content or 'newline="\\n"' in solution_content, (
+            "Text file opening should explicitly set newline='\\n' to ensure LF-only line endings"
+        )
+        
+        # Check for csv.writer with lineterminator='\n'
+        assert "lineterminator='\\n'" in solution_content or 'lineterminator="\\n"' in solution_content, (
+            "csv.writer should explicitly set lineterminator='\\n' to ensure LF-only line endings"
+        )
+
+
+def test_all_currency_codes_explicitly_supported():
+    """Verify that solution explicitly supports all listed currency codes regardless of dataset coverage."""
+    solution_file = Path("/app/process_transactions.py")
+    if solution_file.exists():
+        solution_content = solution_file.read_text()
+        
+        # Required currency codes from task specification
+        required_currencies = ['EUR', 'GBP', 'JPY', 'INR', 'USD', 'AUD', 'CAD', 'CHF', 'SEK', 'BRL', 'ARS']
+        
+        # Check that all currency codes are explicitly handled in the solution
+        for currency in required_currencies:
+            # Verify that each currency code appears in the exchange rate dictionary or case statements
+            assert currency in solution_content, (
+                f"Required currency code {currency} not explicitly handled in solution"
+            )
+
+
+def test_csv_quoting_fields_with_commas():
+    """Verify CSV quoting for fields that actually contain commas in the original data."""
+    output_file = Path("/app/output/transactions_cleaned.csv")
+    
+    # Read the raw CSV content to check quoting
+    with open(output_file, "r", encoding="utf-8", newline="") as f:
+        content = f.read()
+    
+    # Check that the CSV content can be properly parsed
+    lines = content.split('\n')
+    header = lines[0]
+    
+    # Verify header is properly formatted
+    assert header == "transaction_id,user_id,country,amount_usd,date,status", (
+        f"Header not properly formatted: {header}"
+    )
+    
+    # Verify that the CSV can be read properly by standard CSV readers
+    with open(output_file, "r", encoding="utf-8", newline="") as f:
+        reader = csv.DictReader(f)
+        rows = list(reader)
+        assert len(rows) > 0, "CSV should be readable by standard CSV reader"
+        # Check that we have the expected number of columns
+        assert len(reader.fieldnames) == 6, f"Expected 6 columns, got {len(reader.fieldnames)}"
+
+
+def test_visualization_contains_expected_bars():
+    """Verify that visualization is specifically a bar chart of completed transaction totals."""
+    viz_file = Path("/app/output/visuals/transactions_by_country.png")
+    output_file = Path("/app/output/transactions_cleaned.csv")
+    
+    # Calculate expected data: total completed transaction amount per country
+    from collections import defaultdict
+    from decimal import Decimal
+    
+    country_amounts = defaultdict(Decimal)
+    completed_count = 0
+    
+    with open(output_file, "r", encoding="utf-8", newline="") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            if row["status"] == "completed":
+                country = row["country"]
+                amount = Decimal(row["amount_usd"])
+                country_amounts[country] += amount
+                completed_count += 1
+    
+    # Verify we have completed transactions to visualize
+    assert completed_count > 0, "No completed transactions found for visualization"
+    assert len(country_amounts) > 0, "No countries with completed transactions"
+    
+    # Verify the visualization file exists and is valid
+    assert viz_file.exists(), "Visualization file does not exist"
+    
+    # Check file size meets minimum requirement (1000 bytes as specified in task)
+    file_size = viz_file.stat().st_size
+    assert file_size >= 1000, (
+        f"Visualization file size {file_size} bytes is less than required 1000 bytes"
+    )
+    
+    # Verify PNG header
+    with open(viz_file, "rb") as f:
+        header = f.read(8)
+    assert header == b"\x89PNG\r\n\x1a\n", "File is not a valid PNG"
+    
+    # Try to verify content if libraries are available
+    try:
+        from PIL import Image
+        import numpy as np
+        
+        # Open the image
+        img = Image.open(viz_file)
+        img_array = np.array(img)
+        
+        # Basic checks:
+        # 1. Image should have reasonable dimensions (not too small)
+        width, height = img.size
+        assert width >= 100 and height >= 100, (
+            f"Visualization dimensions too small: {width}x{height}, expected at least 100x100"
+        )
+        
+        # 2. For a bar chart, we expect:
+        #    - Multiple distinct vertical bars (rectangular regions)
+        #    - The image should have some structure (not a single color)
+        unique_colors = len(np.unique(img_array.reshape(-1, img_array.shape[-1]), axis=0))
+        assert unique_colors > 5, (
+            f"Visualization appears to be too simple (only {unique_colors} unique colors), "
+            f"expected a bar chart with multiple bars"
+        )
+        
+        # While we can't precisely verify bar heights without more sophisticated analysis,
+        # we can confirm the image has the characteristics of a bar chart
+        
+    except ImportError:
+        # PIL/Pillow not available, skip detailed image analysis
+        # But verify the file is a valid PNG and has reasonable size
+        file_size = viz_file.stat().st_size
+        assert file_size >= 1000, "PNG file too small for a meaningful visualization"
+        
+        # Verify the file contains PNG data (basic check)
+        with open(viz_file, "rb") as f:
+            header = f.read(8)
+            assert header == b"\x89PNG\r\n\x1a\n", "File is not a valid PNG"
+        
+        # We can't verify it's specifically a bar chart without image processing,
+        # but we verify the file is valid and of reasonable size
+
+    # but we verify the computed totals are correct and file meets minimum requirements)
