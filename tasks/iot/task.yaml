@@ -16,7 +16,9 @@ instruction: |-
      - Normal sequences: Use augmentations (jitter, scaling, time-warp, or combinations) on original windows
      - Anomalous sequences: Use latent-space perturbations of the trained VAE
   5. Split the synthesized dataset into train/val/test sets with approximately 70%/15%/15% ratio (train must be largest)
-  6. Save outputs to /app with exact filenames:
+  6. Create a Python CLI script (e.g., iot_vae_synthesizer.py or similar) that performs the above steps
+  
+  7. Save outputs to /app with exact filenames:
      - /app/train.parquet: Training set with fixed-length windows
      - /app/val.parquet: Validation set with fixed-length windows
      - /app/test.parquet: Test set with fixed-length windows
