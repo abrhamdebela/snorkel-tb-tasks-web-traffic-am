@@ -296,32 +296,79 @@ def main():
         for i in range(len(anomalous_synthetic))
     ]
     
-    # Combine and create labels
-    all_windows = np.vstack([normal_synthetic, anomalous_synthetic])
-    all_labels = np.array([0] * len(normal_synthetic) + [1] * len(anomalous_synthetic))
+    # Split normal and anomalous samples separately to ensure balanced splits
+    n_normal = len(normal_synthetic)
+    n_anomalous = len(anomalous_synthetic)
     
-    # Shuffle
-    indices = np.random.permutation(len(all_windows))
-    all_windows = all_windows[indices]
-    all_labels = all_labels[indices]
+    # Shuffle each class separately
+    normal_indices = np.random.permutation(n_normal)
+    anomalous_indices = np.random.permutation(n_anomalous)
     
-    # Update manifest with shuffled indices
-    all_manifest = normal_manifest + anomalous_manifest
-    all_manifest = [all_manifest[i] for i in indices]
-    for i, entry in enumerate(all_manifest):
-        entry['sample_id'] = i
+    normal_windows_shuffled = normal_synthetic[normal_indices]
+    anomalous_windows_shuffled = anomalous_synthetic[anomalous_indices]
+    normal_manifest_shuffled = [normal_manifest[i] for i in normal_indices]
+    anomalous_manifest_shuffled = [anomalous_manifest[i] for i in anomalous_indices]
     
-    # Split into train/val/test (70/15/15)
-    n_total = len(all_windows)
-    n_train = int(0.7 * n_total)
-    n_val = int(0.15 * n_total)
+    # Split each class into train/val/test (70/15/15)
+    n_normal_train = int(0.7 * n_normal)
+    n_normal_val = int(0.15 * n_normal)
+    n_anomalous_train = int(0.7 * n_anomalous)
+    n_anomalous_val = int(0.15 * n_anomalous)
     
-    train_windows = all_windows[:n_train]
-    train_labels = all_labels[:n_train]
-    val_windows = all_windows[n_train:n_train + n_val]
-    val_labels = all_labels[n_train:n_train + n_val]
-    test_windows = all_windows[n_train + n_val:]
-    test_labels = all_labels[n_train + n_val:]
+    # Normal splits
+    normal_train = normal_windows_shuffled[:n_normal_train]
+    normal_val = normal_windows_shuffled[n_normal_train:n_normal_train + n_normal_val]
+    normal_test = normal_windows_shuffled[n_normal_train + n_normal_val:]
+    normal_train_manifest = normal_manifest_shuffled[:n_normal_train]
+    normal_val_manifest = normal_manifest_shuffled[n_normal_train:n_normal_train + n_normal_val]
+    normal_test_manifest = normal_manifest_shuffled[n_normal_train + n_normal_val:]
+    
+    # Anomalous splits
+    anomalous_train = anomalous_windows_shuffled[:n_anomalous_train]
+    anomalous_val = anomalous_windows_shuffled[n_anomalous_train:n_anomalous_train + n_anomalous_val]
+    anomalous_test = anomalous_windows_shuffled[n_anomalous_train + n_anomalous_val:]
+    anomalous_train_manifest = anomalous_manifest_shuffled[:n_anomalous_train]
+    anomalous_val_manifest = anomalous_manifest_shuffled[n_anomalous_train:n_anomalous_train + n_anomalous_val]
+    anomalous_test_manifest = anomalous_manifest_shuffled[n_anomalous_train + n_anomalous_val:]
+    
+    # Combine train/val/test sets (shuffle within each split)
+    train_windows = np.vstack([normal_train, anomalous_train])
+    train_labels = np.array([0] * len(normal_train) + [1] * len(anomalous_train))
+    train_indices = np.random.permutation(len(train_windows))
+    train_windows = train_windows[train_indices]
+    train_labels = train_labels[train_indices]
+    train_manifest = normal_train_manifest + anomalous_train_manifest
+    train_manifest = [train_manifest[i] for i in train_indices]
+    
+    val_windows = np.vstack([normal_val, anomalous_val])
+    val_labels = np.array([0] * len(normal_val) + [1] * len(anomalous_val))
+    val_indices = np.random.permutation(len(val_windows))
+    val_windows = val_windows[val_indices]
+    val_labels = val_labels[val_indices]
+    val_manifest = normal_val_manifest + anomalous_val_manifest
+    val_manifest = [val_manifest[i] for i in val_indices]
+    
+    test_windows = np.vstack([normal_test, anomalous_test])
+    test_labels = np.array([0] * len(normal_test) + [1] * len(anomalous_test))
+    test_indices = np.random.permutation(len(test_windows))
+    test_windows = test_windows[test_indices]
+    test_labels = test_labels[test_indices]
+    test_manifest = normal_test_manifest + anomalous_test_manifest
+    test_manifest = [test_manifest[i] for i in test_indices]
+    
+    # Update sample_ids in manifest
+    sample_id = 0
+    for entry in train_manifest:
+        entry['sample_id'] = sample_id
+        sample_id += 1
+    for entry in val_manifest:
+        entry['sample_id'] = sample_id
+        sample_id += 1
+    for entry in test_manifest:
+        entry['sample_id'] = sample_id
+        sample_id += 1
+    
+    all_manifest = train_manifest + val_manifest + test_manifest
     
     # Create DataFrames with window data (optimized)
     def create_window_df(windows, labels):
