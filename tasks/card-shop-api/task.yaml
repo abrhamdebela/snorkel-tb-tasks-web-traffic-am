@@ -36,8 +36,10 @@ instruction: |-
       - card_id (integer): The ID of the card given in the card shop listing
       - player_name (string): The name of the player given in the Baseball Reference page
       - season (integer): The season of the player given in the Baseball Reference page
-      - war (float, correct to two decimal places): The WAR of the player in the given season given in the Baseball Reference page
-      - price (float, correct to two decimal places): The price of the card given in the card shop listing
+      - war (float): The WAR of the player in the given season given in the Baseball Reference page, correct to two decimal places
+      - price (float): The price of the card given in the card shop listing, correct to two decimal places
+      There should be one element for every player I provided data for that has a valid
+      best deal card.
 author_name: Henry Ehrenberg
 author_email: henry@snorkel.ai
 difficulty: unknown
