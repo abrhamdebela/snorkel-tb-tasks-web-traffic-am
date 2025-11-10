@@ -20,7 +20,8 @@ instruction: |-
       interested in cards that are in Excellent condition or better.
     - The value of the deal on the card should be the WAR of the player in the given
       season divided by the price of the card. Find the card with the highest value for
-      each player I provided data for.
+      each player I provided data for, and save the results as per the output
+      requirements below.
 
   Output:
     - A JSON array in /app/output/best_deals.json where each element has the following
