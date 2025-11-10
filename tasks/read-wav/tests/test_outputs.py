@@ -662,7 +662,7 @@ def test_deterministic_behavior_with_seed():
             cwd="/app",
             capture_output=True,
             text=True,
-            timeout=120
+            timeout=60
         )
         
         # CLI should run successfully

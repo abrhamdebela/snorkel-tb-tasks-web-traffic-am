@@ -24,9 +24,11 @@ fi
 
 uv venv .tbench-testing
 source .tbench-testing/bin/activate
-uv pip install pytest==8.4.1 numpy==1.24.3 scipy==1.11.4 soundfile==0.12.1
+uv pip install pytest==8.4.1 pytest-timeout==2.3.1 numpy==2.1.0 scipy==1.13.1 soundfile==0.12.1
 
 # Install other dependencies if needed (remember, by default this is a different venv
 # than your agent's)
 
-uv run pytest $TEST_DIR/test_outputs.py -rA
+# Run tests with per-test timeout (300 seconds per test to catch hanging tests)
+# The overall test suite timeout is controlled by max_test_timeout_sec in task.yaml
+uv run pytest $TEST_DIR/test_outputs.py -rA --timeout=300
