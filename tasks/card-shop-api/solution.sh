@@ -227,7 +227,7 @@ for listing in all_listings:
 
     price = listing['price']
 
-    # Look up best WAR for this card (considers all years for NULL year rookies)
+    # Look up WAR for this card (infers rookie year for NULL year rookies)
     war_result = find_best_war_for_card(card, price, war_lookup)
     if war_result is None:
         continue

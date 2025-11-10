@@ -196,7 +196,7 @@ def init_database():
 
         # ===== BOBBY WITT JR =====
         # listing_id=19: card_id=19 (Witt, Bobby Jr. NULL year rookie)
-        # Could infer best year 2024 (WAR=9.40), but price=$50 makes value=0.188 - NOT best deal
+        # Will infer 2022 (WAR=0.92), price=$50, value=0.0184 - NOT best deal
         models.Listing(card_id=19, price=50.00, condition="Excellent", seller_name="RoyalsShop", quantity=1),
 
         # listing_id=20: card_id=21 (Bobby 2024) - BEST DEAL FOR BOBBY
