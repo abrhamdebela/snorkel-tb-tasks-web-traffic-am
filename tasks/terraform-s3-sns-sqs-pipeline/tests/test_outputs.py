@@ -245,34 +245,67 @@ def test_dlq_redrive_behavior():
     except ClientError:
         pass
 
-    test_key = "test-dlq-object.txt"
-    test_content = b"Test content for DLQ"
+    test_key = "test-dlq-redrive-object.txt"
+    test_content = b"Test content for DLQ redrive"
     s3_client.put_object(Bucket=BUCKET_NAME, Key=test_key, Body=test_content)
 
-    time.sleep(5)
+    time.sleep(10)
 
     response1 = sqs_client.receive_message(
-        QueueUrl=queue_url, MaxNumberOfMessages=1, WaitTimeSeconds=10
+        QueueUrl=queue_url,
+        MaxNumberOfMessages=1,
+        WaitTimeSeconds=15,
+        AttributeNames=["ApproximateReceiveCount"],
     )
     messages1 = response1.get("Messages", [])
-    assert len(messages1) > 0, "No messages in main queue"
+    assert len(messages1) > 0, "No messages in main queue after S3 upload"
+    receive_count_1 = int(
+        messages1[0]["Attributes"].get("ApproximateReceiveCount", "1")
+    )
+    assert receive_count_1 >= 1, f"Expected receive count >= 1, got {receive_count_1}"
 
     time.sleep(35)
 
     response2 = sqs_client.receive_message(
-        QueueUrl=queue_url, MaxNumberOfMessages=1, WaitTimeSeconds=10
+        QueueUrl=queue_url,
+        MaxNumberOfMessages=10,
+        WaitTimeSeconds=15,
+        AttributeNames=["ApproximateReceiveCount"],
     )
     messages2 = response2.get("Messages", [])
-    assert len(messages2) > 0, "No messages on second receive"
+    receive_count_2 = None
+    if messages2:
+        for msg in messages2:
+            receive_count = int(msg["Attributes"].get("ApproximateReceiveCount", "1"))
+            if receive_count >= 2:
+                receive_count_2 = receive_count
+                break
 
-    time.sleep(35)
-
-    dlq_response = sqs_client.receive_message(
-        QueueUrl=dlq_url, MaxNumberOfMessages=10, WaitTimeSeconds=10
+    assert receive_count_2 is not None and receive_count_2 >= 2, (
+        f"Message was not received twice. Receive count 1: {receive_count_1}, "
+        f"Receive count 2: {receive_count_2}"
     )
-    dlq_messages = dlq_response.get("Messages", [])
 
-    assert len(dlq_messages) > 0, "Message not moved to DLQ after max receive count"
+    time.sleep(40)
+
+    max_wait_time = 90
+    start_time = time.time()
+    dlq_messages = []
+
+    while time.time() - start_time < max_wait_time:
+        time.sleep(5)
+        dlq_response = sqs_client.receive_message(
+            QueueUrl=dlq_url, MaxNumberOfMessages=10, WaitTimeSeconds=5
+        )
+        dlq_messages = dlq_response.get("Messages", [])
+        if dlq_messages:
+            break
+
+    assert len(dlq_messages) > 0, (
+        f"Message not moved to DLQ after {max_wait_time}s. "
+        f"Receive count 1: {receive_count_1}, Receive count 2: {receive_count_2}. "
+        f"This indicates the redrive policy (maxReceiveCount=2) is not working correctly."
+    )
 
     dlq_message_body = json.loads(dlq_messages[0]["Body"])
     if "Message" in dlq_message_body:
@@ -361,3 +394,184 @@ def test_pipeline_tf_uses_modules_only():
     assert 'resource "aws_s3_bucket_notification"' not in content, (
         "pipeline.tf should use S3 notification module, not direct resource"
     )
+
+
+def test_terraform_state_exists():
+    """Verify Terraform state file exists, indicating Terraform was actually run."""
+    import os
+
+    terraform_dir = "/app/terraform"
+    state_file = os.path.join(terraform_dir, "terraform.tfstate")
+    assert os.path.exists(state_file), (
+        "terraform.tfstate not found - Terraform was not executed"
+    )
+
+
+def test_terraform_state_contains_resources():
+    """Verify Terraform state contains the expected resources with correct names."""
+    import os
+    import json
+
+    terraform_dir = "/app/terraform"
+    state_file = os.path.join(terraform_dir, "terraform.tfstate")
+    assert os.path.exists(state_file), "terraform.tfstate not found"
+
+    with open(state_file, "r") as f:
+        state = json.load(f)
+
+    resources = state.get("resources", [])
+    assert len(resources) > 0, "Terraform state contains no resources"
+
+    found_s3 = False
+    found_sns = False
+    found_sqs = False
+    found_sqs_dlq = False
+
+    for resource in resources:
+        resource_type = resource.get("type", "")
+        module_address = resource.get("module", "")
+        instances = resource.get("instances", [])
+
+        for instance in instances:
+            attributes = instance.get("attributes", {})
+
+            if (
+                "aws_s3_bucket" in resource_type
+                and "module.s3_bucket" in module_address
+                and resource.get("mode") == "managed"
+            ):
+                bucket_name = attributes.get("bucket") or attributes.get("id", "")
+                if bucket_name == BUCKET_NAME:
+                    found_s3 = True
+
+            if (
+                "aws_sns_topic" in resource_type
+                and "module.sns_topic" in module_address
+                and resource.get("mode") == "managed"
+            ):
+                topic_arn = attributes.get("arn", "") or attributes.get("id", "")
+                if TOPIC_NAME in topic_arn:
+                    found_sns = True
+
+            if (
+                "aws_sqs_queue" in resource_type
+                and "module.sqs_queue" in module_address
+                and resource.get("mode") == "managed"
+            ):
+                queue_name = attributes.get("name", "")
+                if queue_name == QUEUE_NAME:
+                    found_sqs = True
+                elif queue_name == DLQ_NAME:
+                    found_sqs_dlq = True
+
+    assert found_s3, f"S3 bucket '{BUCKET_NAME}' not found in Terraform state"
+    assert found_sns, f"SNS topic '{TOPIC_NAME}' not found in Terraform state"
+    assert found_sqs, f"SQS queue '{QUEUE_NAME}' not found in Terraform state"
+    assert found_sqs_dlq, f"SQS DLQ '{DLQ_NAME}' not found in Terraform state"
+
+
+def test_terraform_validate_passes():
+    """Verify Terraform configuration is valid by running terraform validate."""
+    import subprocess
+    import os
+
+    terraform_dir = "/app/terraform"
+    assert os.path.exists(terraform_dir), "Terraform directory not found"
+
+    result = subprocess.run(
+        ["terraform", "validate"],
+        cwd=terraform_dir,
+        capture_output=True,
+        text=True,
+        timeout=30,
+    )
+
+    assert result.returncode == 0, f"Terraform validate failed: {result.stderr}"
+
+
+def test_terraform_plan_shows_no_changes():
+    """Verify Terraform plan shows no resource changes, meaning state matches infrastructure."""
+    import subprocess
+    import os
+    import re
+
+    terraform_dir = "/app/terraform"
+    assert os.path.exists(terraform_dir), "Terraform directory not found"
+
+    result = subprocess.run(
+        ["terraform", "plan", "-detailed-exitcode"],
+        cwd=terraform_dir,
+        capture_output=True,
+        text=True,
+        timeout=60,
+    )
+
+    exit_code = result.returncode
+    output = result.stdout + result.stderr
+
+    if exit_code == 1:
+        assert False, f"Terraform plan failed with error: {output}"
+
+    output_lower = output.lower()
+
+    resource_change_patterns = [
+        r"will be created",
+        r"must be replaced",
+        r"will be destroyed",
+        r"will be updated in-place",
+        r"forces replacement",
+        r"# .* will be",
+        r"# .* must be",
+    ]
+
+    plan_summary_pattern = r"Plan: (\d+) to add, (\d+) to change, (\d+) to destroy"
+    plan_match = re.search(plan_summary_pattern, output_lower)
+    has_plan_changes = False
+    if plan_match:
+        to_add, to_change, to_destroy = map(int, plan_match.groups())
+        has_plan_changes = (to_add > 0) or (to_change > 0) or (to_destroy > 0)
+
+    has_resource_changes = has_plan_changes or any(
+        re.search(pattern, output_lower) for pattern in resource_change_patterns
+    )
+
+    data_source_read_patterns = [
+        r"reading\.\.\.",
+        r"data\..*: reading",
+        r"data\..*: read",
+    ]
+    has_only_data_sources = (
+        any(re.search(pattern, output_lower) for pattern in data_source_read_patterns)
+        and not has_resource_changes
+    )
+
+    if exit_code == 2:
+        if has_resource_changes:
+            assert False, (
+                f"Terraform plan shows resource changes (exit code: 2). "
+                f"This suggests infrastructure was not created by Terraform or state is out of sync. "
+                f"Output: {output}"
+            )
+        elif has_only_data_sources:
+            pass
+        else:
+            assert False, (
+                f"Terraform plan returned exit code 2 but no clear reason. "
+                f"Output: {output}"
+            )
+    elif exit_code == 0:
+        if (
+            "No changes" in output
+            or "no changes" in output_lower
+            or "No changes" in output
+        ):
+            pass
+        else:
+            assert False, (
+                f"Terraform plan returned exit code 0 but did not indicate 'No changes': {output}"
+            )
+    else:
+        assert False, (
+            f"Terraform plan returned unexpected exit code: {exit_code}. "
+            f"Output: {output}"
+        )
