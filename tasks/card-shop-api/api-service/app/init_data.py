@@ -21,17 +21,17 @@ def init_database():
     # Seed data strategy:
     # - Players WITH HTML WAR data: Nomar, Andruw, Magglio, David Ortiz, Bobby Witt Jr, Ichiro
     # - Each player has multiple cards with different name formats
-    # - NULL year rookies: solution will try all years and pick best WAR/price ratio
-    # - Only Ichiro's NULL year rookie IS best deal (he has high WAR in actual rookie year 2001)
+    # - NULL year rookies: solution will infer actual rookie year (earliest year in HTML)
+    # - Only Ichiro's NULL year rookie IS best deal (high WAR 7.71 in rookie year 2001)
     # - Ichiro has both NULL and explicit 2001 rookies, NULL is better deal (cheaper)
-    # - Other players' NULL year rookies are NOT best deals (priced too high)
+    # - Other players' NULL year rookies are NOT best deals (low WAR in actual rookie years)
     # - NULL year non-rookies are traps to skip (solution should ignore these)
     # - Magglio Ordonez has cards but ZERO listings
     # - Some players have multiple cards for same year (different brands)
     cards = [
         # ===== NOMAR GARCIAPARRA =====
         # Rookie year: 1996 (WAR=0.19), Best WAR: 2000 (WAR=7.42)
-        # card_id=1: NULL year rookie - NOT best deal (priced at $45, too expensive even with 2000 WAR)
+        # card_id=1: NULL year rookie - NOT best deal (will infer 1996 with WAR=0.19, poor value)
         models.Card(player_name="N. Garciaparra", team="Boston Red Sox", card_brand="Topps", year=None, card_number="#301", rookie_card=True),
         # card_id=2: 2002 (WAR=6.81)
         models.Card(player_name="Nomar Garciaparra", team="Boston Red Sox", card_brand="Topps", year=2002, card_number="#150", rookie_card=False),
@@ -46,7 +46,7 @@ def init_database():
 
         # ===== ANDRUW JONES =====
         # Rookie year: 1996 (WAR=0.12), Best WAR: 2000 (WAR=8.16)
-        # card_id=7: NULL year rookie - NOT best deal (priced at $40, too expensive even if trying all years)
+        # card_id=7: NULL year rookie - NOT best deal (will infer 1996 with WAR=0.12, poor value)
         models.Card(player_name="Jones, Andruw", team="Atlanta Braves", card_brand="Fleer", year=None, card_number="#212", rookie_card=True),
         # card_id=8: 2000 (WAR=8.16) - Topps, BEST DEAL for Andruw
         models.Card(player_name="Andruw Jones", team="Atlanta Braves", card_brand="Topps", year=2000, card_number="#400", rookie_card=False),
@@ -61,7 +61,7 @@ def init_database():
 
         # ===== DAVID ORTIZ =====
         # Rookie year: 1997 (WAR=0.08), Best WAR: 2007 (WAR=6.37)
-        # card_id=13: NULL year rookie - NOT best deal (priced at $40, too expensive even with 2007 WAR)
+        # card_id=13: NULL year rookie - NOT best deal (will infer 1997 with WAR=0.08, poor value)
         models.Card(player_name="David Ortiz", team="Boston Red Sox", card_brand="Fleer", year=None, card_number="#180", rookie_card=True),
         # card_id=14: 2005 (WAR=5.23)
         models.Card(player_name="Ortiz, David", team="Boston Red Sox", card_brand="Topps", year=2005, card_number="#34", rookie_card=False),
@@ -76,7 +76,7 @@ def init_database():
 
         # ===== BOBBY WITT JR =====
         # Rookie year: 2022 (WAR=0.92), Best WAR: 2024 (WAR=9.40)
-        # card_id=19: NULL year rookie - NOT best deal (priced at $50, too expensive even with 2024 WAR)
+        # card_id=19: NULL year rookie - NOT best deal (will infer 2022 with WAR=0.92, poor value)
         models.Card(player_name="Witt, Bobby Jr.", team="Kansas City Royals", card_brand="Topps", year=None, card_number="#1", rookie_card=True),
         # card_id=20: 2022 (WAR=0.92)
         models.Card(player_name="Bobby Witt Jr.", team="Kansas City Royals", card_brand="Topps", year=2022, card_number="#650", rookie_card=False),
@@ -142,7 +142,7 @@ def init_database():
     listings = [
         # ===== NOMAR GARCIAPARRA =====
         # listing_id=1: card_id=1 (N. Garciaparra NULL year rookie)
-        # Could infer best year 2000 (WAR=7.42), but price=$45 makes value=0.165 - NOT best deal
+        # Will infer 1996 (WAR=0.19), price=$45, value=0.0042 - NOT best deal
         models.Listing(card_id=1, price=45.00, condition="Excellent", seller_name="EliteCards", quantity=1),
 
         # listing_id=2: card_id=6 (Nomar 2000) - BEST DEAL FOR NOMAR
@@ -160,7 +160,7 @@ def init_database():
 
         # ===== ANDRUW JONES =====
         # listing_id=7: card_id=7 (Jones, Andruw NULL year rookie) - NOT best deal
-        # Could try all years and pick 2000 (WAR=8.16), but price=$40 makes value=0.204
+        # Will infer 1996 (WAR=0.12), price=$40, value=0.0030 - NOT best deal
         models.Listing(card_id=7, price=40.00, condition="Mint", seller_name="AtlantaCards", quantity=1),
 
         # listing_id=8: card_id=8 (Andruw 2000 Topps) - BEST DEAL FOR ANDRUW
@@ -178,7 +178,7 @@ def init_database():
 
         # ===== DAVID ORTIZ =====
         # listing_id=13: card_id=13 (David Ortiz NULL year rookie)
-        # Could infer best year 2007 (WAR=6.37), but price=$40 makes value=0.159 - NOT best deal
+        # Will infer 1997 (WAR=0.08), price=$40, value=0.0020 - NOT best deal
         models.Listing(card_id=13, price=40.00, condition="Near Mint", seller_name="BigPapiShop", quantity=1),
 
         # listing_id=14: card_id=18 (Ortiz 2007) - BEST DEAL FOR ORTIZ
