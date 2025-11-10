@@ -164,13 +164,13 @@ def find_best_war_for_card(card, listing_price, war_lookup):
         # Find the rookie year for this player (earliest year in data)
         for (war_player, war_year), (war_value, is_rookie_year) in war_lookup.items():
             if names_match(player_name, war_player) and is_rookie_year:
-                return (war_year, war_value)
+                return (war_year, war_value, war_player)
         return None
 
     # Normal case: card has a year, find matching WAR
     for (war_player, war_year), (war_value, is_rookie_year) in war_lookup.items():
         if war_year == year and names_match(player_name, war_player):
-            return (war_year, war_value)
+            return (war_year, war_value, war_player)
 
     return None
 
@@ -232,7 +232,7 @@ for listing in all_listings:
     if war_result is None:
         continue
 
-    year, war = war_result
+    year, war, display_name = war_result
 
     # Calculate value (WAR per dollar - higher is better)
     value = war / price
@@ -253,7 +253,7 @@ for listing in all_listings:
             'deal': {
                 'listing_id': listing['id'],
                 'card_id': card['id'],
-                'player_name': card['player_name'],
+                'player_name': display_name,
                 'season': year,
                 'war': war,
                 'price': price
