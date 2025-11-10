@@ -1,0 +1,4 @@
+# Test dependencies for IoT telemetry task
+# All Python dependencies must be pinned for reproducibility
+pytest==8.4.1
+

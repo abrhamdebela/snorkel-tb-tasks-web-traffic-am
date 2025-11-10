@@ -1,0 +1,50 @@
+{
+  "baseline_profiles": {
+    "temperature": {
+      "unit": "C",
+      "expected_interval_seconds": 60,
+      "avg_value": 22.5,
+      "stddev_value": 0.8,
+      "absolute_critical_value": 85.0
+    },
+    "humidity": {
+      "unit": "%",
+      "expected_interval_seconds": 120,
+      "avg_value": 45.0,
+      "stddev_value": 5.0,
+      "absolute_critical_value": 95.0
+    },
+    "vibration": {
+      "unit": "mm/s",
+      "expected_interval_seconds": 30,
+      "avg_value": 0.5,
+      "stddev_value": 0.2,
+      "absolute_critical_value": 50.0
+    },
+    "power": {
+      "unit": "W",
+      "expected_interval_seconds": 60,
+      "avg_value": 120.0,
+      "stddev_value": 10.0,
+      "absolute_critical_value": 10000.0
+    }
+  },
+  "anomaly_thresholds": {
+    "drift_slope_threshold": 0.05,
+    "drift_min_consecutive": 6,
+    "spike_std_multiplier": 4,
+    "high_spike_multiplier": 6,
+    "critical_spike_multiplier": 10,
+    "heartbeat_timeout_seconds": 600,
+    "heartbeat_critical_seconds": 1800,
+    "rolling_window_count": 10
+  },
+  "allowed_firmware_versions": [
+    "1.0.0",
+    "1.0.1",
+    "1.1.0"
+  ],
+  "known_malicious_devices": [
+    "device-007"
+  ]
+}

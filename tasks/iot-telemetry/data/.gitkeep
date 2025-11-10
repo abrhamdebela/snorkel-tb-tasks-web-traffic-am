@@ -1,0 +1,8 @@
+# This directory must contain the following files:
+# - telemetry.log (SHA256: 23bdbe85781f0dfd602cabb8f8884503c2ca6deb552d9a5b23088d42bb43a896)
+# - device_events.log (SHA256: 6b9b74a5f8596f3ad584cdef5f777d0a312c97c3e3bb9abf95f48fb2ad0b494f)
+# - baseline_config.json (SHA256: 9e30c01d2aefd776bb402827836b7924b8873612401e26ca6f9d486d4098388d)
+#
+# These files are required for the Docker build to succeed.
+# The files must match the exact SHA256 hashes specified in tests/test_outputs.py
+

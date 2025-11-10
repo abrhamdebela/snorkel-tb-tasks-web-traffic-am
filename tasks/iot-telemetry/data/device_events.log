@@ -1,0 +1,7 @@
+2025-11-06 08:04:30 severity=INFO device_id=device-001 service=maintenance msg="Routine check OK"
+2025-11-06 08:05:10 severity=WARNING device_id=device-002 service=sensor_firmware msg="Read anomaly: sudden high reading"
+2025-11-06 08:05:15 severity=CRITICAL device_id=device-002 service=integrity_check msg="integrity_check=FAIL firmware_version=2.0.0"
+2025-11-06 08:06:30 severity=INFO device_id=device-004 service=health msg="Vibration trend rising; scheduling inspection"
+2025-11-06 08:10:30 severity=INFO device_id=device-003 service=maintenance msg="Humidity sensor calibrated"
+2025-11-06 08:18:05 severity=WARNING device_id=device-007 service=watchdog msg="Device reported unexpected firmware version=9.9.9"
+2025-11-06 08:40:00 severity=INFO device_id=device-009 service=health msg="Regular heartbeat received"
