@@ -304,14 +304,15 @@ def test_only_pipeline_tf_created():
     import os
 
     terraform_dir = "/app/terraform"
-    expected_files = {"main.tf", "outputs.tf", "variables.tf", "pipeline.tf"}
     actual_files = set(
         f
         for f in os.listdir(terraform_dir)
         if f.endswith(".tf") and os.path.isfile(os.path.join(terraform_dir, f))
     )
-    assert actual_files == expected_files, (
-        f"Expected files {expected_files}, got {actual_files}"
+    assert "pipeline.tf" in actual_files, "pipeline.tf must exist"
+    assert "main.tf" in actual_files, "main.tf must exist"
+    assert len(actual_files) == 2, (
+        f"Only main.tf and pipeline.tf should exist, got {actual_files}"
     )
 
 
