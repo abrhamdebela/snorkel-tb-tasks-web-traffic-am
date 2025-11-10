@@ -45,9 +45,9 @@ attempt=0
 while [ $attempt -lt $max_attempts ]; do
     if curl -s http://localstack:4566/_localstack/health > /dev/null 2>&1; then
         health_response=$(curl -s http://localstack:4566/_localstack/health)
-        if echo "$health_response" | grep -q '"s3": "available"' && \
-           echo "$health_response" | grep -q '"sns": "available"' && \
-           echo "$health_response" | grep -q '"sqs": "available"'; then
+        if (echo "$health_response" | grep -q '"s3": "running"' || echo "$health_response" | grep -q '"s3": "available"') && \
+           (echo "$health_response" | grep -q '"sns": "running"' || echo "$health_response" | grep -q '"sns": "available"') && \
+           (echo "$health_response" | grep -q '"sqs": "running"' || echo "$health_response" | grep -q '"sqs": "available"'); then
             echo "LocalStack is ready!"
             break
         fi

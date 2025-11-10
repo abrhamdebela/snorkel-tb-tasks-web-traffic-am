@@ -5,7 +5,7 @@
 set -euo pipefail
 
 echo "Waiting for LocalStack to be ready..."
-timeout 120 bash -c 'until curl -s http://localstack:4566/_localstack/health | grep -q "\"s3\": \"available\""; do sleep 2; done' || {
+timeout 120 bash -c 'until curl -s http://localstack:4566/_localstack/health | grep -qE "\"s3\": \"(running|available)\""; do sleep 2; done' || {
     echo "LocalStack failed to start"
     exit 1
 }
