@@ -18,6 +18,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
     gnupg \
     lsb-release \
+    coreutils \
     && rm -rf /var/lib/apt/lists/*
 
 RUN ARCH=$(uname -m) && \
