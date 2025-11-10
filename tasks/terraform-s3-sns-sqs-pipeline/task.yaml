@@ -34,6 +34,7 @@ instruction: |-
 
   Constraints
   - You must create the file: `/app/terraform/pipeline.tf`
+  - Do not create any other new `.tf` files — only `pipeline.tf` should be created
   - Use Terraform AWS modules only — do not declare direct resources (e.g., `resource "aws_s3_bucket"`, `resource "aws_sns_topic"`, etc.)
   - All resources must be defined as modules in `pipeline.tf`
 
