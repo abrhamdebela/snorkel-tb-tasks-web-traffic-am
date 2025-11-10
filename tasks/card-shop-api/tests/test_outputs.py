@@ -27,7 +27,9 @@ def find_and_test_deal(output_deals: list[Deal], expected_deal: Deal):
             assert deal.listing_id == expected_deal.listing_id
             assert deal.card_id == expected_deal.card_id
             assert deal.season == expected_deal.season
-            # Tests WAR output is correct to 2 decimal places
+            # Tests WAR output is correct to 2 decimal places.
+            # The more precise WAR data is available in the Baseball Reference page via
+            # the csk tag in the HTML table.
             assert abs(deal.war - expected_deal.war) < 0.01
             # Tests price output is correct to 2 decimal places
             assert abs(deal.price - expected_deal.price) < 0.01
