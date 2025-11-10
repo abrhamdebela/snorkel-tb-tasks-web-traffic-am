@@ -7,19 +7,14 @@
 # (e.g., logs or JSON summaries) that indicate task completion status.
 # It must be deterministic, portable, and callable directly from the project root.
 
-set -euo pipefail
-
-# Install curl if not available
-if ! command -v curl &> /dev/null; then
-    apt-get update
-    apt-get install -y curl
-fi
+# Install curl
+apt-get update
+apt-get install -y curl
 
 # Install uv
-if ! command -v uv &> /dev/null; then
-    curl -LsSf https://astral.sh/uv/0.7.13/install.sh | sh
-    source $HOME/.local/bin/env
-fi
+curl -LsSf https://astral.sh/uv/0.7.13/install.sh | sh
+
+source $HOME/.local/bin/env
 
 # Check if we're in a valid working directory
 if [ "$PWD" = "/" ]; then
@@ -27,15 +22,16 @@ if [ "$PWD" = "/" ]; then
     exit 1
 fi
 
-# Set up Python testing environment
-uv venv .tbench-testing
-source .tbench-testing/bin/activate
+VENV_PATH=".tbench-testing"
+
+uv venv "$VENV_PATH"
+. "$VENV_PATH/bin/activate"
 
 # Install test dependencies
 uv pip install --no-cache-dir \
     pytest==8.4.1 \
     boto3==1.35.0 \
-    botocore==1.35.0
+    botocore==1.35.0 >/dev/null 2>&1
 
 # Wait for LocalStack to be ready
 echo "Waiting for LocalStack to be ready..."
@@ -57,12 +53,12 @@ while [ $attempt -lt $max_attempts ]; do
 done
 
 if [ $attempt -eq $max_attempts ]; then
-    echo "Error: LocalStack is not ready after $max_attempts attempts"
-    curl -s http://localstack:4566/_localstack/health || echo "Cannot reach LocalStack health endpoint"
+    echo "Error: LocalStack is not ready after $max_attempts attempts" >&2
+    curl -s http://localstack:4566/_localstack/health || echo "Cannot reach LocalStack health endpoint" >&2
     exit 1
 fi
 
 # Run the tests
 echo "Running tests..."
-uv run pytest ${TEST_DIR}/test_outputs.py -rA --tb=short
+pytest "${TEST_DIR}/test_outputs.py" -rA --tb=short -v || exit $?
 

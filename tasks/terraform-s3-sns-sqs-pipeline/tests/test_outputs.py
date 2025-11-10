@@ -317,7 +317,11 @@ def test_only_pipeline_tf_created():
 
 def test_pipeline_tf_uses_notification_submodule():
     """Verify pipeline.tf uses the S3 notification submodule."""
+    import os
+
     pipeline_path = "/app/terraform/pipeline.tf"
+    assert os.path.exists(pipeline_path), f"pipeline.tf not found at {pipeline_path}"
+
     with open(pipeline_path, "r") as f:
         content = f.read()
 
@@ -329,7 +333,11 @@ def test_pipeline_tf_uses_notification_submodule():
 
 def test_pipeline_tf_uses_modules_only():
     """Verify pipeline.tf uses only Terraform AWS modules, no direct resources."""
+    import os
+
     pipeline_path = "/app/terraform/pipeline.tf"
+    assert os.path.exists(pipeline_path), f"pipeline.tf not found at {pipeline_path}"
+
     with open(pipeline_path, "r") as f:
         content = f.read()
 
