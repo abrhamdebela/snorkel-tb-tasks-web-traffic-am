@@ -6,10 +6,10 @@
 # The instructions will include references to the relevant resources necessary for task completion, rules and additional constraints, and a description of the success criteria.
 # This will also contain task metadata that is not available to the agent at runtime.
 instruction: |-
-  I am interested in finding the best deal on a baseball card. We're going to use
-  some Baseball Reference pages to get player stats, and then use the API for a
-  baseball card shop to find the best deal based on the WAR of the player in a given
-  season vs. the price of the card.
+  I am interested in finding the best deal on baseball cards for each player I have
+  data for. We're going to use some Baseball Reference pages to get player stats, and
+  then use the API for a baseball card shop to find the best deal for each player based
+  on the WAR of the player in a given season vs. the price of the card.
 
   Steps:
     - I downloaded the HTML of the Baseball Reference pages for the players I'm
@@ -19,10 +19,12 @@ instruction: |-
       can use the API key "TBENCH_CARD_API_KEY_2025" to authenticate.
     - I am only interested in cards that are in Excellent condition or better.
     - The value of the deal on the card should be the WAR of the player in the given
-      season divided by the price of the card. Find the card with the highest value.
+      season divided by the price of the card. For each player, find the card with the
+      highest value.
 
   Output:
-    - A JSON object in /app/output/best_deal.json with the following fields:
+    - A JSON array in /app/output/best_deals.json where each element has the following
+      fields:
       - listing_id (integer): The ID of the listing
       - card_id (integer): The ID of the card
       - player_name (string): The name of the player

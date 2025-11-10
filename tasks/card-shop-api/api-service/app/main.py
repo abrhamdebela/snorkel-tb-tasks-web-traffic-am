@@ -87,8 +87,9 @@ def health_check():
 
 
 # Card endpoints
-@app.get("/cards", response_model=List[Card], dependencies=[Depends(verify_api_key)])
+@app.get("/cards", dependencies=[Depends(verify_api_key)])
 def get_cards(
+    offset: int = 0,
     brand: Optional[str] = None,
     year: Optional[int] = None,
     player: Optional[str] = None,
@@ -107,7 +108,28 @@ def get_cards(
     if rookie_only is not None:
         query = query.filter(models.Card.rookie_card == rookie_only)
 
-    return query.all()
+    # Pagination
+    page_size = 5
+    items = query.offset(offset).limit(page_size).all()
+
+    # Determine if there are more results
+    next_offset = offset + page_size if len(items) == page_size else None
+
+    return {
+        "items": [
+            {
+                "id": card.id,
+                "player_name": card.player_name,
+                "team": card.team,
+                "card_brand": card.card_brand,
+                "year": card.year,
+                "card_number": card.card_number,
+                "rookie_card": card.rookie_card
+            }
+            for card in items
+        ],
+        "next_offset": next_offset
+    }
 
 
 @app.get(
@@ -162,10 +184,9 @@ def delete_card(card_id: int, db: Session = Depends(get_db)):
 
 
 # Listing endpoints
-@app.get(
-    "/listings", response_model=List[Listing], dependencies=[Depends(verify_api_key)]
-)
+@app.get("/listings", dependencies=[Depends(verify_api_key)])
 def get_listings(
+    offset: int = 0,
     condition: Optional[str] = None,
     max_price: Optional[float] = None,
     min_price: Optional[float] = None,
@@ -184,7 +205,27 @@ def get_listings(
     if seller:
         query = query.filter(models.Listing.seller_name.ilike(f"%{seller}%"))
 
-    return query.all()
+    # Pagination
+    page_size = 5
+    items = query.offset(offset).limit(page_size).all()
+
+    # Determine if there are more results
+    next_offset = offset + page_size if len(items) == page_size else None
+
+    return {
+        "items": [
+            {
+                "id": listing.id,
+                "card_id": listing.card_id,
+                "price": listing.price,
+                "condition": listing.condition,
+                "seller_name": listing.seller_name,
+                "quantity": listing.quantity
+            }
+            for listing in items
+        ],
+        "next_offset": next_offset
+    }
 
 
 @app.get(

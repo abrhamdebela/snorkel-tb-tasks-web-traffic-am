@@ -13,11 +13,13 @@ class Card(Base):
     player_name = Column(String, nullable=False, index=True)
     team = Column(String, nullable=False)
     card_brand = Column(String, nullable=False)
-    year = Column(Integer, nullable=False, index=True)
+    year = Column(Integer, nullable=True)
     card_number = Column(String, nullable=True)
     rookie_card = Column(Boolean, default=False)
 
-    listings = relationship("Listing", back_populates="card", cascade="all, delete-orphan")
+    listings = relationship(
+        "Listing", back_populates="card", cascade="all, delete-orphan"
+    )
 
 
 class Listing(Base):
