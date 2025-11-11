@@ -3,7 +3,7 @@
 
 services:
   localstack:
-    image: public.ecr.aws/localstack/localstack:4.9.0
+    image: public.ecr.aws/localstack/localstack:4.10
     environment:
       - AWS_IAM_STRICT_ENFORCEMENT=1
       - ENFORCE_IAM=1
@@ -39,6 +39,5 @@ services:
       - ${T_BENCH_TASK_AGENT_LOGS_PATH}:${T_BENCH_CONTAINER_AGENT_LOGS_PATH}
       - ./app/terraform:/app/terraform
     depends_on:
-      localstack:
-        condition: service_healthy
+      - localstack
 
