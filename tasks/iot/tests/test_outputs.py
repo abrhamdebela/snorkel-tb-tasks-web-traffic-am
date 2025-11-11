@@ -392,10 +392,22 @@ def test_window_id_maps_to_manifest_sample_id():
 
 
 def test_data_comes_from_sensor_csv():
-    """Verify synthesized data uses sensor columns from /app/sensor.csv."""
+    """Verify synthesized data uses sensor columns and values from /app/sensor.csv (anti-cheating)."""
     # Load original sensor data
     original_df = pd.read_csv("/app/sensor.csv")
     sensor_cols = [col for col in original_df.columns if col != 'timestamp']
+    original_data = original_df[sensor_cols].values
+    
+    # Get value ranges from original data
+    original_ranges = {}
+    for i, col in enumerate(sensor_cols):
+        col_data = original_data[:, i]
+        original_ranges[col] = {
+            'min': float(np.min(col_data)),
+            'max': float(np.max(col_data)),
+            'mean': float(np.mean(col_data)),
+            'std': float(np.std(col_data))
+        }
     
     # Load synthesized data
     train_df = pd.read_parquet("/app/train.parquet")
@@ -415,6 +427,37 @@ def test_data_comes_from_sensor_csv():
     missing_sensors = set(sensor_cols) - sensor_names_in_cols
     assert len(missing_sensors) == 0, \
         f"Synthesized data missing sensor columns from CSV: {missing_sensors}"
+    
+    # Anti-cheating: Verify data values are plausibly derived from sensor.csv
+    # Check that synthesized values are within reasonable range of original data
+    # (allowing for augmentations that might extend the range, but not completely random)
+    for sensor in sensor_cols:
+        sensor_values = []
+        for col in timestep_cols:
+            if sensor in col:
+                sensor_values.extend(train_df[col].dropna().tolist())
+        
+        if len(sensor_values) > 0:
+            orig_range = original_ranges[sensor]
+            # Check that at least some values overlap with original range
+            # (augmentations might extend range, but shouldn't be completely disjoint)
+            values_in_original_range = sum(1 for v in sensor_values 
+                                         if orig_range['min'] <= v <= orig_range['max'])
+            
+            # Also check values are within reasonable bounds (within 5 std devs of mean)
+            reasonable_bounds = (
+                orig_range['mean'] - 5 * orig_range['std'],
+                orig_range['mean'] + 5 * orig_range['std']
+            )
+            values_in_reasonable_bounds = sum(1 for v in sensor_values 
+                                             if reasonable_bounds[0] <= v <= reasonable_bounds[1])
+            
+            # At least 50% of values should be within reasonable bounds of original data
+            assert values_in_reasonable_bounds >= len(sensor_values) * 0.5, \
+                f"Anti-cheating check failed: {sensor} values don't appear derived from sensor.csv. " \
+                f"Only {values_in_reasonable_bounds}/{len(sensor_values)} values within reasonable range " \
+                f"of original data (mean={orig_range['mean']:.2f}, std={orig_range['std']:.2f}). " \
+                f"This suggests data may be fabricated rather than synthesized from sensor.csv."
 
 
 def test_data_is_synthesized_not_copied():
@@ -519,7 +562,7 @@ def test_vae_was_used_for_anomalous():
 
 
 def test_vae_was_actually_trained():
-    """Verify VAE was actually trained by checking that latent-perturbed samples have VAE-like characteristics."""
+    """Verify VAE was actually trained by checking that latent-perturbed samples have VAE-like characteristics (anti-cheating)."""
     train_df = pd.read_parquet("/app/train.parquet")
     manifest_path = Path("/app/manifest.jsonl")
     original_df = pd.read_csv("/app/sensor.csv")
@@ -570,34 +613,51 @@ def test_vae_was_actually_trained():
     latent_windows = np.array(latent_windows)
     normal_windows = np.array(normal_windows[:len(latent_windows)])  # Sample same number for fair comparison
     
-    # VAE-generated samples should:
-    # 1. Have similar statistical properties to normal samples (same distribution family)
-    # 2. But be different enough to be anomalous (not identical copies)
-    # 3. Show evidence of reconstruction (smoother than random noise)
+    # Anti-cheating: VAE-generated samples should have characteristics that indicate actual VAE training:
+    # 1. Similar distribution to normal samples (VAE learns the data distribution)
+    # 2. Different from normal samples (perturbations were applied)
+    # 3. Show structure (not pure random noise - VAE reconstructions have structure)
     
-    # Check that latent-perturbed samples are not identical to normal samples
-    # (indicating VAE was used to generate variations)
-    if len(latent_windows) > 0 and len(normal_windows) > 0:
-        # Compute average distance between latent and normal samples
-        # If VAE was used, samples should be similar but not identical
-        sample_distances = []
-        for i in range(min(10, len(latent_windows))):
-            for j in range(min(10, len(normal_windows))):
-                dist = np.linalg.norm(latent_windows[i] - normal_windows[j])
-                sample_distances.append(dist)
+    # Check 1: Statistical similarity (VAE preserves distribution characteristics)
+    latent_mean = np.mean(latent_windows)
+    latent_std = np.std(latent_windows)
+    normal_mean = np.mean(normal_windows)
+    normal_std = np.std(normal_windows)
+    
+    # Means should be within 3 std devs (VAE-generated data should be similar to training data)
+    mean_diff_normalized = abs(latent_mean - normal_mean) / (normal_std + 1e-8)
+    assert mean_diff_normalized < 3.0, \
+        f"Anti-cheating check failed: Latent-perturbed samples have very different mean " \
+        f"({latent_mean:.2f} vs {normal_mean:.2f}, {mean_diff_normalized:.2f} std devs apart). " \
+        f"This suggests VAE was not properly trained or data is fabricated."
+    
+    # Check 2: Samples should be different (not identical copies)
+    sample_distances = []
+    for i in range(min(10, len(latent_windows))):
+        for j in range(min(10, len(normal_windows))):
+            dist = np.linalg.norm(latent_windows[i] - normal_windows[j])
+            sample_distances.append(dist)
+    
+    avg_distance = np.mean(sample_distances) if sample_distances else 0
+    assert avg_distance > 1e-6, \
+        "Anti-cheating check failed: Latent-perturbed samples are identical to normal samples. " \
+        "This suggests VAE perturbations are not being applied or data is fabricated."
+    
+    # Check 3: Latent samples should have structure (VAE reconstructions are structured, not random)
+    if len(latent_windows) > 1:
+        # Check that samples have reasonable diversity (not all identical)
+        latent_diversity = np.mean([np.linalg.norm(latent_windows[i] - latent_windows[j]) 
+                                    for i in range(min(5, len(latent_windows))) 
+                                    for j in range(i+1, min(5, len(latent_windows)))])
+        assert latent_diversity > 1e-6, \
+            "Anti-cheating check failed: All latent-perturbed samples are identical. " \
+            "This suggests VAE perturbations are not being applied correctly."
         
-        avg_distance = np.mean(sample_distances) if sample_distances else 0
-        
-        # Latent samples should be different from normal (not identical copies)
-        assert avg_distance > 1e-6, \
-            "Latent-perturbed samples are identical to normal samples. " \
-            "This suggests VAE perturbations are not being applied."
-        
-        # Latent samples should have some variation (not all identical)
-        if len(latent_windows) > 1:
-            latent_diversity = np.mean([np.linalg.norm(latent_windows[i] - latent_windows[j]) 
-                                        for i in range(min(5, len(latent_windows))) 
-                                        for j in range(i+1, min(5, len(latent_windows)))])
-            assert latent_diversity > 1e-6, \
-                "All latent-perturbed samples are identical. " \
-                "This suggests VAE perturbations are not being applied correctly."
+        # Check feature-level structure (VAE should generate structured outputs)
+        feature_stds = np.std(latent_windows, axis=0)
+        # At least some features should have variation (not all zeros)
+        features_with_variation = np.sum(feature_stds > 1e-6)
+        assert features_with_variation > len(feature_stds) * 0.3, \
+            f"Anti-cheating check failed: Latent-perturbed samples lack structure " \
+            f"(only {features_with_variation}/{len(feature_stds)} features vary). " \
+            f"This suggests VAE was not properly trained or data is fabricated."
