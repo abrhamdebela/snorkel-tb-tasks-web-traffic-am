@@ -7,7 +7,6 @@
 from pathlib import Path
 import pandas as pd
 import json
-import numpy as np
 
 
 def test_python_cli_exists():
@@ -208,7 +207,7 @@ def test_no_target_leakage():
 
 
 def test_fixed_rng_seed():
-    """Verify fixed RNG seed produces deterministic results."""
+    """Verify fixed RNG seed is used (as specified in instruction: seed value 42)."""
     report_path = Path("/app/report.json")
     
     with open(report_path, 'r') as f:
@@ -216,7 +215,7 @@ def test_fixed_rng_seed():
     
     assert 'random_seed' in report, "Report missing random_seed"
     assert report['random_seed'] == 42, \
-        f"Expected random_seed=42, got {report.get('random_seed')}"
+        f"Expected random_seed=42 as specified in instruction, got {report.get('random_seed')}"
 
 
 def test_augmented_data_has_more_samples():
@@ -248,7 +247,7 @@ def test_report_contains_constraints():
 
 
 def test_all_original_samples_preserved():
-    """Verify all original samples are preserved in augmented dataset."""
+    """Verify all original samples are preserved in augmented dataset (as required by instruction)."""
     original_df = pd.read_csv("/app/dataset.csv")
     augmented_df = pd.read_csv("/app/augmented.csv")
     
@@ -280,3 +279,127 @@ def test_drift_metrics_are_valid():
             f"Drift pvalue for {col} must be between 0 and 1: {metrics['pvalue']}"
         assert metrics['statistic'] >= 0, \
             f"Drift statistic for {col} must be non-negative: {metrics['statistic']}"
+
+
+def test_smote_nc_algorithm_used():
+    """Verify SMOTE-NC algorithm was used (not simple duplication)."""
+    original_df = pd.read_csv("/app/dataset.csv")
+    augmented_df = pd.read_csv("/app/augmented.csv")
+    
+    # Get minority class samples
+    original_counts = original_df['target'].value_counts()
+    minority_class = original_counts.idxmin()
+    minority_samples = original_df[original_df['target'] == minority_class]
+    
+    # Get synthetic samples (augmented minus original)
+    feature_cols = [col for col in original_df.columns if col != 'target']
+    
+    # Find rows in augmented that don't exactly match any original row
+    synthetic_count = 0
+    for idx, aug_row in augmented_df.iterrows():
+        if aug_row['target'] == minority_class:
+            # Check if this row exactly matches any original row
+            matches = (original_df[feature_cols] == aug_row[feature_cols]).all(axis=1)
+            if not matches.any():
+                synthetic_count += 1
+    
+    # Should have synthetic samples (not just duplicates)
+    assert synthetic_count > 0, \
+        "No synthetic samples found - augmentation may be using simple duplication instead of SMOTE-NC"
+    
+    # Synthetic samples should have interpolated numeric values (not exact copies)
+    numeric_cols = [col for col in feature_cols if original_df[col].dtype in ['int64', 'float64']]
+    if len(numeric_cols) > 0:
+        has_interpolated = False
+        for col in numeric_cols:
+            # Check if any synthetic sample has a value between two original values
+            original_values = set(original_df[col].values)
+            for idx, aug_row in augmented_df.iterrows():
+                if aug_row['target'] == minority_class:
+                    # Check if this is a synthetic sample
+                    matches = (original_df[feature_cols] == aug_row[feature_cols]).all(axis=1)
+                    if not matches.any():
+                        aug_value = aug_row[col]
+                        # Check if value is between any two original values (indicating interpolation)
+                        sorted_orig = sorted(original_values)
+                        for i in range(len(sorted_orig) - 1):
+                            if sorted_orig[i] < aug_value < sorted_orig[i + 1]:
+                                has_interpolated = True
+                                break
+                        if has_interpolated:
+                            break
+                if has_interpolated:
+                    break
+        
+        assert has_interpolated, \
+            "Numeric values appear to be exact copies, not interpolated. " \
+            "SMOTE-NC should interpolate between samples, not duplicate them."
+
+
+def test_results_are_deterministic():
+    """Verify results are deterministic when using the same seed (as required by instruction)."""
+    # This test verifies that the solution uses the seed, but cannot fully test determinism
+    # without running twice. We check that seed is used and report structure is consistent.
+    report_path = Path("/app/report.json")
+    
+    with open(report_path, 'r') as f:
+        report = json.load(f)
+    
+    assert 'random_seed' in report, "Report must include random_seed for determinism"
+    assert isinstance(report['random_seed'], int), "random_seed must be an integer"
+    
+    # Verify report structure is complete (deterministic structure)
+    required_keys = ['pre_augmentation', 'post_augmentation', 'drift_metrics', 
+                     'constraints_applied', 'random_seed']
+    for key in required_keys:
+        assert key in report, f"Report missing required key: {key}"
+
+
+def test_report_schema_matches_instruction():
+    """Verify report JSON schema matches the structure specified in instruction."""
+    report_path = Path("/app/report.json")
+    original_df = pd.read_csv("/app/dataset.csv")
+    
+    with open(report_path, 'r') as f:
+        report = json.load(f)
+    
+    # Verify top-level structure
+    assert 'pre_augmentation' in report, "Report missing pre_augmentation"
+    assert 'post_augmentation' in report, "Report missing post_augmentation"
+    assert 'drift_metrics' in report, "Report missing drift_metrics"
+    assert 'constraints_applied' in report, "Report missing constraints_applied"
+    assert 'random_seed' in report, "Report missing random_seed"
+    
+    # Verify pre_augmentation structure
+    pre = report['pre_augmentation']
+    assert 'class_ratios' in pre, "pre_augmentation missing class_ratios"
+    assert 'class_counts' in pre, "pre_augmentation missing class_counts"
+    assert 'total_samples' in pre, "pre_augmentation missing total_samples"
+    
+    # Verify post_augmentation structure
+    post = report['post_augmentation']
+    assert 'class_ratios' in post, "post_augmentation missing class_ratios"
+    assert 'class_counts' in post, "post_augmentation missing class_counts"
+    assert 'total_samples' in post, "post_augmentation missing total_samples"
+    
+    # Verify drift_metrics structure for each column
+    feature_cols = [col for col in original_df.columns if col != 'target']
+    for col in feature_cols:
+        assert col in report['drift_metrics'], f"drift_metrics missing column {col}"
+        metric = report['drift_metrics'][col]
+        assert 'test' in metric, f"drift_metrics[{col}] missing 'test'"
+        assert 'statistic' in metric, f"drift_metrics[{col}] missing 'statistic'"
+        assert 'pvalue' in metric, f"drift_metrics[{col}] missing 'pvalue'"
+    
+    # Verify constraints_applied structure
+    constraints = report['constraints_applied']
+    for col in feature_cols:
+        assert col in constraints, f"constraints_applied missing column {col}"
+        constraint = constraints[col]
+        if original_df[col].dtype in ['int64', 'float64']:
+            assert 'min' in constraint, f"constraints[{col}] missing 'min'"
+            assert 'max' in constraint, f"constraints[{col}] missing 'max'"
+            assert 'integer_only' in constraint, f"constraints[{col}] missing 'integer_only'"
+        else:
+            assert 'allowed_categories' in constraint, \
+                f"constraints[{col}] missing 'allowed_categories'"

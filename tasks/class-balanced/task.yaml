@@ -6,7 +6,56 @@
 # The instructions will include references to the relevant resources necessary for task completion, rules and additional constraints, and a description of the success criteria.
 # This will also contain task metadata that is not available to the agent at runtime.
 instruction: |-
-  Create a Python CLI that performs class-balanced augmentation of a mixed-type tabular dataset by implementing SMOTE-NC from scratch, honoring per-column constraints (numeric bounds, integer-only, allowed categories) and a fixed RNG seed. Output the augmented CSV and a JSON report with pre/post class ratios and drift metrics (KS for numeric, chi-square for categorical), with tests ensuring constraints are met and no target leakage occurs.
+  Create a Python CLI that performs class-balanced augmentation of a mixed-type tabular dataset by implementing SMOTE-NC from scratch, honoring per-column constraints (numeric bounds, integer-only, allowed categories) and a fixed RNG seed.
+  
+  Requirements:
+  1. Read the input dataset from /app/dataset.csv (mixed-type tabular data with numeric and categorical columns)
+  2. Implement SMOTE-NC (SMOTE for Nominal and Continuous) from scratch to balance classes:
+     - For numeric features: interpolate between minority class samples and their k-nearest neighbors
+     - For categorical features: use majority voting from k-nearest neighbors
+     - Generate synthetic samples by combining numeric interpolation and categorical voting
+  3. Honor per-column constraints:
+     - Numeric columns: respect min/max bounds from original data
+     - Integer columns: ensure generated values are integers
+     - Categorical columns: only use categories present in original data
+  4. Use a fixed RNG seed for reproducibility (seed value: 42)
+  5. Output the augmented dataset to /app/augmented.csv (must include all original samples plus synthetic samples)
+  6. Generate a JSON report at /app/report.json with the following structure:
+     {
+       "pre_augmentation": {
+         "class_ratios": {class: ratio},
+         "class_counts": {class: count},
+         "total_samples": number
+       },
+       "post_augmentation": {
+         "class_ratios": {class: ratio},
+         "class_counts": {class: count},
+         "total_samples": number
+       },
+       "drift_metrics": {
+         "column_name": {
+           "test": "ks" or "chi_square",
+           "statistic": number,
+           "pvalue": number
+         }
+       },
+       "constraints_applied": {
+         "column_name": {
+           "min": number (for numeric),
+           "max": number (for numeric),
+           "integer_only": boolean (for numeric),
+           "allowed_categories": [list] (for categorical)
+         }
+       },
+       "random_seed": 42
+     }
+  
+  The solution must ensure:
+  - All constraints are met (no values outside bounds, integers remain integers, categories are valid)
+  - No target leakage occurs (target values only from original classes)
+  - Classes are balanced after augmentation (equal counts)
+  - Synthetic samples are generated using SMOTE-NC algorithm (not simple duplication)
+  - Results are deterministic when using the same seed
 author_name: anonymous
 author_email: anonymous
 difficulty: unknown
