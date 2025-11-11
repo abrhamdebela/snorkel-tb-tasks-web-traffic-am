@@ -1,0 +1,12 @@
+agent,ts,offset_seconds
+builder1,2025-10-20T11:00:00+00:00,5
+builder1,2025-10-20T12:00:00+00:00,25
+builder1,2025-10-20T12:15:00+00:00,-10
+builder1,2025-10-20T13:00:00+00:00,30
+builder2,2025-10-20T11:00:00+00:00,-15
+builder2,2025-10-20T12:00:00+00:00,0
+# Level-S add-ons
+builder1,2025-10-20T11:00:00+00:00,-20
+builder1,2025-10-20T12:00:00+00:00,40
+# Note: includes shorthand "agent,offset_seconds" row per spec
+builder1,5

@@ -1,0 +1,14 @@
+2025-10-20T11:59:10+00:00 iam: login user=dave session=SID200 ip=10.0.0.55 result=success
+2025-10-20T11:59:20+00:00 iam: assume_role user=dave session=SID210 ip=10.0.0.55 role=builder-proxy parent=SID200
+2025-10-20T12:00:20+00:00 iam: status user=dave session=SID200 ip=10.0.0.055 terminated=1
+2025-10-20T11:40:00+00:00 iam: login user=frank session=SID300 ip=10.0.1.20 result=success
+2025-10-20T11:57:30+00:00 iam: login user=frank session=SID301 ip=10.0.2.20 result=success
+2025-10-20T12:01:30+00:00 iam: status user=frank session=SID301 ip=10.0.2.20 terminated=1
+
+2025-10-20T11:45:00+00:00 iam: login user=dave session=SID211 ip=10.0.0.55 result=success
+2025-10-20T12:01:05+00:00 iam: status user=dave session=SID210 ip=10.0.0.55 terminated=1
+2025-10-20T11:45:30+00:00 iam: login user=frank session=SID302 ip=10.0.1.20 result=success
+2025-10-20T11:45:55+00:00 iam: login user=frank session=SID303 ip=10.0.1.20 result=success
+
+2025-10-20T11:47:45+00:00 iam: login user=gary session=SID400 ip=10.0.0.61 result=success
+2025-10-20T12:00:30+00:00 iam: status user=gary session=SID400 ip=10.0.0.61 terminated=1

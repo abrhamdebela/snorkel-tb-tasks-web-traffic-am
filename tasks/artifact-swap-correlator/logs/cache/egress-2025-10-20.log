@@ -1,0 +1,40 @@
+2025-10-20T12:00:50+00:00 cache: src=203.0.113.10 host=cdn.example tls_sni=front.example method=GET path=/pref/eroc/seed?k=deadbee&k=d953168 status=200
+2025-10-20T12:01:25+00:00 cache: src=203.0.114.10 host=cdn.example tls_sni=front.example method=GET path=/eroc/beacon status=200
+2025-10-20T12:01:40+00:00 cache: src=198.51.100.12 host=edge.example tls_sni=front.example method=GET path=/p/eroc/release.tgz?k=d953168 status=206
+# decoys and noise:
+2025-10-20T12:01:26+00:00 cache: src=203.0.113.11 host=badcdn.example tls_sni=front.example method=GET path=/eroc/x status=200
+2025-10-20T12:01:27+00:00 cache: src=10.0.0.5 host=cdn.example tls_sni=front.example method=GET path=/eroc/y status=200
+2025-10-20T12:01:28+00:00 cache: src=2001:db8::1 host=cdn.example tls_sni=front.example method=GET path=/eroc/z status=200
+2025-10-20T12:01:33+00:00 cache: src=203.0.113.11 host=cdn.example tls_sni=cdn.example method=GET path=/eroc/a status=200
+2025-10-20T12:01:41+00:00 cache: src=198.51.100.9 host=edge.example tls_sni=front.example method=GET path=/p/eroc/release.tgz?k=deadbee status=206
+2025-10-20T12:01:44+00:00 cache: src=203.0.113.12 host=edge.example tls_sni=front.example method=GET path=/p/eroc/release.tgz status=206
+2025-10-20T12:01:45+00:00 cache: src=198.51.100.8 host=edge.example tls_sni=front.example method=GET path=/p/wrong/release.tgz?k=d953168 status=206
+2025-10-20T12:01:26+00:00 cache: src=10.0.0.56 host=cdn.example tls_sni=front.example method=GET path=/eroc/priv status=200
+
+# Level-S add-ons
+# Stage-0 decoys: wrong fronting (host==sni) or wrong allowlist
+2025-10-20T12:00:52+00:00 cache: src=198.18.0.1 host=cdn.example tls_sni=cdn.example method=GET path=/pref/eroc/seed?k=deadbee&k=d953168 status=200
+2025-10-20T12:00:53+00:00 cache: src=203.0.113.20 host=badcdn.example tls_sni=front.example method=GET path=/pref/eroc/seed?k=d953168 status=200
+# Last-wins flips (Stage-0)
+2025-10-20T12:00:58+00:00 cache: src=203.0.113.19 host=cdn.example tls_sni=front.example method=GET path=/pref/eroc/seed?k=d953168&k=deadbee status=200
+
+# Stage-1 decoys: looks right but tokenC slightly wrong or private src
+2025-10-20T12:01:10+00:00 cache: src=10.0.0.70 host=cdn.example tls_sni=front.example method=GET path=/eroc/beacon status=200
+2025-10-20T12:01:12+00:00 cache: src=203.0.113.10 host=cdn.example tls_sni=front.example method=GET path=/er0c/beacon status=200
+
+# Stage-2 decoy: right k first but last-wins should select the other (if present)
+2025-10-20T12:01:16+00:00 cache: src=198.51.100.7 host=edge.example tls_sni=front.example method=GET path=/p/eroc/release.tgz?k=deadbee&k=d953168 status=200
+
+# Stage-2 decoy: wrong host role (cdn instead of edge)
+2025-10-20T12:01:17+00:00 cache: src=198.51.100.6 host=cdn.example tls_sni=front.example method=GET path=/p/eroc/release.tgz?k=d953168 status=206
+
+# Distinctness trap: a src in same /28 as Stage-1 (should cause rejection if chosen)
+2025-10-20T12:01:18+00:00 cache: src=198.51.100.12 host=edge.example tls_sni=front.example method=GET path=/p/eroc/release.tgz?k=d953168 status=206
+
+# Fronting violation on “perfect-looking” Stage-2
+2025-10-20T12:01:14+00:00 cache: src=198.51.100.13 host=edge.example tls_sni=edge.example method=GET path=/p/eroc/release.tgz?k=d953168 status=200
+
+# Nightmare++ second valid candidate (kutil-core; tokenK = sha1('c'*64)[:7] = b29fcb5)
+2025-10-20T12:00:20+00:00 cache: src=203.0.113.21 host=cdn.example tls_sni=front.example method=GET path=/pref/eroc/seed?k=deadbee&k=b29fcb5 status=200
+2025-10-20T12:01:06+00:00 cache: src=203.0.114.22 host=cdn.example tls_sni=front.example method=GET path=/eroc/ping status=200
+2025-10-20T12:01:18+00:00 cache: src=198.51.100.23 host=edge.example tls_sni=front.example method=GET path=/p/eroc/release.tgz?k=b29fcb5 status=206

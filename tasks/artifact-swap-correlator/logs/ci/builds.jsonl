@@ -1,0 +1,8 @@
+{"agent":"builder1","ts":"2025-10-20T12:00:40+00:00","event":"build","proj":"util-core","version":"9.1.0","sha256":"1111111111111111111111111111111111111111111111111111111111111111","session":"SID100","ip":"10.0.0.60"}
+{"agent":"builder1","ts":"2025-10-20T12:00:40+00:00","event":"build","proj":"util-core","version":"9.1.0","sha256":"1111111111111111111111111111111111111111111111111111111111111111","session":"SID100","ip":"10.0.0.60"}
+{"agent":"builder2","ts":"2025-10-20T11:59:50+00:00","event":"build","proj":"util-core","version":"9.1.0","sha256":"1111111111111111111111111111111111111111111111111111111111111111","session":"SID101","ip":"10.0.2.5"}
+{"agent":"builder1","ts":"2025-10-20T12:00:42+00:00","event":"build","proj":"util-core","version":"9.1.0","sha256":"1111111111111111111111111111111111111111111111111111111111111111","session":"SID102","ip":"10.0.1.60"}
+{"agent":"builder2","ts":"2025-10-20T11:48:10+00:00","event":"build","proj":"other-app","version":"1.0.1","sha256":"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb","session":"SID010","ip":"10.0.2.6"}
+{"agent":"builder1","ts":"2025-10-20T12:00:42+00:00","event":"build","proj":"util-core","version":"9.1.0","sha256":"1111111111111111111111111111111111111111111111111111111111111111","session":"SID102","ip":"10.0.1.60"}  
+{"agent":"builder2","ts":"2025-10-20T11:50:00+00:00","event":"build","proj":"ui-lore","version":"1.0.0","sha256":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","session":"SID011","ip":"10.0.2.7"}
+{"agent":"builder1","ts":"2025-10-20T12:00:43+00:00","event":"build","proj":"kutil-core","version":"9.1.0","sha256":"eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee","session":"SID103","ip":"10.0.0.61"}
