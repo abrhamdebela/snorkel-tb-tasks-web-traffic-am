@@ -95,22 +95,39 @@ def test_labels_are_binary():
 
 
 def test_parquet_files_have_window_structure():
-    """Verify Parquet files contain fixed-length window data (timestep columns)."""
+    """Verify Parquet files contain fixed-length window data with exact timestep column naming pattern."""
     train_df = pd.read_parquet("/app/train.parquet")
+    original_df = pd.read_csv("/app/sensor.csv")
+    sensor_cols = [col for col in original_df.columns if col != 'timestamp']
     
     # Check for timestep columns (format: timestep_{t}_{sensor_name})
     timestep_cols = [col for col in train_df.columns if col.startswith('timestep_')]
     assert len(timestep_cols) > 0, \
         "Parquet file missing timestep columns (expected format: timestep_{t}_{sensor_name})"
     
-    # Verify all windows have same number of timesteps
-    timestep_nums = set()
+    # Verify exact naming pattern: timestep_{t}_{sensor_name}
+    timestep_pattern = {}
     for col in timestep_cols:
-        parts = col.split('_')
-        if len(parts) >= 2:
-            timestep_nums.add(int(parts[1]))
+        parts = col.split('_', 2)  # Split into ['timestep', '{t}', '{sensor_name}']
+        assert len(parts) == 3, \
+            f"Timestep column '{col}' doesn't match pattern 'timestep_{{t}}_{{sensor_name}}'"
+        assert parts[0] == 'timestep', \
+            f"Timestep column '{col}' must start with 'timestep_'"
+        try:
+            t = int(parts[1])
+            sensor_name = parts[2]
+            if t not in timestep_pattern:
+                timestep_pattern[t] = set()
+            timestep_pattern[t].add(sensor_name)
+        except ValueError:
+            assert False, f"Timestep index in '{col}' must be an integer"
     
-    assert len(timestep_nums) > 0, "Could not extract timestep numbers from column names"
+    # Verify all sensor names from CSV are present for each timestep
+    assert len(timestep_pattern) > 0, "Could not extract timestep numbers from column names"
+    for t, sensors in timestep_pattern.items():
+        missing_sensors = set(sensor_cols) - sensors
+        assert len(missing_sensors) == 0, \
+            f"Timestep {t} missing sensor columns: {missing_sensors}"
 
 
 def test_dataset_is_balanced():
@@ -172,6 +189,12 @@ def test_manifest_has_required_fields():
                 if 'augmentation_params' in entry:
                     assert isinstance(entry['augmentation_params'], dict), \
                         f"augmentation_params must be a dictionary/object at line {line_num}"
+                
+                # Verify source_window_idx is -1 for latent_perturbation (as per instruction)
+                if entry.get('augmentation') == 'latent_perturbation':
+                    assert entry['source_window_idx'] == -1, \
+                        f"source_window_idx must be -1 for latent_perturbation at line {line_num}, " \
+                        f"got {entry['source_window_idx']}"
 
 
 def test_manifest_labels_match_parquet():
@@ -363,14 +386,14 @@ def test_parquet_has_window_id_column():
 
 
 def test_window_id_maps_to_manifest_sample_id():
-    """Verify window_id in Parquet files maps to sample_id in manifest for all splits."""
+    """Verify window_id in Parquet files maps to sample_id in manifest for all splits (one-to-one mapping)."""
     train_df = pd.read_parquet("/app/train.parquet")
     val_df = pd.read_parquet("/app/val.parquet")
     test_df = pd.read_parquet("/app/test.parquet")
     manifest_path = Path("/app/manifest.jsonl")
     
-    # Build mapping from sample_id to expected window_id
-    manifest_sample_to_window = {}
+    # Build mapping from sample_id in manifest
+    manifest_sample_ids = set()
     with open(manifest_path, 'r') as f:
         for line in f:
             line = line.strip()
@@ -378,21 +401,25 @@ def test_window_id_maps_to_manifest_sample_id():
                 entry = json.loads(line)
                 sample_id = entry.get('sample_id')
                 if sample_id is not None:
-                    manifest_sample_to_window[sample_id] = sample_id  # sample_id should equal window_id
+                    manifest_sample_ids.add(sample_id)
     
-    # Check all splits - verify exact mapping
+    # Check all splits - verify one-to-one mapping (each window_id maps to a sample_id)
     for split_name, df in [('train', train_df), ('val', val_df), ('test', test_df)]:
-        for idx, row in df.iterrows():
-            window_id = row['window_id']
-            # window_id should equal sample_id in manifest
-            assert window_id in manifest_sample_to_window, \
-                f"window_id {window_id} in {split_name}.parquet has no corresponding sample_id in manifest"
-            assert manifest_sample_to_window[window_id] == window_id, \
-                f"window_id {window_id} in {split_name}.parquet doesn't match sample_id in manifest"
+        split_window_ids = set(df['window_id'].values)
+        # Each window_id should have a corresponding sample_id in manifest
+        missing = split_window_ids - manifest_sample_ids
+        assert len(missing) == 0, \
+            f"Some window_ids in {split_name}.parquet have no corresponding sample_id in manifest: {list(missing)[:10]}"
+        
+        # Verify one-to-one: each window_id appears exactly once in this split
+        window_id_counts = df['window_id'].value_counts()
+        duplicates = window_id_counts[window_id_counts > 1]
+        assert len(duplicates) == 0, \
+            f"Duplicate window_ids found in {split_name}.parquet: {duplicates.to_dict()}"
 
 
 def test_data_comes_from_sensor_csv():
-    """Verify synthesized data uses sensor columns and values from /app/sensor.csv (anti-cheating)."""
+    """Verify synthesized data uses sensor columns and values from /app/sensor.csv."""
     # Load original sensor data
     original_df = pd.read_csv("/app/sensor.csv")
     sensor_cols = [col for col in original_df.columns if col != 'timestamp']
@@ -428,9 +455,9 @@ def test_data_comes_from_sensor_csv():
     assert len(missing_sensors) == 0, \
         f"Synthesized data missing sensor columns from CSV: {missing_sensors}"
     
-    # Anti-cheating: Verify data values are plausibly derived from sensor.csv
+    # Verify data values are plausibly derived from sensor.csv
     # Check that synthesized values are within reasonable range of original data
-    # (allowing for augmentations that might extend the range, but not completely random)
+    # (allowing for augmentations that might extend the range)
     for sensor in sensor_cols:
         sensor_values = []
         for col in timestep_cols:
@@ -439,12 +466,7 @@ def test_data_comes_from_sensor_csv():
         
         if len(sensor_values) > 0:
             orig_range = original_ranges[sensor]
-            # Check that at least some values overlap with original range
-            # (augmentations might extend range, but shouldn't be completely disjoint)
-            values_in_original_range = sum(1 for v in sensor_values 
-                                         if orig_range['min'] <= v <= orig_range['max'])
-            
-            # Also check values are within reasonable bounds (within 5 std devs of mean)
+            # Check values are within reasonable bounds (within 5 std devs of mean)
             reasonable_bounds = (
                 orig_range['mean'] - 5 * orig_range['std'],
                 orig_range['mean'] + 5 * orig_range['std']
@@ -454,10 +476,9 @@ def test_data_comes_from_sensor_csv():
             
             # At least 50% of values should be within reasonable bounds of original data
             assert values_in_reasonable_bounds >= len(sensor_values) * 0.5, \
-                f"Anti-cheating check failed: {sensor} values don't appear derived from sensor.csv. " \
+                f"{sensor} values don't appear derived from sensor.csv. " \
                 f"Only {values_in_reasonable_bounds}/{len(sensor_values)} values within reasonable range " \
-                f"of original data (mean={orig_range['mean']:.2f}, std={orig_range['std']:.2f}). " \
-                f"This suggests data may be fabricated rather than synthesized from sensor.csv."
+                f"of original data (mean={orig_range['mean']:.2f}, std={orig_range['std']:.2f})."
 
 
 def test_data_is_synthesized_not_copied():
@@ -562,7 +583,7 @@ def test_vae_was_used_for_anomalous():
 
 
 def test_vae_was_actually_trained():
-    """Verify VAE was actually trained by checking that latent-perturbed samples have VAE-like characteristics (anti-cheating)."""
+    """Verify VAE was actually trained by checking that latent-perturbed samples have VAE-like characteristics."""
     train_df = pd.read_parquet("/app/train.parquet")
     manifest_path = Path("/app/manifest.jsonl")
     original_df = pd.read_csv("/app/sensor.csv")
@@ -613,23 +634,22 @@ def test_vae_was_actually_trained():
     latent_windows = np.array(latent_windows)
     normal_windows = np.array(normal_windows[:len(latent_windows)])  # Sample same number for fair comparison
     
-    # Anti-cheating: VAE-generated samples should have characteristics that indicate actual VAE training:
+    # VAE-generated samples should have characteristics that indicate actual VAE training:
     # 1. Similar distribution to normal samples (VAE learns the data distribution)
     # 2. Different from normal samples (perturbations were applied)
-    # 3. Show structure (not pure random noise - VAE reconstructions have structure)
+    # 3. Show structure (VAE reconstructions have structure)
     
     # Check 1: Statistical similarity (VAE preserves distribution characteristics)
     latent_mean = np.mean(latent_windows)
-    latent_std = np.std(latent_windows)
     normal_mean = np.mean(normal_windows)
     normal_std = np.std(normal_windows)
     
     # Means should be within 3 std devs (VAE-generated data should be similar to training data)
     mean_diff_normalized = abs(latent_mean - normal_mean) / (normal_std + 1e-8)
     assert mean_diff_normalized < 3.0, \
-        f"Anti-cheating check failed: Latent-perturbed samples have very different mean " \
+        f"Latent-perturbed samples have very different mean " \
         f"({latent_mean:.2f} vs {normal_mean:.2f}, {mean_diff_normalized:.2f} std devs apart). " \
-        f"This suggests VAE was not properly trained or data is fabricated."
+        f"This suggests VAE was not properly trained."
     
     # Check 2: Samples should be different (not identical copies)
     sample_distances = []
@@ -640,17 +660,17 @@ def test_vae_was_actually_trained():
     
     avg_distance = np.mean(sample_distances) if sample_distances else 0
     assert avg_distance > 1e-6, \
-        "Anti-cheating check failed: Latent-perturbed samples are identical to normal samples. " \
-        "This suggests VAE perturbations are not being applied or data is fabricated."
+        "Latent-perturbed samples are identical to normal samples. " \
+        "This suggests VAE perturbations are not being applied."
     
-    # Check 3: Latent samples should have structure (VAE reconstructions are structured, not random)
+    # Check 3: Latent samples should have structure (VAE reconstructions are structured)
     if len(latent_windows) > 1:
         # Check that samples have reasonable diversity (not all identical)
         latent_diversity = np.mean([np.linalg.norm(latent_windows[i] - latent_windows[j]) 
                                     for i in range(min(5, len(latent_windows))) 
                                     for j in range(i+1, min(5, len(latent_windows)))])
         assert latent_diversity > 1e-6, \
-            "Anti-cheating check failed: All latent-perturbed samples are identical. " \
+            "All latent-perturbed samples are identical. " \
             "This suggests VAE perturbations are not being applied correctly."
         
         # Check feature-level structure (VAE should generate structured outputs)
@@ -658,6 +678,6 @@ def test_vae_was_actually_trained():
         # At least some features should have variation (not all zeros)
         features_with_variation = np.sum(feature_stds > 1e-6)
         assert features_with_variation > len(feature_stds) * 0.3, \
-            f"Anti-cheating check failed: Latent-perturbed samples lack structure " \
+            f"Latent-perturbed samples lack structure " \
             f"(only {features_with_variation}/{len(feature_stds)} features vary). " \
-            f"This suggests VAE was not properly trained or data is fabricated."
+            f"This suggests VAE was not properly trained."
