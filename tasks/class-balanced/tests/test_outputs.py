@@ -538,6 +538,8 @@ def test_deterministic_output_with_same_seed():
 
 def test_smote_nc_uses_k_nearest_neighbors():
     """Verify SMOTE-NC uses k-nearest neighbors (anti-cheating: ensures algorithm is implemented)."""
+    import numpy as np
+    
     original_df = pd.read_csv("/app/dataset.csv")
     augmented_df = pd.read_csv("/app/augmented.csv")
     
@@ -547,9 +549,10 @@ def test_smote_nc_uses_k_nearest_neighbors():
     
     feature_cols = [col for col in original_df.columns if col != 'target']
     numeric_cols = [col for col in feature_cols if original_df[col].dtype in ['int64', 'float64']]
+    categorical_cols = [col for col in feature_cols if original_df[col].dtype not in ['int64', 'float64']]
     
-    if len(numeric_cols) == 0:
-        return  # Skip if no numeric columns
+    if len(numeric_cols) == 0 and len(categorical_cols) == 0:
+        return  # Skip if no features
     
     # Get synthetic samples
     synthetic_samples = []
@@ -562,47 +565,115 @@ def test_smote_nc_uses_k_nearest_neighbors():
     if len(synthetic_samples) == 0:
         return  # No synthetic samples to check
     
-    # SMOTE-NC with k-nearest neighbors means each synthetic sample should be
-    # an interpolation between a minority sample and one of its k-nearest neighbors
-    # This creates samples that are "between" pairs of original samples
+    # Anti-cheating: Verify that synthetic samples are closer to original minority samples
+    # than uniform random samples would be. This ensures KNN is actually used.
     
-    # For each synthetic sample, verify it's an interpolation between two original minority samples
-    # by checking that its numeric values are between pairs of original values
-    interpolation_evidence = 0
-    
+    # Compute distances from each synthetic sample to all original minority samples
+    synthetic_distances = []
     for synth_row in synthetic_samples:
-        # Check if this synthetic sample's numeric values are interpolations
-        # (i.e., between pairs of original minority sample values)
-        is_interpolation = True
-        for col in numeric_cols:
-            synth_value = synth_row[col]
-            original_values = minority_original[col].values
+        min_dist = float('inf')
+        for _, orig_row in minority_original.iterrows():
+            # Compute mixed-type distance (similar to SMOTE-NC)
+            dist = 0.0
             
-            # Check if value is between any pair of original values
-            found_between = False
-            sorted_orig = sorted(original_values)
-            for i in range(len(sorted_orig) - 1):
-                if sorted_orig[i] < synth_value < sorted_orig[i + 1]:
-                    found_between = True
-                    break
+            # Numeric distance (normalized Euclidean)
+            if len(numeric_cols) > 0:
+                numeric_dist = 0.0
+                for col in numeric_cols:
+                    orig_min = minority_original[col].min()
+                    orig_max = minority_original[col].max()
+                    if orig_max > orig_min:
+                        norm_synth = (synth_row[col] - orig_min) / (orig_max - orig_min)
+                        norm_orig = (orig_row[col] - orig_min) / (orig_max - orig_min)
+                        numeric_dist += (norm_synth - norm_orig) ** 2
+                dist += np.sqrt(numeric_dist)
             
-            if not found_between:
-                # Value might be at boundary, check if it's close to original values
-                # (within reasonable interpolation range)
-                min_dist = min(abs(synth_value - v) for v in original_values)
-                if min_dist > (max(original_values) - min(original_values)) * 0.1:
-                    is_interpolation = False
-                    break
+            # Categorical distance (Hamming)
+            if len(categorical_cols) > 0:
+                cat_dist = sum(1 for col in categorical_cols if synth_row[col] != orig_row[col])
+                dist += cat_dist
+            
+            min_dist = min(min_dist, dist)
         
-        if is_interpolation:
-            interpolation_evidence += 1
+        synthetic_distances.append(min_dist)
     
-    # At least some synthetic samples should show interpolation pattern
-    # (indicating k-nearest neighbors were used)
-    assert interpolation_evidence >= len(synthetic_samples) * 0.5, \
-        f"Only {interpolation_evidence}/{len(synthetic_samples)} synthetic samples show " \
-        f"interpolation pattern. SMOTE-NC should interpolate between samples and their " \
-        f"k-nearest neighbors, not use naive jitter or duplication."
+    # Compare with uniform random sampling: generate random samples within minority ranges
+    # and compute their distances to original samples
+    np.random.seed(42)  # Fixed seed for reproducibility
+    random_distances = []
+    for _ in range(len(synthetic_samples)):
+        random_row = {}
+        for col in numeric_cols:
+            col_min = minority_original[col].min()
+            col_max = minority_original[col].max()
+            random_row[col] = np.random.uniform(col_min, col_max)
+        for col in categorical_cols:
+            random_row[col] = np.random.choice(minority_original[col].unique())
+        
+        min_dist = float('inf')
+        for _, orig_row in minority_original.iterrows():
+            dist = 0.0
+            if len(numeric_cols) > 0:
+                numeric_dist = 0.0
+                for col in numeric_cols:
+                    orig_min = minority_original[col].min()
+                    orig_max = minority_original[col].max()
+                    if orig_max > orig_min:
+                        norm_random = (random_row[col] - orig_min) / (orig_max - orig_min)
+                        norm_orig = (orig_row[col] - orig_min) / (orig_max - orig_min)
+                        numeric_dist += (norm_random - norm_orig) ** 2
+                dist += np.sqrt(numeric_dist)
+            if len(categorical_cols) > 0:
+                cat_dist = sum(1 for col in categorical_cols if random_row[col] != orig_row[col])
+                dist += cat_dist
+            min_dist = min(min_dist, dist)
+        random_distances.append(min_dist)
+    
+    # SMOTE-NC with KNN should produce samples closer to originals than uniform random
+    # (interpolation between neighbors should be closer than random sampling)
+    avg_synthetic_dist = np.mean(synthetic_distances)
+    avg_random_dist = np.mean(random_distances)
+    
+    assert avg_synthetic_dist < avg_random_dist * 0.9, \
+        f"SMOTE-NC synthetic samples (avg distance: {avg_synthetic_dist:.4f}) are not " \
+        f"significantly closer to original samples than uniform random samples " \
+        f"(avg distance: {avg_random_dist:.4f}). This suggests KNN is not being used. " \
+        f"SMOTE-NC should interpolate between k-nearest neighbors, producing samples " \
+        f"closer to the original distribution than uniform random sampling."
+    
+    # Also verify interpolation pattern: at least 50% of synthetic samples should be
+    # between pairs of original minority samples (for numeric features)
+    if len(numeric_cols) > 0:
+        interpolation_evidence = 0
+        for synth_row in synthetic_samples:
+            is_interpolation = True
+            for col in numeric_cols:
+                synth_value = synth_row[col]
+                original_values = minority_original[col].values
+                
+                # Check if value is between any pair of original values
+                found_between = False
+                sorted_orig = sorted(original_values)
+                for i in range(len(sorted_orig) - 1):
+                    if sorted_orig[i] <= synth_value <= sorted_orig[i + 1]:
+                        found_between = True
+                        break
+                
+                if not found_between:
+                    # Check if very close to an original value (within 5% of range)
+                    min_dist_to_orig = min(abs(synth_value - v) for v in original_values)
+                    range_size = max(original_values) - min(original_values)
+                    if min_dist_to_orig > range_size * 0.05:
+                        is_interpolation = False
+                        break
+            
+            if is_interpolation:
+                interpolation_evidence += 1
+        
+        assert interpolation_evidence >= len(synthetic_samples) * 0.5, \
+            f"Only {interpolation_evidence}/{len(synthetic_samples)} synthetic samples show " \
+            f"interpolation pattern. SMOTE-NC should interpolate between samples and their " \
+            f"k-nearest neighbors, not use naive jitter or duplication."
 
 
 def test_smote_nc_implemented_from_scratch():

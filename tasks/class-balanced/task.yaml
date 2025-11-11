@@ -8,20 +8,70 @@
 instruction: |-
   Create a Python CLI that performs class-balanced augmentation of a mixed-type tabular dataset by implementing SMOTE-NC from scratch, honoring per-column constraints (numeric bounds, integer-only, allowed categories) and a fixed RNG seed.
   
+  **CLI Interface:**
+  The CLI must accept the following command-line arguments:
+  ```
+  python3 <script_name> --input <input_path> --output <output_path> --report <report_path> --target <target_column> --seed <seed_value>
+  ```
+  
+  Required arguments:
+  - `--input`: Path to input CSV file (default: /app/dataset.csv)
+  - `--output`: Path to output augmented CSV file (default: /app/augmented.csv)
+  - `--report`: Path to output JSON report file (default: /app/report.json)
+  - `--target`: Name of the target column containing class labels (default: target)
+  - `--seed`: Integer seed for random number generation (default: 42)
+  
+  Example command:
+  ```
+  python3 smote_nc_augment.py --input /app/dataset.csv --output /app/augmented.csv --report /app/report.json --target target --seed 42
+  ```
+  
+  **SMOTE-NC Algorithm Specification:**
+  
+  SMOTE-NC (SMOTE for Nominal and Continuous) must be implemented from scratch with the following steps:
+  
+  1. **Distance Computation for Mixed-Type Data:**
+     - Normalize all numeric features to [0, 1] range: `normalized = (value - min) / (max - min)`
+     - For each pair of samples (i, j), compute distance as:
+       - Numeric distance: Euclidean distance on normalized numeric features
+       - Categorical distance: Hamming distance (count of mismatched categorical features)
+       - Combined distance: `d(i,j) = sqrt(sum((norm_i - norm_j)^2)) + sum(cat_i != cat_j)`
+  
+  2. **K-Nearest Neighbors Selection:**
+     - For each minority class sample, find its k-nearest neighbors (k=3 by default) from other minority class samples
+     - Use the distance metric defined above
+     - If fewer than k neighbors exist, use all available neighbors
+  
+  3. **Synthetic Sample Generation:**
+     - For each synthetic sample to generate:
+       a. Randomly select a minority class sample (base sample)
+       b. Randomly select one of its k-nearest neighbors
+       c. For numeric features: interpolate between base and neighbor: `value = base + α * (neighbor - base)` where α is a random value in [0, 1]
+       d. For categorical features: use majority voting from the base sample and its k-nearest neighbors (choose the most frequent value)
+     - Apply constraints: clip numeric values to [min, max], round integers, ensure categorical values are from allowed set
+  
+  4. **Class Balancing:**
+     - Identify majority and minority classes
+     - Generate synthetic samples until minority class count equals majority class count
+     - All synthetic samples must belong to the minority class
+  
+  **Deterministic Output Requirements:**
+  - JSON report must have deterministic key ordering (use sorted keys)
+  - Lists in JSON (e.g., allowed_categories) must be sorted
+  - Same seed must produce byte-identical output files
+  - Use `json.dump()` with `sort_keys=True` to ensure deterministic JSON
+  
   Requirements:
   1. Create a Python CLI script (e.g., smote_nc_augment.py or similar) that performs the augmentation
   2. Read the input dataset from /app/dataset.csv (mixed-type tabular data with numeric and categorical columns)
-  3. Implement SMOTE-NC (SMOTE for Nominal and Continuous) from scratch to balance classes:
-     - For numeric features: interpolate between minority class samples and their k-nearest neighbors
-     - For categorical features: use majority voting from k-nearest neighbors
-     - Generate synthetic samples by combining numeric interpolation and categorical voting
+  3. Implement SMOTE-NC (SMOTE for Nominal and Continuous) from scratch following the algorithm specification above
   4. Honor per-column constraints:
      - Numeric columns: respect min/max bounds from original data
      - Integer columns: ensure generated values are integers
      - Categorical columns: only use categories present in original data
   5. Use a fixed RNG seed for reproducibility (seed value: 42)
   6. Output the augmented dataset to /app/augmented.csv (must include all original samples plus synthetic samples)
-  7. Generate a JSON report at /app/report.json with the following structure:
+  7. Generate a JSON report at /app/report.json with the following structure (all keys sorted, all lists sorted):
      {
        "pre_augmentation": {
          "class_ratios": {class: ratio},
@@ -51,13 +101,15 @@ instruction: |-
        "random_seed": 42
      }
      Note: Drift metrics must use Kolmogorov-Smirnov (KS) test for numeric columns and chi-square test for categorical columns.
+     Note: All dictionary keys in JSON must be sorted, and all lists (e.g., allowed_categories) must be sorted to ensure deterministic output.
   
   The solution must ensure:
   - All constraints are met (no values outside bounds, integers remain integers, categories are valid)
   - No target leakage occurs (target values only from original classes)
   - Classes are balanced after augmentation (equal counts)
-  - Synthetic samples are generated using SMOTE-NC algorithm (not simple duplication)
-  - Results are deterministic when using the same seed
+  - Synthetic samples are generated using SMOTE-NC algorithm with true k-nearest neighbors (not simple duplication, not uniform sampling)
+  - Results are deterministic when using the same seed (byte-identical files, sorted JSON keys and lists)
+  - The implementation must actually compute distances and select k-nearest neighbors (not use uniform sampling or naive jittering)
 author_name: anonymous
 author_email: anonymous
 difficulty: unknown
