@@ -354,7 +354,6 @@ def test_smote_nc_algorithm_used():
         for col in numeric_cols:
             original_min = minority_original[col].min()
             original_max = minority_original[col].max()
-            original_range = original_max - original_min
             
             # Count how many synthetic values are within the original range
             # (SMOTE interpolation should keep values within range of minority samples)
