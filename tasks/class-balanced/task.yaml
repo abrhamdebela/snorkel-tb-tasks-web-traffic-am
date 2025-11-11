@@ -9,18 +9,19 @@ instruction: |-
   Create a Python CLI that performs class-balanced augmentation of a mixed-type tabular dataset by implementing SMOTE-NC from scratch, honoring per-column constraints (numeric bounds, integer-only, allowed categories) and a fixed RNG seed.
   
   Requirements:
-  1. Read the input dataset from /app/dataset.csv (mixed-type tabular data with numeric and categorical columns)
-  2. Implement SMOTE-NC (SMOTE for Nominal and Continuous) from scratch to balance classes:
+  1. Create a Python CLI script (e.g., smote_nc_augment.py or similar) that performs the augmentation
+  2. Read the input dataset from /app/dataset.csv (mixed-type tabular data with numeric and categorical columns)
+  3. Implement SMOTE-NC (SMOTE for Nominal and Continuous) from scratch to balance classes:
      - For numeric features: interpolate between minority class samples and their k-nearest neighbors
      - For categorical features: use majority voting from k-nearest neighbors
      - Generate synthetic samples by combining numeric interpolation and categorical voting
-  3. Honor per-column constraints:
+  4. Honor per-column constraints:
      - Numeric columns: respect min/max bounds from original data
      - Integer columns: ensure generated values are integers
      - Categorical columns: only use categories present in original data
-  4. Use a fixed RNG seed for reproducibility (seed value: 42)
-  5. Output the augmented dataset to /app/augmented.csv (must include all original samples plus synthetic samples)
-  6. Generate a JSON report at /app/report.json with the following structure:
+  5. Use a fixed RNG seed for reproducibility (seed value: 42)
+  6. Output the augmented dataset to /app/augmented.csv (must include all original samples plus synthetic samples)
+  7. Generate a JSON report at /app/report.json with the following structure:
      {
        "pre_augmentation": {
          "class_ratios": {class: ratio},
@@ -32,14 +33,14 @@ instruction: |-
          "class_counts": {class: count},
          "total_samples": number
        },
-       "drift_metrics": {
-         "column_name": {
-           "test": "ks" or "chi_square",
-           "statistic": number,
-           "pvalue": number
-         }
-       },
-       "constraints_applied": {
+      "drift_metrics": {
+        "column_name": {
+          "test": "ks" (for numeric columns) or "chi_square" (for categorical columns),
+          "statistic": number,
+          "pvalue": number
+        }
+      },
+      "constraints_applied": {
          "column_name": {
            "min": number (for numeric),
            "max": number (for numeric),
@@ -49,6 +50,7 @@ instruction: |-
        },
        "random_seed": 42
      }
+     Note: Drift metrics must use Kolmogorov-Smirnov (KS) test for numeric columns and chi-square test for categorical columns.
   
   The solution must ensure:
   - All constraints are met (no values outside bounds, integers remain integers, categories are valid)
