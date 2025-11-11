@@ -139,6 +139,7 @@ module "all_notifications" {
   version = "5.8.2"
 
   bucket = module.s3_bucket.s3_bucket_id
+  create_sns_policy = false
 
   sns_notifications = {
     to_sns = {
