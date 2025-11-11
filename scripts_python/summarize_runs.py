@@ -82,6 +82,7 @@ def main():
                         n_other_failures += 1
             agents_summary[agent]["accuracy"] = sum(is_resolveds) / len(is_resolveds)
             agents_summary[agent]["n_runs"] = len(task_results)
+            agents_summary[agent]["n_resolved"] = sum(is_resolveds)
             agents_summary[agent]["n_agent_timeouts"] = n_agent_timeouts
             agents_summary[agent]["n_other_failures"] = n_other_failures
         summary[task]["agents"] = agents_summary
@@ -93,10 +94,10 @@ def main():
                 f.write("This task is not tested with any agents as the Oracle solution failed. Please fix the Oracle solution and re-run the tests.\n")
             else:
                 f.write(f"### Difficulty: {task_summary['difficulty']}\n")
-                f.write("| Agent/Model | # of total runs | # of failures<br>(agent timeout) | # of failures<br>(other reasons) | Accuracy |\n")
-                f.write("|-------------|-----------------|------------------------------------|---------------|----------|\n")
+                f.write("| Agent/Model | # of total runs | # of successes | # of failures<br>(agent timeout) | # of failures<br>(other reasons) | Accuracy |\n")
+                f.write("|-------------|-----------------|-----------------|------------------------------------|---------------|----------|\n")
                 for agent, data in task_summary["agents"].items():
-                    f.write(f"| {agent} | {data['n_runs']} | {data['n_agent_timeouts']} | {data['n_other_failures']} | {data['accuracy']} |\n")
+                    f.write(f"| {agent} | {data['n_runs']} | {data['n_resolved']} | {data['n_agent_timeouts']} | {data['n_other_failures']} | {data['accuracy']} |\n")
             debug = safe_read_json(Path(f"debug-output-{task}.json"))
             # Replace "pass" with "✅" and "fail" with "❌"
             debug["outcome"] = debug["outcome"].replace("PASS", "✅ PASS").replace("FAIL", "❌ FAIL").replace("NOT_APPLICABLE", "➖ NOT_APPLICABLE")
