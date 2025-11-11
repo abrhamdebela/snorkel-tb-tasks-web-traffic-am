@@ -1,0 +1,6 @@
+dep,ver,digest_hex,keyid
+lib-zet,3.2.5,bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb ,ABCD1234
+img-calc,1.9.0,dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd ,DEAD7777
+tiny,0.0.7,1111111111111111111111111111111111111111111111111111111111111111 ,BEEF0001
+alpha,9.9.9,0000000000000000000000000000000000000000000000000000000000000000 ,FFFF0000
+lib-zet,3.2.5,bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb ,  ABCD1234

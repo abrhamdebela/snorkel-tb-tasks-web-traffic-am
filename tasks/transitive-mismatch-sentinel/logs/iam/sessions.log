@@ -1,0 +1,10 @@
+2025-11-10T11:50:10+00:00 iam: login user=alice session=SID200 ip=10.0.0.055 result=success
+2025-11-10T11:55:00+00:00 iam: status user=alice session=SID200 ip=10.0.0.55 terminated=1
+2025-11-10T11:48:30+00:00 iam: login user=bob session=SID300 ip=10.0.2.8 result=success
+2025-11-10T12:10:00+00:00 iam: status user=bob session=SID300 ip=10.0.2.8 terminated=1
+2025-11-10T11:58:30+00:00 iam: login user=bob session=SID301 ip=10.0.2.8 result=success
+2025-11-10T11:40:00+00:00 iam: login user=alice session=SID190 ip=10.0.0.60 result=success
+2025-11-10T11:42:00+00:00 iam: status user=alice session=SID190 ip=10.0.0.60 terminated=1
+2025-11-10T12:15:00+00:00 iam: login user=carol session=SID400 ip=10.0.3.7 result=success
+2025-11-10T12:20:00+00:00 iam: status user=carol session=SID400 ip=10.0.3.7 terminated=1
+2025-11-10T11:45:00+00:00 iam: assume_role user=alice session=SID199 ip=10.0.0.60 role=read_only
