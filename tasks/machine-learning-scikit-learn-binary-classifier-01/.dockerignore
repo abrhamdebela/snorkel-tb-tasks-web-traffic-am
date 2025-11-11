@@ -1,0 +1,16 @@
+# Only exclude these files
+Dockerfile
+docker-compose.yaml
+task.yaml
+run-tests.sh
+solution.yaml
+
+# Standard excludes
+.git/
+.gitignore
+__pycache__/
+*.pyc
+.DS_Store
+
+# Do NOT list solution.sh here!
+# Do NOT list signups.csv here!
