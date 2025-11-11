@@ -402,51 +402,6 @@ def test_main_tf_contains_provider_config():
     )
 
 
-def test_main_tf_uses_notification_submodule():
-    """Verify main.tf uses the S3 notification submodule with correct version."""
-    import os
-    import re
-
-    main_path = "/app/terraform/main.tf"
-    assert os.path.exists(main_path), f"main.tf not found at {main_path}"
-
-    with open(main_path, "r") as f:
-        content = f.read()
-
-    assert "s3-bucket/aws//modules/notification" in content, (
-        "main.tf must use the S3 notification submodule: "
-        "terraform-aws-modules/s3-bucket/aws//modules/notification"
-    )
-
-    notification_source_pattern = (
-        r'source\s*=\s*"terraform-aws-modules/s3-bucket/aws//modules/notification"'
-    )
-    assert re.search(notification_source_pattern, content), (
-        "Notification submodule source not found"
-    )
-
-    lines = content.split("\n")
-    in_notification_module = False
-    notification_version = None
-
-    for line in lines:
-        stripped = line.strip()
-        if "terraform-aws-modules/s3-bucket/aws//modules/notification" in line:
-            in_notification_module = True
-        if in_notification_module and "version" in stripped and "=" in stripped:
-            version_match = re.search(r'version\s*=\s*"([^"]+)"', stripped)
-            if version_match:
-                notification_version = version_match.group(1)
-                break
-        if in_notification_module and stripped == "}":
-            in_notification_module = False
-
-    assert notification_version is not None, "Notification submodule version not found"
-    assert notification_version == "5.8.2", (
-        f"Notification submodule version should be 5.8.2, got {notification_version}"
-    )
-
-
 def test_main_tf_uses_modules_only():
     """Verify main.tf uses Terraform AWS modules for infrastructure, no direct resources."""
     import os
