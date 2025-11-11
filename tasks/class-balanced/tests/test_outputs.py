@@ -649,7 +649,6 @@ def test_smote_nc_implemented_from_scratch():
     # Check if any forbidden imports are present
     lines = script_content.split('\n')
     in_docstring = False
-    in_multiline_string = False
     
     for line in lines:
         stripped = line.strip()
