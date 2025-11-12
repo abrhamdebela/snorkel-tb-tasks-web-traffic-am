@@ -156,34 +156,34 @@ class SMOTENC:
         return normalized
     
     def _compute_mixed_distance(self, sample1, sample2, X_numeric_norm, X_categorical, idx1, idx2):
-        """Compute sophisticated mixed-type distance with feature weighting."""
+        """Compute unweighted mixed-type distance as specified: sqrt(sum((norm_i - norm_j)^2)) + sum(cat_i != cat_j)."""
         distance = 0.0
         
-        # Weighted numeric distance (Euclidean)
+        # Unweighted numeric distance (Euclidean on normalized features)
+        # Formula: sqrt(sum((norm_i - norm_j)^2))
         if len(self.numeric_cols) > 0 and len(X_numeric_norm) > 0 and idx1 < len(X_numeric_norm) and idx2 < len(X_numeric_norm):
             numeric_dist = 0.0
             for col in self.numeric_cols:
                 if col in X_numeric_norm.columns:
                     try:
-                        weight = self.feature_weights.get(col, 1.0 / max(len(self.numeric_cols), 1))
                         val1 = X_numeric_norm.iloc[idx1][col]
                         val2 = X_numeric_norm.iloc[idx2][col]
-                        numeric_dist += weight * ((val1 - val2) ** 2)
+                        numeric_dist += (val1 - val2) ** 2
                     except (IndexError, KeyError):
                         continue
             distance += np.sqrt(numeric_dist) if numeric_dist > 0 else 0.0
         
-        # Weighted categorical distance (weighted Hamming)
+        # Unweighted categorical distance (Hamming: count of mismatches)
+        # Formula: sum(cat_i != cat_j)
         if len(self.categorical_cols) > 0 and len(X_categorical) > 0 and idx1 < len(X_categorical) and idx2 < len(X_categorical):
             categorical_dist = 0.0
             for col in self.categorical_cols:
                 if col in X_categorical.columns:
                     try:
-                        weight = self.feature_weights.get(col, 1.0 / max(len(self.categorical_cols), 1))
                         val1 = X_categorical.iloc[idx1][col]
                         val2 = X_categorical.iloc[idx2][col]
                         if val1 != val2:
-                            categorical_dist += weight
+                            categorical_dist += 1  # Unweighted: count mismatch
                     except (IndexError, KeyError):
                         continue
             distance += categorical_dist
@@ -191,19 +191,16 @@ class SMOTENC:
         return distance
     
     def _compute_distances(self, X_numeric, X_categorical, numeric_indices, categorical_indices):
-        """Compute sophisticated distance matrix with feature weighting and normalization."""
+        """Compute unweighted distance matrix with normalization as specified."""
         n_samples = len(X_numeric) if len(X_numeric) > 0 else len(X_categorical)
         
         if n_samples == 0:
             return np.array([])
         
-        # Normalize numeric features
+        # Normalize numeric features to [0, 1] range as specified
         X_numeric_norm = self._normalize_numeric_features(X_numeric, fit=True) if len(self.numeric_cols) > 0 else pd.DataFrame()
         
-        # Compute feature weights
-        self._compute_feature_weights(X_numeric, X_categorical)
-        
-        # Compute distance matrix
+        # Compute unweighted distance matrix (no feature weights)
         distances = np.zeros((n_samples, n_samples))
         
         for i in range(n_samples):
@@ -252,50 +249,39 @@ class SMOTENC:
         # Limit to k if we have more due to ties
         return k_nearest[:k] if len(k_nearest) > k else k_nearest
     
-    def _distance_weighted_categorical_voting(self, minority_sample, neighbors, base_distance, col, categorical_cols, distances_dict=None):
-        """Perform distance-weighted majority voting for categorical features."""
+    def _unweighted_categorical_voting(self, minority_sample, neighbors, col, categorical_cols):
+        """Perform unweighted majority voting for categorical features (choose the most frequent value)."""
         if col not in categorical_cols:
             return None
         
-        # Collect votes with weights (inverse distance)
+        # Collect votes (unweighted: simple count)
         votes = Counter()
-        total_weight = 0.0
         
-        # Add minority sample vote with weight 1.0
+        # Add minority sample vote
         minority_value = minority_sample[col]
-        votes[minority_value] += 1.0
-        total_weight += 1.0
+        votes[minority_value] += 1
         
-        # Add neighbor votes with inverse distance weights
+        # Add neighbor votes (unweighted: each neighbor gets one vote)
         for neighbor_item in neighbors:
             if isinstance(neighbor_item, tuple) and len(neighbor_item) == 2:
                 neighbor_idx, neighbor_sample = neighbor_item
-                # Get distance for this neighbor
-                if distances_dict is not None and neighbor_idx in distances_dict:
-                    dist = distances_dict[neighbor_idx]
-                else:
-                    dist = base_distance  # Fallback to base distance
             else:
                 neighbor_sample = neighbor_item
-                dist = base_distance
             
             neighbor_value = neighbor_sample[col]
-            # Use inverse distance as weight (add small epsilon to avoid division by zero)
-            weight = 1.0 / (dist + 1e-10)
-            votes[neighbor_value] += weight
-            total_weight += weight
+            votes[neighbor_value] += 1
         
         # Check constraints
         if col in self.constraints and 'allowed_categories' in self.constraints[col]:
             allowed = set(self.constraints[col]['allowed_categories'])
             # Filter votes to only allowed categories
-            filtered_votes = {cat: weight for cat, weight in votes.items() if str(cat) in allowed}
+            filtered_votes = {cat: count for cat, count in votes.items() if str(cat) in allowed}
             if len(filtered_votes) == 0:
                 # No allowed votes, use first allowed category
                 return self.constraints[col]['allowed_categories'][0]
             votes = filtered_votes
         
-        # Select category with highest weighted vote
+        # Select category with highest count (most frequent value)
         if len(votes) > 0:
             return max(votes.items(), key=lambda x: x[1])[0]
         else:
@@ -316,18 +302,8 @@ class SMOTENC:
             neighbor_value = neighbor_sample[col]
             
             # Use random interpolation factor
+            # Linear interpolation: value = base + α * (neighbor - base) where α is random in [0, 1]
             alpha = random.random()
-            
-            # Apply different interpolation strategies based on feature characteristics
-            if col in self.feature_weights:
-                weight = self.feature_weights[col]
-                # Adjust interpolation based on feature importance
-                if weight > 0.5:  # Important feature: more conservative interpolation
-                    alpha = alpha * 0.7  # Closer to minority sample
-            else:
-                # Default: linear interpolation
-                pass
-            
             value = base_value + alpha * (neighbor_value - base_value)
             
             # Apply constraints with sophisticated handling
@@ -351,20 +327,15 @@ class SMOTENC:
             
             synthetic[col] = value
         
-        # Categorical distance-weighted majority voting
+        # Categorical unweighted majority voting (choose the most frequent value)
         for col in categorical_cols:
             if col not in minority_sample.index:
                 continue
             
             if neighbors_list is not None and len(neighbors_list) > 0:
-                # Use distance-weighted voting
-                # Create distances dict for neighbors
-                distances_dict = {}
-                for neighbor_idx, _ in neighbors_list:
-                    if isinstance(neighbor_idx, int):
-                        distances_dict[neighbor_idx] = neighbor_dist  # Use base distance for all
-                value = self._distance_weighted_categorical_voting(
-                    minority_sample, neighbors_list, neighbor_dist, col, categorical_cols, distances_dict
+                # Use unweighted majority voting as specified
+                value = self._unweighted_categorical_voting(
+                    minority_sample, neighbors_list, col, categorical_cols
                 )
             else:
                 # Fallback to simple voting between minority and neighbor
@@ -446,13 +417,12 @@ class SMOTENC:
             # Compute distance matrix for minority samples
             # For small datasets, compute on-the-fly to save memory
             if len(minority_indices) <= 50:
-                # Small dataset: compute distances on-the-fly with sophisticated method
-                # First normalize and compute weights
+                # Small dataset: compute distances on-the-fly
+                # Normalize numeric features to [0, 1] range as specified
                 if len(self.numeric_cols) > 0 and len(minority_X_numeric) > 0:
                     X_numeric_norm = self._normalize_numeric_features(minority_X_numeric, fit=True)
                 else:
                     X_numeric_norm = pd.DataFrame()
-                self._compute_feature_weights(minority_X_numeric, minority_X_categorical)
                 
                 synthetic_samples = []
                 for _ in range(n_synthetic):
