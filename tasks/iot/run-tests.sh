@@ -24,7 +24,7 @@ fi
 
 uv venv .tbench-testing
 source .tbench-testing/bin/activate
-uv pip install pytest==8.4.1 pyarrow==18.1.0 pandas==2.2.3
+uv pip install pytest==8.4.1 pyarrow==18.1.0 pandas==2.2.3 numpy==2.1.3
 
 # Install other dependencies if needed (remember, by default this is a different venv
 # than your agent's)

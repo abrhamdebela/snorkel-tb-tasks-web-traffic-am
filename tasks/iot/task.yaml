@@ -48,7 +48,7 @@ author_name: anonymous
 author_email: anonymous
 difficulty: unknown
 category: machine-learning
-tags: []
+tags: [machine-learning, vae, time-series, anomaly-detection, data-synthesis, iot]
 parser_name: pytest
 max_agent_timeout_sec: 900.0
 max_test_timeout_sec: 900.0
