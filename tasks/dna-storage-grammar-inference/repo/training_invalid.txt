@@ -1,0 +1,106 @@
+ENCODE binary dna
+STORE 5GB
+REDUNDANCY 3x reed_solomon
+---
+STORE 5GB
+ENCODE binary dna
+---
+STORE 5GB
+REDUNDANCY 3x reed_solomon
+ENCODE binary dna
+---
+STORE 5GB
+ENCODE binary dna
+COMPRESS gzip level=5
+CHECKSUM sha256
+REDUNDANCY 3x reed_solomon
+---
+STORE 5GB
+ENCODE binary dna
+AVOID AAAA
+PARTITION 1024
+REDUNDANCY 3x reed_solomon
+---
+STORE 5GB
+ENCRYPT AES256
+ENCODE binary dna
+REDUNDANCY 3x reed_solomon
+---
+STORE 20GB
+ENCODE binary dna
+REDUNDANCY 3x reed_solomon
+---
+STORE 5GB
+ENCODE binary dna
+REDUNDANCY 7x reed_solomon
+---
+STORE 5GB
+ENCODE binary dna
+AVOID AAAA TTTT GGGG CCCC
+REDUNDANCY 3x reed_solomon
+---
+STORE 5GB
+ENCODE binary dna
+ENCRYPT AES256
+REDUNDANCY 3x reed_solomon
+---
+STORE 5GB
+ENCODE binary dna
+COMPRESS gzip level=5
+ENCRYPT AES256
+REDUNDANCY 3x reed_solomon
+---
+STORE 5GB
+ENCODE binary dna
+CHECKSUM md5
+REDUNDANCY 3x fountain
+---
+STORE 5GB
+ENCODE binary dna
+AVOID AAAA
+REDUNDANCY 3x reed_solomon
+---
+STORE 5MB
+ENCODE binary dna
+REDUNDANCY 3x reed_solomon
+---
+STORE 5GB
+ENCODE utf8 dna
+AVOID AAAA TTTT GGGG CCCC
+REDUNDANCY 3x reed_solomon
+---
+STORE 11MB
+ENCODE binary dna
+COMPRESS gzip level=5
+REDUNDANCY 3x reed_solomon
+---
+STORE 5PB
+ENCODE binary dna
+REDUNDANCY 3x reed_solomon
+---
+STORE 5GB
+ENCODE base64 dna
+REDUNDANCY 3x reed_solomon
+---
+STORE 5GB
+ENCODE binary xml
+REDUNDANCY 3x reed_solomon
+---
+STORE 5GB
+ENCODE binary dna
+PARTITION 1000
+REDUNDANCY 3x reed_solomon
+---
+STORE 5GB
+ENCODE binary dna
+CHECKSUM blake2
+REDUNDANCY 3x reed_solomon
+---
+STORE 5GB
+ENCODE binary dna
+COMPRESS snappy level=5
+REDUNDANCY 3x reed_solomon
+---
+STORE 5GB
+ENCODE binary dna
+REDUNDANCY 3x hamming_code

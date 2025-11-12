@@ -1,0 +1,4002 @@
+[
+  {
+    "program": "STORE 5GB\nENCODE hexadecimal quaternary\nPARTITION 2048\nAVOID AAA CCC\nCOMPRESS bzip2 level=9\nVERIFY strict\nREDUNDANCY 8x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 500KB\nPARTITION 512\nCOMPRESS gzip level=4\nREDUNDANCY 4x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nAVOID GGGGG AAA GGG\nCOMPRESS lzma level=8\nVERIFY paranoid\nREDUNDANCY 4x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nAVOID AAAAA\nCHECKSUM sha512\nCOMPRESS bzip2 level=1\nREPLICATE 3\nVERIFY relaxed\nREDUNDANCY 5x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nENCODE utf8 base4\nPARTITION 128\nAVOID GGG GGGG TTT\nCHECKSUM crc32\nCOMPRESS bzip2 level=1\nREDUNDANCY 8x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nAVOID AAAA\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 1GB\nENCODE utf8 base4\nPARTITION 512\nAVOID TTT GGGGG CCC TTTT GGGG AAAA GCGCGC\nCHECKSUM sha512\nCOMPRESS bzip2 level=2\nENCRYPT AES256\nVERIFY strict\nREDUNDANCY 6x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE utf8 quaternary\nAVOID GGG TTTTT AAAAA TTTTTTT TTTTTT CCC AAAAAAA\nCOMPRESS zstd level=3\nREDUNDANCY 5x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 1MB\nENCODE utf8 dna\nPARTITION 512\nAVOID TTTT TTT AAAA CCCC AAAAAA\nCHECKSUM sha512\nCOMPRESS bzip2 level=7\nENCRYPT AES256\nREDUNDANCY 7x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 1GB\nENCODE base32 quaternary\nPARTITION 2048\nAVOID AAAA GCGCGC\nREDUNDANCY 7x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary xml\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCOMPRESS gzip level=5\nENCRYPT AES256\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nENCRYPT AES256\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5MB\nAVOID CCC GCGCGC TTTT\nVERIFY strict\nREDUNDANCY 4x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nPARTITION 4096\nAVOID AAAAAA GGGG AAAAAAA\nVERIFY strict\nREDUNDANCY 8x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE utf8 dna\nPARTITION 512\nAVOID AAAA TTTT AAAAA GCGCGC TTTTTT GGG AAAAAAA\nCOMPRESS gzip level=1\nVERIFY paranoid\nREDUNDANCY 5x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 1GB\nENCODE utf8 dna\nPARTITION 4096\nAVOID CCC TTTTTTT\nCHECKSUM sha512\nCOMPRESS zstd level=6\nREDUNDANCY 5x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE utf8 dna\nAVOID AAAA TTTT GGGG CCCC\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "ENCODE binary dna\nSTORE 5GB\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 500MB\nENCODE base32 dna\nAVOID AAAA CCC\nCOMPRESS zstd level=1\nREPLICATE 5\nREDUNDANCY 2x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 1GB\nPARTITION 1024\nAVOID TTTT CCCC\nCOMPRESS zstd level=5\nREDUNDANCY 3x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nENCODE base32 base4\nCHECKSUM sha512\nCOMPRESS lzma level=1\nENCRYPT AES256\nREPLICATE 3\nREDUNDANCY 2x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nENCODE ascii base4\nAVOID GCGCGC\nCHECKSUM crc32\nCOMPRESS zstd level=1\nVERIFY relaxed\nREDUNDANCY 2x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE ascii dna\nAVOID CCCC\nCHECKSUM md5\nREPLICATE 4\nVERIFY paranoid\nREDUNDANCY 5x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 1GB\nENCODE hexadecimal base4\nPARTITION 128\nCOMPRESS gzip level=4\nREDUNDANCY 7x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 5MB\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 1GB\nAVOID CCC\nCHECKSUM md5\nVERIFY paranoid\nREDUNDANCY 2x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 5MB\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 10GB\nPARTITION 256\nAVOID GGG AAAA\nCHECKSUM crc32\nREDUNDANCY 4x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nREDUNDANCY 3x hamming_code",
+    "valid": false
+  },
+  {
+    "program": "ENCODE binary dna\nSTORE 5GB\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCHECKSUM md5\nREDUNDANCY 3x fountain",
+    "valid": false
+  },
+  {
+    "program": "STORE 10GB\nAVOID AAAAAA AAAAAAA TTTTT\nCOMPRESS zstd level=7\nVERIFY relaxed\nREDUNDANCY 4x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE base64 dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 500KB\nENCODE hexadecimal quaternary\nPARTITION 1024\nAVOID AAAA\nREDUNDANCY 5x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 500KB\nENCODE binary dna\nAVOID AAA\nCHECKSUM crc32\nCOMPRESS bzip2 level=1\nENCRYPT ChaCha20\nVERIFY relaxed\nREDUNDANCY 2x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE utf8 dna\nAVOID AAAA TTTT GGGG CCCC\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE utf8 dna\nAVOID AAAA TTTT GGGG CCCC\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5PB\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE base64 dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE utf8 quaternary\nAVOID AAAA CCC AAAAA\nCHECKSUM sha512\nCOMPRESS gzip level=4\nENCRYPT ChaCha20\nREPLICATE 2\nVERIFY paranoid\nREDUNDANCY 2x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE base64 dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nREDUNDANCY 3x hamming_code",
+    "valid": false
+  },
+  {
+    "program": "STORE 5MB\nENCODE base32 quaternary\nAVOID TTTTTTT\nCOMPRESS gzip level=6\nVERIFY paranoid\nREDUNDANCY 2x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 500KB\nENCODE hexadecimal base4\nAVOID GCGCGC AAA AAAAA\nCHECKSUM crc32\nCOMPRESS bzip2 level=1\nENCRYPT ChaCha20\nREDUNDANCY 3x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 500KB\nENCODE base32 base4\nPARTITION 128\nAVOID AAAAAAA AAA\nREDUNDANCY 6x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 10GB\nENCODE ascii quaternary\nAVOID TTT GGGGG\nCHECKSUM sha256\nREDUNDANCY 2x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE utf8 dna\nAVOID AAAA TTTT GGGG CCCC\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 100KB\nCOMPRESS lzma level=2\nREPLICATE 2\nVERIFY relaxed\nREDUNDANCY 4x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nAVOID AAAA\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE utf8 dna\nAVOID AAAA TTTT GGGG CCCC\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCOMPRESS snappy level=5\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5MB\nAVOID AAAA\nVERIFY relaxed\nREDUNDANCY 2x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 10GB\nENCODE utf8 quaternary\nPARTITION 1024\nAVOID TTTT AAAA GCGCGC CCC AAAAAAA TTT GGG\nCHECKSUM crc32\nCOMPRESS zstd level=1\nENCRYPT AES256\nVERIFY paranoid\nREDUNDANCY 2x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nAVOID AAAA\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "ENCODE binary dna\nSTORE 5GB\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 1MB\nENCODE ascii dna\nAVOID GGGGG AAAAAAA CCCC\nREDUNDANCY 4x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCHECKSUM md5\nREDUNDANCY 3x fountain",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nPARTITION 1000\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 500MB\nENCODE binary base4\nAVOID TTTTTT TTT\nCHECKSUM sha512\nCOMPRESS bzip2 level=4\nREPLICATE 4\nVERIFY paranoid\nREDUNDANCY 5x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 500MB\nENCODE hexadecimal base4\nAVOID TTTTT GGGGG TTT\nCHECKSUM sha512\nCOMPRESS bzip2 level=4\nENCRYPT ChaCha20\nREPLICATE 5\nREDUNDANCY 4x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary base4\nAVOID AAAA TTTT CCCC\nVERIFY strict\nREDUNDANCY 2x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nENCODE base32 quaternary\nPARTITION 512\nAVOID AAAAAAA\nCHECKSUM md5\nCOMPRESS lzma level=1\nENCRYPT ChaCha20\nVERIFY paranoid\nREDUNDANCY 2x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE base64 dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCOMPRESS snappy level=5\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 20GB\nENCODE utf8 quaternary\nPARTITION 128\nAVOID CCC GGGGG TTTTT AAAAA AAAAAAA\nCHECKSUM sha512\nCOMPRESS gzip level=2\nENCRYPT ChaCha20\nVERIFY strict\nREDUNDANCY 5x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 100KB\nPARTITION 4096\nAVOID GGG\nVERIFY strict\nREDUNDANCY 3x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nENCODE base32 dna\nCHECKSUM sha256\nCOMPRESS lzma level=1\nENCRYPT AES128\nVERIFY relaxed\nREDUNDANCY 3x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 500MB\nENCODE ascii base4\nAVOID TTTTTT CCCC\nREDUNDANCY 2x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 100KB\nPARTITION 4096\nAVOID AAAA TTTT\nCOMPRESS zstd level=8\nREDUNDANCY 6x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "ENCODE binary dna\nSTORE 5GB\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nAVOID AAAA\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 10GB\nENCODE hexadecimal base4\nPARTITION 64\nAVOID TTTTTTT GGGGG\nCOMPRESS bzip2 level=2\nVERIFY relaxed\nREDUNDANCY 3x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nREDUNDANCY 3x hamming_code",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nAVOID AAAA\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCOMPRESS snappy level=5\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 10GB\nENCODE base32 dna\nPARTITION 1024\nAVOID TTTTTTT TTTTTT\nCHECKSUM sha512\nENCRYPT AES256\nREDUNDANCY 4x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 100KB\nPARTITION 8192\nAVOID AAA\nCHECKSUM crc32\nCOMPRESS lzma level=1\nREDUNDANCY 2x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nAVOID AAAA TTTT GGGG CCCC\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 1MB\nENCODE utf8 dna\nAVOID GGGGG CCCC AAAAA TTTTTT TTTT AAAAAA GCGCGC\nCOMPRESS zstd level=2\nVERIFY strict\nREDUNDANCY 5x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE utf8 dna\nAVOID AAAA TTTT GGGG CCCC\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna",
+    "valid": false
+  },
+  {
+    "program": "STORE 20GB\nPARTITION 4096\nAVOID TTTTTTT TTT AAAAA\nCHECKSUM crc32\nCOMPRESS lzma level=1\nVERIFY paranoid\nREDUNDANCY 8x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 500KB\nENCODE hexadecimal base4\nPARTITION 8192\nAVOID AAA CCCC\nCHECKSUM crc32\nENCRYPT ChaCha20\nREDUNDANCY 7x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCOMPRESS snappy level=5\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5MB\nENCODE hexadecimal base4\nAVOID GGGGG TTTTTT GGGG\nREDUNDANCY 4x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nENCRYPT AES256\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCRYPT AES256\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary xml\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna",
+    "valid": false
+  },
+  {
+    "program": "STORE 20GB\nENCODE utf8 quaternary\nPARTITION 4096\nAVOID TTT AAAAAA\nCHECKSUM crc32\nCOMPRESS bzip2 level=5\nREDUNDANCY 7x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 500KB\nPARTITION 256\nREDUNDANCY 7x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE base32 base4\nPARTITION 1024\nAVOID AAAAAAA AAAAA GCGCGC\nCHECKSUM sha256\nVERIFY paranoid\nREDUNDANCY 6x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nPARTITION 1000\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 500MB\nPARTITION 256\nAVOID GGGGG AAA GGG\nCHECKSUM sha512\nCOMPRESS zstd level=1\nREDUNDANCY 8x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 100KB\nENCODE hexadecimal dna\nCHECKSUM sha256\nCOMPRESS bzip2 level=1\nENCRYPT AES128\nREPLICATE 4\nVERIFY strict\nREDUNDANCY 3x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nPARTITION 1024\nAVOID CCCC AAAAA TTT\nCHECKSUM crc32\nCOMPRESS zstd level=1\nVERIFY relaxed\nREDUNDANCY 2x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCOMPRESS gzip level=5\nCHECKSUM sha256\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 500KB\nENCODE ascii dna\nAVOID AAAAAA\nCHECKSUM md5\nCOMPRESS lzma level=1\nENCRYPT AES256\nREDUNDANCY 2x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5PB\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5MB\nPARTITION 8192\nAVOID GGG AAA GGGGG\nREDUNDANCY 5x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nREDUNDANCY 3x reed_solomon\nENCODE binary dna",
+    "valid": false
+  },
+  {
+    "program": "STORE 20GB\nENCODE utf8 base4\nAVOID TTTTTTT AAAAA GGG TTT CCCC\nCHECKSUM sha512\nCOMPRESS bzip2 level=2\nVERIFY strict\nREDUNDANCY 3x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 10GB\nENCODE utf8 dna\nCHECKSUM sha512\nENCRYPT AES256\nREDUNDANCY 5x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 100KB\nENCODE hexadecimal base4\nAVOID CCC\nCHECKSUM crc32\nCOMPRESS zstd level=4\nREDUNDANCY 5x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 500KB\nENCODE binary base4\nPARTITION 128\nAVOID CCCC TTTTT\nCHECKSUM sha256\nENCRYPT ChaCha20\nREDUNDANCY 2x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nENCRYPT AES256\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCOMPRESS gzip level=5\nCHECKSUM sha256\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 100KB\nENCODE hexadecimal base4\nPARTITION 128\nCHECKSUM crc32\nREDUNDANCY 2x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE base32 dna\nPARTITION 2048\nAVOID AAAAA\nCOMPRESS zstd level=7\nVERIFY paranoid\nREDUNDANCY 3x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE hexadecimal base4\nCOMPRESS gzip level=9\nVERIFY relaxed\nREDUNDANCY 2x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 11MB\nENCODE binary dna\nCOMPRESS gzip level=5\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nREDUNDANCY 3x reed_solomon\nENCODE binary dna",
+    "valid": false
+  },
+  {
+    "program": "STORE 500KB\nAVOID AAA AAAAAA TTTT\nCOMPRESS lzma level=1\nREDUNDANCY 4x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 500MB\nENCODE hexadecimal dna\nPARTITION 512\nAVOID AAAAA AAAA TTTT\nCHECKSUM sha512\nREDUNDANCY 7x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCRYPT AES256\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 10GB\nPARTITION 8192\nREDUNDANCY 6x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nREDUNDANCY 3x hamming_code",
+    "valid": false
+  },
+  {
+    "program": "STORE 100KB\nENCODE base32 base4\nPARTITION 1024\nAVOID TTTT AAAA AAAAAA\nREDUNDANCY 7x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCOMPRESS snappy level=5\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 20GB\nENCODE binary quaternary\nPARTITION 8192\nAVOID TTTTTT AAA TTTTT\nCHECKSUM sha512\nCOMPRESS bzip2 level=5\nENCRYPT ChaCha20\nVERIFY paranoid\nREDUNDANCY 4x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 100KB\nENCODE base32 base4\nPARTITION 1024\nAVOID TTTTT\nCHECKSUM crc32\nCOMPRESS bzip2 level=1\nENCRYPT AES128\nREDUNDANCY 2x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 100KB\nENCODE utf8 quaternary\nPARTITION 256\nAVOID AAAAAAA AAAAAA\nVERIFY strict\nREDUNDANCY 2x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE base32 base4\nPARTITION 8192\nCHECKSUM sha512\nREDUNDANCY 7x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 500KB\nAVOID TTT CCC GCGCGC\nCOMPRESS gzip level=1\nREDUNDANCY 2x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 1GB\nENCODE binary dna\nPARTITION 1024\nAVOID GGGGG AAAAAAA AAA\nCOMPRESS lzma level=8\nVERIFY relaxed\nREDUNDANCY 7x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 1MB\nENCODE base32 base4\nCHECKSUM sha256\nENCRYPT AES128\nREPLICATE 2\nREDUNDANCY 3x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 1GB\nENCODE utf8 dna\nPARTITION 4096\nAVOID GGGGG GGG TTTTTTT\nCHECKSUM sha512\nCOMPRESS gzip level=2\nREDUNDANCY 7x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCOMPRESS gzip level=5\nCHECKSUM sha256\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 11MB\nENCODE binary dna\nCOMPRESS gzip level=5\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nPARTITION 1000\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 500KB\nENCODE hexadecimal base4\nPARTITION 4096\nAVOID GGGG AAAAAAA TTTTTT\nREDUNDANCY 7x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE utf8 dna\nAVOID AAAA TTTT GGGG CCCC\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nAVOID GCGCGC GGGG\nCHECKSUM sha512\nCOMPRESS lzma level=5\nREDUNDANCY 2x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nENCODE utf8 quaternary\nAVOID TTTT AAA\nCHECKSUM sha256\nCOMPRESS lzma level=2\nVERIFY relaxed\nREDUNDANCY 3x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5MB\nENCODE binary base4\nAVOID AAA TTTTT CCCC\nREDUNDANCY 2x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nENCODE utf8 dna\nAVOID CCC GGGGG\nCHECKSUM sha512\nCOMPRESS gzip level=3\nVERIFY strict\nREDUNDANCY 5x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nREDUNDANCY 3x reed_solomon\nENCODE binary dna",
+    "valid": false
+  },
+  {
+    "program": "STORE 20GB\nENCODE base32 base4\nPARTITION 1024\nAVOID AAAAAA AAAAA CCCC\nCHECKSUM sha512\nCOMPRESS gzip level=3\nREDUNDANCY 7x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 1GB\nENCODE binary dna\nPARTITION 128\nCHECKSUM sha256\nCOMPRESS gzip level=6\nENCRYPT ChaCha20\nREDUNDANCY 3x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE hexadecimal base4\nPARTITION 256\nAVOID CCCC AAAAAAA GCGCGC\nCHECKSUM crc32\nCOMPRESS zstd level=8\nREDUNDANCY 8x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE utf8 dna\nAVOID AAAA TTTT GGGG CCCC\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 10GB\nENCODE hexadecimal dna\nPARTITION 64\nAVOID TTTTTTT AAA TTT\nREDUNDANCY 7x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 1GB\nENCODE ascii base4\nPARTITION 1024\nAVOID TTTTTT\nCHECKSUM md5\nVERIFY relaxed\nREDUNDANCY 2x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 5MB\nENCODE binary dna\nAVOID GCGCGC AAA GGGG\nREDUNDANCY 4x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE base32 quaternary\nPARTITION 8192\nAVOID CCC GGGGG TTTT\nCHECKSUM crc32\nVERIFY strict\nREDUNDANCY 2x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nPARTITION 8192\nAVOID TTTTTTT\nCHECKSUM sha512\nCOMPRESS lzma level=3\nVERIFY paranoid\nREDUNDANCY 8x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 100MB\nENCODE utf8 base4\nPARTITION 2048\nAVOID TTTTTT GGGG GGG GGGGG AAAAAAA\nCOMPRESS bzip2 level=1\nREDUNDANCY 3x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nAVOID AAAA TTTT GGGG CCCC\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5MB\nPARTITION 4096\nCHECKSUM sha256\nCOMPRESS gzip level=1\nVERIFY strict\nREDUNDANCY 2x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCHECKSUM md5\nREDUNDANCY 3x fountain",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCHECKSUM md5\nREDUNDANCY 3x fountain",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nPARTITION 1000\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE utf8 dna\nAVOID TTTTTTT AAAAAA TTTTT GCGCGC CCCC AAAAAAA AAA\nCOMPRESS zstd level=8\nREDUNDANCY 5x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCOMPRESS gzip level=5\nENCRYPT AES256\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nENCRYPT AES256\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCHECKSUM md5\nREDUNDANCY 3x fountain",
+    "valid": false
+  },
+  {
+    "program": "STORE 20GB\nENCODE base32 quaternary\nAVOID TTTTTT TTTT\nCHECKSUM crc32\nCOMPRESS zstd level=6\nVERIFY paranoid\nREDUNDANCY 4x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 100MB\nENCODE base32 base4\nPARTITION 4096\nREDUNDANCY 4x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna",
+    "valid": false
+  },
+  {
+    "program": "STORE 10GB\nCHECKSUM md5\nCOMPRESS lzma level=8\nVERIFY paranoid\nREDUNDANCY 3x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 5MB\nENCODE base32 dna\nPARTITION 1024\nCHECKSUM sha256\nCOMPRESS bzip2 level=3\nENCRYPT AES256\nVERIFY relaxed\nREDUNDANCY 4x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 1GB\nENCODE binary quaternary\nPARTITION 256\nAVOID AAAAAAA\nREDUNDANCY 3x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nAVOID AAAA TTTT GGGG CCCC\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nAVOID AAAA\nPARTITION 1024\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 20GB\nENCODE ascii base4\nAVOID TTTTT AAAAA\nCHECKSUM sha512\nCOMPRESS zstd level=2\nVERIFY relaxed\nREDUNDANCY 3x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE base64 dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "ENCODE binary dna\nSTORE 5GB\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nAVOID AAAA\nPARTITION 1024\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 20GB\nENCODE binary dna\nPARTITION 128\nAVOID GCGCGC\nCHECKSUM sha256\nCOMPRESS zstd level=1\nENCRYPT AES128\nVERIFY relaxed\nREDUNDANCY 6x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nREDUNDANCY 3x reed_solomon\nENCODE binary dna",
+    "valid": false
+  },
+  {
+    "program": "STORE 5MB\nENCODE hexadecimal dna\nAVOID CCC\nCHECKSUM crc32\nVERIFY relaxed\nREDUNDANCY 3x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nENCRYPT AES256\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE utf8 dna\nAVOID AAAA TTTT GGGG CCCC\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 20GB\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 1MB\nENCODE utf8 quaternary\nAVOID AAA GCGCGC CCC GGGGG CCCC\nCOMPRESS zstd level=9\nVERIFY relaxed\nREDUNDANCY 5x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nPARTITION 1000\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 100MB\nENCODE binary base4\nCHECKSUM md5\nREDUNDANCY 2x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE utf8 base4\nPARTITION 8192\nVERIFY relaxed\nREDUNDANCY 7x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 500KB\nENCODE base32 base4\nAVOID AAAAAA GGGGG\nCHECKSUM sha512\nCOMPRESS zstd level=8\nREDUNDANCY 5x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5MB\nCOMPRESS gzip level=3\nVERIFY relaxed\nREDUNDANCY 4x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nREDUNDANCY 7x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 1MB\nPARTITION 128\nAVOID GGGGG AAA TTTTT\nREDUNDANCY 4x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nPARTITION 1000\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 11MB\nENCODE binary dna\nCOMPRESS gzip level=5\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 500MB\nENCODE utf8 quaternary\nPARTITION 256\nAVOID TTTTT TTT\nCHECKSUM crc32\nCOMPRESS zstd level=2\nENCRYPT ChaCha20\nREDUNDANCY 8x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 1GB\nENCODE base32 quaternary\nPARTITION 512\nAVOID AAAA\nREDUNDANCY 2x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCOMPRESS gzip level=5\nCHECKSUM sha256\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE utf8 dna\nAVOID AAAA TTTT GGGG CCCC\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 10GB\nENCODE binary quaternary\nPARTITION 4096\nAVOID TTTTT AAAAAAA\nCOMPRESS bzip2 level=8\nVERIFY relaxed\nREDUNDANCY 7x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCOMPRESS snappy level=5\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCRYPT AES256\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5PB\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary xml\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 20GB\nENCODE utf8 dna\nAVOID GGG AAAA GGGGG AAA AAAAA AAAAAA TTTTTTT\nCHECKSUM sha256\nCOMPRESS lzma level=3\nVERIFY relaxed\nREDUNDANCY 3x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5MB\nENCODE base32 quaternary\nCHECKSUM sha512\nCOMPRESS zstd level=4\nENCRYPT AES256\nREPLICATE 3\nVERIFY relaxed\nREDUNDANCY 3x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 10GB\nCHECKSUM sha256\nREPLICATE 5\nVERIFY strict\nREDUNDANCY 5x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5PB\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nAVOID AAAA\nPARTITION 1024\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary xml\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 20GB\nENCODE utf8 dna\nCHECKSUM sha512\nCOMPRESS lzma level=1\nREPLICATE 4\nVERIFY relaxed\nREDUNDANCY 5x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCOMPRESS gzip level=5\nENCRYPT AES256\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nREDUNDANCY 3x reed_solomon\nENCODE binary dna",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nREDUNDANCY 7x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5MB\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCOMPRESS gzip level=5\nENCRYPT AES256\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE utf8 dna\nAVOID AAAA TTTT GGGG CCCC\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE hexadecimal base4\nAVOID TTTTT\nCHECKSUM sha512\nCOMPRESS bzip2 level=6\nVERIFY strict\nREDUNDANCY 4x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nENCODE ascii quaternary\nPARTITION 128\nAVOID GCGCGC\nCHECKSUM sha512\nCOMPRESS bzip2 level=5\nENCRYPT ChaCha20\nVERIFY strict\nREDUNDANCY 7x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 1GB\nENCODE ascii quaternary\nCOMPRESS lzma level=3\nVERIFY paranoid\nREDUNDANCY 4x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCRYPT AES256\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 1GB\nPARTITION 2048\nCHECKSUM crc32\nCOMPRESS gzip level=1\nREDUNDANCY 2x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5MB\nAVOID AAAAAAA\nCHECKSUM sha512\nREDUNDANCY 2x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nENCODE hexadecimal quaternary\nAVOID CCCC\nCHECKSUM md5\nCOMPRESS zstd level=1\nVERIFY strict\nREDUNDANCY 2x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nENCODE hexadecimal base4\nCHECKSUM sha256\nCOMPRESS gzip level=4\nENCRYPT AES128\nVERIFY strict\nREDUNDANCY 3x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 500KB\nPARTITION 256\nAVOID GGGG\nCHECKSUM sha256\nCOMPRESS gzip level=5\nREDUNDANCY 6x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 10GB\nENCODE hexadecimal quaternary\nPARTITION 2048\nVERIFY paranoid\nREDUNDANCY 3x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 11MB\nENCODE binary dna\nCOMPRESS gzip level=5\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5PB\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCHECKSUM md5\nREDUNDANCY 3x fountain",
+    "valid": false
+  },
+  {
+    "program": "STORE 500KB\nAVOID AAAAAA\nCHECKSUM sha256\nREDUNDANCY 3x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 1MB\nENCODE ascii quaternary\nAVOID CCC AAAAAA\nCHECKSUM sha512\nCOMPRESS bzip2 level=3\nREDUNDANCY 3x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 500KB\nENCODE utf8 quaternary\nPARTITION 64\nAVOID AAAAA CCC AAAAAAA GCGCGC CCCC\nCHECKSUM sha256\nCOMPRESS lzma level=1\nENCRYPT AES256\nREDUNDANCY 3x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 100KB\nENCODE utf8 quaternary\nPARTITION 8192\nAVOID CCC TTT TTTTT\nCHECKSUM sha256\nREDUNDANCY 3x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 500KB\nPARTITION 512\nCHECKSUM crc32\nCOMPRESS bzip2 level=3\nVERIFY relaxed\nREDUNDANCY 7x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary xml\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5MB\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 10GB\nAVOID GGGG AAAAAA\nREDUNDANCY 3x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nAVOID AAAA\nPARTITION 1024\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 100KB\nENCODE hexadecimal dna\nPARTITION 4096\nAVOID AAA GGG\nCHECKSUM sha256\nCOMPRESS gzip level=2\nENCRYPT AES128\nREDUNDANCY 6x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 500KB\nENCODE ascii quaternary\nAVOID TTTTTT AAAA\nREDUNDANCY 2x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nENCRYPT AES256\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 11MB\nENCODE binary dna\nCOMPRESS gzip level=5\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCHECKSUM md5\nREDUNDANCY 3x fountain",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nAVOID AAAA\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 1GB\nPARTITION 2048\nAVOID TTTTT AAAAA TTT\nVERIFY strict\nREDUNDANCY 6x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE base32 dna\nPARTITION 128\nAVOID AAAAAAA GGGG\nCOMPRESS gzip level=9\nVERIFY strict\nREDUNDANCY 2x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nENCODE hexadecimal quaternary\nAVOID AAAAAAA\nCHECKSUM sha256\nCOMPRESS zstd level=9\nREPLICATE 2\nREDUNDANCY 4x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nREDUNDANCY 3x reed_solomon\nENCODE binary dna",
+    "valid": false
+  },
+  {
+    "program": "STORE 100KB\nENCODE base32 dna\nPARTITION 4096\nAVOID TTTTTTT\nCHECKSUM crc32\nCOMPRESS bzip2 level=3\nENCRYPT AES256\nREDUNDANCY 8x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 100KB\nENCODE binary quaternary\nPARTITION 256\nAVOID CCC\nCHECKSUM sha256\nCOMPRESS bzip2 level=6\nVERIFY paranoid\nREDUNDANCY 3x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 10GB\nENCODE utf8 quaternary\nAVOID AAA AAAAA\nCHECKSUM sha512\nREDUNDANCY 3x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 1GB\nENCODE binary quaternary\nAVOID AAA TTTT\nCHECKSUM crc32\nCOMPRESS zstd level=2\nVERIFY relaxed\nREDUNDANCY 5x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 500KB\nENCODE utf8 base4\nAVOID AAAAA CCCC GCGCGC AAA CCC AAAAAAA GGG\nCHECKSUM sha256\nCOMPRESS lzma level=8\nENCRYPT AES256\nREDUNDANCY 5x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nENCODE hexadecimal base4\nPARTITION 4096\nAVOID AAAAAAA\nCHECKSUM crc32\nCOMPRESS gzip level=5\nREDUNDANCY 6x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCOMPRESS gzip level=5\nCHECKSUM sha256\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 20GB\nENCODE binary dna\nPARTITION 8192\nAVOID GCGCGC AAAAAA\nCHECKSUM crc32\nCOMPRESS gzip level=2\nENCRYPT ChaCha20\nVERIFY paranoid\nREDUNDANCY 2x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 100KB\nENCODE hexadecimal quaternary\nAVOID TTT AAAAA\nREDUNDANCY 3x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nENCODE hexadecimal dna\nAVOID AAAA GCGCGC CCC\nCHECKSUM sha512\nCOMPRESS zstd level=9\nVERIFY relaxed\nREDUNDANCY 2x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCOMPRESS gzip level=5\nENCRYPT AES256\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 1GB\nPARTITION 2048\nAVOID AAAAA AAAA TTTTTTT\nCHECKSUM sha512\nREDUNDANCY 3x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE utf8 dna\nAVOID AAAA TTTT GGGG CCCC\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE base32 dna\nAVOID AAAAA GGGGG GGGG\nCHECKSUM sha512\nREDUNDANCY 4x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 5MB\nENCODE ascii quaternary\nAVOID TTT AAA GGGG\nCHECKSUM crc32\nENCRYPT AES256\nREDUNDANCY 2x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 1GB\nPARTITION 8192\nCHECKSUM sha512\nCOMPRESS zstd level=3\nREDUNDANCY 4x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 10GB\nPARTITION 8192\nAVOID AAAAAAA TTT\nCOMPRESS bzip2 level=1\nREDUNDANCY 3x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nREDUNDANCY 7x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 10GB\nENCODE hexadecimal dna\nPARTITION 1024\nAVOID GGGGG CCCC\nREDUNDANCY 7x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 500KB\nAVOID AAAAAA TTTTT\nCHECKSUM sha256\nCOMPRESS bzip2 level=2\nREDUNDANCY 4x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCHECKSUM md5\nREDUNDANCY 3x fountain",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nAVOID AAAA\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 1MB\nENCODE ascii base4\nPARTITION 64\nAVOID AAAAAAA GGGG TTT\nCOMPRESS gzip level=4\nREDUNDANCY 3x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 5MB\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5PB\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCHECKSUM blake2\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCOMPRESS gzip level=5\nCHECKSUM sha256\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCRYPT AES256\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary xml\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 20GB\nPARTITION 128\nCHECKSUM md5\nCOMPRESS bzip2 level=4\nREDUNDANCY 8x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nENCODE utf8 dna\nAVOID CCCC GGGG\nCHECKSUM sha512\nCOMPRESS bzip2 level=2\nVERIFY paranoid\nREDUNDANCY 4x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nENCODE utf8 dna\nPARTITION 8192\nAVOID GGG AAAAAAA GCGCGC CCCC GGGG TTT CCC\nCHECKSUM sha512\nCOMPRESS bzip2 level=1\nREDUNDANCY 5x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nPARTITION 1000\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nAVOID AAAA\nPARTITION 1024\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 1MB\nENCODE binary quaternary\nAVOID TTTTT CCC\nREDUNDANCY 3x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 1GB\nAVOID TTTTTTT\nCOMPRESS bzip2 level=9\nREPLICATE 3\nREDUNDANCY 2x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nAVOID AAAA TTTT GGGG CCCC\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nPARTITION 256\nVERIFY paranoid\nREDUNDANCY 3x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCOMPRESS gzip level=5\nCHECKSUM sha256\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 100KB\nENCODE binary quaternary\nAVOID GGGGG CCCC\nREDUNDANCY 2x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCOMPRESS gzip level=5\nENCRYPT AES256\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "ENCODE binary dna\nSTORE 5GB\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nAVOID AAAA TTTT GGGG CCCC\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 20GB\nAVOID GCGCGC TTTTTTT GGGG\nCHECKSUM crc32\nCOMPRESS lzma level=1\nREDUNDANCY 3x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 500KB\nENCODE utf8 base4\nPARTITION 128\nAVOID GGG TTTTT CCC GGGGG AAAAAA GCGCGC AAAA\nCOMPRESS lzma level=4\nVERIFY strict\nREDUNDANCY 3x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 500KB\nPARTITION 512\nAVOID TTTTT\nCOMPRESS zstd level=1\nREDUNDANCY 2x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nREDUNDANCY 3x hamming_code",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCHECKSUM md5\nREDUNDANCY 3x fountain",
+    "valid": false
+  },
+  {
+    "program": "STORE 500KB\nENCODE hexadecimal dna\nPARTITION 8192\nAVOID CCCC AAAA\nREDUNDANCY 7x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nAVOID AAAA\nPARTITION 1024\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 100KB\nENCODE binary quaternary\nPARTITION 8192\nVERIFY relaxed\nREDUNDANCY 3x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna",
+    "valid": false
+  },
+  {
+    "program": "STORE 20GB\nENCODE hexadecimal base4\nCHECKSUM crc32\nCOMPRESS gzip level=8\nREDUNDANCY 4x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5MB\nENCODE binary quaternary\nPARTITION 1024\nCHECKSUM crc32\nENCRYPT AES128\nREDUNDANCY 7x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nAVOID AAAA\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna",
+    "valid": false
+  },
+  {
+    "program": "STORE 500KB\nENCODE ascii base4\nAVOID GGGG AAAA AAAAA\nCOMPRESS gzip level=1\nVERIFY strict\nREDUNDANCY 2x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE utf8 dna\nPARTITION 64\nAVOID TTTTTTT AAAA\nCHECKSUM sha512\nCOMPRESS bzip2 level=6\nENCRYPT ChaCha20\nVERIFY relaxed\nREDUNDANCY 7x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary base4\nCHECKSUM sha512\nCOMPRESS bzip2 level=1\nENCRYPT AES256\nVERIFY paranoid\nREDUNDANCY 2x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE utf8 base4\nPARTITION 2048\nCOMPRESS bzip2 level=7\nREDUNDANCY 5x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nREDUNDANCY 3x hamming_code",
+    "valid": false
+  },
+  {
+    "program": "STORE 5MB\nENCODE ascii dna\nAVOID AAA\nREDUNDANCY 3x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 500KB\nENCODE utf8 base4\nPARTITION 4096\nAVOID GGG GGGG CCC TTTTT GGGGG\nCHECKSUM sha512\nCOMPRESS bzip2 level=5\nENCRYPT ChaCha20\nVERIFY strict\nREDUNDANCY 7x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna",
+    "valid": false
+  },
+  {
+    "program": "STORE 1MB\nENCODE binary base4\nPARTITION 2048\nAVOID TTTTT TTT\nCHECKSUM sha512\nCOMPRESS lzma level=7\nENCRYPT AES128\nREDUNDANCY 3x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary xml\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCOMPRESS gzip level=5\nENCRYPT AES256\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 100KB\nPARTITION 2048\nREDUNDANCY 6x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 100KB\nENCODE base32 dna\nPARTITION 128\nAVOID AAAAAAA TTTTTT AAAAA\nCHECKSUM crc32\nENCRYPT AES128\nVERIFY paranoid\nREDUNDANCY 7x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 1MB\nENCODE hexadecimal dna\nAVOID TTTTTTT\nCHECKSUM sha256\nCOMPRESS gzip level=1\nREPLICATE 2\nVERIFY relaxed\nREDUNDANCY 5x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nENCODE binary quaternary\nAVOID TTTTT AAA AAAA\nCHECKSUM md5\nCOMPRESS lzma level=1\nVERIFY paranoid\nREDUNDANCY 2x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 1MB\nAVOID AAAAAA\nCOMPRESS lzma level=2\nREDUNDANCY 2x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 500KB\nENCODE binary base4\nPARTITION 64\nCOMPRESS gzip level=4\nREDUNDANCY 8x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nPARTITION 2048\nCOMPRESS bzip2 level=1\nVERIFY strict\nREDUNDANCY 2x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 500MB\nPARTITION 128\nAVOID TTTT\nCOMPRESS lzma level=4\nVERIFY relaxed\nREDUNDANCY 3x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nPARTITION 256\nAVOID AAA AAAAAAA\nCOMPRESS lzma level=1\nREDUNDANCY 2x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCOMPRESS snappy level=5\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 500MB\nENCODE base32 base4\nAVOID GGGG CCC\nCOMPRESS lzma level=7\nREPLICATE 3\nREDUNDANCY 2x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCHECKSUM blake2\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCRYPT AES256\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5MB\nENCODE utf8 dna\nAVOID TTTT AAAA AAAAA GGG AAAAAAA AAA TTTTT\nCHECKSUM md5\nCOMPRESS lzma level=4\nREDUNDANCY 4x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 10GB\nENCODE binary quaternary\nPARTITION 128\nAVOID AAAA\nCHECKSUM sha256\nCOMPRESS zstd level=1\nENCRYPT AES128\nVERIFY strict\nREDUNDANCY 2x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 10GB\nAVOID TTTTTTT TTTTT TTTT\nCHECKSUM sha256\nCOMPRESS zstd level=2\nREDUNDANCY 3x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5MB\nENCODE binary dna\nPARTITION 2048\nAVOID AAAAAAA CCC GGG\nCHECKSUM sha256\nREDUNDANCY 8x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 100KB\nAVOID GGGGG GGGG\nCHECKSUM crc32\nREDUNDANCY 3x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCHECKSUM blake2\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 100KB\nENCODE ascii base4\nAVOID CCC TTTTTTT AAAAA\nCHECKSUM crc32\nCOMPRESS lzma level=2\nENCRYPT ChaCha20\nREDUNDANCY 3x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nAVOID AAAAA CCCC\nCHECKSUM md5\nCOMPRESS bzip2 level=1\nREDUNDANCY 2x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 10GB\nENCODE ascii base4\nAVOID TTTTTT GGGGG\nVERIFY paranoid\nREDUNDANCY 4x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCHECKSUM blake2\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 20GB\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nREDUNDANCY 3x hamming_code",
+    "valid": false
+  },
+  {
+    "program": "STORE 100KB\nENCODE binary base4\nPARTITION 512\nAVOID AAAAAAA GGG GGGG\nCOMPRESS zstd level=1\nREDUNDANCY 7x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 100KB\nENCODE binary base4\nCHECKSUM sha512\nCOMPRESS zstd level=7\nENCRYPT ChaCha20\nREPLICATE 3\nREDUNDANCY 5x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 1MB\nENCODE ascii quaternary\nPARTITION 2048\nAVOID AAAAAAA CCC TTT\nCHECKSUM sha512\nENCRYPT ChaCha20\nVERIFY relaxed\nREDUNDANCY 6x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nAVOID AAAAA GGGG AAAAAAA\nVERIFY strict\nREDUNDANCY 4x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 500KB\nENCODE utf8 dna\nPARTITION 64\nAVOID AAAAAA TTTTTTT AAAAA GCGCGC CCC\nCOMPRESS gzip level=1\nREDUNDANCY 6x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 10GB\nENCODE hexadecimal dna\nPARTITION 512\nAVOID CCCC AAAA\nCOMPRESS bzip2 level=6\nVERIFY strict\nREDUNDANCY 2x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 100MB\nENCODE ascii base4\nAVOID TTTTT TTTTTT TTTTTTT\nCHECKSUM crc32\nCOMPRESS gzip level=1\nREDUNDANCY 2x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 500KB\nENCODE hexadecimal dna\nPARTITION 64\nAVOID GGGG AAAA AAA\nREDUNDANCY 7x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCOMPRESS gzip level=5\nENCRYPT AES256\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 100MB\nENCODE base32 dna\nAVOID AAAA GCGCGC\nCHECKSUM crc32\nCOMPRESS gzip level=5\nREPLICATE 5\nVERIFY paranoid\nREDUNDANCY 4x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 1GB\nPARTITION 1024\nAVOID AAAAAAA AAAAAA AAAA\nCOMPRESS gzip level=1\nREDUNDANCY 7x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCRYPT AES256\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 20GB\nENCODE binary quaternary\nPARTITION 2048\nAVOID GGG\nCHECKSUM crc32\nCOMPRESS gzip level=1\nREDUNDANCY 2x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 1MB\nENCODE binary quaternary\nAVOID AAAAAAA TTTTTTT GCGCGC\nCHECKSUM sha512\nENCRYPT AES128\nREDUNDANCY 4x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nAVOID AAAA TTTT GGGG CCCC\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5MB\nENCODE utf8 base4\nPARTITION 256\nAVOID AAAA AAAAAAA TTT GGG GGGGG AAA TTTTTTT\nCOMPRESS gzip level=2\nREDUNDANCY 3x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nREDUNDANCY 7x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nREDUNDANCY 3x reed_solomon\nENCODE binary dna",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary xml\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 10GB\nENCODE utf8 dna\nAVOID TTTTTTT TTTTT\nCHECKSUM md5\nENCRYPT ChaCha20\nVERIFY strict\nREDUNDANCY 3x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nAVOID TTTTTTT AAA TTTTTT\nCHECKSUM sha512\nCOMPRESS lzma level=2\nREDUNDANCY 5x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nAVOID AAAA\nPARTITION 1024\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 100MB\nPARTITION 64\nAVOID TTTTTTT\nCOMPRESS bzip2 level=1\nVERIFY strict\nREDUNDANCY 2x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE base32 quaternary\nPARTITION 512\nAVOID GGG AAAAAA GGGGG\nREDUNDANCY 8x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nPARTITION 1000\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 100KB\nENCODE utf8 quaternary\nAVOID TTTTT GCGCGC GGGG\nCHECKSUM sha512\nCOMPRESS zstd level=1\nREDUNDANCY 2x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nREDUNDANCY 7x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCRYPT AES256\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 20GB\nENCODE base32 quaternary\nAVOID AAAAAAA TTTT AAA\nCHECKSUM md5\nCOMPRESS lzma level=9\nVERIFY paranoid\nREDUNDANCY 4x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 11MB\nENCODE binary dna\nCOMPRESS gzip level=5\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCHECKSUM blake2\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 500KB\nENCODE hexadecimal base4\nPARTITION 512\nAVOID TTTT TTTTTTT CCCC\nCHECKSUM sha256\nREDUNDANCY 7x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 1MB\nENCODE binary quaternary\nPARTITION 2048\nAVOID AAAAA\nCOMPRESS zstd level=1\nREDUNDANCY 7x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 1GB\nENCODE hexadecimal base4\nPARTITION 128\nAVOID GCGCGC AAAAAAA GGGG\nREDUNDANCY 3x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 100KB\nENCODE utf8 base4\nAVOID AAAAA TTTTT AAA CCC CCCC\nCHECKSUM crc32\nCOMPRESS zstd level=7\nREPLICATE 2\nREDUNDANCY 3x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nAVOID AAAA\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 10GB\nENCODE utf8 dna\nPARTITION 128\nAVOID TTTTTT GGGGG AAAAAA GCGCGC GGG\nCOMPRESS gzip level=4\nVERIFY paranoid\nREDUNDANCY 7x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCOMPRESS snappy level=5\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCRYPT AES256\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "ENCODE binary dna\nSTORE 5GB\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nREDUNDANCY 3x reed_solomon\nENCODE binary dna",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nPARTITION 128\nCOMPRESS lzma level=9\nVERIFY relaxed\nREDUNDANCY 2x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 500MB\nENCODE hexadecimal quaternary\nAVOID TTTTTTT AAAAAAA\nREDUNDANCY 2x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna",
+    "valid": false
+  },
+  {
+    "program": "STORE 20GB\nENCODE hexadecimal dna\nPARTITION 128\nAVOID AAAAAA AAAAAAA AAAA\nCHECKSUM md5\nCOMPRESS zstd level=1\nREDUNDANCY 8x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 1MB\nENCODE hexadecimal quaternary\nAVOID AAAA CCCC TTT\nCHECKSUM sha256\nCOMPRESS zstd level=4\nREDUNDANCY 2x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 5MB\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nPARTITION 1000\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 20GB\nENCODE hexadecimal dna\nAVOID TTTTT CCCC\nCHECKSUM crc32\nCOMPRESS gzip level=8\nVERIFY relaxed\nREDUNDANCY 2x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 500KB\nENCODE hexadecimal base4\nAVOID GGGG AAAAA GCGCGC\nCOMPRESS zstd level=2\nREPLICATE 2\nREDUNDANCY 3x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 1MB\nENCODE base32 dna\nAVOID GCGCGC AAA\nCHECKSUM sha256\nREPLICATE 3\nREDUNDANCY 2x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 500MB\nENCODE ascii quaternary\nPARTITION 1024\nREDUNDANCY 6x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nREDUNDANCY 7x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 500KB\nENCODE utf8 base4\nPARTITION 256\nCHECKSUM sha256\nCOMPRESS lzma level=2\nENCRYPT AES256\nREDUNDANCY 2x turbo",
+    "valid": true
+  },
+  {
+    "program": "ENCODE binary dna\nSTORE 5GB\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 20GB\nENCODE ascii dna\nAVOID AAA GGGG TTTTTTT\nCHECKSUM sha512\nCOMPRESS lzma level=1\nVERIFY relaxed\nREDUNDANCY 2x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 5PB\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 500MB\nENCODE utf8 base4\nCHECKSUM crc32\nREDUNDANCY 5x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 1GB\nCHECKSUM crc32\nCOMPRESS zstd level=7\nVERIFY strict\nREDUNDANCY 2x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 5MB\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 11MB\nENCODE binary dna\nCOMPRESS gzip level=5\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5MB\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary base4\nAVOID GCGCGC TTT AAAAAA\nCOMPRESS lzma level=7\nREDUNDANCY 3x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCOMPRESS gzip level=5\nENCRYPT AES256\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 100KB\nENCODE base32 base4\nAVOID AAAAAA CCC TTTT\nCHECKSUM sha512\nCOMPRESS zstd level=2\nREDUNDANCY 3x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 500MB\nENCODE binary base4\nPARTITION 512\nAVOID TTTTTT GCGCGC AAA\nCOMPRESS gzip level=9\nREDUNDANCY 4x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nREDUNDANCY 3x hamming_code",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCHECKSUM blake2\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 500KB\nAVOID GGGG\nCHECKSUM md5\nCOMPRESS lzma level=1\nREDUNDANCY 2x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nREDUNDANCY 3x hamming_code",
+    "valid": false
+  },
+  {
+    "program": "STORE 1MB\nENCODE base32 quaternary\nPARTITION 256\nAVOID TTTTTTT\nCHECKSUM sha512\nREDUNDANCY 6x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 1MB\nENCODE ascii dna\nPARTITION 128\nAVOID TTT GGGGG AAAAAAA\nCHECKSUM sha256\nENCRYPT AES256\nVERIFY relaxed\nREDUNDANCY 2x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5MB\nENCODE binary dna\nAVOID AAAA GGGGG TTTT\nCHECKSUM md5\nCOMPRESS gzip level=4\nREDUNDANCY 2x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 1MB\nENCODE utf8 dna\nPARTITION 64\nCHECKSUM sha512\nVERIFY strict\nREDUNDANCY 5x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 10GB\nENCODE binary base4\nAVOID CCCC TTTTT GGG\nCOMPRESS zstd level=4\nREPLICATE 3\nVERIFY strict\nREDUNDANCY 4x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 1GB\nENCODE base32 quaternary\nPARTITION 1024\nAVOID AAAAAA\nCHECKSUM sha256\nCOMPRESS gzip level=6\nENCRYPT ChaCha20\nVERIFY strict\nREDUNDANCY 8x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nENCODE utf8 dna\nAVOID TTTT GGGGG\nCHECKSUM sha256\nCOMPRESS bzip2 level=1\nREPLICATE 5\nREDUNDANCY 2x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 100MB\nENCODE base32 base4\nCHECKSUM md5\nCOMPRESS lzma level=6\nREPLICATE 2\nREDUNDANCY 2x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCOMPRESS gzip level=5\nCHECKSUM sha256\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 1MB\nENCODE base32 dna\nPARTITION 256\nAVOID GCGCGC CCCC AAA\nVERIFY strict\nREDUNDANCY 4x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 1GB\nENCODE ascii dna\nPARTITION 8192\nAVOID CCCC TTTTTTT\nCHECKSUM crc32\nCOMPRESS gzip level=1\nENCRYPT ChaCha20\nVERIFY strict\nREDUNDANCY 2x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nREDUNDANCY 7x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5PB\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nREDUNDANCY 3x reed_solomon\nENCODE binary dna",
+    "valid": false
+  },
+  {
+    "program": "STORE 11MB\nENCODE binary dna\nCOMPRESS gzip level=5\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 500KB\nAVOID TTT GCGCGC AAAA\nCOMPRESS gzip level=1\nVERIFY relaxed\nREDUNDANCY 2x ldpc",
+    "valid": true
+  },
+  {
+    "program": "ENCODE binary dna\nSTORE 5GB\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 500MB\nENCODE binary dna\nAVOID AAAA CCC TTTT\nCHECKSUM md5\nENCRYPT AES128\nREPLICATE 5\nVERIFY strict\nREDUNDANCY 2x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 5MB\nENCODE ascii quaternary\nPARTITION 1024\nREDUNDANCY 7x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 1GB\nENCODE base32 quaternary\nAVOID AAAAAAA\nCHECKSUM md5\nENCRYPT AES256\nVERIFY paranoid\nREDUNDANCY 2x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 1GB\nENCODE ascii quaternary\nAVOID CCC\nCHECKSUM crc32\nCOMPRESS bzip2 level=1\nENCRYPT ChaCha20\nREDUNDANCY 3x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 100KB\nENCODE utf8 base4\nPARTITION 2048\nCHECKSUM md5\nREDUNDANCY 3x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 100KB\nENCODE ascii base4\nPARTITION 1024\nAVOID GGGG GGG TTTTTT\nCHECKSUM md5\nREDUNDANCY 7x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 10GB\nENCODE utf8 dna\nPARTITION 128\nAVOID TTTT CCCC\nCHECKSUM crc32\nVERIFY relaxed\nREDUNDANCY 5x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 1MB\nENCODE base32 quaternary\nAVOID GCGCGC AAAAA\nCHECKSUM sha512\nCOMPRESS lzma level=1\nENCRYPT AES128\nVERIFY paranoid\nREDUNDANCY 2x fountain",
+    "valid": true
+  },
+  {
+    "program": "ENCODE binary dna\nSTORE 5GB\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 500KB\nENCODE ascii base4\nAVOID TTTTT\nCHECKSUM md5\nENCRYPT AES128\nREPLICATE 3\nREDUNDANCY 3x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nAVOID AAAA\nPARTITION 1024\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 500KB\nENCODE ascii dna\nAVOID TTT GGGG\nCHECKSUM sha256\nENCRYPT AES128\nVERIFY strict\nREDUNDANCY 2x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 1MB\nENCODE utf8 base4\nAVOID TTTTT AAAAAA GGGGG AAAAAAA TTTTTTT\nCHECKSUM sha512\nCOMPRESS zstd level=2\nREPLICATE 2\nVERIFY paranoid\nREDUNDANCY 2x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCHECKSUM md5\nREDUNDANCY 3x fountain",
+    "valid": false
+  },
+  {
+    "program": "STORE 20GB\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5PB\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE base64 dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 500MB\nENCODE base32 base4\nPARTITION 4096\nAVOID TTT GCGCGC CCC\nCHECKSUM crc32\nCOMPRESS gzip level=1\nVERIFY relaxed\nREDUNDANCY 4x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCOMPRESS snappy level=5\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 1MB\nENCODE binary dna\nAVOID TTTTTT CCC AAAAAAA\nREDUNDANCY 2x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 1GB\nENCODE hexadecimal dna\nAVOID AAAAAA GCGCGC TTTTT\nCHECKSUM crc32\nREDUNDANCY 2x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5MB\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 1MB\nENCODE hexadecimal base4\nPARTITION 1024\nAVOID GGGG\nCHECKSUM sha256\nCOMPRESS bzip2 level=4\nVERIFY strict\nREDUNDANCY 5x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 500MB\nENCODE binary base4\nPARTITION 4096\nAVOID GCGCGC AAA GGGG\nCHECKSUM crc32\nCOMPRESS bzip2 level=7\nVERIFY strict\nREDUNDANCY 7x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 500MB\nENCODE utf8 dna\nPARTITION 512\nCHECKSUM sha512\nENCRYPT ChaCha20\nREDUNDANCY 2x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nENCODE binary quaternary\nPARTITION 128\nCHECKSUM crc32\nCOMPRESS bzip2 level=4\nVERIFY paranoid\nREDUNDANCY 8x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 10GB\nENCODE ascii base4\nAVOID AAA AAAAAA\nCHECKSUM sha512\nENCRYPT ChaCha20\nREPLICATE 4\nREDUNDANCY 4x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCHECKSUM blake2\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 1GB\nENCODE binary dna\nCOMPRESS gzip level=1\nVERIFY paranoid\nREDUNDANCY 2x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 1MB\nENCODE base32 base4\nAVOID AAAAAAA AAAA\nREDUNDANCY 3x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 5MB\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 20GB\nENCODE utf8 quaternary\nAVOID GCGCGC CCCC\nCHECKSUM sha512\nCOMPRESS zstd level=8\nENCRYPT AES128\nREDUNDANCY 2x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 100KB\nPARTITION 2048\nAVOID CCCC AAAA\nREDUNDANCY 5x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nENCRYPT AES256\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 500KB\nENCODE utf8 base4\nPARTITION 256\nAVOID GCGCGC GGGG AAA GGG TTTT TTTTTT GGGGG\nCOMPRESS bzip2 level=7\nVERIFY relaxed\nREDUNDANCY 7x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 1MB\nPARTITION 128\nAVOID GCGCGC TTTTTTT AAAA\nREDUNDANCY 6x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCHECKSUM md5\nREDUNDANCY 3x fountain",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCHECKSUM blake2\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 1GB\nENCODE hexadecimal base4\nPARTITION 128\nCHECKSUM sha256\nCOMPRESS lzma level=7\nENCRYPT AES256\nREDUNDANCY 8x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 11MB\nENCODE binary dna\nCOMPRESS gzip level=5\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nPARTITION 2048\nAVOID AAAAA\nCHECKSUM sha256\nREDUNDANCY 2x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nREDUNDANCY 7x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 500KB\nPARTITION 256\nCOMPRESS bzip2 level=9\nREDUNDANCY 3x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 10GB\nENCODE hexadecimal dna\nAVOID TTT GGG AAAA\nCHECKSUM sha512\nENCRYPT AES128\nREPLICATE 3\nREDUNDANCY 2x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 10GB\nENCODE base32 quaternary\nPARTITION 2048\nAVOID GGGG AAAAAAA\nCHECKSUM sha512\nCOMPRESS gzip level=4\nREDUNDANCY 8x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE ascii base4\nAVOID TTTT\nCHECKSUM crc32\nENCRYPT AES128\nVERIFY paranoid\nREDUNDANCY 3x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCRYPT AES256\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 100KB\nENCODE ascii dna\nCHECKSUM sha512\nENCRYPT AES256\nREDUNDANCY 4x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE base64 dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 20GB\nENCODE ascii quaternary\nPARTITION 1024\nAVOID GGGG TTTT\nCHECKSUM sha256\nCOMPRESS lzma level=2\nREDUNDANCY 2x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nPARTITION 8192\nAVOID TTT\nCHECKSUM sha256\nCOMPRESS bzip2 level=1\nVERIFY relaxed\nREDUNDANCY 3x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 100KB\nENCODE ascii base4\nREDUNDANCY 4x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary base4\nPARTITION 2048\nAVOID GCGCGC\nCOMPRESS bzip2 level=4\nVERIFY relaxed\nREDUNDANCY 7x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 100KB\nENCODE utf8 quaternary\nAVOID AAAA TTTTT GCGCGC AAAAAA AAA AAAAA TTTTTT\nCOMPRESS gzip level=1\nVERIFY strict\nREDUNDANCY 4x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCHECKSUM md5\nREDUNDANCY 3x fountain",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nAVOID AAAA\nREDUNDANCY 3x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 500MB\nENCODE binary dna\nPARTITION 8192\nAVOID AAAAAA TTTTTT\nVERIFY relaxed\nREDUNDANCY 7x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 5MB\nENCODE base32 base4\nAVOID AAAAAAA TTTTT\nCOMPRESS zstd level=8\nVERIFY paranoid\nREDUNDANCY 3x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 11MB\nENCODE binary dna\nCOMPRESS gzip level=5\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 1GB\nENCODE utf8 dna\nPARTITION 64\nAVOID GGGG TTTTTTT TTTTTT GCGCGC TTT\nCHECKSUM sha512\nCOMPRESS zstd level=5\nENCRYPT AES256\nVERIFY relaxed\nREDUNDANCY 5x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 500MB\nAVOID GGG TTTTT AAA\nCOMPRESS gzip level=1\nREDUNDANCY 3x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5MB\nENCODE ascii dna\nAVOID AAAAA GGGG AAA\nCHECKSUM sha256\nENCRYPT AES256\nREDUNDANCY 4x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 1GB\nENCODE binary quaternary\nAVOID AAAAAAA TTTT\nVERIFY relaxed\nREDUNDANCY 3x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 500MB\nENCODE base32 quaternary\nAVOID GGGG\nCHECKSUM md5\nCOMPRESS zstd level=1\nREDUNDANCY 2x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCOMPRESS snappy level=5\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 100KB\nENCODE ascii dna\nPARTITION 1024\nCHECKSUM sha256\nCOMPRESS bzip2 level=4\nENCRYPT AES128\nREDUNDANCY 8x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nENCRYPT AES256\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCHECKSUM blake2\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 100MB\nCHECKSUM sha256\nVERIFY strict\nREDUNDANCY 4x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 500MB\nENCODE base32 quaternary\nPARTITION 64\nAVOID AAAAAA AAAAA GCGCGC\nCOMPRESS gzip level=1\nREDUNDANCY 4x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 100MB\nAVOID AAAAAAA CCC\nVERIFY strict\nREDUNDANCY 3x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 10GB\nENCODE ascii dna\nAVOID CCC AAAAAAA\nVERIFY paranoid\nREDUNDANCY 2x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 10GB\nENCODE base32 quaternary\nPARTITION 1024\nAVOID AAAA AAAAAA TTTTTT\nCOMPRESS lzma level=3\nVERIFY paranoid\nREDUNDANCY 8x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nREDUNDANCY 3x reed_solomon\nENCODE binary dna",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nPARTITION 1000\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 10GB\nENCODE utf8 quaternary\nPARTITION 4096\nCOMPRESS lzma level=6\nREDUNDANCY 8x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 10GB\nENCODE hexadecimal base4\nPARTITION 512\nAVOID AAAAA AAAAAAA\nCHECKSUM sha256\nENCRYPT AES128\nREDUNDANCY 2x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna",
+    "valid": false
+  },
+  {
+    "program": "STORE 500KB\nENCODE binary quaternary\nPARTITION 512\nAVOID GGGG AAAAAAA GGGGG\nREDUNDANCY 7x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 1GB\nAVOID AAAAA\nCOMPRESS lzma level=1\nVERIFY strict\nREDUNDANCY 3x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nENCRYPT AES256\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCOMPRESS gzip level=5\nENCRYPT AES256\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 11MB\nENCODE binary dna\nCOMPRESS gzip level=5\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE hexadecimal dna\nPARTITION 4096\nCOMPRESS lzma level=9\nREDUNDANCY 3x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 500KB\nENCODE utf8 base4\nPARTITION 2048\nAVOID AAAAAAA TTTTT\nREDUNDANCY 5x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nAVOID AAAA\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 100MB\nENCODE hexadecimal base4\nAVOID AAAAA GGGG AAAA\nCOMPRESS bzip2 level=1\nVERIFY strict\nREDUNDANCY 4x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 10GB\nPARTITION 4096\nAVOID TTTTTT TTTTTTT GGG\nCHECKSUM crc32\nREDUNDANCY 7x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nAVOID AAAA\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCHECKSUM blake2\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 10GB\nENCODE base32 dna\nAVOID TTTTT TTT TTTT\nCHECKSUM crc32\nCOMPRESS zstd level=2\nENCRYPT ChaCha20\nREDUNDANCY 3x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 100KB\nENCODE hexadecimal dna\nPARTITION 4096\nAVOID AAA AAAA TTTT\nCHECKSUM sha512\nCOMPRESS zstd level=9\nVERIFY relaxed\nREDUNDANCY 8x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 1MB\nENCODE utf8 quaternary\nCHECKSUM crc32\nCOMPRESS bzip2 level=3\nENCRYPT ChaCha20\nREDUNDANCY 4x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 500KB\nENCODE binary quaternary\nCOMPRESS lzma level=5\nREPLICATE 3\nREDUNDANCY 2x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nAVOID TTTT TTT GCGCGC\nCHECKSUM sha512\nVERIFY strict\nREDUNDANCY 2x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 500KB\nAVOID AAAA GCGCGC\nCOMPRESS bzip2 level=2\nREDUNDANCY 4x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 11MB\nENCODE binary dna\nCOMPRESS gzip level=5\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "ENCODE binary dna\nSTORE 5GB\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 20GB\nPARTITION 8192\nAVOID AAAAAA TTTTT\nCHECKSUM sha256\nCOMPRESS lzma level=4\nVERIFY relaxed\nREDUNDANCY 7x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 10GB\nENCODE binary dna\nCHECKSUM md5\nVERIFY strict\nREDUNDANCY 2x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nENCODE ascii quaternary\nPARTITION 8192\nAVOID GGGGG\nCHECKSUM sha512\nCOMPRESS zstd level=7\nREDUNDANCY 4x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCOMPRESS gzip level=5\nENCRYPT AES256\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 100KB\nAVOID TTTTT GGG TTTTTT\nREPLICATE 2\nVERIFY strict\nREDUNDANCY 5x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 10GB\nENCODE utf8 dna\nPARTITION 1024\nAVOID GGGGG GCGCGC GGG AAAA TTTTTTT TTT AAAAA\nCHECKSUM sha512\nCOMPRESS gzip level=7\nREDUNDANCY 8x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nPARTITION 64\nAVOID TTTTTT CCCC GGGG\nCHECKSUM md5\nCOMPRESS gzip level=9\nVERIFY relaxed\nREDUNDANCY 6x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary xml\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 100KB\nENCODE binary base4\nAVOID CCC TTTTTTT AAAAAAA\nCHECKSUM sha512\nCOMPRESS zstd level=1\nREPLICATE 4\nVERIFY paranoid\nREDUNDANCY 3x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE base64 dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE ascii quaternary\nPARTITION 2048\nAVOID TTTTTT AAAA\nCHECKSUM sha256\nCOMPRESS gzip level=9\nREDUNDANCY 3x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCOMPRESS snappy level=5\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 10GB\nENCODE utf8 dna\nAVOID TTTTTTT GGGGG\nCHECKSUM sha512\nREDUNDANCY 3x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 1MB\nENCODE binary quaternary\nCHECKSUM crc32\nCOMPRESS zstd level=4\nENCRYPT AES256\nREDUNDANCY 5x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 100MB\nENCODE utf8 base4\nAVOID TTTTTT AAAA TTTT\nCHECKSUM md5\nCOMPRESS gzip level=2\nENCRYPT ChaCha20\nREPLICATE 3\nREDUNDANCY 4x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nREDUNDANCY 7x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 20GB\nENCODE binary dna\nPARTITION 64\nAVOID GCGCGC GGGGG\nCHECKSUM sha256\nCOMPRESS zstd level=4\nENCRYPT AES256\nVERIFY paranoid\nREDUNDANCY 6x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCRYPT AES256\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "ENCODE binary dna\nSTORE 5GB\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 1GB\nENCODE binary dna\nAVOID AAA\nCHECKSUM sha256\nENCRYPT AES256\nVERIFY paranoid\nREDUNDANCY 2x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nREDUNDANCY 3x reed_solomon\nENCODE binary dna",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE utf8 dna\nAVOID AAAA TTTT GGGG CCCC\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 11MB\nENCODE binary dna\nCOMPRESS gzip level=5\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 10GB\nENCODE hexadecimal quaternary\nCHECKSUM crc32\nCOMPRESS gzip level=2\nENCRYPT AES128\nVERIFY relaxed\nREDUNDANCY 3x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE ascii quaternary\nPARTITION 2048\nAVOID GCGCGC\nCHECKSUM md5\nCOMPRESS bzip2 level=4\nREDUNDANCY 3x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nENCODE binary base4\nCHECKSUM crc32\nCOMPRESS gzip level=9\nREPLICATE 3\nVERIFY paranoid\nREDUNDANCY 2x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nREDUNDANCY 7x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 100MB\nENCODE base32 base4\nPARTITION 512\nAVOID AAAAAAA\nCHECKSUM sha256\nCOMPRESS bzip2 level=7\nENCRYPT ChaCha20\nREDUNDANCY 2x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 1MB\nPARTITION 4096\nAVOID TTTTTTT AAA GGGG\nCHECKSUM crc32\nCOMPRESS gzip level=4\nREDUNDANCY 4x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 100KB\nENCODE binary base4\nCHECKSUM crc32\nENCRYPT AES128\nREDUNDANCY 2x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nPARTITION 64\nAVOID GGGG\nCHECKSUM md5\nENCRYPT AES256\nREDUNDANCY 7x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCOMPRESS snappy level=5\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 10GB\nENCODE base32 dna\nPARTITION 2048\nAVOID AAAAAAA GCGCGC\nCOMPRESS zstd level=5\nVERIFY relaxed\nREDUNDANCY 7x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 100KB\nENCODE utf8 base4\nPARTITION 2048\nAVOID CCC TTTTTT TTTTTTT AAAAAAA GGGG GCGCGC AAAAA\nCHECKSUM crc32\nCOMPRESS gzip level=5\nENCRYPT ChaCha20\nVERIFY relaxed\nREDUNDANCY 6x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 10GB\nENCODE utf8 dna\nAVOID AAAA AAA TTTTT GCGCGC AAAAAAA\nCOMPRESS bzip2 level=1\nREDUNDANCY 2x ldpc",
+    "valid": true
+  },
+  {
+    "program": "ENCODE binary dna\nSTORE 5GB\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 20GB\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5PB\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 500KB\nENCODE ascii quaternary\nPARTITION 256\nREDUNDANCY 7x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nENCRYPT AES256\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 1MB\nAVOID GGG AAAA\nCOMPRESS lzma level=1\nREDUNDANCY 2x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 1MB\nENCODE utf8 base4\nPARTITION 8192\nAVOID AAAAA AAAA AAAAAA\nCOMPRESS zstd level=6\nREDUNDANCY 2x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nAVOID AAAA\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE base32 dna\nPARTITION 64\nAVOID TTTTT\nREDUNDANCY 2x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nAVOID AAAA\nPARTITION 1024\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 1GB\nAVOID TTTTTTT\nREPLICATE 3\nVERIFY strict\nREDUNDANCY 5x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 100KB\nENCODE hexadecimal quaternary\nPARTITION 64\nAVOID GCGCGC TTTTTTT AAAAAAA\nCHECKSUM sha256\nCOMPRESS bzip2 level=8\nENCRYPT ChaCha20\nREDUNDANCY 7x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE base64 dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE base64 dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 500MB\nPARTITION 128\nAVOID GGG AAAAA\nREDUNDANCY 7x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 100MB\nENCODE binary dna\nCHECKSUM crc32\nCOMPRESS lzma level=2\nREPLICATE 3\nREDUNDANCY 5x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5MB\nPARTITION 256\nAVOID AAAAA TTTTTTT AAAA\nCHECKSUM sha512\nCOMPRESS gzip level=2\nREDUNDANCY 7x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE base32 dna\nPARTITION 4096\nAVOID CCCC AAAAA\nCHECKSUM sha512\nCOMPRESS zstd level=1\nENCRYPT ChaCha20\nVERIFY relaxed\nREDUNDANCY 3x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 1GB\nAVOID AAAAAA GGGG GCGCGC\nCOMPRESS zstd level=8\nVERIFY relaxed\nREDUNDANCY 2x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 100MB\nENCODE base32 base4\nAVOID CCCC AAAAAAA\nCHECKSUM sha256\nENCRYPT ChaCha20\nREDUNDANCY 3x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 500MB\nPARTITION 512\nAVOID AAAAAAA\nCHECKSUM sha512\nCOMPRESS gzip level=1\nREDUNDANCY 2x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 1MB\nPARTITION 512\nAVOID AAAAA\nREDUNDANCY 2x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nENCODE ascii dna\nPARTITION 8192\nAVOID TTT\nCHECKSUM sha512\nCOMPRESS bzip2 level=3\nENCRYPT AES256\nVERIFY strict\nREDUNDANCY 4x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCOMPRESS gzip level=5\nENCRYPT AES256\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 500KB\nENCODE hexadecimal base4\nAVOID TTTTTTT TTTTTT\nCHECKSUM sha256\nCOMPRESS lzma level=3\nENCRYPT AES256\nREDUNDANCY 5x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5MB\nAVOID TTTTTTT\nCOMPRESS gzip level=4\nREDUNDANCY 2x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 1MB\nENCODE utf8 dna\nAVOID GCGCGC AAAA\nCOMPRESS bzip2 level=1\nREPLICATE 4\nREDUNDANCY 4x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 10GB\nENCODE binary base4\nPARTITION 64\nAVOID TTTTTTT\nCHECKSUM md5\nENCRYPT AES128\nREDUNDANCY 3x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE base64 dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 10GB\nAVOID TTTTTTT AAAAAA\nCOMPRESS bzip2 level=1\nREPLICATE 2\nREDUNDANCY 3x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nPARTITION 1000\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 100KB\nENCODE ascii quaternary\nPARTITION 128\nAVOID AAA\nCOMPRESS gzip level=2\nREDUNDANCY 3x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE hexadecimal base4\nPARTITION 8192\nAVOID GGGGG GCGCGC TTTTT\nCHECKSUM sha512\nVERIFY paranoid\nREDUNDANCY 8x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nCOMPRESS bzip2 level=1\nREDUNDANCY 3x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 20GB\nAVOID AAAAA\nCHECKSUM sha256\nCOMPRESS gzip level=3\nREDUNDANCY 3x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nPARTITION 1000\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCHECKSUM blake2\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 1GB\nENCODE hexadecimal quaternary\nAVOID TTTT GCGCGC\nVERIFY relaxed\nREDUNDANCY 3x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nENCODE hexadecimal quaternary\nCHECKSUM sha512\nCOMPRESS gzip level=5\nREDUNDANCY 5x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 1GB\nENCODE hexadecimal base4\nAVOID AAAA TTTTT\nCHECKSUM sha512\nCOMPRESS bzip2 level=5\nENCRYPT ChaCha20\nREDUNDANCY 4x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nPARTITION 64\nAVOID AAA TTT\nCHECKSUM sha512\nCOMPRESS lzma level=2\nVERIFY paranoid\nREDUNDANCY 8x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nAVOID AAAA TTTT GGGG CCCC\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nREDUNDANCY 3x hamming_code",
+    "valid": false
+  },
+  {
+    "program": "STORE 500KB\nAVOID GCGCGC\nCHECKSUM sha256\nCOMPRESS bzip2 level=4\nREPLICATE 2\nREDUNDANCY 3x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE hexadecimal base4\nPARTITION 512\nAVOID AAA\nREDUNDANCY 7x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 1GB\nENCODE base32 quaternary\nPARTITION 8192\nAVOID AAAAAA AAA\nCHECKSUM md5\nENCRYPT ChaCha20\nREDUNDANCY 5x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 500MB\nENCODE ascii dna\nPARTITION 64\nAVOID AAA\nCHECKSUM sha256\nCOMPRESS bzip2 level=5\nENCRYPT AES128\nREDUNDANCY 6x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 500MB\nENCODE utf8 dna\nAVOID AAAAAA TTTTTT\nCHECKSUM md5\nENCRYPT AES256\nREPLICATE 2\nVERIFY strict\nREDUNDANCY 3x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 1MB\nAVOID AAAAAAA AAAAAA AAAAA\nCHECKSUM crc32\nREDUNDANCY 4x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE hexadecimal dna\nPARTITION 4096\nAVOID AAAAAAA TTTTT\nCOMPRESS gzip level=1\nVERIFY relaxed\nREDUNDANCY 2x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCRYPT AES256\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 100MB\nENCODE binary dna\nPARTITION 1024\nAVOID AAAAAAA TTTTT CCC\nCOMPRESS bzip2 level=1\nREDUNDANCY 4x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5MB\nPARTITION 512\nAVOID CCC\nREDUNDANCY 7x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nPARTITION 256\nCHECKSUM sha512\nCOMPRESS gzip level=4\nREDUNDANCY 7x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 500MB\nENCODE utf8 dna\nPARTITION 2048\nAVOID CCCC TTTTTT AAAA AAAAA GCGCGC\nCOMPRESS gzip level=7\nREDUNDANCY 8x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCOMPRESS gzip level=5\nCHECKSUM sha256\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 20GB\nENCODE base32 quaternary\nAVOID AAA TTTTTTT GGG\nCHECKSUM sha256\nCOMPRESS zstd level=2\nENCRYPT AES128\nREPLICATE 5\nVERIFY paranoid\nREDUNDANCY 3x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 1GB\nENCODE utf8 quaternary\nPARTITION 64\nAVOID AAAAAA TTTT\nCHECKSUM md5\nCOMPRESS bzip2 level=1\nREDUNDANCY 2x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna",
+    "valid": false
+  },
+  {
+    "program": "STORE 100KB\nAVOID TTTTTTT\nCHECKSUM md5\nCOMPRESS lzma level=1\nREDUNDANCY 3x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 10GB\nAVOID AAAAAA AAAAA\nREDUNDANCY 3x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nREDUNDANCY 3x hamming_code",
+    "valid": false
+  },
+  {
+    "program": "STORE 1GB\nENCODE ascii dna\nAVOID AAAAA TTTTTT CCC\nCOMPRESS lzma level=2\nREDUNDANCY 3x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 10GB\nENCODE hexadecimal quaternary\nPARTITION 1024\nAVOID TTT\nCOMPRESS lzma level=9\nVERIFY strict\nREDUNDANCY 2x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE base64 dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 10GB\nPARTITION 1024\nAVOID GCGCGC AAAA TTTTTT\nCHECKSUM crc32\nCOMPRESS bzip2 level=1\nVERIFY strict\nREDUNDANCY 6x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nAVOID AAAA\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 500KB\nENCODE hexadecimal quaternary\nAVOID TTTT CCC\nCOMPRESS bzip2 level=8\nREPLICATE 3\nREDUNDANCY 3x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nAVOID AAA\nCHECKSUM sha256\nCOMPRESS lzma level=1\nREPLICATE 2\nVERIFY paranoid\nREDUNDANCY 2x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 1GB\nAVOID AAAAAAA\nCOMPRESS lzma level=2\nVERIFY strict\nREDUNDANCY 2x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary xml\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 1GB\nAVOID CCCC TTT\nCHECKSUM crc32\nVERIFY paranoid\nREDUNDANCY 3x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCOMPRESS gzip level=5\nCHECKSUM sha256\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5MB\nENCODE ascii dna\nPARTITION 1024\nAVOID AAAAAA TTTT\nCOMPRESS zstd level=5\nREDUNDANCY 7x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 5MB\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5MB\nPARTITION 4096\nAVOID GGGG\nCHECKSUM sha512\nCOMPRESS gzip level=2\nREDUNDANCY 3x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nENCODE utf8 base4\nAVOID TTTTTTT GCGCGC CCC TTTTT CCCC TTT AAAA\nCHECKSUM sha512\nCOMPRESS lzma level=1\nVERIFY strict\nREDUNDANCY 2x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 500KB\nENCODE hexadecimal dna\nAVOID AAAA\nCHECKSUM crc32\nENCRYPT ChaCha20\nREPLICATE 3\nVERIFY relaxed\nREDUNDANCY 4x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 5MB\nENCODE binary quaternary\nAVOID CCC\nCHECKSUM crc32\nCOMPRESS bzip2 level=4\nREDUNDANCY 5x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 500MB\nPARTITION 128\nAVOID GGGG\nCHECKSUM sha256\nCOMPRESS zstd level=1\nREDUNDANCY 3x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5MB\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nAVOID AAAA\nPARTITION 1024\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 500KB\nENCODE base32 dna\nAVOID TTTTT\nCHECKSUM sha256\nENCRYPT AES256\nREDUNDANCY 3x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCOMPRESS gzip level=5\nCHECKSUM sha256\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 500MB\nENCODE base32 quaternary\nPARTITION 1024\nCHECKSUM crc32\nENCRYPT ChaCha20\nREDUNDANCY 3x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCHECKSUM blake2\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCRYPT AES256\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 1GB\nENCODE utf8 base4\nPARTITION 4096\nAVOID GGGG AAA TTT TTTTTTT TTTT\nCHECKSUM md5\nCOMPRESS zstd level=7\nREDUNDANCY 7x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 1GB\nENCODE utf8 quaternary\nAVOID GGG AAAAA CCCC GGGGG AAAA TTT AAA\nCHECKSUM sha256\nCOMPRESS gzip level=7\nVERIFY strict\nREDUNDANCY 3x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCOMPRESS gzip level=5\nCHECKSUM sha256\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE ascii quaternary\nAVOID AAAAA TTTTT TTTTTTT\nCOMPRESS zstd level=1\nREDUNDANCY 3x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nENCODE utf8 base4\nPARTITION 128\nAVOID GGG TTTTTTT\nCHECKSUM sha256\nCOMPRESS bzip2 level=4\nREDUNDANCY 7x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 100MB\nPARTITION 512\nAVOID AAAAA AAAA\nREDUNDANCY 2x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary xml\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE hexadecimal quaternary\nAVOID TTT\nCHECKSUM sha512\nENCRYPT AES128\nVERIFY paranoid\nREDUNDANCY 3x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nENCRYPT AES256\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5MB\nPARTITION 512\nAVOID GGG\nCHECKSUM md5\nCOMPRESS gzip level=4\nREDUNDANCY 2x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nENCODE binary quaternary\nPARTITION 64\nAVOID AAAAA GGG\nCHECKSUM crc32\nCOMPRESS lzma level=1\nREDUNDANCY 3x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nENCODE base32 base4\nAVOID TTT\nCHECKSUM md5\nCOMPRESS gzip level=3\nREPLICATE 2\nREDUNDANCY 2x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 1MB\nENCODE hexadecimal dna\nAVOID GGGG\nREDUNDANCY 2x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nAVOID AAAA\nPARTITION 1024\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nENCRYPT AES256\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary xml\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 100KB\nAVOID AAAA\nCHECKSUM md5\nCOMPRESS zstd level=1\nREDUNDANCY 3x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 5MB\nENCODE utf8 base4\nAVOID CCC CCCC AAAA GGG GGGG GCGCGC TTTTTT\nCHECKSUM crc32\nCOMPRESS bzip2 level=9\nENCRYPT AES256\nREPLICATE 5\nREDUNDANCY 2x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCOMPRESS snappy level=5\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 1GB\nPARTITION 4096\nAVOID GGGG\nVERIFY paranoid\nREDUNDANCY 6x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nENCRYPT AES256\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCOMPRESS gzip level=5\nCHECKSUM sha256\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5MB\nENCODE utf8 base4\nAVOID AAAAAA TTTTT TTTT TTT CCCC\nCOMPRESS gzip level=5\nREPLICATE 3\nREDUNDANCY 3x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 10GB\nENCODE binary dna\nAVOID AAAAA AAAAAAA\nCHECKSUM sha512\nREDUNDANCY 4x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nAVOID AAAA TTTT GGGG CCCC\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nAVOID TTTTTTT\nCHECKSUM sha512\nVERIFY strict\nREDUNDANCY 3x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nREDUNDANCY 7x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nREDUNDANCY 3x reed_solomon\nENCODE binary dna",
+    "valid": false
+  },
+  {
+    "program": "STORE 20GB\nPARTITION 4096\nAVOID TTTT GGGGG AAAA\nCHECKSUM md5\nCOMPRESS lzma level=3\nVERIFY relaxed\nREDUNDANCY 6x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 500KB\nENCODE base32 base4\nPARTITION 64\nREDUNDANCY 2x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 1MB\nCHECKSUM sha512\nREPLICATE 3\nREDUNDANCY 4x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCRYPT AES256\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 500MB\nENCODE ascii quaternary\nPARTITION 2048\nAVOID GCGCGC TTTTTT\nCOMPRESS bzip2 level=6\nREDUNDANCY 6x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nREDUNDANCY 3x reed_solomon\nENCODE binary dna",
+    "valid": false
+  },
+  {
+    "program": "STORE 20GB\nENCODE base32 base4\nPARTITION 128\nAVOID AAAA\nCHECKSUM md5\nCOMPRESS bzip2 level=5\nREDUNDANCY 7x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nENCRYPT AES256\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 20GB\nAVOID GGG GGGG AAAA\nCHECKSUM sha256\nCOMPRESS lzma level=5\nREDUNDANCY 2x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 500MB\nENCODE utf8 base4\nAVOID TTTTTTT AAAAAAA AAAAAA TTT CCCC GGGGG GGGG\nCHECKSUM sha512\nCOMPRESS bzip2 level=3\nREDUNDANCY 5x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 1GB\nPARTITION 8192\nAVOID GCGCGC TTTTTTT AAAAAAA\nVERIFY paranoid\nREDUNDANCY 6x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 500KB\nENCODE utf8 quaternary\nCOMPRESS bzip2 level=5\nREDUNDANCY 5x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 100MB\nENCODE ascii base4\nAVOID TTTTTTT GCGCGC\nCOMPRESS lzma level=1\nREPLICATE 5\nREDUNDANCY 2x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 11MB\nENCODE binary dna\nCOMPRESS gzip level=5\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 1GB\nENCODE utf8 dna\nPARTITION 512\nAVOID AAAAAAA TTTTTT\nREDUNDANCY 5x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 500MB\nENCODE utf8 quaternary\nPARTITION 4096\nAVOID GGG GGGG AAAAAA AAAAAAA TTTTT CCCC AAA\nCHECKSUM crc32\nCOMPRESS gzip level=5\nENCRYPT AES128\nREDUNDANCY 8x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 100KB\nENCODE ascii quaternary\nPARTITION 2048\nAVOID GGGGG AAA\nREDUNDANCY 2x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 100KB\nENCODE base32 dna\nAVOID AAAAAAA AAA\nREDUNDANCY 2x turbo",
+    "valid": true
+  },
+  {
+    "program": "ENCODE binary dna\nSTORE 5GB\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5MB\nENCODE base32 base4\nPARTITION 8192\nAVOID TTTTT TTTTTTT TTTT\nCHECKSUM crc32\nREDUNDANCY 8x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 10GB\nENCODE utf8 quaternary\nAVOID GGGGG CCCC TTTTTTT\nCHECKSUM sha256\nCOMPRESS zstd level=2\nVERIFY paranoid\nREDUNDANCY 5x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCHECKSUM md5\nREDUNDANCY 3x fountain",
+    "valid": false
+  },
+  {
+    "program": "STORE 100KB\nENCODE hexadecimal quaternary\nAVOID AAAAA\nCOMPRESS zstd level=7\nVERIFY strict\nREDUNDANCY 2x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nPARTITION 256\nAVOID AAAA GCGCGC TTTTTTT\nCHECKSUM crc32\nCOMPRESS gzip level=1\nVERIFY paranoid\nREDUNDANCY 7x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 500MB\nENCODE utf8 base4\nAVOID TTTTT GGGG TTTT TTTTTT AAA AAAAAA GGGGG\nCHECKSUM sha256\nCOMPRESS zstd level=7\nREDUNDANCY 2x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE hexadecimal base4\nPARTITION 8192\nAVOID GGGGG TTTTTTT TTTTTT\nCOMPRESS zstd level=4\nVERIFY relaxed\nREDUNDANCY 7x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 1GB\nAVOID GCGCGC\nCHECKSUM md5\nCOMPRESS lzma level=6\nREDUNDANCY 4x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nAVOID AAAA\nPARTITION 1024\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 1GB\nENCODE ascii base4\nPARTITION 8192\nAVOID TTTTT AAAAAAA TTTTTT\nREDUNDANCY 3x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5MB\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCOMPRESS gzip level=5\nCHECKSUM sha256\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE hexadecimal base4\nAVOID TTT\nCOMPRESS zstd level=5\nREPLICATE 5\nVERIFY paranoid\nREDUNDANCY 2x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nENCODE base32 base4\nAVOID TTTTTTT AAA\nCHECKSUM crc32\nCOMPRESS lzma level=6\nVERIFY relaxed\nREDUNDANCY 4x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 10GB\nPARTITION 128\nCHECKSUM crc32\nVERIFY paranoid\nREDUNDANCY 3x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nENCRYPT AES256\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE base64 dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 100MB\nENCODE ascii dna\nPARTITION 2048\nAVOID GCGCGC AAAAA CCCC\nCOMPRESS bzip2 level=3\nREDUNDANCY 6x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nAVOID AAAA\nPARTITION 1024\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nPARTITION 1000\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 10GB\nENCODE hexadecimal dna\nPARTITION 128\nAVOID AAAAAA\nCOMPRESS zstd level=5\nVERIFY strict\nREDUNDANCY 4x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nPARTITION 8192\nAVOID GGGGG AAAA\nCHECKSUM sha512\nCOMPRESS gzip level=6\nVERIFY paranoid\nREDUNDANCY 2x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 500MB\nENCODE ascii dna\nPARTITION 2048\nAVOID CCC AAAAA TTTT\nCHECKSUM sha512\nCOMPRESS zstd level=9\nENCRYPT AES128\nREDUNDANCY 2x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 10GB\nENCODE utf8 dna\nAVOID AAAAA AAAAAA TTTTT TTT AAAA CCC GGG\nCOMPRESS zstd level=7\nREDUNDANCY 4x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 1MB\nPARTITION 2048\nAVOID TTTT TTTTT\nREDUNDANCY 7x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nREDUNDANCY 3x reed_solomon\nENCODE binary dna",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE ascii dna\nCHECKSUM sha512\nCOMPRESS lzma level=4\nENCRYPT AES256\nVERIFY relaxed\nREDUNDANCY 3x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nREDUNDANCY 3x hamming_code",
+    "valid": false
+  },
+  {
+    "program": "STORE 100KB\nENCODE binary dna\nAVOID AAAAA\nREPLICATE 5\nREDUNDANCY 2x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 500KB\nENCODE ascii dna\nPARTITION 4096\nAVOID AAAAA\nCOMPRESS gzip level=9\nREDUNDANCY 2x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary quaternary\nAVOID AAAAA\nCHECKSUM crc32\nENCRYPT AES128\nREPLICATE 4\nREDUNDANCY 5x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 10GB\nENCODE binary base4\nAVOID GCGCGC GGGG\nCHECKSUM sha512\nCOMPRESS gzip level=4\nVERIFY relaxed\nREDUNDANCY 2x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE ascii quaternary\nPARTITION 1024\nAVOID AAAA\nCHECKSUM sha256\nVERIFY paranoid\nREDUNDANCY 2x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE base32 dna\nAVOID GCGCGC\nCOMPRESS lzma level=2\nREDUNDANCY 4x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 11MB\nENCODE binary dna\nCOMPRESS gzip level=5\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCOMPRESS gzip level=5\nENCRYPT AES256\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nREDUNDANCY 3x hamming_code",
+    "valid": false
+  },
+  {
+    "program": "STORE 20GB\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCOMPRESS gzip level=5\nCHECKSUM sha256\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna",
+    "valid": false
+  },
+  {
+    "program": "STORE 100KB\nENCODE binary dna\nPARTITION 8192\nAVOID AAAAAA GGGG\nCHECKSUM md5\nCOMPRESS lzma level=6\nENCRYPT AES256\nREDUNDANCY 4x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nENCRYPT AES256\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 100KB\nENCODE binary dna\nPARTITION 4096\nAVOID TTTTT\nCOMPRESS bzip2 level=9\nVERIFY paranoid\nREDUNDANCY 2x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 1MB\nAVOID TTTTTT TTT AAAA\nCOMPRESS lzma level=2\nREPLICATE 2\nVERIFY paranoid\nREDUNDANCY 4x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nENCODE ascii base4\nAVOID AAAA\nCHECKSUM md5\nCOMPRESS lzma level=1\nVERIFY relaxed\nREDUNDANCY 2x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 10GB\nENCODE base32 dna\nPARTITION 256\nCHECKSUM md5\nCOMPRESS bzip2 level=1\nENCRYPT AES128\nREDUNDANCY 3x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 10GB\nENCODE ascii quaternary\nREDUNDANCY 5x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 5MB\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 100MB\nPARTITION 4096\nAVOID GGGG\nREDUNDANCY 3x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nENCODE hexadecimal base4\nPARTITION 512\nAVOID CCCC\nCHECKSUM sha512\nCOMPRESS lzma level=3\nREDUNDANCY 8x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 5PB\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nAVOID AAAA\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nREDUNDANCY 7x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 1GB\nENCODE utf8 quaternary\nPARTITION 512\nAVOID AAAAA TTT AAAAAA\nCHECKSUM crc32\nENCRYPT ChaCha20\nREDUNDANCY 3x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nPARTITION 512\nAVOID TTT\nCHECKSUM sha512\nCOMPRESS zstd level=1\nVERIFY strict\nREDUNDANCY 3x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 10GB\nPARTITION 512\nAVOID TTT\nCHECKSUM sha256\nCOMPRESS gzip level=5\nVERIFY relaxed\nREDUNDANCY 2x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 100KB\nENCODE binary base4\nPARTITION 2048\nAVOID TTTT AAA\nCHECKSUM crc32\nCOMPRESS bzip2 level=1\nENCRYPT ChaCha20\nREDUNDANCY 3x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCOMPRESS gzip level=5\nCHECKSUM sha256\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 500KB\nENCODE utf8 dna\nPARTITION 1024\nAVOID CCCC GGGG TTTTTT AAAAA GGGGG AAAAAA GGG\nCHECKSUM crc32\nCOMPRESS lzma level=5\nENCRYPT AES128\nREDUNDANCY 8x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 500MB\nENCODE utf8 dna\nAVOID TTTT CCCC AAA\nCOMPRESS bzip2 level=1\nVERIFY strict\nREDUNDANCY 4x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nAVOID AAAA TTTT GGGG CCCC\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 500MB\nPARTITION 1024\nAVOID TTTT GGGG TTTTTT\nREDUNDANCY 3x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 100KB\nENCODE utf8 quaternary\nPARTITION 1024\nAVOID TTT GGGGG TTTTT GGG AAAAA\nCOMPRESS lzma level=5\nVERIFY paranoid\nREDUNDANCY 7x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 100KB\nENCODE utf8 dna\nPARTITION 8192\nAVOID GCGCGC AAAA AAAAAAA AAAAA CCCC\nCOMPRESS bzip2 level=1\nREDUNDANCY 2x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nPARTITION 1000\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 20GB\nENCODE ascii dna\nAVOID CCCC AAAA\nCHECKSUM sha512\nCOMPRESS lzma level=2\nVERIFY strict\nREDUNDANCY 2x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE utf8 dna\nAVOID AAAA TTTT GGGG CCCC\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 1GB\nPARTITION 512\nAVOID AAAAA AAAAAAA GGGG\nCHECKSUM sha256\nCOMPRESS lzma level=2\nVERIFY strict\nREDUNDANCY 7x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nREDUNDANCY 7x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 500MB\nENCODE utf8 quaternary\nPARTITION 1024\nAVOID CCC AAAA TTTTT\nCOMPRESS zstd level=8\nREDUNDANCY 5x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 500MB\nPARTITION 8192\nAVOID GGGG AAAAAA TTTTTT\nREDUNDANCY 5x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nREDUNDANCY 3x reed_solomon\nENCODE binary dna",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCRYPT AES256\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 500KB\nENCODE utf8 dna\nPARTITION 8192\nAVOID GGGGG TTTTTT AAAAAAA TTTTT AAAAAA\nCOMPRESS zstd level=6\nREDUNDANCY 3x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 100KB\nENCODE base32 base4\nCHECKSUM sha256\nENCRYPT AES256\nREDUNDANCY 4x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nAVOID AAAA\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 1GB\nAVOID GGGG\nCHECKSUM sha512\nVERIFY strict\nREDUNDANCY 2x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nENCODE binary dna\nPARTITION 1024\nAVOID AAA\nCHECKSUM md5\nCOMPRESS zstd level=5\nREDUNDANCY 7x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCOMPRESS gzip level=5\nCHECKSUM sha256\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 500KB\nENCODE hexadecimal quaternary\nAVOID TTT GGGGG\nCHECKSUM crc32\nCOMPRESS lzma level=2\nREDUNDANCY 3x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 100MB\nENCODE ascii dna\nAVOID TTTT TTTTTT\nREDUNDANCY 2x bch",
+    "valid": true
+  },
+  {
+    "program": "ENCODE binary dna\nSTORE 5GB\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nAVOID AAAA TTTT GGGG CCCC\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 1MB\nENCODE utf8 base4\nPARTITION 128\nAVOID CCCC AAA CCC TTTTT GGGGG\nCHECKSUM md5\nCOMPRESS zstd level=6\nENCRYPT ChaCha20\nREDUNDANCY 4x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nENCODE utf8 quaternary\nPARTITION 4096\nAVOID TTT AAAAAA\nCHECKSUM sha256\nCOMPRESS lzma level=1\nENCRYPT AES256\nVERIFY paranoid\nREDUNDANCY 3x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nPARTITION 8192\nAVOID TTT\nCOMPRESS gzip level=2\nREDUNDANCY 8x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nAVOID AAAA\nPARTITION 1024\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE base64 dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 10GB\nENCODE hexadecimal base4\nCOMPRESS gzip level=4\nVERIFY relaxed\nREDUNDANCY 2x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nAVOID GGGG\nCHECKSUM sha512\nCOMPRESS bzip2 level=1\nREPLICATE 2\nVERIFY strict\nREDUNDANCY 4x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary xml\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5MB\nENCODE binary base4\nAVOID GGGGG GGG CCCC\nCHECKSUM md5\nENCRYPT ChaCha20\nREDUNDANCY 2x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 1MB\nENCODE ascii quaternary\nPARTITION 4096\nAVOID AAA TTTTTTT AAAAAA\nCHECKSUM sha256\nCOMPRESS zstd level=2\nVERIFY paranoid\nREDUNDANCY 7x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCOMPRESS gzip level=5\nCHECKSUM sha256\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5PB\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 1MB\nENCODE hexadecimal base4\nAVOID AAAAAAA CCC AAA\nCHECKSUM crc32\nENCRYPT AES128\nREDUNDANCY 4x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 5PB\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nPARTITION 1000\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCHECKSUM md5\nREDUNDANCY 3x fountain",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary xml\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 100KB\nENCODE base32 base4\nAVOID AAAA\nCOMPRESS gzip level=3\nREDUNDANCY 4x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 500KB\nCHECKSUM md5\nREDUNDANCY 2x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 500MB\nPARTITION 2048\nCOMPRESS zstd level=8\nREDUNDANCY 6x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 100KB\nAVOID GCGCGC AAAA\nREDUNDANCY 2x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5MB\nENCODE utf8 dna\nAVOID AAA CCCC AAAAAA\nCHECKSUM sha512\nENCRYPT AES128\nREDUNDANCY 2x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 10GB\nENCODE binary dna\nAVOID CCCC GGG\nCHECKSUM sha512\nREDUNDANCY 4x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 10GB\nENCODE binary base4\nAVOID TTTT GCGCGC\nCHECKSUM sha256\nENCRYPT AES128\nVERIFY relaxed\nREDUNDANCY 2x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 1MB\nENCODE hexadecimal base4\nAVOID AAAAAAA\nREDUNDANCY 2x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nAVOID CCC CCCC TTTTTTT\nCHECKSUM sha512\nCOMPRESS lzma level=1\nREDUNDANCY 2x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 500KB\nPARTITION 256\nREDUNDANCY 7x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nENCODE binary quaternary\nPARTITION 128\nAVOID TTT\nCHECKSUM sha512\nCOMPRESS zstd level=5\nREDUNDANCY 7x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCHECKSUM blake2\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 1MB\nENCODE utf8 base4\nCHECKSUM md5\nCOMPRESS bzip2 level=5\nENCRYPT AES128\nREDUNDANCY 3x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 5MB\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nAVOID AAAA TTTT GGGG CCCC\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 100MB\nENCODE utf8 base4\nPARTITION 4096\nAVOID GCGCGC AAAAA AAAAAA\nCOMPRESS gzip level=1\nREDUNDANCY 2x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE base32 base4\nPARTITION 8192\nAVOID CCC TTTTT CCCC\nCOMPRESS gzip level=2\nVERIFY strict\nREDUNDANCY 3x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCOMPRESS gzip level=5\nENCRYPT AES256\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 500KB\nPARTITION 4096\nAVOID AAA\nCOMPRESS bzip2 level=5\nREDUNDANCY 6x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nPARTITION 1024\nAVOID CCCC AAAAAAA\nCOMPRESS gzip level=9\nREDUNDANCY 8x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 500KB\nENCODE binary dna\nAVOID TTTTTT\nCHECKSUM sha256\nCOMPRESS gzip level=1\nREPLICATE 4\nVERIFY strict\nREDUNDANCY 2x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 10GB\nENCODE hexadecimal dna\nAVOID GGG TTTTTTT\nCHECKSUM sha512\nENCRYPT AES128\nVERIFY strict\nREDUNDANCY 2x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nENCODE binary dna\nCHECKSUM crc32\nCOMPRESS gzip level=2\nENCRYPT ChaCha20\nVERIFY strict\nREDUNDANCY 2x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 500KB\nENCODE base32 dna\nPARTITION 8192\nAVOID AAAAAA TTTTT AAAA\nCHECKSUM sha256\nCOMPRESS bzip2 level=5\nREDUNDANCY 4x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nENCODE ascii base4\nAVOID TTTTT GGG AAAA\nCHECKSUM sha512\nCOMPRESS zstd level=1\nENCRYPT ChaCha20\nREDUNDANCY 4x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 500KB\nENCODE binary quaternary\nAVOID GGGG\nCHECKSUM sha256\nCOMPRESS gzip level=3\nREDUNDANCY 4x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nREDUNDANCY 3x hamming_code",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE utf8 dna\nCHECKSUM sha256\nCOMPRESS gzip level=1\nREDUNDANCY 3x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 500KB\nENCODE hexadecimal base4\nAVOID TTTTTTT AAAAAA\nREDUNDANCY 2x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nREDUNDANCY 7x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 500KB\nENCODE binary dna\nAVOID GCGCGC\nCHECKSUM md5\nCOMPRESS gzip level=6\nENCRYPT ChaCha20\nREPLICATE 3\nREDUNDANCY 2x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nAVOID TTTTTTT CCC\nCHECKSUM md5\nCOMPRESS bzip2 level=6\nREDUNDANCY 4x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 1MB\nPARTITION 4096\nAVOID TTT CCC GGGG\nCHECKSUM crc32\nCOMPRESS bzip2 level=5\nREDUNDANCY 5x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nPARTITION 64\nAVOID TTTTTT AAAAAAA\nCHECKSUM md5\nCOMPRESS gzip level=2\nVERIFY paranoid\nREDUNDANCY 8x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 100KB\nENCODE base32 base4\nAVOID TTTTTT AAAAA\nCOMPRESS gzip level=4\nREDUNDANCY 2x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 11MB\nENCODE binary dna\nCOMPRESS gzip level=5\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 500KB\nENCODE ascii dna\nPARTITION 128\nAVOID TTTTT GCGCGC TTTT\nCOMPRESS lzma level=1\nREDUNDANCY 2x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 500MB\nENCODE base32 quaternary\nAVOID AAAAAA GCGCGC\nCHECKSUM crc32\nCOMPRESS bzip2 level=7\nREPLICATE 3\nVERIFY relaxed\nREDUNDANCY 4x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE utf8 dna\nAVOID AAAA TTTT GGGG CCCC\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 20GB\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nAVOID AAAA TTTT GGGG CCCC\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nREDUNDANCY 3x reed_solomon\nENCODE binary dna",
+    "valid": false
+  },
+  {
+    "program": "STORE 100MB\nENCODE utf8 quaternary\nPARTITION 1024\nAVOID AAAAA CCC TTTTTTT GCGCGC GGG\nCHECKSUM sha512\nCOMPRESS zstd level=5\nENCRYPT AES256\nREDUNDANCY 6x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCHECKSUM md5\nREDUNDANCY 3x fountain",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary xml\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nREDUNDANCY 3x hamming_code",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE ascii base4\nPARTITION 512\nAVOID CCCC\nREDUNDANCY 7x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 1GB\nENCODE hexadecimal base4\nAVOID CCC GGG TTTT\nVERIFY paranoid\nREDUNDANCY 2x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 1MB\nPARTITION 64\nAVOID TTT\nREDUNDANCY 6x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 500KB\nENCODE hexadecimal quaternary\nCHECKSUM crc32\nREDUNDANCY 5x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5PB\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nPARTITION 1024\nAVOID GGGGG AAAAAAA GGGG\nVERIFY paranoid\nREDUNDANCY 4x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 100KB\nENCODE utf8 base4\nCHECKSUM sha256\nREDUNDANCY 5x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 1GB\nPARTITION 256\nAVOID CCCC\nCHECKSUM sha256\nREDUNDANCY 6x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nPARTITION 1000\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 1GB\nENCODE ascii dna\nPARTITION 8192\nCOMPRESS gzip level=7\nREDUNDANCY 8x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary xml\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 500MB\nAVOID TTT AAAAAA TTTTTT\nCOMPRESS lzma level=1\nREDUNDANCY 4x turbo",
+    "valid": true
+  },
+  {
+    "program": "ENCODE binary dna\nSTORE 5GB\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 500KB\nAVOID AAAAAAA GGGGG\nCHECKSUM md5\nREDUNDANCY 2x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 100KB\nENCODE ascii dna\nAVOID AAA GGGGG CCC\nCHECKSUM sha256\nCOMPRESS bzip2 level=2\nENCRYPT AES256\nREDUNDANCY 3x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna",
+    "valid": false
+  },
+  {
+    "program": "STORE 20GB\nAVOID CCCC\nCHECKSUM crc32\nCOMPRESS zstd level=7\nREDUNDANCY 2x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 500MB\nENCODE binary base4\nAVOID CCCC\nCHECKSUM sha256\nCOMPRESS bzip2 level=1\nREDUNDANCY 2x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary xml\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nREDUNDANCY 7x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 10GB\nPARTITION 512\nAVOID GCGCGC TTTT CCCC\nVERIFY paranoid\nREDUNDANCY 7x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nPARTITION 8192\nAVOID GGG AAAAAAA\nCHECKSUM crc32\nCOMPRESS gzip level=2\nVERIFY relaxed\nREDUNDANCY 8x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nAVOID AAAA\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 100KB\nENCODE binary base4\nPARTITION 4096\nAVOID AAAAA\nCHECKSUM sha512\nCOMPRESS bzip2 level=3\nENCRYPT ChaCha20\nREDUNDANCY 6x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nAVOID AAAA TTTT GGGG CCCC\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 10GB\nENCODE utf8 quaternary\nCHECKSUM crc32\nENCRYPT ChaCha20\nREPLICATE 5\nVERIFY strict\nREDUNDANCY 3x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCOMPRESS snappy level=5\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCHECKSUM md5\nREDUNDANCY 3x fountain",
+    "valid": false
+  },
+  {
+    "program": "STORE 5MB\nAVOID GGG\nCOMPRESS gzip level=2\nREDUNDANCY 4x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 1MB\nAVOID TTTTT\nCHECKSUM crc32\nREDUNDANCY 2x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 100MB\nENCODE hexadecimal base4\nPARTITION 1024\nAVOID AAAAA CCCC\nCOMPRESS zstd level=8\nREDUNDANCY 7x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCOMPRESS snappy level=5\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE base64 dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCRYPT AES256\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 100KB\nPARTITION 512\nREDUNDANCY 2x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 1GB\nENCODE base32 quaternary\nPARTITION 1024\nAVOID GGGG\nCHECKSUM crc32\nENCRYPT AES256\nREDUNDANCY 6x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 500KB\nREPLICATE 4\nREDUNDANCY 4x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna",
+    "valid": false
+  },
+  {
+    "program": "STORE 500KB\nPARTITION 1024\nREDUNDANCY 6x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nENCODE binary quaternary\nPARTITION 256\nAVOID TTTT AAAAAA GGGG\nCHECKSUM crc32\nCOMPRESS gzip level=9\nENCRYPT ChaCha20\nVERIFY strict\nREDUNDANCY 8x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 1GB\nENCODE base32 base4\nCHECKSUM crc32\nCOMPRESS lzma level=3\nENCRYPT AES128\nVERIFY strict\nREDUNDANCY 4x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 100KB\nENCODE utf8 dna\nPARTITION 8192\nAVOID AAAAA GCGCGC TTTTTTT TTTTTT AAAA\nCOMPRESS lzma level=7\nREDUNDANCY 3x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 100MB\nENCODE hexadecimal quaternary\nPARTITION 4096\nAVOID CCCC\nCOMPRESS bzip2 level=3\nREDUNDANCY 5x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 500KB\nPARTITION 1024\nAVOID GCGCGC TTT AAAAAA\nREDUNDANCY 3x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 500MB\nENCODE utf8 base4\nAVOID CCC TTTTT AAAAAA AAAAA GCGCGC\nCOMPRESS lzma level=6\nREPLICATE 5\nREDUNDANCY 3x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 10GB\nENCODE binary base4\nAVOID GGGG AAAAA AAAA\nREPLICATE 5\nREDUNDANCY 2x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 100KB\nENCODE base32 base4\nAVOID AAAA AAAAAA\nCOMPRESS zstd level=1\nREPLICATE 2\nREDUNDANCY 3x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 100KB\nENCODE utf8 quaternary\nAVOID TTT CCC\nCOMPRESS lzma level=3\nVERIFY relaxed\nREDUNDANCY 5x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 100MB\nENCODE ascii base4\nPARTITION 64\nAVOID TTTTTTT TTTTT\nCHECKSUM sha512\nCOMPRESS zstd level=9\nVERIFY paranoid\nREDUNDANCY 7x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nAVOID AAAA TTTT GGGG CCCC\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCOMPRESS gzip level=5\nENCRYPT AES256\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 20GB\nAVOID TTTT TTTTTT GGGGG\nCHECKSUM md5\nCOMPRESS lzma level=5\nREDUNDANCY 2x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nENCODE utf8 dna\nPARTITION 64\nAVOID CCC AAA\nCHECKSUM crc32\nCOMPRESS zstd level=2\nREDUNDANCY 8x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCHECKSUM blake2\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE utf8 quaternary\nAVOID AAAAAA GCGCGC TTTT TTT TTTTTTT TTTTT AAAAA\nCOMPRESS lzma level=2\nREDUNDANCY 2x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE utf8 quaternary\nPARTITION 1024\nAVOID TTTT GCGCGC CCC\nCHECKSUM crc32\nENCRYPT AES128\nREDUNDANCY 6x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 1GB\nENCODE utf8 base4\nPARTITION 512\nAVOID TTTTTTT CCCC\nCHECKSUM sha512\nENCRYPT ChaCha20\nREDUNDANCY 5x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 1GB\nENCODE ascii quaternary\nPARTITION 512\nAVOID GGG AAAA AAAAA\nREDUNDANCY 2x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nENCODE ascii quaternary\nPARTITION 4096\nCHECKSUM md5\nCOMPRESS gzip level=6\nVERIFY strict\nREDUNDANCY 2x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 10GB\nENCODE base32 dna\nAVOID TTTT GGGG AAAAAAA\nCHECKSUM sha256\nCOMPRESS gzip level=8\nVERIFY paranoid\nREDUNDANCY 3x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 500MB\nENCODE binary dna\nPARTITION 128\nAVOID TTTTTTT TTTT\nCOMPRESS lzma level=2\nREDUNDANCY 8x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nENCODE base32 dna\nCHECKSUM sha512\nCOMPRESS bzip2 level=4\nENCRYPT ChaCha20\nVERIFY paranoid\nREDUNDANCY 3x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 1GB\nENCODE binary base4\nPARTITION 1024\nAVOID GGGG\nCOMPRESS zstd level=2\nVERIFY relaxed\nREDUNDANCY 4x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCHECKSUM md5\nCOMPRESS zstd level=4\nREDUNDANCY 3x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nENCODE hexadecimal dna\nAVOID TTTT TTTTTTT\nCHECKSUM md5\nCOMPRESS lzma level=2\nVERIFY strict\nREDUNDANCY 3x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCOMPRESS snappy level=5\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 10GB\nENCODE binary quaternary\nPARTITION 8192\nAVOID GGG TTTTT\nCHECKSUM crc32\nVERIFY strict\nREDUNDANCY 7x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nPARTITION 512\nAVOID TTTTT\nCHECKSUM sha256\nCOMPRESS bzip2 level=7\nVERIFY strict\nREDUNDANCY 6x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nAVOID TTT AAAAAAA\nCHECKSUM md5\nCOMPRESS lzma level=2\nREDUNDANCY 3x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 100MB\nENCODE utf8 base4\nPARTITION 2048\nREDUNDANCY 4x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 1GB\nENCODE base32 dna\nAVOID TTT CCC AAAAAA\nCHECKSUM md5\nREDUNDANCY 4x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCHECKSUM md5\nREDUNDANCY 3x fountain",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nREDUNDANCY 3x hamming_code",
+    "valid": false
+  },
+  {
+    "program": "ENCODE binary dna\nSTORE 5GB\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 100MB\nPARTITION 4096\nAVOID TTTTTTT GGG\nREDUNDANCY 2x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nENCODE hexadecimal dna\nAVOID CCCC\nCHECKSUM crc32\nCOMPRESS zstd level=1\nVERIFY paranoid\nREDUNDANCY 2x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nAVOID AAAA\nPARTITION 1024\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5MB\nENCODE ascii quaternary\nAVOID AAAA TTT AAA\nCOMPRESS gzip level=2\nREPLICATE 4\nREDUNDANCY 2x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 500KB\nPARTITION 128\nAVOID TTT GGGGG\nCHECKSUM sha256\nCOMPRESS lzma level=6\nREDUNDANCY 2x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5MB\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 500MB\nENCODE base32 base4\nPARTITION 256\nAVOID TTTTTT\nCHECKSUM crc32\nCOMPRESS bzip2 level=3\nENCRYPT AES128\nREDUNDANCY 8x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 1GB\nENCODE utf8 base4\nPARTITION 2048\nAVOID AAAAAAA TTTT AAA TTTTTTT TTTTT\nCOMPRESS zstd level=2\nVERIFY strict\nREDUNDANCY 8x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE hexadecimal base4\nAVOID AAAAA\nCHECKSUM sha256\nCOMPRESS bzip2 level=4\nENCRYPT ChaCha20\nREDUNDANCY 2x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nAVOID CCCC GGGG\nCHECKSUM sha256\nCOMPRESS zstd level=9\nREDUNDANCY 4x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 100MB\nENCODE utf8 quaternary\nAVOID TTTT GCGCGC GGG TTTTT TTTTTTT AAAA AAAAAAA\nCOMPRESS lzma level=2\nREPLICATE 3\nREDUNDANCY 4x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 100KB\nPARTITION 2048\nAVOID AAA\nREDUNDANCY 7x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5PB\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 1GB\nENCODE hexadecimal quaternary\nPARTITION 64\nAVOID AAAA\nCOMPRESS lzma level=2\nVERIFY paranoid\nREDUNDANCY 2x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nAVOID AAAA TTTT GGGG CCCC\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 500MB\nPARTITION 1024\nAVOID TTT GGG CCC\nCHECKSUM crc32\nCOMPRESS gzip level=6\nREDUNDANCY 7x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCRYPT AES256\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE ascii base4\nPARTITION 64\nAVOID TTTTTTT\nCHECKSUM md5\nCOMPRESS bzip2 level=2\nENCRYPT ChaCha20\nVERIFY strict\nREDUNDANCY 6x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCHECKSUM blake2\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCHECKSUM blake2\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nPARTITION 1000\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nREDUNDANCY 7x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 100MB\nPARTITION 8192\nAVOID GGG\nCHECKSUM crc32\nCOMPRESS bzip2 level=2\nREDUNDANCY 3x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCOMPRESS snappy level=5\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE base64 dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 100MB\nENCODE ascii dna\nCHECKSUM md5\nREDUNDANCY 4x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nAVOID AAAA\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 1GB\nENCODE hexadecimal dna\nAVOID CCC GGGGG\nCOMPRESS bzip2 level=1\nREPLICATE 4\nVERIFY relaxed\nREDUNDANCY 2x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 1GB\nENCODE binary dna\nPARTITION 8192\nAVOID GGG TTTTTT\nCHECKSUM sha256\nCOMPRESS zstd level=7\nREDUNDANCY 3x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 10GB\nENCODE ascii quaternary\nPARTITION 8192\nAVOID GGG GGGG\nCOMPRESS lzma level=1\nVERIFY paranoid\nREDUNDANCY 5x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nREDUNDANCY 3x hamming_code",
+    "valid": false
+  },
+  {
+    "program": "STORE 500MB\nAVOID CCCC GGGGG\nCOMPRESS zstd level=6\nREDUNDANCY 4x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nENCODE hexadecimal quaternary\nPARTITION 1024\nAVOID TTTTT GCGCGC TTTTTT\nCHECKSUM sha256\nCOMPRESS zstd level=1\nREDUNDANCY 2x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE utf8 dna\nAVOID AAAA TTTT GGGG CCCC\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nAVOID AAAA TTTT GGGG CCCC\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 10GB\nENCODE base32 base4\nPARTITION 8192\nAVOID AAAA CCCC TTTTTTT\nCHECKSUM md5\nVERIFY paranoid\nREDUNDANCY 5x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5MB\nENCODE base32 quaternary\nAVOID GGGG TTTTTTT AAAAAA\nREDUNDANCY 4x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 100KB\nENCODE utf8 base4\nVERIFY strict\nREDUNDANCY 2x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nAVOID AAAAAAA GGGGG TTTTTT\nCOMPRESS gzip level=8\nVERIFY strict\nREDUNDANCY 2x reed_solomon",
+    "valid": true
+  },
+  {
+    "program": "STORE 100KB\nENCODE ascii base4\nAVOID AAAA\nCOMPRESS zstd level=1\nVERIFY paranoid\nREDUNDANCY 3x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nAVOID AAAA\nPARTITION 1024\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nPARTITION 1024\nAVOID AAAAAAA AAAA GCGCGC\nCHECKSUM crc32\nREDUNDANCY 6x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nAVOID AAAAA TTTTTTT GGG\nCOMPRESS bzip2 level=8\nVERIFY relaxed\nREDUNDANCY 4x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nREDUNDANCY 7x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCOMPRESS gzip level=5\nENCRYPT AES256\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nAVOID AAAA TTTT GGGG CCCC\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCRYPT AES256\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "ENCODE binary dna\nSTORE 5GB\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nAVOID AAAA\nPARTITION 1024\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nPARTITION 64\nAVOID GGG AAAA AAA\nREDUNDANCY 3x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nPARTITION 512\nAVOID AAAA GGGG\nVERIFY paranoid\nREDUNDANCY 3x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 11MB\nENCODE binary dna\nCOMPRESS gzip level=5\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 20GB\nENCODE base32 dna\nCHECKSUM sha512\nCOMPRESS zstd level=4\nREDUNDANCY 4x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 5MB\nAVOID TTTT TTTTTT\nCOMPRESS gzip level=1\nREDUNDANCY 2x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 500KB\nAVOID CCC TTT AAA\nCHECKSUM sha256\nCOMPRESS bzip2 level=1\nREDUNDANCY 2x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE hexadecimal base4\nPARTITION 256\nAVOID AAA TTTT CCC\nREDUNDANCY 8x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nAVOID AAAA TTTT GGGG CCCC\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 20GB\nENCODE binary quaternary\nAVOID TTTTTTT\nCHECKSUM sha512\nCOMPRESS gzip level=6\nREPLICATE 3\nREDUNDANCY 2x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE base64 dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nREDUNDANCY 3x reed_solomon\nENCODE binary dna",
+    "valid": false
+  },
+  {
+    "program": "STORE 10GB\nENCODE binary base4\nAVOID AAA AAAAAA AAAA\nCOMPRESS bzip2 level=1\nREDUNDANCY 2x bch",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nREDUNDANCY 7x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5MB\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE utf8 dna\nAVOID AAAA TTTT GGGG CCCC\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5PB\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCOMPRESS gzip level=5\nENCRYPT AES256\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 500KB\nENCODE ascii base4\nPARTITION 64\nVERIFY strict\nREDUNDANCY 2x turbo",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nCHECKSUM blake2\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nAVOID AAAA\nPARTITION 1024\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 10GB\nENCODE hexadecimal base4\nREDUNDANCY 2x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 20GB\nENCODE hexadecimal dna\nAVOID TTTTTTT\nCHECKSUM sha256\nCOMPRESS zstd level=9\nVERIFY relaxed\nREDUNDANCY 2x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nREDUNDANCY 3x reed_solomon\nENCODE binary dna",
+    "valid": false
+  },
+  {
+    "program": "STORE 5PB\nENCODE binary dna\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 500KB\nENCODE base32 quaternary\nAVOID AAAAA AAAAAA\nCOMPRESS zstd level=2\nREDUNDANCY 3x ldpc",
+    "valid": true
+  },
+  {
+    "program": "STORE 5GB\nENCODE binary dna\nENCRYPT AES256\nREDUNDANCY 3x reed_solomon",
+    "valid": false
+  },
+  {
+    "program": "STORE 100MB\nENCODE utf8 base4\nPARTITION 128\nCOMPRESS lzma level=3\nVERIFY paranoid\nREDUNDANCY 3x fountain",
+    "valid": true
+  },
+  {
+    "program": "STORE 1GB\nENCODE hexadecimal dna\nPARTITION 128\nAVOID GGG AAAAAA GGGGG\nREDUNDANCY 6x fountain",
+    "valid": true
+  }
+]
