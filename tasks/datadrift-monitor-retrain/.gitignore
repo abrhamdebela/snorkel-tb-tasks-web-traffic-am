@@ -1,0 +1,6 @@
+.ruff_cache/
+.pytest_cache/
+uv.lock
+__pycache__/
+*.pyc
+.DS_Store

@@ -1,0 +1,8 @@
+tests/
+solution.sh
+*.md
+.git
+.gitignore
+.DS_Store
+__pycache__/
+*.pyc
