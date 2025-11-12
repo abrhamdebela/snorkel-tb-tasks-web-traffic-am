@@ -881,9 +881,10 @@ def test_json_keys_and_lists_are_sorted():
 
 
 def test_cli_argument_defaults():
-    """Verify CLI argument defaults match the instruction specification."""
+    """Verify CLI argument defaults match the instruction specification by running without arguments."""
     import subprocess
     import json
+    import tempfile
     
     # Find the CLI script
     app_dir = Path("/app")
@@ -924,28 +925,55 @@ def test_cli_argument_defaults():
     help_text = result.stdout
     
     # Verify defaults are mentioned (instruction specifies defaults)
-    # Note: We check that defaults exist, but exact values may vary in argparse output format
     assert "--input" in help_text or "input" in help_text.lower(), "CLI should have --input argument"
     assert "--output" in help_text or "output" in help_text.lower(), "CLI should have --output argument"
     assert "--report" in help_text or "report" in help_text.lower(), "CLI should have --report argument"
     assert "--target" in help_text or "target" in help_text.lower(), "CLI should have --target argument"
     assert "--seed" in help_text or "seed" in help_text.lower(), "CLI should have --seed argument"
     
-    # Verify defaults by running without arguments (if possible) or checking help text
-    # The instruction specifies: --input default=/app/dataset.csv, --output default=/app/augmented.csv,
-    # --report default=/app/report.json, --target default=target, --seed default=42
-    # We verify these are used by checking the actual report
+    # Verify defaults by actually running without arguments (using defaults)
+    # Create temporary output files to avoid overwriting existing ones
+    with tempfile.TemporaryDirectory() as tmpdir:
+        tmp_output = Path(tmpdir) / "augmented_defaults.csv"
+        tmp_report = Path(tmpdir) / "report_defaults.json"
+        
+        # Run CLI with only required arguments (using defaults for others)
+        # Note: We need to provide at least the input file
+        input_file = Path("/app/dataset.csv")
+        if input_file.exists():
+            result = subprocess.run(
+                ["python3", str(cli_path),
+                 "--input", str(input_file),
+                 "--output", str(tmp_output),
+                 "--report", str(tmp_report)],
+                capture_output=True,
+                text=True,
+                timeout=300,
+                cwd="/app"
+            )
+            
+            # If it succeeds, verify defaults were used
+            if result.returncode == 0 and tmp_report.exists():
+                with open(tmp_report, 'r') as f:
+                    report = json.load(f)
+                # Verify seed default (42) is used
+                assert 'random_seed' in report, "Report should contain random_seed"
+                assert report['random_seed'] == 42, \
+                    f"Default seed should be 42 as specified in instruction, got {report.get('random_seed')}"
+    
+    # Also verify defaults from the existing report (if it exists)
     report_path = Path("/app/report.json")
     if report_path.exists():
         with open(report_path, 'r') as f:
             report = json.load(f)
-        # Verify seed default (42) is used if not specified
+        # Verify seed default (42) is used
         assert 'random_seed' in report, "Report should contain random_seed"
-        # The seed should be 42 as per instruction default
+        assert report['random_seed'] == 42, \
+            f"Default seed should be 42 as specified in instruction, got {report.get('random_seed')}"
 
 
 def test_distance_formula_matches_specification():
-    """Verify distance computation matches the exact formula specified: unweighted Euclidean on normalized numeric + Hamming count."""
+    """Verify distance computation matches the exact unweighted formula specified: Euclidean on normalized numeric + Hamming count."""
     import re
     
     # Find the CLI script
@@ -981,19 +1009,52 @@ def test_distance_formula_matches_specification():
     has_numeric_euclidean = False
     has_categorical_hamming = False
     has_normalization = False
+    has_unweighted_formula = True
     
     # Check for normalization pattern: (value - min) / (max - min)
     if re.search(r'\(.*-.*min.*\)\s*/\s*\(.*max.*-.*min.*\)|normalize|normaliz', script_content, re.IGNORECASE):
         has_normalization = True
     
     # Check for Euclidean distance on numeric: sqrt(sum of squared differences)
-    if re.search(r'sqrt.*sum.*\*\*.*2|sqrt.*sum.*\^.*2|euclidean|np\.sqrt.*np\.sum|np\.linalg\.norm', 
-                 script_content, re.IGNORECASE):
-        has_numeric_euclidean = True
+    # Must be unweighted: sqrt(sum((norm_i - norm_j)^2)), not sqrt(sum(weight * (norm_i - norm_j)^2)))
+    euclidean_patterns = [
+        r'sqrt\s*\(\s*sum\s*\(.*\*\*.*2',  # sqrt(sum(...**2))
+        r'np\.sqrt\s*\(\s*np\.sum\s*\(.*\*\*.*2',  # np.sqrt(np.sum(...**2))
+        r'np\.linalg\.norm',  # np.linalg.norm (Euclidean)
+        r'sqrt.*sum.*diff.*\*\*.*2',  # sqrt(sum(diff**2))
+    ]
+    for pattern in euclidean_patterns:
+        if re.search(pattern, script_content, re.IGNORECASE):
+            has_numeric_euclidean = True
+            break
     
     # Check for categorical Hamming distance: sum of mismatches (cat_i != cat_j)
-    if re.search(r'sum.*!=|count.*!=|hamming|cat.*!=.*cat|\.sum\(.*!=', script_content, re.IGNORECASE):
-        has_categorical_hamming = True
+    # Must be unweighted: sum(cat_i != cat_j), not sum(weight * (cat_i != cat_j))
+    hamming_patterns = [
+        r'sum\s*\(.*!=',  # sum(...!=...)
+        r'np\.sum\s*\(.*!=',  # np.sum(...!=...)
+        r'count.*!=|hamming',  # count or hamming
+    ]
+    for pattern in hamming_patterns:
+        if re.search(pattern, script_content, re.IGNORECASE):
+            has_categorical_hamming = True
+            break
+    
+    # Check for feature weighting in distance computation (should NOT be present for unweighted formula)
+    # The instruction explicitly specifies unweighted formula
+    weighting_patterns = [
+        r'weight.*\*.*distance',
+        r'distance.*\*.*weight',
+        r'feature.*weight.*distance',
+        r'weight.*\*.*diff',
+        r'weight.*\*.*norm',
+        r'weight.*\*.*\*\*.*2',  # weight * diff**2
+        r'weight.*\*.*\(.*-.*\)',  # weight * (val1 - val2)
+    ]
+    for pattern in weighting_patterns:
+        if re.search(pattern, script_content, re.IGNORECASE):
+            has_unweighted_formula = False
+            break
     
     # Verify the distance formula components are present
     assert has_normalization, \
@@ -1002,21 +1063,17 @@ def test_distance_formula_matches_specification():
     
     assert has_numeric_euclidean, \
         "Distance computation should include numeric Euclidean distance on normalized features. " \
-        "Instruction requires: sqrt(sum((norm_i - norm_j)^2))"
+        "Instruction requires unweighted formula: sqrt(sum((norm_i - norm_j)^2))"
     
     assert has_categorical_hamming, \
         "Distance computation should include categorical Hamming distance. " \
-        "Instruction requires: sum(cat_i != cat_j)"
+        "Instruction requires unweighted formula: sum(cat_i != cat_j)"
     
-    # Check for feature weighting in distance (should NOT be present for unweighted formula per spec)
-    # The instruction specifies unweighted, so we check if weights are used
-    has_weighting = re.search(r'weight.*\*.*distance|distance.*\*.*weight|feature.*weight.*distance|weight.*\*.*diff|weight.*\*.*norm', 
-                             script_content, re.IGNORECASE)
-    
-    if has_weighting:
-        # Note: The instruction specifies unweighted formula, but we allow weighted implementations
-        # as they may still produce correct results. The key requirement is the formula structure.
-        pass
+    # Enforce unweighted formula (instruction explicitly specifies unweighted)
+    assert has_unweighted_formula, \
+        "Distance computation should use unweighted formula as specified in instruction. " \
+        "Instruction requires: d(i,j) = sqrt(sum((norm_i - norm_j)^2)) + sum(cat_i != cat_j) " \
+        "(no feature weights). Found evidence of feature weighting in distance computation."
 
 
 def test_categorical_voting_is_unweighted():
@@ -1054,10 +1111,20 @@ def test_categorical_voting_is_unweighted():
     
     has_majority_voting = False
     has_frequency_counting = False
+    has_unweighted_voting = True
     
     # Check for majority voting patterns (Counter, most_common, mode, etc.)
-    if re.search(r'Counter|most_common|mode|most.*frequent|max.*count|argmax.*count', script_content, re.IGNORECASE):
-        has_majority_voting = True
+    majority_patterns = [
+        r'Counter\s*\(',  # Counter(...)
+        r'\.most_common\s*\(',  # .most_common(...)
+        r'\.mode\s*\(|mode\s*\(',  # .mode() or mode()
+        r'most.*frequent|max.*count|argmax.*count',
+        r'Counter.*vote|vote.*Counter',
+    ]
+    for pattern in majority_patterns:
+        if re.search(pattern, script_content, re.IGNORECASE):
+            has_majority_voting = True
+            break
     
     # Check for frequency counting (unweighted)
     if re.search(r'count|frequency|freq|\.value_counts|Counter\(', script_content, re.IGNORECASE):
@@ -1069,10 +1136,139 @@ def test_categorical_voting_is_unweighted():
         "Instruction requires: 'choose the most frequent value' (unweighted majority voting)"
     
     # Check for distance-weighted voting (instruction specifies unweighted)
-    has_distance_weighted = re.search(r'distance.*weight.*vote|weight.*distance.*vote|inverse.*distance.*vote|1\s*/\s*distance.*vote|weight.*\*.*vote', 
-                                      script_content, re.IGNORECASE)
+    # The instruction explicitly states unweighted majority voting
+    weighted_voting_patterns = [
+        r'distance.*weight.*vote',
+        r'weight.*distance.*vote',
+        r'inverse.*distance.*vote',
+        r'1\s*/\s*distance.*vote',
+        r'weight.*\*.*vote',
+        r'weight.*\*.*Counter',
+        r'weight.*\*.*count',
+        r'1\s*/\s*\(.*distance.*\+',  # inverse distance weighting
+    ]
+    for pattern in weighted_voting_patterns:
+        if re.search(pattern, script_content, re.IGNORECASE):
+            has_unweighted_voting = False
+            break
     
-    if has_distance_weighted:
-        # The instruction specifies unweighted majority voting, but we note if distance weighting is used
-        # The key requirement is that it uses majority voting from k-nearest neighbors
-        pass
+    # Enforce unweighted voting (instruction explicitly specifies unweighted)
+    assert has_unweighted_voting, \
+        "Categorical voting should use unweighted majority voting as specified in instruction. " \
+        "Instruction requires: 'choose the most frequent value' (unweighted, not distance-weighted). " \
+        "Found evidence of distance-weighted voting in categorical feature selection."
+
+
+def test_default_k_neighbors_is_3():
+    """Verify default k-neighbors is 3 as specified in instruction (k=3 by default)."""
+    import re
+    
+    # Find the CLI script
+    app_dir = Path("/app")
+    cli_path = None
+    
+    for py_file in app_dir.glob("*.py"):
+        if py_file.name in ["test_outputs.py", "__init__.py", "conftest.py"]:
+            continue
+        try:
+            content = py_file.read_text()
+            if "smote" in content.lower() or "SMOTE" in content:
+                cli_path = py_file
+                break
+        except Exception:
+            continue
+    
+    if cli_path is None:
+        smote_path = app_dir / "smote_nc_augment.py"
+        if smote_path.exists():
+            cli_path = smote_path
+    
+    assert cli_path is not None, "CLI script must exist"
+    
+    # Read script content
+    script_content = cli_path.read_text()
+    
+    # Check for k_neighbors=3 or k=3 default
+    # Instruction specifies: "k=3 by default"
+    has_k_3_default = False
+    
+    # Check for k_neighbors default value of 3
+    k_patterns = [
+        r'k_neighbors\s*=\s*3',  # k_neighbors=3
+        r'k\s*=\s*3',  # k=3
+        r'k_neighbors.*default.*3|default.*k_neighbors.*3',  # default k_neighbors=3
+        r'SMOTENC.*k_neighbors.*3|SMOTENC.*3',  # SMOTENC(..., k_neighbors=3)
+    ]
+    
+    for pattern in k_patterns:
+        if re.search(pattern, script_content, re.IGNORECASE):
+            has_k_3_default = True
+            break
+    
+    # Also check if k_neighbors is initialized to 3 in __init__
+    if re.search(r'def\s+__init__.*k_neighbors.*3|self\.k_neighbors\s*=\s*3', script_content, re.IGNORECASE):
+        has_k_3_default = True
+    
+    assert has_k_3_default, \
+        "SMOTE-NC should use k=3 by default as specified in instruction. " \
+        "Instruction requires: 'k=3 by default'. " \
+        "Check that k_neighbors=3 or k=3 is set as the default value."
+
+
+def test_fallback_when_fewer_than_k_neighbors():
+    """Verify fallback behavior when fewer than k neighbors exist (use all available neighbors)."""
+    import re
+    
+    # Find the CLI script
+    app_dir = Path("/app")
+    cli_path = None
+    
+    for py_file in app_dir.glob("*.py"):
+        if py_file.name in ["test_outputs.py", "__init__.py", "conftest.py"]:
+            continue
+        try:
+            content = py_file.read_text()
+            if "smote" in content.lower() or "SMOTE" in content:
+                cli_path = py_file
+                break
+        except Exception:
+            continue
+    
+    if cli_path is None:
+        smote_path = app_dir / "smote_nc_augment.py"
+        if smote_path.exists():
+            cli_path = smote_path
+    
+    assert cli_path is not None, "CLI script must exist"
+    
+    # Read script content
+    script_content = cli_path.read_text()
+    
+    # Check for fallback logic when fewer than k neighbors exist
+    # Instruction specifies: "If fewer than k neighbors exist, use all available neighbors"
+    
+    has_fallback_logic = False
+    
+    # Check for fallback patterns
+    fallback_patterns = [
+        r'if.*fewer.*k|if.*less.*k|if.*<.*k',  # if fewer/less than k
+        r'if.*len.*<.*k|if.*k.*>.*len',  # if len < k or k > len
+        r'min\s*\(.*k.*len|min\s*\(.*len.*k',  # min(k, len(...))
+        r'use.*all.*available|all.*available.*neighbor',  # use all available
+        r'adaptive.*k|adapt.*k',  # adaptive k selection
+        r'if.*neighbor.*<.*k|if.*k.*>.*neighbor',  # if neighbors < k
+    ]
+    
+    for pattern in fallback_patterns:
+        if re.search(pattern, script_content, re.IGNORECASE):
+            has_fallback_logic = True
+            break
+    
+    # Also check for explicit handling of edge cases
+    if re.search(r'if.*len.*neighbor|if.*neighbor.*len|max\s*\(.*1.*len', script_content, re.IGNORECASE):
+        has_fallback_logic = True
+    
+    assert has_fallback_logic, \
+        "SMOTE-NC should handle the case when fewer than k neighbors exist. " \
+        "Instruction requires: 'If fewer than k neighbors exist, use all available neighbors'. " \
+        "Check that the implementation includes fallback logic for this case."
