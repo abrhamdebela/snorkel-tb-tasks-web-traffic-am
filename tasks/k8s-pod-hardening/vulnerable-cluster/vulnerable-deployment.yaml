@@ -1,0 +1,163 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: vulnerable-app
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: sensitive-data
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: production
+
+---
+# Vulnerable Pod with privileged mode and hostPath
+apiVersion: v1
+kind: Pod
+metadata:
+  name: vulnerable-pod
+  namespace: vulnerable-app
+  labels:
+    app: vulnerable-app
+spec:
+  serviceAccountName: vulnerable-sa
+  hostNetwork: false
+  hostPID: false
+  containers:
+  - name: app
+    image: nginx:1.21
+    securityContext:
+      privileged: true
+      allowPrivilegeEscalation: true
+    volumeMounts:
+    - name: host-root
+      mountPath: /host
+    - name: docker-socket
+      mountPath: /var/run/docker.sock
+  volumes:
+  - name: host-root
+    hostPath:
+      path: /
+      type: Directory
+  - name: docker-socket
+    hostPath:
+      path: /var/run/docker.sock
+      type: Socket
+
+---
+# Overly permissive ServiceAccount
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: vulnerable-sa
+  namespace: vulnerable-app
+
+---
+# Overly permissive ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: overly-permissive-role
+rules:
+- apiGroups: ["*"]
+  resources: ["*"]
+  verbs: ["*"]
+
+---
+# Bind the permissive role to the service account
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: vulnerable-binding
+subjects:
+- kind: ServiceAccount
+  name: vulnerable-sa
+  namespace: vulnerable-app
+roleRef:
+  kind: ClusterRole
+  name: overly-permissive-role
+  apiGroup: rbac.authorization.k8s.io
+
+---
+# Attacker user Role (limited but enough to deploy pods)
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: pod-deployer
+  namespace: vulnerable-app
+rules:
+- apiGroups: [""]
+  resources: ["pods", "pods/log"]
+  verbs: ["create", "get", "list", "delete"]
+- apiGroups: [""]
+  resources: ["serviceaccounts"]
+  verbs: ["get", "list"]
+
+---
+# RoleBinding for attacker user
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: exploit-user-binding
+  namespace: vulnerable-app
+subjects:
+- kind: User
+  name: exploit-user
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: pod-deployer
+  apiGroup: rbac.authorization.k8s.io
+
+---
+# Secret in sensitive namespace
+apiVersion: v1
+kind: Secret
+metadata:
+  name: db-credentials
+  namespace: sensitive-data
+type: Opaque
+stringData:
+  username: admin
+  password: super-secret-password-12345
+  connection-string: postgresql://admin:super-secret-password-12345@db.sensitive-data.svc.cluster.local:5432/production
+
+---
+# ConfigMap with sensitive data
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: sensitive-data
+data:
+  api-key: "sk-1234567890abcdef"
+  internal-api-url: "https://internal-api.production.svc.cluster.local"
+
+---
+# Production deployment (target for escalation)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: production-app
+  namespace: production
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: production-app
+  template:
+    metadata:
+      labels:
+        app: production-app
+    spec:
+      containers:
+      - name: app
+        image: nginx:1.21
+        ports:
+        - containerPort: 80

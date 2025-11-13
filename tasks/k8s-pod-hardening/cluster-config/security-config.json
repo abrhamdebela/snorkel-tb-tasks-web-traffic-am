@@ -1,0 +1,9 @@
+{
+  "cluster_name": "k8s-security-lab",
+  "namespaces": ["vulnerable-app", "sensitive-data", "production"],
+  "policy_enforcement": "gatekeeper",
+  "audit_enabled": true,
+  "pod_security_standard": "restricted",
+  "network_policies_required": true,
+  "rbac_least_privilege": true
+}
