@@ -54,7 +54,7 @@ for file in $FILES_TO_CHECK; do
     
     # Validate category field has valid value
     if grep -q "^category:" "$file"; then
-        category=$(grep "^category:" "$file" | sed 's/^category: *//' | tr -d ' ')
+        category=$(grep "^category:" "$file" | sed 's/^category: *//' | tr -d '[:space:]')
         if [[ ! "$category" =~ ^(system-administration|build-and-dependency-management|data-processing|games|software-engineering|machine-learning|debugging|security|scientific-computing)$ ]]; then
             echo "❌ Error: $file has invalid category: $category (must be one of: system-administration, build-and-dependency-management, data-processing, games, software-engineering, machine-learning, debugging, security, scientific-computing)"
             FAILED=1
@@ -66,7 +66,7 @@ for file in $FILES_TO_CHECK; do
 
     # Validate time estimates: required fields, can be empty/null but validate if present
     if grep -q "^expert_time_estimate_min:" "$file"; then
-        expert_time=$(grep "^expert_time_estimate_min:" "$file" | sed 's/^expert_time_estimate_min: *//' | tr -d ' ')
+        expert_time=$(grep "^expert_time_estimate_min:" "$file" | sed 's/^expert_time_estimate_min: *//' | tr -d '[:space:]')
         if [ "$expert_time" != "null" ] && [ "$expert_time" != "" ] && (! [[ "$expert_time" =~ ^[0-9]+(\.[0-9]+)?$ ]] || [ "$(echo "$expert_time <= 0" | bc -l 2>/dev/null || echo "false")" = "1" ]); then
             echo "❌ Error: $file has invalid expert_time_estimate_min: $expert_time (must be positive number or null)"
             FAILED=1
@@ -74,7 +74,7 @@ for file in $FILES_TO_CHECK; do
     fi
     
     if grep -q "^junior_time_estimate_min:" "$file"; then
-        junior_time=$(grep "^junior_time_estimate_min:" "$file" | sed 's/^junior_time_estimate_min: *//' | tr -d ' ')
+        junior_time=$(grep "^junior_time_estimate_min:" "$file" | sed 's/^junior_time_estimate_min: *//' | tr -d '[:space:]')
         if [ "$junior_time" != "null" ] && [ "$junior_time" != "" ] && (! [[ "$junior_time" =~ ^[0-9]+(\.[0-9]+)?$ ]] || [ "$(echo "$junior_time <= 0" | bc -l 2>/dev/null || echo "false")" = "1" ]); then
             echo "❌ Error: $file has invalid junior_time_estimate_min: $junior_time (must be positive number or null)"
             FAILED=1
@@ -83,7 +83,7 @@ for file in $FILES_TO_CHECK; do
     
     # Validate difficulty field has valid value
     if grep -q "^difficulty:" "$file"; then
-        difficulty=$(grep "^difficulty:" "$file" | sed 's/^difficulty: *//' | tr -d ' ')
+        difficulty=$(grep "^difficulty:" "$file" | sed 's/^difficulty: *//' | tr -d '[:space:]')
         if [[ ! "$difficulty" =~ ^(easy|medium|hard|unknown)$ ]]; then
             echo "❌ Error: $file has invalid difficulty: $difficulty (must be easy, medium, hard, or unknown)"
             FAILED=1
