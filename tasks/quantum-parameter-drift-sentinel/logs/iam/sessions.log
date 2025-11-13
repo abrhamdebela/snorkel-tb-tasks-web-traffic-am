@@ -1,0 +1,4 @@
+2025-10-20T11:59:30+00:00 iam: login user=alice session=SID42 ip=10.0.0.50 result=success
+2025-10-20T12:00:00+00:00 iam: status user=alice session=SID42 ip=10.0.0.50 terminated=1
+2025-10-20T12:03:00+00:00 iam: login user=bob session=SID77 ip=10.0.0.77 result=success
+2025-10-20T11:59:30+00:00 iam: login user=alice session=SID42 ip=10.0.0.50 result=success    

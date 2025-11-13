@@ -1,0 +1,4 @@
+{"ts": "2025-10-20T12:00:05+00:00", "instrument": "qpu7alpha", "session": "SID42", "coefA": 1.23456, "delta": 0.003}
+{"ts": "2025-10-20T12:01:00+00:00", "instrument": "qpu9beta", "session": "SID77", "coefA": 0.99999, "delta": 0.0005}
+{"ts":"2025-10-20T12:00:05+00:00","instrument":"qpu7alpha","session":"SID42","coefA":1.23456,"delta":0.00300}
+{"ts": "2025-10-20T12:02:00+00:00", "instrument": "qpuX", "session": "SIDXX", "coefZ": 1.23456}

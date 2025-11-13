@@ -1,0 +1,17 @@
+2025-10-20T12:00:08+00:00 tele: src=203.0.113.77 host=lab.example tls_sni=front.example method=GET path=/d/ahp/pulse?v=0.21&p=ccf393 status=200
+2025-10-20T12:00:08+00:00 tele: src=203.0.113.88 host=bad.example tls_sni=front.example method=GET path=/d/ahp/pulse?v=0.30&p=ccf393 status=200
+2025-10-20T12:00:08+00:00 tele: src=198.51.100.23 host=lab.example tls_sni=front.example method=GET path=/d/ahp/pulse?v=0.25 status=200
+2025-10-20T12:00:08+00:00 tele: src=2001:db8::1 host=lab.example tls_sni=front.example method=GET path=/d/ahp/pulse?v=0.25&p=ccf393 status=200
+2025-10-20T12:00:08+00:00 tele: src=203.0.113.77 host=lab.example tls_sni=front.example method=GET path=/d/ahp/pulse?v=0.21&p=ccf393 status=200
+# --- Very-hard confounders (all should be ignored by strict rules) ---
+2025-10-20T12:00:09+00:00 tele: src=10.0.0.9 host=lab.example tls_sni=front.example method=GET path=/d/ahp/pulse?v=0.35&p=ccf393 status=200
+2025-10-20T12:00:09+00:00 tele: src=2001:db8::2 host=edge.example tls_sni=front.example method=GET path=/d/ahp/pulse?v=0.40&p=ccf393 status=200
+2025-10-20T12:00:09+00:00 tele: src=203.0.113.44 host=lab.example tls_sni=front.example method=GET path=/d/ahp/pulse?v=0.19634954084&p=ccf393 status=200
+2025-10-20T12:00:09+00:00 tele: src=203.0.113.45 host=lab.example tls_sni=front.example method=GET path=/d/ahp/pulse?v=0.25&p=deadbe status=200
+2025-10-20T12:00:09+00:00 tele: src=203.0.113.46 host=lab.example tls_sni=lab.example method=GET path=/d/ahp/pulse?v=0.30&p=ccf393 status=200
+# replay-burst window around corrected CTRL
+2025-10-20T12:00:19+00:00 tele: src=203.0.113.77 host=lab.example tls_sni=front.example method=GET path=/d/ahp/pulse?v=0.20&p=ccf393 status=200  # replay-burst
+2025-10-20T12:00:19+00:00 tele: src=203.0.113.77 host=lab.example tls_sni=front.example method=GET path=/d/ahp/pulse?v=0.21&p=ccf393 status=200  # replay-burst
+2025-10-20T12:00:19+00:00 tele: src=203.0.113.77 host=lab.example tls_sni=front.example method=GET path=/d/ahp/pulse?v=0.210000&p=ccf393 status=200  # replay-burst (tie on time; path decides)
+2025-10-20T12:00:19+00:00 tele: src=203.0.113.78 host=lab.example tls_sni=front.example method=GET path=/d/ahp/pulse?v=0.21&p=ccf393 status=200  # replay-burst (different src)
+2025-10-20T12:00:18+00:00 tele: src=203.0.113.79 host=edge.example tls_sni=front.example method=GET path=/d/ahp/pulse?v=0.22&p=ccf393 status=200  # competing allowlisted host
