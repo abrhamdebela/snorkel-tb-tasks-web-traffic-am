@@ -1,0 +1,7 @@
+2025-10-20T12:00:05+00:00 net: src=203.0.113.10 host=repo.example tls_sni=front.example method=GET path=/pkg/gkpl/pull?v=3.00&p=555c68d0 status=200
+2025-10-20T12:00:05+00:00 net: src=10.0.0.9 host=repo.example tls_sni=front.example method=GET path=/pkg/gkpl/pull?v=3.00&p=16c2b163 status=200
+2025-10-20T12:00:05+00:00 net: src=203.0.113.11 host=repo.example tls_sni=repo.example method=GET path=/pkg/gkpl/pull?v=3.00&p=555c68d0 status=200
+2025-10-20T12:00:05+00:00 net: src=203.0.113.12 host=bad.example tls_sni=front.example method=GET path=/pkg/gkpl/pull?v=3.00&p=555c68d0 status=200
+2025-10-20T12:00:05+00:00 net: src=203.0.113.13 host=repo.example tls_sni=front.example method=GET path=/pkg/WRONG/pull?v=3.00&p=555c68d0 status=200
+2025-10-20T12:00:05+00:00 net: src=203.0.113.14 host=repo.example tls_sni=front.example method=GET path=/pkg/gkpl/pull?v=1.00&p=555c68d0 status=200
+2025-10-20T12:00:05+00:00 net: src=2001:db8::1 host=repo.example tls_sni=front.example method=GET path=/pkg/gkpl/pull?v=3.00&p=555c68d0 status=200

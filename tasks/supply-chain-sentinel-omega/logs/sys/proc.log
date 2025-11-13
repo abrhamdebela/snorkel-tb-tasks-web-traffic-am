@@ -1,0 +1,3 @@
+2025-10-20T12:00:07+00:00 proc: host=hostA user=ci exe=/opt/bin/runner sha256=abcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcd pid=4242 action=start hmac=f39074c014359d75bbcc8051e981687eaec73307133306553346a87e6d00eb08
+2025-10-20T12:00:07+00:00 proc: host=hostA user=ci exe=/opt/bin/runner sha256=abcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcd pid=4242 action=start hmac=f39074c014359d75bbcc8051e981687eaec73307133306553346a87e6d00eb08
+2025-10-20T12:10:00+00:00 proc: host=hostB user=ops exe=/usr/bin/other sha256=ffffeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee pid=9999 action=start hmac=ed282a428c2384f7d15323525d092cb353641207b2d7b2ba8869a240f4270a10

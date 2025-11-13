@@ -1,0 +1,4 @@
+agent,offset_seconds
+hostA,2
+hostA,3
+hostB,-5

@@ -1,0 +1,4 @@
+# intentionally unparseable / nonconforming BUILD lines → must yield 0 parsed events
+{"ts":"2025-10-20T12:00:00+00:00","note":"missing required keys (project, commit, agent, deps)"}
+{"ts":"2025-10-20T12:02:00+00:00","project":"alpha","commit":"C1","agent":"builder1","deps":"[]"}  # deps must be a JSON array
+{"ts":"2025-10-20T12:03:00+00:00","broken": }  # malformed JSON

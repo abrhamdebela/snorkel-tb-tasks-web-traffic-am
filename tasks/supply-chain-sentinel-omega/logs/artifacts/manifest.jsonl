@@ -1,0 +1,4 @@
+# intentionally unparseable / nonconforming ART lines → must yield 0 parsed events
+{"ts":"2025-10-20T12:00:05+00:00","note":"missing required keys (project, commit, artifact_sha, deps)"}
+{"ts":"2025-10-20T12:02:05+00:00","project":"beta","commit":"C2","artifact_sha":"beefbeefbeefbeefbeefbeefbeefbeefbeefbeefbeefbeefbeefbeefbeefbeef","deps":"not-a-list"}  # deps must be a JSON array
+{"ts":"2025-10-20T12:04:05+00:00","oops": }  # malformed JSON
