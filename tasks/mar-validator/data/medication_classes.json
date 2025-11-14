@@ -1,0 +1,133 @@
+{
+  "medication_classes": {
+    "Insulin": {
+      "class": "critical",
+      "timing_window_minutes": 15,
+      "max_daily_dose": {
+        "units": 100
+      },
+      "min_interval_hours": 4
+    },
+    "Digoxin": {
+      "class": "critical",
+      "timing_window_minutes": 15,
+      "max_daily_dose": {
+        "mg": 0.5
+      },
+      "min_interval_hours": 23
+    },
+    "Warfarin": {
+      "class": "critical",
+      "timing_window_minutes": 15,
+      "max_daily_dose": {
+        "mg": 15
+      },
+      "min_interval_hours": 20
+    },
+    "Amiodarone": {
+      "class": "standard",
+      "timing_window_minutes": 30,
+      "max_daily_dose": {
+        "mg": 600
+      },
+      "min_interval_hours": 12
+    },
+    "Furosemide": {
+      "class": "standard",
+      "timing_window_minutes": 30,
+      "max_daily_dose": {
+        "mg": 200
+      },
+      "min_interval_hours": 6
+    },
+    "Spironolactone": {
+      "class": "standard",
+      "timing_window_minutes": 30,
+      "max_daily_dose": {
+        "mg": 100
+      },
+      "min_interval_hours": 12
+    },
+    "Verapamil": {
+      "class": "standard",
+      "timing_window_minutes": 30,
+      "max_daily_dose": {
+        "mg": 480
+      },
+      "min_interval_hours": 8
+    },
+    "Metformin": {
+      "class": "standard",
+      "timing_window_minutes": 30,
+      "max_daily_dose": {
+        "mg": 2550
+      },
+      "min_interval_hours": 4
+    },
+    "Lisinopril": {
+      "class": "standard",
+      "timing_window_minutes": 30,
+      "max_daily_dose": {
+        "mg": 40
+      },
+      "min_interval_hours": 20
+    },
+    "Aspirin": {
+      "class": "flexible",
+      "timing_window_minutes": 60,
+      "max_daily_dose": {
+        "mg": 325
+      },
+      "min_interval_hours": 8
+    },
+    "Acetaminophen": {
+      "class": "flexible",
+      "timing_window_minutes": 60,
+      "max_daily_dose": {
+        "mg": 4000
+      },
+      "min_interval_hours": 4
+    },
+    "Gabapentin": {
+      "class": "flexible",
+      "timing_window_minutes": 60,
+      "max_daily_dose": {
+        "mg": 3600
+      },
+      "min_interval_hours": 4
+    },
+    "Potassium": {
+      "class": "standard",
+      "timing_window_minutes": 30,
+      "max_daily_dose": {
+        "mEq": 100
+      },
+      "min_interval_hours": 6
+    },
+    "Atorvastatin": {
+      "class": "flexible",
+      "timing_window_minutes": 60,
+      "max_daily_dose": {
+        "mg": 80
+      },
+      "min_interval_hours": 20
+    },
+    "Morphine": {
+      "class": "critical",
+      "timing_window_minutes": 15,
+      "max_daily_dose": {
+        "mg": 100
+      },
+      "min_interval_hours": 3
+    },
+    "Hydrocodone": {
+      "class": "critical",
+      "timing_window_minutes": 15,
+      "max_daily_dose": {
+        "mg": 60
+      },
+      "min_interval_hours": 4
+    }
+  }
+}
+
