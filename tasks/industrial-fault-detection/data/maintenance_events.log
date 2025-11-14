@@ -1,0 +1,14 @@
+2025-11-09 09:58:30 severity=HIGH machine_id=MACH-007 service=vibration_monitor msg=Amplitude spike detected
+2025-11-09 10:01:30 severity=CRITICAL machine_id=MACH-007 service=maintenance msg=Confirmed overload condition
+2025-11-09 10:03:30 severity=MEDIUM machine_id=MACH-007 service=alignment_check msg=Slight imbalance trend
+
+2025-11-09 10:03:00 severity=HIGH machine_id=MACH-015 service=sensor_check msg=Sudden kurtosis increase
+2025-11-09 10:05:00 severity=MEDIUM machine_id=MACH-015 service=vibration_monitor msg=Drift detected
+
+2025-11-09 09:57:30 severity=HIGH machine_id=MACH-101 service=bearing_analysis msg=High kurtosis detected
+2025-11-09 09:59:30 severity=CRITICAL machine_id=MACH-101 service=maintenance msg=Bearing failure suspected
+2025-11-09 10:02:30 severity=LOW machine_id=MACH-101 service=monitor msg=Axis Z imbalance observed
+
+2025-11-09 09:53:30 severity=MEDIUM machine_id=MACH-220 service=vibration_monitor msg=Low-level imbalance detected
+2025-11-09 09:56:30 severity=HIGH machine_id=MACH-220 service=diagnostics msg=Imbalance increasing
+2025-11-09 09:58:00 severity=CRITICAL machine_id=MACH-220 service=maintenance msg=Severe imbalance event
