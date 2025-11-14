@@ -1,0 +1,11 @@
+colors,result
+"black,white",gray
+"blue,red",purple
+"blue,yellow",green
+"red,white",pink
+"red,yellow",orange
+"blue,green",cyan
+"blue,red,yellow",brown
+"magenta,yellow",orange
+"blue,magenta",violet
+"cyan,magenta",purple
