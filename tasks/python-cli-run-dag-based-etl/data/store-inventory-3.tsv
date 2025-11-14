@@ -1,0 +1,31 @@
+id	name	type	time	status	price	currency	description
+61	Coca Cola 500ml	drink	2025-11-06T12:15:00Z	available	2	USD	refreshing soft drink
+62	Pepsi 500ml	drink	2025-11-06T14:30:00-05:00	sold	1.8	USD	classic cola
+63	Red Bull 250ml	drink	2025-11-07T01:45:00+01:00	available	3	EUR	energy booster
+64	Monster 330ml	drink	2025-11-07T06:10:00+03:00	pending	3.5	EUR	energy drink
+65	Sprite 500ml	drink	2025-11-06T15:20:00Z	sold	1.5	USD	lemon-lime soda
+66	Fanta 500ml	drink	2025-11-06T17:40:00-07:00	available	1.7	USD	orange soda
+67	Tropicana Orange Juice 1L	drink	2025-11-07T02:10:00+09:00	sold	4	JPY	fruit juice
+68	Gatorade 600ml	drink	2025-11-06T19:00:00Z	available	2.5	USD	sports drink
+69	Peach Iced Tea 500ml	drink	2025-11-07T05:20:00+02:00	pending	2	EUR	refreshing tea
+70	Coffee 250ml	drink	2025-11-07T08:30:00-04:00	sold	2.5	USD	hot beverage
+71	Latte 300ml	drink	2025-11-06T16:15:00Z	available	3	USD	coffee drink
+72	Black Tea 250ml	drink	2025-11-06T18:40:00-05:00	pending	1.8	CAD	hot tea
+73	Green Tea 250ml	drink	2025-11-07T03:50:00+01:00	sold	2	EUR	healthy tea
+74	Cappuccino 300ml	drink	2025-11-07T07:10:00+03:00	available	3.2	EUR	coffee beverage
+75	Mocha 300ml	drink	2025-11-06T20:05:00Z	pending	3.5	USD	chocolate coffee
+76	Water 500ml	drink	2025-11-07T02:45:00+09:00	sold	1	JPY	plain water
+77	Peach Smoothie 400ml	drink	2025-11-06T21:30:00-07:00	available	4.5	USD	fruit smoothie
+78	Strawberry Smoothie 400ml	drink	2025-11-06T13:50:00Z	sold	4.5	USD	fruit smoothie
+79	Lemonade 500ml	drink	2025-11-07T06:00:00+02:00	available	2.2	EUR	refreshing drink
+80	Iced Coffee 300ml	drink	2025-11-07T09:20:00-04:00	pending	3	USD	cold coffee
+81	Milkshake 400ml	drink	2025-11-06T16:50:00Z	sold	3.5	USD	sweet drink
+82	Chocolate Milk 300ml	drink	2025-11-06T19:10:00-05:00	available	2.8	USD	sweet milk drink
+83	Apple Juice 500ml	drink	2025-11-07T04:40:00+01:00	pending	2.5	EUR	fruit juice
+84	Grape Juice 500ml	drink	2025-11-07T08:50:00+03:00	sold	2.7	EUR	fruit juice
+85	Tonic Water 500ml	drink	2025-11-06T20:50:00Z	available	1.9	USD	soft drink
+86	Sparkling Water 500ml	drink	2025-11-07T03:15:00+09:00	pending	2.2	JPY	fizzy water
+87	Cranberry Juice 500ml	drink	2025-11-06T22:50:00-07:00	sold	3	USD	fruit juice
+88	Mango Smoothie 400ml	drink	2025-11-06T15:40:00Z	available	4.8	USD	fruit smoothie
+89	Orange Juice 500ml	drink	2025-11-07T06:45:00+02:00	pending	2.3	XXX	fruit juice
+90	Coconut Water 500ml	drink	2025-11-07T10:15:00-04:00	sold	3	USD

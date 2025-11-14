@@ -1,0 +1,11 @@
+normalized_data.csv
+currency_normalized.csv
+summary.md
+manifest.json
+
+scripts/venv/*
+
+venv/*
+
+warehouse/*
+
