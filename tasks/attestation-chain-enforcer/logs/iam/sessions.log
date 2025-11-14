@@ -1,0 +1,3 @@
+2025-10-20T11:59:10+00:00 iam: login user=dave session=SID200 ip=10.0.0.55 result=success
+2025-10-20T12:00:20+00:00 iam: status user=dave session=SID200 ip=10.0.0.055 terminated=1
+2025-10-20T11:40:00+00:00 iam: login user=frank session=SID300 ip=10.0.1.20 result=success
