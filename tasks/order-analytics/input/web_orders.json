@@ -1,0 +1,182 @@
+[
+  {
+    "order_id": "web_001",
+    "cust_ref": "cust_A",
+    "order_time": "2025-11-10T09:05:00+02:00",
+    "amount": 129.99,
+    "currency_code": "EUR",
+    "country": "DE",
+    "payment_type": "credit_card",
+    "items": [
+      {"sku": "SHIRT-01", "qty": 2, "price": 39.99},
+      {"sku": "SHOES-05", "qty": 1, "price": 50.01}
+    ]
+  },
+  {
+    "order_id": "web_002",
+    "cust_ref": "cust_B",
+    "order_time": "2025-11-10T08:55:12+00:00",
+    "amount": 89.50,
+    "currency_code": "GBP",
+    "country": "GB",
+    "payment_type": "paypal",
+    "items": [
+      {"sku": "BOOK-12", "qty": 1, "price": 89.50}
+    ]
+  },
+  {
+    "order_id": "web_003",
+    "cust_ref": "cust_C",
+    "order_time": "2025-11-10T11:00:00+02:00",
+    "amount": 450.00,
+    "currency_code": "USD",
+    "country": "US",
+    "payment_type": "crypto",
+    "items": [
+      {"sku": "LAPTOP-99", "qty": 1, "price": 450.00}
+    ]
+  },
+  {
+    "order_id": "web_004",
+    "cust_ref": "cust_A",
+    "order_time": "2025-11-10T09:15:30+02:00",
+    "amount": 89.99,
+    "currency_code": "EUR",
+    "country": "FR",
+    "payment_type": "credit_card",
+    "items": [
+      {"sku": "HAT-03", "qty": 1, "price": 89.99}
+    ]
+  },
+  {
+    "order_id": "web_005",
+    "cust_ref": "cust_D",
+    "order_time": "2025-11-10T10:20:00-05:00",
+    "amount": 599.99,
+    "currency_code": "USD",
+    "country": "CA",
+    "payment_type": "gift_card",
+    "items": [
+      {"sku": "DRONE-77", "qty": 1, "price": 599.99}
+    ]
+  },
+  {
+    "order_id": "web_006",
+    "cust_ref": "cust_E",
+    "order_time": "2025-11-10T12:30:00+08:00",
+    "amount": 320.00,
+    "currency_code": "USD",
+    "country": "SG",
+    "payment_type": "credit_card",
+    "items": [
+      {"sku": "CAMERA-22", "qty": 1, "price": 320.00}
+    ]
+  },
+  {
+    "order_id": "web_007",
+    "cust_ref": "cust_A",
+    "order_time": "2025-11-10T09:25:00+02:00",
+    "amount": 159.98,
+    "currency_code": "EUR",
+    "country": "IT",
+    "payment_type": "paypal",
+    "items": [
+      {"sku": "JACKET-08", "qty": 1, "price": 109.99},
+      {"sku": "SCARF-04", "qty": 2, "price": 24.995}
+    ]
+  },
+  {
+    "order_id": "web_008",
+    "cust_ref": "cust_F",
+    "order_time": "2025-11-10T14:00:00Z",
+    "amount": 75.00,
+    "currency_code": "GBP",
+    "country": "GB",
+    "payment_type": "credit_card",
+    "items": [
+      {"sku": "MUG-01", "qty": 5, "price": 15.00}
+    ]
+  },
+  {
+    "order_id": "web_009",
+    "cust_ref": "cust_G",
+    "order_time": "2025-11-10T09:10:00+02:00",
+    "amount": 0.00,
+    "currency_code": "EUR",
+    "country": "DE",
+    "payment_type": "credit_card",
+    "items": []
+  },
+  {
+    "order_id": "web_010",
+    "cust_ref": "cust_X",
+    "order_time": "2025-11-10T09:30:00+02:00",
+    "amount": 199.99,
+    "currency_code": "USD",
+    "country": "US",
+    "payment_type": "credit_card",
+    "items": [
+      {"sku": "PHONE-11", "qty": 1, "price": 199.99}
+    ]
+  },
+  {
+    "order_id": "web_011",
+    "cust_ref": "cust_B",
+    "order_time": "2025-11-10T09:35:00+02:00",
+    "amount": 500.00,
+    "currency_code": "GBP",
+    "country": "GB",
+    "payment_type": "crypto",
+    "items": [
+      {"sku": "GAMING-01", "qty": 1, "price": 500.00}
+    ]
+  },
+  {
+    "order_id": "web_012",
+    "cust_ref": "cust_A",
+    "order_time": "2025-11-10T09:18:00+02:00",
+    "amount": 59.99,
+    "currency_code": "EUR",
+    "country": "DE",
+    "payment_type": "credit_card",
+    "items": [
+      {"sku": "BAG-15", "qty": 1, "price": 59.99}
+    ]
+  },
+  {
+    "order_id": "web_013",
+    "cust_ref": "cust_H",
+    "order_time": "2025-11-10T08:00:00-07:00",
+    "amount": 1200.00,
+    "currency_code": "USD",
+    "country": "US",
+    "payment_type": "credit_card",
+    "items": [
+      {"sku": "TV-85", "qty": 1, "price": 1200.00}
+    ]
+  },
+  {
+    "order_id": "web_014",
+    "cust_ref": "cust_I",
+    "order_time": "2025-11-10T13:15:00+03:00",
+    "amount": 88.88,
+    "currency_code": "EUR",
+    "country": "FI",
+    "payment_type": "paypal",
+    "items": [
+      {"sku": "LAMP-03", "qty": 2, "price": 44.44}
+    ]
+  },
+  {
+    "order_id": "web_015",
+    "cust_ref": "cust_A",
+    "order_time": "2025-11-10T09:22:00+02:00",
+    "amount": 299.99,
+    "currency_code": "EUR",
+    "country": "ES",
+    "payment_type": "gift_card",
+    "items": [
+      {"sku": "SPEAKER-09", "qty": 1, "price": 299.99}
+    ]
+  }
+]
