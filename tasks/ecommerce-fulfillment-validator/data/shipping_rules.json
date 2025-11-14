@@ -1,0 +1,23 @@
+{
+  "standard": {
+    "max_hours_allowed": 24,
+    "late_fee_per_hour": 5.00,
+    "late_fee_multiplier": 1
+  },
+  "express": {
+    "max_hours_allowed": 4,
+    "late_fee_per_hour": 15.00,
+    "late_fee_multiplier": 2
+  },
+  "zone_mapping": {
+    "0": "E",
+    "1": "E",
+    "2": "E",
+    "3": "E",
+    "5": "C",
+    "6": "C",
+    "7": "C",
+    "8": "C",
+    "9": "W"
+  }
+}
