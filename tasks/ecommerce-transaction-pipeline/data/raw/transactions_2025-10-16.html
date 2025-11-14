@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Transaction Report - 2025-10-16</title>
+</head>
+<body>
+    <h1>Daily Transaction Report</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Transaction ID</th>
+                <th>Timestamp</th>
+                <th>Product ID</th>
+                <th>Product Name</th>
+                <th>Category</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Customer ID</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>TXN006</td>
+                <td>2025-10-16 08:00:00</td>
+                <td>PROD606</td>
+                <td>Mechanical Keyboard</td>
+                <td>Electronics</td>
+                <td>1</td>
+                <td>89.99</td>
+                <td>CUST5005</td>
+            </tr>
+            <!-- Malformed row: unclosed td tag -->
+            <tr>
+                <td>TXN007</td>
+                <td>2025-10-16 09:30:00
+                <td>PROD707</td>
+                <td>Monitor 27&quot;</td>
+                <td>Electronics</td>
+                <td>1</td>
+                <td>299.99</td>
+                <td>CUST5006</td>
+            </tr>
+            <!-- Missing customer_id -->
+            <tr>
+                <td>TXN008</td>
+                <td>2025-10-16 10:15:30</td>
+                <td>PROD808</td>
+                <td>Standing Desk</td>
+                <td>Furniture</td>
+                <td>1</td>
+                <td>450.00</td>
+                <td></td>
+            </tr>
+            <!-- Invalid quantity (0) -->
+            <tr>
+                <td>TXN009</td>
+                <td>2025-10-16 11:00:00</td>
+                <td>PROD909</td>
+                <td>Webcam HD</td>
+                <td>Electronics</td>
+                <td>0</td>
+                <td>79.99</td>
+                <td>CUST5007</td>
+            </tr>
+            <!-- Negative price -->
+            <tr>
+                <td>TXN010</td>
+                <td>2025-10-16 12:45:00</td>
+                <td>PROD1010</td>
+                <td>Headphones</td>
+                <td>Electronics</td>
+                <td>1</td>
+                <td>-50.00</td>
+                <td>CUST5008</td>
+            </tr>
+            <!-- Valid transaction -->
+            <tr>
+                <td>TXN011</td>
+                <td>2025-10-16 13:20:00</td>
+                <td>PROD1111</td>
+                <td>Notebook &lt;Premium&gt;</td>
+                <td>Stationery</td>
+                <td>5</td>
+                <td>12.50</td>
+                <td>CUST5009</td>
+            </tr>
+            <!-- Duplicate transaction ID -->
+            <tr>
+                <td>TXN006</td>
+                <td>2025-10-16 14:00:00</td>
+                <td>PROD1212</td>
+                <td>Pen Set</td>
+                <td>Stationery</td>
+                <td>3</td>
+                <td>8.99</td>
+                <td>CUST5010</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

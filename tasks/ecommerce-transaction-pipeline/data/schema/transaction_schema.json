@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Transaction",
+  "type": "object",
+  "required": [
+    "transaction_id",
+    "timestamp",
+    "product_id",
+    "product_name",
+    "category",
+    "quantity",
+    "price",
+    "customer_id"
+  ],
+  "properties": {
+    "transaction_id": {
+      "type": "string",
+      "pattern": "^TXN[0-9]+$"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "product_id": {
+      "type": "string",
+      "pattern": "^PROD[0-9]+$"
+    },
+    "product_name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "category": {
+      "type": "string",
+      "enum": ["Electronics", "Furniture", "Stationery", "Clothing", "Books"]
+    },
+    "quantity": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "price": {
+      "type": "number",
+      "minimum": 0.01
+    },
+    "customer_id": {
+      "type": "string",
+      "pattern": "^CUST[0-9]+$"
+    }
+  }
+}
