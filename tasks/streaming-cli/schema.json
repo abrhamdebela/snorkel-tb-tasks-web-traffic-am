@@ -1,0 +1,37 @@
+{
+  "columns": {
+    "id": {
+      "type": "integer",
+      "required": true
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "age": {
+      "type": "integer",
+      "required": false
+    },
+    "salary": {
+      "type": "float",
+      "required": false
+    },
+    "is_active": {
+      "type": "boolean",
+      "required": false
+    },
+    "created_at": {
+      "type": "datetime",
+      "required": false
+    },
+    "category": {
+      "type": "string",
+      "required": false
+    }
+  },
+  "composite_key": [
+    "id",
+    "name"
+  ]
+}
+
