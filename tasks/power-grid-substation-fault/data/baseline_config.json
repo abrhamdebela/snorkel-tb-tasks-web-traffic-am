@@ -1,0 +1,9 @@
+{
+  "nominal_voltage": 230.0,
+  "voltage_fluctuation_threshold": 0.1,
+  "overload_current_threshold": 400.0,
+  "overload_power_kw": 150.0,
+  "frequency_drift_threshold": 0.2,
+  "known_faulty_substations": ["S2"],
+  "critical_components": ["transformer", "breaker", "control"]
+}

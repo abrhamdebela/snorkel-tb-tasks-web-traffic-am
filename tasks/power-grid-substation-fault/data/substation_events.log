@@ -1,0 +1,8 @@
+2025-11-09 10:04:30 severity=CRITICAL substation_id=S1 component=transformer msg=overheating alarm triggered
+2025-11-09 10:05:20 severity=CRITICAL substation_id=S1 component=breaker msg=unauthorized remote override detected
+2025-11-09 10:09:30 severity=HIGH substation_id=S2 component=transformer msg=thermal overload alarm
+2025-11-09 10:10:10 severity=CRITICAL substation_id=S2 component=control msg=unauthorized configuration change
+2025-11-09 10:13:50 severity=MEDIUM substation_id=S3 component=monitor msg=frequency deviation observed
+2025-11-09 10:15:30 severity=HIGH substation_id=S3 component=sensor msg=unauthorized manual override attempt
+2025-11-09 10:19:30 severity=HIGH substation_id=S4 component=breaker msg=low-frequency fault detected
+2025-11-09 10:22:30 severity=MEDIUM substation_id=S5 component=monitor msg=oscillation observed
