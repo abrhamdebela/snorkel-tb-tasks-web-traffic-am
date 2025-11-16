@@ -1,0 +1,31 @@
+id,name,type,time,status,price,currency,description
+31,Toyota Camry,car,2025-11-06T14:30:00Z,sold,22000,USD,luxury sale
+32,Honda Accord,car,2025-11-06T16:45:00-05:00,available,18000,USD,budget deal
+33,Ford Mustang,car,2025-11-07T02:15:00+01:00,pending,35000,EUR,sport edition
+34,Chevrolet Malibu,car,2025-11-07T06:20:00+03:00,sold,24000,EUR,family car
+35,BMW 3 Series,car,2025-11-06T19:50:00Z,available,45000,USD,luxury sale
+36,Audi A4,car,2025-11-07T01:10:00+09:00,pending,50000,JPY,luxury sale
+37,Tesla Model 3,car,2025-11-06T21:30:00-07:00,sold,60000,USD,sport edition
+38,Nissan Altima,car,2025-11-06T13:45:00Z,available,27000,USD,family car
+39,Hyundai Sonata,car,2025-11-07T05:30:00+02:00,sold,19000,EUR,budget deal
+40,Kia Optima,car,2025-11-07T08:15:00-04:00,available,21000,USD,budget deal
+41,Toyota Camry,car,2025-11-06T15:10:00Z,pending,23000,USD,luxury sale
+42,Honda Accord,car,2025-11-06T17:25:00-05:00,sold,18500,USD,family car
+43,Ford Mustang,car,2025-11-07T03:50:00+01:00,available,36000,EUR,sport edition
+44,Chevrolet Malibu,car,2025-11-07T07:30:00+03:00,pending,24500,EUR,luxury sale
+45,BMW 3 Series,car,2025-11-06T20:05:00Z,sold,45500,USD,sport edition
+46,Audi A4,car,2025-11-07T02:45:00+09:00,available,50500,JPY,luxury sale
+47,Tesla Model 3,car,2025-11-06T22:10:00-07:00,pending,61000,USD,luxury sale
+48,Nissan Altima,car,2025-11-06T14:20:00Z,sold,27500,USD,family car
+49,Hyundai Sonata,car,2025-11-07T06:00:00+02:00,available,19500,EUR,budget deal
+50,Kia Optima,car,2025-11-07T09:30:00-04:00,pending,21500,USD,budget deal
+51,Toyota Camry,car,2025-11-06T16:00:00Z,sold,22500,USD,sport edition
+52,Honda Accord,car,2025-11-06T18:10:00-05:00,available,19000,USD,luxury sale
+53,Ford Mustang,car,2025-11-07T04:40:00+01:00,pending,36500,EUR,sport edition
+54,Chevrolet Malibu,car,2025-11-07T08:50:00+03:00,sold,25000,EUR,family car
+55,BMW 3 Series,car,2025-11-06T20:50:00Z,available,46000,USD,luxury sale
+56,Audi A4,car,2025-11-07T03:15:00+09:00,pending,51000,JPY,sport edition
+57,Tesla Model 3,car,2025-11-06T22:50:00-07:00,sold,62000,USD,luxury sale
+58,Nissan Altima,car,2025-11-06T15:40:00Z,available,28000,USD,family car
+59,Hyundai Sonata,car,2025-11-07T06:45:00+02:00,pending,20000,EUR,budget deal
+60,Kia Optima,car,2025-11-07T10:15:00-04:00,sold,22000,USD,sport edition

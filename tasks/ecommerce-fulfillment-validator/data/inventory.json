@@ -1,0 +1,46 @@
+{
+  "SKU-LAPTOP-X1": {
+    "current_stock": 45,
+    "reserved_stock": 2
+  },
+  "SKU-MOUSE-M5": {
+    "current_stock": 150,
+    "reserved_stock": 8
+  },
+  "SKU-PHONE-P8": {
+    "current_stock": 78,
+    "reserved_stock": 5
+  },
+  "SKU-CASE-C3": {
+    "current_stock": 200,
+    "reserved_stock": 12
+  },
+  "SKU-HEADSET-H7": {
+    "current_stock": 62,
+    "reserved_stock": 3
+  },
+  "SKU-KEYBOARD-K2": {
+    "current_stock": 88,
+    "reserved_stock": 6
+  },
+  "SKU-MONITOR-M9": {
+    "current_stock": 34,
+    "reserved_stock": 4
+  },
+  "SKU-CABLE-HDMI": {
+    "current_stock": 425,
+    "reserved_stock": 0
+  },
+  "SKU-TABLET-T4": {
+    "current_stock": 52,
+    "reserved_stock": 7
+  },
+  "SKU-SPEAKER-S6": {
+    "current_stock": 110,
+    "reserved_stock": 9
+  },
+  "SKU-WEBCAM-W1": {
+    "current_stock": -2,
+    "reserved_stock": 1
+  }
+}

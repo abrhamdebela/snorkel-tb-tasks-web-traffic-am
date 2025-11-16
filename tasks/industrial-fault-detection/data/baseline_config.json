@@ -1,0 +1,8 @@
+{
+  "imbalance_rms_threshold": 1.2,
+  "bearing_kurtosis_threshold": 4.0,
+  "overload_rms_limit": 2.0,
+  "known_faulty_machines": ["MACH-007", "MACH-101", "MACH-220"],
+  "imbalance_duration_min": 3,
+  "bearing_trend_window": 5
+}

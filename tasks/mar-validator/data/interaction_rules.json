@@ -1,0 +1,124 @@
+{
+  "dangerous_combinations": [
+    {
+      "drug1": "Aspirin",
+      "drug2": "Warfarin",
+      "severity": "HIGH",
+      "reason": "Increased bleeding risk"
+    },
+    {
+      "drug1": "Warfarin",
+      "drug2": "Aspirin",
+      "severity": "HIGH",
+      "reason": "Increased bleeding risk"
+    },
+    {
+      "drug1": "Lisinopril",
+      "drug2": "Potassium",
+      "severity": "HIGH",
+      "reason": "Hyperkalemia risk"
+    },
+    {
+      "drug1": "Potassium",
+      "drug2": "Lisinopril",
+      "severity": "HIGH",
+      "reason": "Hyperkalemia risk"
+    },
+    {
+      "drug1": "Metformin",
+      "drug2": "Insulin",
+      "severity": "MEDIUM",
+      "reason": "Hypoglycemia risk - monitor blood sugar"
+    },
+    {
+      "drug1": "Insulin",
+      "drug2": "Metformin",
+      "severity": "MEDIUM",
+      "reason": "Hypoglycemia risk - monitor blood sugar"
+    },
+    {
+      "drug1": "Digoxin",
+      "drug2": "Furosemide",
+      "severity": "HIGH",
+      "reason": "Increased digoxin toxicity risk"
+    },
+    {
+      "drug1": "Furosemide",
+      "drug2": "Digoxin",
+      "severity": "HIGH",
+      "reason": "Increased digoxin toxicity risk"
+    },
+    {
+      "drug1": "Digoxin",
+      "drug2": "Spironolactone",
+      "severity": "HIGH",
+      "reason": "Increased digoxin levels and hyperkalemia risk"
+    },
+    {
+      "drug1": "Spironolactone",
+      "drug2": "Digoxin",
+      "severity": "HIGH",
+      "reason": "Increased digoxin levels and hyperkalemia risk"
+    },
+    {
+      "drug1": "Furosemide",
+      "drug2": "Spironolactone",
+      "severity": "HIGH",
+      "reason": "Increased risk of hyperkalemia and hyponatremia"
+    },
+    {
+      "drug1": "Spironolactone",
+      "drug2": "Furosemide",
+      "severity": "HIGH",
+      "reason": "Increased risk of hyperkalemia and hyponatremia"
+    },
+    {
+      "drug1": "Amiodarone",
+      "drug2": "Warfarin",
+      "severity": "HIGH",
+      "reason": "Increased anticoagulation effect"
+    },
+    {
+      "drug1": "Warfarin",
+      "drug2": "Amiodarone",
+      "severity": "HIGH",
+      "reason": "Increased anticoagulation effect"
+    },
+    {
+      "drug1": "Amiodarone",
+      "drug2": "Digoxin",
+      "severity": "HIGH",
+      "reason": "Increased digoxin levels"
+    },
+    {
+      "drug1": "Digoxin",
+      "drug2": "Amiodarone",
+      "severity": "HIGH",
+      "reason": "Increased digoxin levels"
+    },
+    {
+      "drug1": "Verapamil",
+      "drug2": "Digoxin",
+      "severity": "HIGH",
+      "reason": "Increased digoxin serum concentration"
+    },
+    {
+      "drug1": "Digoxin",
+      "drug2": "Verapamil",
+      "severity": "HIGH",
+      "reason": "Increased digoxin serum concentration"
+    },
+    {
+      "drug1": "Verapamil",
+      "drug2": "Amiodarone",
+      "severity": "HIGH",
+      "reason": "Increased risk of bradycardia and QT prolongation"
+    },
+    {
+      "drug1": "Amiodarone",
+      "drug2": "Verapamil",
+      "severity": "HIGH",
+      "reason": "Increased risk of bradycardia and QT prolongation"
+    }
+  ]
+}

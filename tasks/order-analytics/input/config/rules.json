@@ -1,0 +1,19 @@
+{
+  "currency_rates": {
+    "USD": 1.0,
+    "EUR": 1.08,
+    "GBP": 1.27
+  },
+  "fraud_thresholds": {
+    "high_value_usd": 400.00,
+    "rapid_order_count": 3,
+    "velocity_time_window_minutes": 30,
+    "velocity_score_weight": 8,
+    "suspicious_countries": ["RU", "NG", "VE", "IR"]
+  },
+  "kpi_weights": {
+    "avg_order_value": 0.4,
+    "item_count_variance": 0.3,
+    "cross_border_ratio": 0.3
+  }
+}

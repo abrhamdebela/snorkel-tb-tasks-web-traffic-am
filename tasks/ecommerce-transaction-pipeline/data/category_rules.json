@@ -1,0 +1,27 @@
+{
+  "Electronics": {
+    "tax_rate": 0.08,
+    "min_margin": 0.15,
+    "peak_hour_surcharge": 0.05
+  },
+  "Furniture": {
+    "tax_rate": 0.06,
+    "min_margin": 0.20,
+    "peak_hour_surcharge": 0.00
+  },
+  "Stationery": {
+    "tax_rate": 0.05,
+    "min_margin": 0.30,
+    "peak_hour_surcharge": 0.00
+  },
+  "Clothing": {
+    "tax_rate": 0.07,
+    "min_margin": 0.25,
+    "peak_hour_surcharge": 0.02
+  },
+  "Books": {
+    "tax_rate": 0.00,
+    "min_margin": 0.10,
+    "peak_hour_surcharge": 0.00
+  }
+}

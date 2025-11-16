@@ -1,0 +1,11 @@
+customer_id,customer_type,discount_rate,region
+CUST5001,premium,0.10,North
+CUST5002,standard,0.00,South
+CUST5003,premium,0.15,East
+CUST5004,standard,0.00,West
+CUST5005,vip,0.20,North
+CUST5006,standard,0.00,South
+CUST5007,premium,0.10,East
+CUST5008,vip,0.25,West
+CUST5009,standard,0.00,North
+CUST5010,premium,0.10,South

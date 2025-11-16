@@ -1,0 +1,116 @@
+INFO  Boot sequence initiated
+
+DEBUG... still initializing modules
+deBUG modules message showing
+DEBUG\
+DEBUG, 
+DEBUG--initializing modules
+DEBUG;RUNNING Test modules
+DEBUG  Config loaded: path=/tmp/config.yaml
+INFO  "DEBUG"  DEBUGGING file
+INFO  She said "\"DEBUG\"" mode active
+[DEBUG] ...still debugging
+ＤＥＢＵＧ writing out files
+DEBUGLEVEL=5 configuration flag
+_DEBUG_ still running debugging
+INFO  Zero-width test: DEBUG​ with space
+INFO  Zero-width inside: DE​BUG should stay
+DEBUG​ with zero-width after
+INFO  Environment variables parsed
+
+DEBUG  Starting cache warmup
+
+DEBUG	still running debugging
+DEBUG \
+continuation line should go too
+DEBUG: performing memory sweep
+DEBUG-flag triggered
+DEBUG .printing out debugging line
+DEBUG  Attempt 1 completed
+INFO  Continuing initialization
+DEBUG Attempt 2 completed...
+DEBUG   Finalizing init sequence
+INFO  Initialization complete
+DeBuG activating session ...
+DEBUGGING active session
+INFO  Connection opened successfully
+DEBUG... reading from socket
+DEBUG reading\tfrom\ttabbed source
+DEBUG  Writing handshake packet
+DEBUG  	Writing handshake packet
+INFO  Socket handshake complete
+DEBUG--transient network lag
+DEBUG   response timeout
+DEBUG   Retrying connection (1/3)
+DEBUG Retrying connection (2/3)
+DEBUG	Retrying connection (3/3)
+DEBUG—awaiting connections stabilized message
+INFO  Connection stabilized
+DEBUG!Connection stabilized
+DEBUG?Connection stabilized messaged showed
+    Connection stabilized
+DEBUG(Log Connection stabilized 
+DEBUG)Log 
+Rerunning 
+still running Rerunning
+DEBUG[Error present
+DEBUG]New Error present
+DEBUG{Evaluating error present
+DEBUG}Running checks on present error
+DEBUG<Debugging checks on present error
+DEBUG>Error in buffer cache
+DEBUG updating buffer cache
+DEBUG Updating buffer cache (different case)
+INFO  Cache update confirmed
+  INFO  Indented log entry for testing
+INFO  Performing routine health check
+DEBUG@Running routine health check
+DEBUG#Still Running routine health check
+DEBUG$Running routine health check
+DEBUG%Still Running routine health check
+DEBUG&ampersand boundary
+DEBUG*asterisk boundary
+DEBUG+plus boundary
+DEBUG=equals boundary
+DEBUG|pipe boundary
+DEBUG~tilde boundary
+DEBUG, cleaning unused plugin
+DEBUG123 cleaned unused plugin
+DEBUG_LEVEL set to 2
+123DEBUG Level is set to 2
+_DEBUG Level:2
+DEBUG_ awaiting fuction called
+NODEBUG funciton call now running
+myDEBUG_function called
+INFO  Health check passed
+DEBUG removing outdated snapshot
+DEBUG removing outdated snapshot (2/5)
+DEBUG removing outdated snapshot; (3/5)
+INFO  Snapshot rotation complete
+DEBUG Removing backup artifacts
+INFO  Backup drive nearly full
+DEBUG— Backup drive nearly full reported
+DEBUG /path/to/temp/file cleanup
+DEBUG.log literal file mention
+DEBUG/production mode path
+INFO  Backup cycle finished
+	Reported Backup cycle finished
+DEBUG:  [DEBUG] 
+INFO  Preparing report generation
+INFO  Report written to /var/reports/
+DEBUG  "DEBUG" 
+DEBUG  'DEBUG' 
+DEBUG HEllooo how are you today.
+DEBUG^LOGGGGGG 
+DEBUG`HELLOOOOO
+DEBUG'YOUOUOUOUFDEBUG
+DEBUG"fFEDEUG DEBUG
+INFO  Service shutdown requested
+DEBUG   Preparing to shut down
+DEBUG-
+ DEBUG this Debug DEBUG line
+DEBUG 
+INFO  Shutdown complete
+DEBUG	 
+DEBUG—
+INFO  Goodbye.

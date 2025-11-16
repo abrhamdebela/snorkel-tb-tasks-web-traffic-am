@@ -44,13 +44,21 @@ jobs:
           echo "## Quality Check Results" > quality-by-llm-comment.md
           echo "| Check       | Outcome  | Explanation              |" >> quality-by-llm-comment.md
           echo "|-------------|----------|--------------------------|" >> quality-by-llm-comment.md
-          jq -r 'to_entries[] |
+          jq -r '
+            def escape_markdown:
+              gsub("\\\\"; "\\\\\\\\") |
+              gsub("\\|"; "\\\\|") |
+              gsub("\\*"; "\\\\*") |
+              gsub("_"; "\\\\_");
+
+            to_entries[] |
             (if .value.outcome == "pass" then "✅ pass"
              elif .value.outcome == "fail" then "❌ fail"
              elif .value.outcome == "not_applicable" then "➖ not_applicable"
              else .value.outcome
              end) as $outcome |
-            "| \(.key) | \($outcome) | \(.value.explanation) |"' output.json >> quality-by-llm-comment.md
+            "| \(.key) | \($outcome) | \(.value.explanation | escape_markdown) |"
+          ' output.json >> quality-by-llm-comment.md
           echo "<!-- check-quality-by-llm-end -->" >> quality-by-llm-comment.md
       - name: Hide comment
         id: hide-comment

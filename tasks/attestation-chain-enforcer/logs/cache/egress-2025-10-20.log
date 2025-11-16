@@ -1,0 +1,6 @@
+2025-10-20T12:01:05+00:00 cache: src=203.0.113.10 host=cdn.example tls_sni=front.example method=GET path=/erocl/init status=200
+2025-10-20T12:01:15+00:00 cache: src=198.51.100.8 host=edge.example tls_sni=front.example method=GET path=/a/erocl/release.tgz?s=222222222 status=206
+2025-10-20T12:01:26+00:00 cache: src=203.0.113.11 host=badcdn.example tls_sni=front.example method=GET path=/erocl/x status=200
+2025-10-20T12:01:27+00:00 cache: src=10.0.0.5 host=cdn.example tls_sni=front.example method=GET path=/erocl/y status=200
+2025-10-20T12:01:28+00:00 cache: src=2001:db8::1 host=cdn.example tls_sni=front.example method=GET path=/erocl/z status=200
+2025-10-20T12:01:05+00:00 cache: src=203.0.113.10 host=cdn.example tls_sni=front.example method=GET path=/erocl/init status=200

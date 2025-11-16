@@ -1,0 +1,73 @@
+{
+  "patients": [
+    {
+      "patient_id": "P001",
+      "allergies": []
+    },
+    {
+      "patient_id": "P002",
+      "allergies": ["Sulfonamides"]
+    },
+    {
+      "patient_id": "P003",
+      "allergies": []
+    },
+    {
+      "patient_id": "P004",
+      "allergies": ["Penicillin"]
+    },
+    {
+      "patient_id": "P005",
+      "allergies": []
+    },
+    {
+      "patient_id": "P006",
+      "allergies": []
+    },
+    {
+      "patient_id": "P007",
+      "allergies": []
+    },
+    {
+      "patient_id": "P008",
+      "allergies": []
+    },
+    {
+      "patient_id": "P009",
+      "allergies": ["Aspirin"]
+    },
+    {
+      "patient_id": "P010",
+      "allergies": []
+    },
+    {
+      "patient_id": "P011",
+      "allergies": []
+    },
+    {
+      "patient_id": "P012",
+      "allergies": ["Warfarin"]
+    },
+    {
+      "patient_id": "P013",
+      "allergies": []
+    },
+    {
+      "patient_id": "P014",
+      "allergies": []
+    },
+    {
+      "patient_id": "P015",
+      "allergies": ["Morphine"]
+    },
+    {
+      "patient_id": "P016",
+      "allergies": []
+    },
+    {
+      "patient_id": "P017",
+      "allergies": []
+    }
+  ]
+}
+

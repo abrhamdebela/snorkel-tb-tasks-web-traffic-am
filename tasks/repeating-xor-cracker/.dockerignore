@@ -1,0 +1,13 @@
+solution.sh
+solution.yaml
+generate_data.py
+tests/
+Dockerfile
+docker-compose.yaml
+task.yaml
+run-tests.sh
+__pycache__/
+runs/
+output/
+*.pyc
+*.pyo

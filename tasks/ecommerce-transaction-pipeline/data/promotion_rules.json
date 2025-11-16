@@ -1,0 +1,54 @@
+{
+  "volume_discounts": {
+    "Electronics": [
+      {"min_quantity": 3, "max_quantity": 5, "additional_discount": 0.02},
+      {"min_quantity": 6, "max_quantity": 10, "additional_discount": 0.05},
+      {"min_quantity": 11, "max_quantity": null, "additional_discount": 0.08}
+    ],
+    "Furniture": [
+      {"min_quantity": 2, "max_quantity": 3, "additional_discount": 0.03},
+      {"min_quantity": 4, "max_quantity": null, "additional_discount": 0.06}
+    ],
+    "Stationery": [
+      {"min_quantity": 10, "max_quantity": 20, "additional_discount": 0.01},
+      {"min_quantity": 21, "max_quantity": null, "additional_discount": 0.03}
+    ]
+  },
+  "weekend_surcharge": {
+    "Saturday": 0.03,
+    "Sunday": 0.05
+  },
+  "holiday_dates": [
+    "2025-10-31",
+    "2025-11-01"
+  ],
+  "holiday_surcharge": 0.10,
+  "loyalty_bonus": {
+    "premium": {
+      "min_total_before_discount": 500,
+      "additional_discount": 0.05
+    },
+    "vip": {
+      "min_total_before_discount": 300,
+      "additional_discount": 0.08
+    }
+  },
+  "bundling_discounts": [
+    {
+      "categories": ["Electronics", "Furniture"],
+      "discount": 0.03,
+      "description": "Tech & Furniture bundle"
+    },
+    {
+      "categories": ["Books", "Stationery"],
+      "discount": 0.02,
+      "description": "Study materials bundle"
+    }
+  ],
+  "region_multipliers": {
+    "North": 1.0,
+    "South": 0.95,
+    "East": 1.02,
+    "West": 0.98
+  }
+}

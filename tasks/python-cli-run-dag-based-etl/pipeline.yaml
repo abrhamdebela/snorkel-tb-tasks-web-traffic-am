@@ -1,0 +1,57 @@
+name: python_cli_etl_pipeline
+description: >
+  DAG-based ETL that normalizes mixed CSV/JSON/TSV data,
+  converts currencies to USD, writes Parquet dataset, and
+  emits a Markdown summary report and reproducibility manifest.
+
+# Global config
+settings:
+  parallel: true                 # allow parallel execution
+  skip_unchanged: true           # compute content hashes to skip unchanged steps
+  manifest_path: manifest.json
+
+# Define steps in the DAG
+steps:
+  - name: normalize_schema
+    type: python
+    script: scripts/normalize_schema.py
+    inputs:
+      - data
+    outputs:
+      - normalized_data.csv
+    description: Normalize column names and timestamp formats to UTC. "id" must be the first column and "description" must be the last column.
+
+  - name: convert_currency
+    type: python
+    script: scripts/convert_currency.py
+    inputs:
+      - normalized_data.csv
+      - exchange_rates.json
+    outputs:
+      - currency_normalized.csv
+    description: Convert all monetary columns to USD.
+    depends_on:
+      - normalize_schema
+
+  - name: write_parquet
+    type: python
+    script: scripts/write_parquet.py
+    inputs:
+      - currency_normalized.csv
+    outputs:
+      - warehouse
+    description: Write partitioned Parquet dataset.
+    depends_on:
+      - convert_currency
+
+  - name: generate_summary
+    type: python
+    script: scripts/generate_summary.py
+    inputs:
+      - warehouse
+    outputs:
+      - summary.md
+    description: Produce Markdown summary of the ETL run.
+    depends_on:
+      - write_parquet
+
