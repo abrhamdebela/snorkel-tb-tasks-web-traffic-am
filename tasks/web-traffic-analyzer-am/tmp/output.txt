@@ -1,0 +1,29 @@
+Total requests: 10
+Unique visitors: 5
+
+Top URLs:
+  /index.html - 4
+  /dashboard - 3
+  /about - 1
+  /login - 1
+  /products - 1
+
+Top IPs:
+  192.168.0.10 - 5
+  192.168.0.13 - 2
+  192.168.0.11 - 1
+  192.168.0.12 - 1
+  192.168.0.14 - 1
+
+Method counts:
+  GET: 9
+  POST: 1
+
+Status code categories:
+  2xx: 5
+  3xx: 1
+  4xx: 1
+  5xx: 3
+
+Anomalies:
+  None detected.

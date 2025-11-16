@@ -1,0 +1,9 @@
+[?2004hroot@712e438a07dc:/workspace# bash /oracle/solution.sh; tmux wait -S done
+[?2004l/oracle/solution.sh: line 1: import: command not found
+/oracle/solution.sh: line 2: from: command not found
+/oracle/solution.sh: line 3: from: command not found
+/oracle/solution.sh: line 4: from: command not found
+/oracle/solution.sh: line 5: $'\r': command not found
+/oracle/solution.sh: line 6: syntax error near unexpected token `('
+/oracle/solution.sh: line 6: `LOG_PATH = Path("dataset/access.log")'
+[?2004hroot@712e438a07dc:/workspace# 

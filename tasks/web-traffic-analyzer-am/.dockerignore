@@ -1,0 +1,21 @@
+# Python cache
+__pycache__/
+*.pyc
+
+# Virtual environments
+.venv/
+
+# Logs
+*.log
+logs*/
+log*
+log*.log
+
+# Local tmp
+tmp/
+
+# Task authoring artifacts
+solution.yaml
+
+# DO NOT IGNORE tests/
+# DO NOT IGNORE run-tests.sh

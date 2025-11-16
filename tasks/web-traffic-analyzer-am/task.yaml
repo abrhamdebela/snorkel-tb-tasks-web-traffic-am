@@ -1,0 +1,48 @@
+instruction: |-
+  Build a command-line web traffic analyzer.
+
+  Your tool should accept a path to a web server log file (for example, an
+  Apache or Nginx access log) and produce a structured summary of the traffic.
+
+  The analyzer must:
+
+  1. Parse each log entry and extract:
+     - IP address
+     - Timestamp
+     - HTTP method
+     - URL path
+     - Response status code
+
+  2. Compute and display the following metrics:
+     - Total number of requests
+     - Number of unique visitors (unique IP addresses)
+     - Top 10 most visited URLs
+     - Top 10 IP addresses by request count
+     - Count of requests per HTTP method (GET, POST, etc.)
+     - Count of responses by status code category (2xx, 3xx, 4xx, 5xx)
+
+  3. Detect anomalies, including:
+     - Any IP exceeding 100 requests in under 60 seconds
+     - Any 5xx error burst (more than 20 server errors within 1 minute)
+
+  4. Output results in a human-readable format.
+
+  The script should be efficient, handle large log files, and skip malformed
+  lines without crashing.
+
+author_name: "Abraham Debela"
+author_email: "a.debela@hotmail.com"   # replace with your email if you want
+difficulty: medium
+category: data-processing
+tags:
+  - web-logs
+  - analytics
+  - anomaly-detection
+parser_name: pytest
+max_agent_timeout_sec: 360
+max_test_timeout_sec: 60
+run_tests_in_same_shell: false
+disable_asciinema: true
+estimated_duration_sec: null
+expert_time_estimate_min: 90
+junior_time_estimate_min: 150
