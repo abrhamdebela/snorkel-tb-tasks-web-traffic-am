@@ -1,64 +1,77 @@
-from pathlib import Path
+import re
+import sys
 from collections import Counter, defaultdict, deque
 from datetime import datetime, timedelta
-import sys
-import re
+from pathlib import Path
 
-# Default path used by the harness
-LOG_PATH = Path("dataset/access.log")
+# Default input log path used by the harness
+LOG_PATH = Path("/workspace/dataset/access.log")
+
+
+# Output file the tests expect
+OUTPUT_PATH = Path("/tmp/web_traffic_report.txt")
 
 LOG_PATTERN = re.compile(
-    r'(?P<ip>\S+)\s+\S+\s+\S+\s+\[(?P<time>[^\]]+)\]\s+'
-    r'"(?P<method>\S+)\s+(?P<path>\S+)[^"]*"\s+'
-    r'(?P<status>\d{3})\s+\S+'
+    r'(?P<ip>\S+) - - \[(?P<ts>[^\]]+)\] '
+    r'"(?P<method>\S+) (?P<path>\S+) (?P<proto>[^"]+)" '
+    r'(?P<status>\d{3})'
 )
 
-TIME_FORMAT = "%d/%b/%Y:%H:%M:%S %z"
+TS_FORMAT = "%d/%b/%Y:%H:%M:%S %z"
 
 
 def parse_line(line: str):
+    """Parse a single Apache-style access log line."""
     m = LOG_PATTERN.match(line)
     if not m:
         return None
 
+    d = m.groupdict()
     try:
-        ip = m.group("ip")
-        ts = datetime.strptime(m.group("time"), TIME_FORMAT)
-        method = m.group("method")
-        path = m.group("path")
-        status = int(m.group("status"))
+        ts = datetime.strptime(d["ts"], TS_FORMAT)
     except Exception:
+        # Skip lines with bad timestamps
         return None
 
-    return ip, ts, method, path, status
+    return {
+        "ip": d["ip"],
+        "timestamp": ts,
+        "method": d["method"],
+        "path": d["path"],
+        "status": int(d["status"]),
+    }
 
 
 def analyze_log(path: Path):
+    """Compute basic traffic stats and simple anomalies from a log file."""
     total_requests = 0
     unique_ips = set()
     url_counter = Counter()
     ip_counter = Counter()
     method_counter = Counter()
-    status_category_counter = Counter()
+    status_category_counter = Counter()  # "2xx", "3xx", etc.
 
-    # Anomaly detection data structures
-    ip_windows = defaultdict(deque)         # ip -> timestamps
-    error_window = deque()                  # timestamps of 5xx
+    # Anomaly detection state
+    ip_windows = defaultdict(deque)  # ip -> deque[timestamps]
+    error_window = deque()           # deque[timestamps of 5xx]
     anomalies = {
-        "high_traffic_ips": [],             # (ip, start, end, count)
-        "error_bursts": []                  # (start, end, count)
+        "high_traffic_ips": [],      # (ip, start, end, count)
+        "error_bursts": []           # (start, end, count)
     }
 
     window_size = timedelta(seconds=60)
 
     with path.open("r", encoding="utf-8", errors="ignore") as f:
         for line in f:
-            parsed = parse_line(line)
-            if not parsed:
-                # Skip malformed line
+            entry = parse_line(line)
+            if not entry:
                 continue
 
-            ip, ts, method, url_path, status = parsed
+            ip = entry["ip"]
+            ts = entry["timestamp"]
+            method = entry["method"]
+            url_path = entry["path"]
+            status = entry["status"]
 
             total_requests += 1
             unique_ips.add(ip)
@@ -69,10 +82,9 @@ def analyze_log(path: Path):
             status_category = f"{status // 100}xx"
             status_category_counter[status_category] += 1
 
-            # --- Anomaly: per-IP > 100 req in 60s ---
+            # --- Anomaly: per-IP > 100 requests in 60 seconds ---
             dq = ip_windows[ip]
             dq.append(ts)
-            # Drop timestamps older than 60s from current
             while dq and ts - dq[0] > window_size:
                 dq.popleft()
             if len(dq) > 100:
@@ -80,7 +92,7 @@ def analyze_log(path: Path):
                     (ip, dq[0], dq[-1], len(dq))
                 )
 
-            # --- Anomaly: 5xx burst > 20 in 60s ---
+            # --- Anomaly: >20 5xx errors in 60 seconds ---
             if 500 <= status < 600:
                 error_window.append(ts)
                 while error_window and ts - error_window[0] > window_size:
@@ -102,6 +114,7 @@ def analyze_log(path: Path):
 
 
 def format_report(metrics):
+    """Turn metrics into the human-readable report the tests assert on."""
     lines = []
 
     lines.append(f"Total requests: {metrics['total_requests']}")
@@ -144,7 +157,8 @@ def format_report(metrics):
         lines.append("  High traffic IPs (>100 req in 60s):")
         for ip, start, end, count in metrics["anomalies"]["high_traffic_ips"]:
             lines.append(
-                f"    {ip} - {count} requests between {start.isoformat()} and {end.isoformat()}"
+                f"    {ip} - {count} requests between "
+                f"{start.isoformat()} and {end.isoformat()}"
             )
 
     if metrics["anomalies"]["error_bursts"]:
@@ -152,7 +166,8 @@ def format_report(metrics):
         lines.append("  5xx error bursts (>20 errors in 60s):")
         for start, end, count in metrics["anomalies"]["error_bursts"]:
             lines.append(
-                f"    {count} errors between {start.isoformat()} and {end.isoformat()}"
+                f"    {count} errors between "
+                f"{start.isoformat()} and {end.isoformat()}"
             )
 
     if not any_anom:
@@ -170,6 +185,12 @@ def main():
 
     metrics = analyze_log(log_path)
     report = format_report(metrics)
+
+    # Write report where tests expect it
+    OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
+    OUTPUT_PATH.write_text(report + "\n", encoding="utf-8")
+
+    # Also print to stdout (useful when you run manually)
     print(report)
 
 

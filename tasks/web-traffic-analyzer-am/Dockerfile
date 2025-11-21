@@ -13,10 +13,10 @@ RUN mkdir -p /tmp /tests '\tmp' '\tests'
 
 WORKDIR /workspace
 
-# Task files (fine to copy everything; the check only cares about explicit names)
-COPY . .
+# Install runtime Python deps only (no pytest) with a pinned version
+RUN pip install --no-cache-dir python-dateutil==2.9.0.post0
 
-# Python deps used by oracle/tests
-RUN pip install --no-cache-dir python-dateutil pytest
+# Do NOT copy any repo files, tests, or solutions into the image.
+# The harness mounts the task directory into /workspace at runtime.
 
 CMD ["bash"]
